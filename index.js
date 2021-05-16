@@ -1,20 +1,21 @@
-// express 모듈 불러오기
+// 모듈 불러오기
 const express = require('express');
+const mysql = require('mysql');
+const path = require('path');
+const bodyParser = require("body-parser");
 
 // express 객체 생성
 const app = express();
 
-// path 모듈 불러오기
-const path = require('path');
-
-// 미들웨어 함수를 특정 경로에 등록
-app.use('/api/data', function(req, res) {
-    res.json({ greeting: 'Hello World' });
-});
-
 // 기본 포트를 app 객체에 설정
 const port = process.env.PORT || 5000;
 app.listen(port);
+console.log(`server running at http ${port}`);
+
+// 미들웨어 설정
+app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false }));
 
 // 리액트 정적 파일 제공
 app.use(express.static(path.join(__dirname, 'client/build')));
@@ -24,4 +25,19 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname+'/client/build/index.html'));
 });
 
-console.log(`server running at http ${port}`);
+// 데이터베이스 연결
+const connection = mysql.createConnection({
+    host: 'bmlx3df4ma7r1yh4.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+    user: 'u8chske93qphbtar',
+    password: 'u74cik86q65ig2m6',
+    database: 'g4qbaxkdt4mtekys',
+    timezone: 'utc'
+})
+connection.connect();
+
+// 데이터베이스 API
+app.use('/api/data', (req, res) => {
+    connection.query('SELECT * FROM reservation', (err, data) => {
+        res.send(data);
+    });
+});
