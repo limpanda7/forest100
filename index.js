@@ -7,23 +7,10 @@ const bodyParser = require("body-parser");
 // express 객체 생성
 const app = express();
 
-// 기본 포트를 app 객체에 설정
-const port = process.env.PORT || 5000;
-app.listen(port);
-console.log(`server running at http ${port}`);
-
 // 미들웨어 설정
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.urlencoded({ extended: false }));
-
-// 리액트 정적 파일 제공
-app.use(express.static(path.join(__dirname, 'client/build')));
-
-// 라우트 설정
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname+'/client/build/index.html'));
-});
 
 // 데이터베이스 연결
 const connection = mysql.createConnection({
@@ -41,3 +28,16 @@ app.use('/api/data', (req, res) => {
         res.send(data);
     });
 });
+
+// 리액트 정적 파일 제공
+app.use(express.static(path.join(__dirname, 'client/build')));
+
+// 라우트 설정
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname+'/client/build/index.html'));
+});
+
+// 기본 포트를 app 객체에 설정
+const port = process.env.PORT || 5000;
+app.listen(port);
+console.log(`server running at http ${port}`);
