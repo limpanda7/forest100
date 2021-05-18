@@ -3,8 +3,32 @@ import './App.scss';
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 import moment from 'moment';
+import Slider from 'react-slick';
 
-import BannerImg from './images/banner1.webp';
+import inner1 from './images/inner/1.webp';
+import inner2 from './images/inner/2.jpg';
+import inner3 from './images/inner/3.jpg';
+import inner4 from './images/inner/4.jpg';
+import inner5 from './images/inner/5.jpg';
+import inner6 from './images/inner/6.jpg';
+import inner7 from './images/inner/7.jpg';
+import inner8 from './images/inner/8.jpg';
+import inner9 from './images/inner/9.jpg';
+import inner10 from './images/inner/10.jpg';
+import inner11 from './images/inner/11.jpg';
+
+import outer1 from './images/outer/1.jpg';
+import outer2 from './images/outer/2.jpg';
+import outer3 from './images/outer/3.jpg';
+import outer4 from './images/outer/4.jpg';
+import outer5 from './images/outer/5.jpg';
+import outer6 from './images/outer/6.jpg';
+import outer7 from './images/outer/7.jpg';
+import outer8 from './images/outer/8.jpg';
+import outer9 from './images/outer/9.jpg';
+import outer10 from './images/outer/10.jpg';
+import outer11 from './images/outer/11.jpg';
+
 import MapImg from './images/map.png';
 
 const App = () =>{
@@ -36,20 +60,57 @@ const App = () =>{
             });
     }
 
+    const sliderSetting = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        adaptiveHeight: true,
+    };
+
     return (
         <div className="App">
-            <img src={BannerImg} />
 
-            <h2 className='Title'>100년 한옥의 별채에서<br/>편안한 시골체험을 해보세요:)<br/>[동해시 민박업등록숙소]</h2>
+            <h2 className='Title'>100년 한옥의 별채에서<br/>편안한 시골체험을 해보세요:)</h2>
 
-            <hr/>
+            <div className='Slider'>
+                <Slider {...sliderSetting}>
+                    <div><img src={outer1}/></div>
+                    <div><img src={outer2}/></div>
+                    <div><img src={outer3}/></div>
+                    <div><img src={outer4}/></div>
+                    <div><img src={outer5}/></div>
+                    <div><img src={outer6}/></div>
+                    <div><img src={outer7}/></div>
+                    <div><img src={outer8}/></div>
+                    <div><img src={outer9}/></div>
+                    <div><img src={outer10}/></div>
+                    <div><img src={outer11}/></div>
+                </Slider>
+            </div>
+            <div className='Slider'>
+                <Slider {...sliderSetting}>
+                    <div><img src={inner1}/></div>
+                    <div><img src={inner2}/></div>
+                    <div><img src={inner3}/></div>
+                    <div><img src={inner4}/></div>
+                    <div><img src={inner5}/></div>
+                    <div><img src={inner6}/></div>
+                    <div><img src={inner7}/></div>
+                    <div><img src={inner8}/></div>
+                    <div><img src={inner9}/></div>
+                    <div><img src={inner10}/></div>
+                    <div><img src={inner11}/></div>
+                </Slider>
+            </div>
 
             <div className='Clean'>
                 코로나확산 방지를 위해 마스크를 반드시 착용해주시고 손씻기와 방역에 동참해주시길 부탁드립니다. (가급적 숙소에만 머무는 것을 추천드립니다.)<br/>
                 침구는 항상 청결하게 준비되어 있으니 안심하시고 찾아주세요 !
             </div>
 
-            <ul>
+            <ul className='List'>
 
                 <li>100년된 한옥의 별채입니다 :-)<br/>
                 주변에는 피톤치드 가득한 산책로가 있고 여러종류의 꽃과 나무, 그리고 열매도 맛볼수 있습니다.<br/>
@@ -84,7 +145,7 @@ const App = () =>{
             <hr/>
 
             <h2>편의시설</h2>
-            <ul>
+            <ul className='List'>
                 <li>TV</li>
                 <li>무선 인터넷</li>
                 <li>에어컨, 난방</li>
@@ -107,7 +168,7 @@ const App = () =>{
 
             {
                 showLocation &&
-                <ul className='Location'>
+                <ul className='List Location'>
                     <li><b>도로명 주소</b><br/>
                         강원도 동해시 구미실길 96-1</li>
 
