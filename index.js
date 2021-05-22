@@ -8,9 +8,8 @@ const bodyParser = require("body-parser");
 const app = express();
 
 // 미들웨어 설정
-app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // 데이터베이스 연결
 const connection = mysql.createConnection({
@@ -22,12 +21,15 @@ const connection = mysql.createConnection({
 })
 connection.connect();
 
-// 데이터베이스 API
-app.use('/api/data', (req, res) => {
+// API
+app.get('/api/getReserved', (req, res) => {
     connection.query('SELECT * FROM reservation', (err, data) => {
         res.send(data);
     });
 });
+app.post('/api/saveReserved', (req, res) => {
+    res.send(req.body);
+})
 
 // 리액트 정적 파일 제공
 app.use(express.static(path.join(__dirname, 'client/build')));

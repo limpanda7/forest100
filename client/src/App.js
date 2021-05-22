@@ -1,10 +1,12 @@
 import React, {useState, useEffect} from 'react';
+import axios from "axios";
 import './App.scss';
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 import moment from 'moment';
 import Slider from 'react-slick';
 
+// import images
 import inner1 from './images/inner/1.webp';
 import inner2 from './images/inner/2.jpg';
 import inner3 from './images/inner/3.jpg';
@@ -16,7 +18,6 @@ import inner8 from './images/inner/8.jpg';
 import inner9 from './images/inner/9.jpg';
 import inner10 from './images/inner/10.jpg';
 import inner11 from './images/inner/11.jpg';
-
 import outer1 from './images/outer/1.jpg';
 import outer2 from './images/outer/2.jpg';
 import outer3 from './images/outer/3.jpg';
@@ -29,35 +30,32 @@ import outer9 from './images/outer/9.jpg';
 import outer10 from './images/outer/10.jpg';
 import outer11 from './images/outer/11.jpg';
 
-import MapImg from './images/map.png';
-
 const App = () =>{
 
     const [showLocation, setShowLocation] = useState(false);
-    const [date, setDate] = useState(new Date());
     const [reserved, setReserved] = useState([]);
+    const [picked, setPicked] = useState([]);
 
     useEffect(() => {
-        apiReserved();
+        getReserved();
     }, []);
 
-    const toggleLocation = () => {
-        if (showLocation === true) setShowLocation(false);
-        else setShowLocation(true);
-    }
-
-    const apiReserved = () => {
-        fetch('/api/data')
+    const getReserved = () => {
+        axios.get('/api/getReserved')
             .then((res) => {
-                return res.json();
-            })
-            .then((data) => {
                 let tempArr = [];
-                for (const element of data) {
+                for (const element of res.data) {
                     tempArr.push(moment(element.date).format('YYYY-MM-DD'));
                 }
                 setReserved(tempArr);
             });
+    }
+
+    const saveReserved = () => {
+        axios.post('/api/saveReserved', {picked})
+            .then((res) => {
+                alert(res.data.picked[0]);
+            })
     }
 
     const sliderSetting = {
@@ -69,11 +67,33 @@ const App = () =>{
         adaptiveHeight: true,
     };
 
+    const toggleLocation = () => {
+        if (showLocation === true) setShowLocation(false);
+        else setShowLocation(true);
+    }
+
+    const calcRange = (value) => {
+        let tempArr = [];
+        let startDate = new Date(value[0]);
+        let endDate = new Date(value[1]);
+        startDate.setDate(startDate.getDate() + 1);
+        endDate.setDate(endDate.getDate() + 1);
+        while(startDate <= endDate) {
+            tempArr.push(startDate.toISOString().split("T")[0]);
+            startDate.setDate(startDate.getDate() + 1);
+        }
+        setPicked(tempArr);
+    }
+
     return (
         <div className="App">
 
-            <h2 className='Title'>100년 한옥의 별채에서<br/>편안한 시골체험을 해보세요:)</h2>
+            <h2 className='Title'>
+                <span>100년 한옥 별채</span><br/>
+                편안한 시골체험을 해보세요:)
+            </h2>
 
+            <h4>[외부사진]</h4>
             <div className='Slider'>
                 <Slider {...sliderSetting}>
                     <div><img src={outer1}/></div>
@@ -89,6 +109,8 @@ const App = () =>{
                     <div><img src={outer11}/></div>
                 </Slider>
             </div>
+
+            <h4>[내부사진]</h4>
             <div className='Slider'>
                 <Slider {...sliderSetting}>
                     <div><img src={inner1}/></div>
@@ -106,26 +128,26 @@ const App = () =>{
             </div>
 
             <div className='Clean'>
-                코로나확산 방지를 위해 마스크를 반드시 착용해주시고 손씻기와 방역에 동참해주시길 부탁드립니다. (가급적 숙소에만 머무는 것을 추천드립니다.)<br/>
-                침구는 항상 청결하게 준비되어 있으니 안심하시고 찾아주세요 !
+                코로나확산 방지를 위해 마스크를 반드시 착용해주시고 손씻기와 방역에 동참해주시길 부탁드립니다.<br/>
+                침구는 항상 청결하게 준비되어 있으니 안심하시고 찾아주세요!
             </div>
 
             <ul className='List'>
 
-                <li>100년된 한옥의 별채입니다 :-)<br/>
-                주변에는 피톤치드 가득한 산책로가 있고 여러종류의 꽃과 나무, 그리고 열매도 맛볼수 있습니다.<br/>
-                    넓은 마당이 있어 차량 3대 이상도 주차가 가능합니다.</li>
+                <li>
+                    100년된 한옥의 별채입니다 :-)<br/>
+                    주변에는 피톤치드 가득한 산책로가 있고 여러종류의 꽃과 나무, 그리고 열매도 맛볼수 있습니다.
+                </li>
 
-                <li>동해시와 삼척시를 여행하기에 좋은 위치에 있습니다.<br/>
-                    인근해변: 추암, 쏠비치(자가용 필요)</li>
+                <li>넓은 마당이 있어 차량 3대 이상도 주차가 가능합니다.</li>
+
+                <li>동해시와 삼척시를 여행하기에 좋은 위치에 있습니다.</li>
 
                 <li>도심을 떠나 혼자 여행하시는 분이나, 커플, 가족단위의 게스트도 환영합니다:D</li>
 
-                <li>궁금하신 사항은 메세지를 주시면 신속히 응답드립니다.</li>
+                <li>텃밭에서 나는 채소들을 직접 재배하여 요리할 수 있도록 제공합니다 :)</li>
 
-                <li>텃밭에서 나는 채소들을 직접 재배하여 요리할 수 있도록 제공합니다:)</li>
-
-                <li>반려견은 인원수에 포함합니다. 털날림이 적은 견종만 가능합니다:)</li>
+                <li>반려견은 인원수에 포함합니다. 털날림이 적은 견종만 가능합니다 :)</li>
             </ul>
 
             <hr/>
@@ -160,8 +182,10 @@ const App = () =>{
             <hr/>
             <h2>위치</h2>
 
-            <img src={MapImg} />
-            <a href='http://naver.me/GmFzmP9P' target='_blank'>네이버 지도에서 보기</a>
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3166.511124703915!2d129.1265640155865!3d37.472263137278524!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3561b9b40c1818d9%3A0xef52d1dc46730d66!2z6rCV7JuQ64-EIOuPme2VtOyLnCDrjIDqtazrj5kg6rWs66-47Iuk6ri4IDk2LTE!5e0!3m2!1sko!2skr!4v1621694052376!5m2!1sko!2skr"
+                allowFullScreen="" loading="lazy"/>
+            <a href='geo:37.4722631,129.126564?q=강원도+동해시+대구동+구미실길+96-1' target='_blank'>지도 앱에서 보기</a>
             <p>주변에 주택이 많고 대부분 농사를 지으시는 분들입니다. 시골감성을 마음껏 누리세요!</p>
 
             <button className='LocationBtn' onClick={() => toggleLocation()}>자세한 위치 정보</button>
@@ -199,16 +223,18 @@ const App = () =>{
             <h2>예약현황</h2>
             <Calendar
                 className='Calendar'
-                onChange={setDate}
-                value={date}
+                minDate={new Date()}
+                calendarType='US'
                 tileDisabled={({ date }) => {
-                    if(reserved.find(x=>x===moment(date).format("YYYY-MM-DD"))){
+                    if(reserved.find(x => x === moment(date).format("YYYY-MM-DD"))){
                         return true;
                     }
                 }}
-                minDate={new Date()}
-                calendarType='US'
+                selectRange={true}
+                onChange={(value) => calcRange(value)}
             />
+
+            <button className='ReservationBtn' onClick={() => saveReserved()}>예약하기</button>
 
         </div>
     );
