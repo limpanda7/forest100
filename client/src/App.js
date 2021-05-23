@@ -18,7 +18,6 @@ import outer7 from "./images/outer/7.jpg";
 import outer8 from "./images/outer/8.jpg";
 import outer9 from "./images/outer/9.jpg";
 import outer10 from "./images/outer/10.jpg";
-import outer11 from "./images/outer/11.jpg";
 import inner1 from "./images/inner/1.webp";
 import inner2 from "./images/inner/2.jpg";
 import inner3 from "./images/inner/3.jpg";
@@ -29,7 +28,6 @@ import inner7 from "./images/inner/7.jpg";
 import inner8 from "./images/inner/8.jpg";
 import inner9 from "./images/inner/9.jpg";
 import inner10 from "./images/inner/10.jpg";
-import inner11 from "./images/inner/11.jpg";
 
 const App = () => {
 
@@ -59,6 +57,7 @@ const App = () => {
             return false;
         } else {
             setCurrentPage('Reservation');
+            window.scrollTo(0, 0);
         }
     }
 
@@ -122,7 +121,6 @@ const App = () => {
                         <div><img src={outer8}/></div>
                         <div><img src={outer9}/></div>
                         <div><img src={outer10}/></div>
-                        <div><img src={outer11}/></div>
                     </Slider>
                 </div>
 
@@ -139,7 +137,6 @@ const App = () => {
                         <div><img src={inner8}/></div>
                         <div><img src={inner9}/></div>
                         <div><img src={inner10}/></div>
-                        <div><img src={inner11}/></div>
                     </Slider>
                 </div>
 
@@ -183,7 +180,7 @@ const App = () => {
                     <li>에어컨, 난방</li>
                     <li>주방 (전자레인지, 냉장고, 전기밥솥)</li>
                     <li>기본 조리도구, 식기류</li>
-                    <li>바베큐 그릴 (추가요금 2만원)</li>
+                    <li>바베큐 그릴</li>
                     <li>발코니</li>
                     <li>뒷마당</li>
                     <li>무료주차</li>
@@ -235,8 +232,8 @@ const App = () => {
 
                 <hr/>
 
-                <h2>예약하기기</h2>
-               <Calendar
+                <h2>예약하기</h2>
+                <Calendar
                     className='Calendar'
                     minDate={new Date()}
                     calendarType='US'
@@ -258,7 +255,7 @@ const App = () => {
     if (currentPage === 'Reservation') {
         return (
             <div className='App'>
-                <Reservation picked={picked} setPicked={setPicked} setCurrentPage={setCurrentPage}/>
+                <Reservation picked={picked} setPicked={setPicked} setCurrentPage={setCurrentPage} getReserved={getReserved}/>
             </div>
         );
     }

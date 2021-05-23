@@ -2,15 +2,18 @@ import React, {useState, useEffect} from 'react';
 import axios from "axios";
 import './App.scss';
 
-const Reservation = ({picked, setPicked, setCurrentPage}) => {
+const Reservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
 
     const [howMany, setHowMany] = useState(2);
     const [adult, setAdult] = useState(2);
     const [baby, setBaby] = useState(0);
     const [dog, setDog] = useState(0);
-    const [priceOption, setPriceOption] = useState('refundable');
+    const [barbecue, setBarbecue] = useState('N');
+    const [barbecueEvent, setBarbecueEvent] = useState(false);
     const [price, setPrice] = useState(0);
+    const [priceOption, setPriceOption] = useState('refundable');
     const [discount, setDiscount] = useState(0);
+    const [name, setName] = useState('');
 
     useEffect(() => {
         calcPrice();
@@ -22,19 +25,20 @@ const Reservation = ({picked, setPicked, setCurrentPage}) => {
 
     useEffect(() => {
         calcPrice();
-    }, [howMany, priceOption])
+    }, [howMany, barbecue, barbecueEvent, priceOption])
 
     const saveReservation = () => {
-        axios.post('/api/saveReserved', {picked})
+        axios.post('/api/saveReservation', {picked, name, adult, baby, dog, barbecue, barbecueEvent, price, priceOption})
             .then((res) => {
                 alert('예약 신청이 완료되었습니다.');
                 setCurrentPage('Home');
+                getReserved();
             })
     }
 
     const calcHowMany = () => {
-        if (adult === 1) {
-            setHowMany(2 + baby + dog);
+        if (adult === 1 && baby === 0 && dog=== 0) {
+            setHowMany(2);
         } else {
             setHowMany(adult + baby+ dog);
         }
@@ -46,6 +50,9 @@ const Reservation = ({picked, setPicked, setCurrentPage}) => {
         if (adult + baby >= 5) {
             price += 30000 * days;
         }
+        if (barbecue === 'Y' && barbecueEvent === false) {
+            price += 20000;
+        }
         if (priceOption === 'nonrefundable') {
             setDiscount(price * 0.1);
             price *= 0.9;
@@ -56,7 +63,7 @@ const Reservation = ({picked, setPicked, setCurrentPage}) => {
     }
 
     return (
-        <div>
+        <div className='Reservation'>
             <button onClick={() => {setCurrentPage('Home'); setPicked([])}}>뒤로가기</button>
 
             <h2>선택한 날짜</h2>
@@ -87,23 +94,86 @@ const Reservation = ({picked, setPicked, setCurrentPage}) => {
                 <p className='Notice'>5명 이상 숙박 시 사랑방 이용요금<br/>(1박 30,000원)이 추가됩니다.</p>
             </div>
 
-            <h2>총 이용요금</h2>
-            <input type='radio' id='refundable' onChange={() => setPriceOption('refundable')} checked={priceOption === 'refundable'}/>
-            <label htmlFor='refundable'>환불가능 (예약금 + 잔금)</label>
-            <br/>
-            <input type='radio' id='nonrefundable' onClick={() => setPriceOption('nonrefundable')} checked={priceOption === 'nonrefundable'}/>
-            <label htmlFor='nonrefundable'>환불불가 10% 할인 (일시불)</label>
-
-            <h3>{price}원</h3>
-            <div className='PriceDetail'>
-                <p>기본요금: 240,000원 x {picked.length - 1}박</p>
-                <p>인원초과: 12,000원 x {howMany - 2}명 x {picked.length - 1}박</p>
-                {
-                    adult + baby >= 5 &&
-                    <p>사랑방: 30,000원 x {picked.length - 1}박</p>
-                }
-                <p>할인금액: {discount}원</p>
+            <div className='Barbecue'>
+                <h2>바베큐 선택</h2>
+                <div className='BarbecueBtn'>
+                    <input type='radio' id='barbecueY' onClick={() => setBarbecue('Y')} checked={barbecue === 'Y'}/>
+                    <label htmlFor='barbecueY'>예</label>
+                    <input type='radio' id='barbecueN' onClick={() => setBarbecue('N')} checked={barbecue === 'N'}/>
+                    <label htmlFor='barbecueN'>아니오</label>
+                </div>
+                <p>
+                    ★★★유투브 영상 댓글 이벤트★★★<br/>
+                    숙박 하신 후 <a href='https://youtu.be/2PQT69JwiEY' target='_blank'>숙소 소개영상</a>에 댓글을 달아 주시면 바베큐를 무료로 이용하실 수 있습니다.<br/>
+                    이벤트에 참여하시려면 체크하세요
+                    <input type='checkbox' onClick={(e) => setBarbecueEvent(e.target.checked)}/>
+                </p>
             </div>
+
+            <div className='PriceOption'>
+                <h2>환불옵션 선택</h2>
+                <input type='radio' id='refundable' onClick={() => setPriceOption('refundable')} checked={priceOption === 'refundable'}/>
+                <label htmlFor='refundable'><b>환불가능 옵션</b></label>
+                <p>
+                    예약할 때 예약금을 10% 지불하고, 체크인 이틀 전 나머지 90%를 지불합니다. <br/>
+                    예약을 취소하더라도 예약금은 환불되지 않습니다. 원활한 서비스를 위해 양해 부탁드립니다 :)
+                </p>
+                <br/>
+                <input type='radio' id='nonrefundable' onClick={() => setPriceOption('nonrefundable')} checked={priceOption === 'nonrefundable'}/>
+                <label htmlFor='nonrefundable'><b>환불불가 옵션 (10% 할인)</b></label>
+                <p>예약할 때 100% 지불합니다. 예약을 취소하더라도 환불이 불가합니다.</p>
+            </div>
+
+            <div className='PriceTotal'>
+                <h2>총 이용요금</h2>
+                <h2 className='Price'>{price}원</h2>
+                <div className='PriceDetail'>
+                    <p><b>기본요금:</b> 240,000원 x {picked.length - 1}박</p>
+                    {
+                        howMany > 2 &&
+                        <p><b>인원초과:</b> 12,000원 x {howMany - 2}명 x {picked.length - 1}박</p>
+                    }
+                    {
+                        adult + baby >= 5 &&
+                        <p><b>사랑방:</b> 30,000원 x {picked.length - 1}박</p>
+                    }
+                    {
+                        barbecue === 'Y' &&
+                        <p><b>바베큐:</b> {barbecueEvent ? '0원' : '20,000원'}</p>
+                    }
+                    {
+                        discount > 0 &&
+                        <p><b>할인금액:</b> {discount}원</p>
+                    }
+                </div>
+            </div>
+
+            <div className='Deposit'>
+                <h2>입금하기</h2>
+                <div className='BankAccount'>카카오뱅크 3333058451192 남은비</div>
+                <span>입금하실 분 성함:</span>
+                <input type='text' size='6' onChange={(e) => setName(e.target.value)}/>
+                {
+                    priceOption === 'refundable' &&
+                        <>
+                            <p>
+                                위 계좌로 예약금 <b>{price * 0.1}원</b>을 입금해주세요.<br/>
+                                3시간 내에 입금 해 주셔야 예약이 확정됩니다.
+                            </p>
+                        </>
+                }
+                {
+                    priceOption === 'nonrefundable' &&
+                    <>
+                        <p>
+                            위 계좌로 <b>{price}원</b>을 입금해주세요.<br/>
+                            3시간 내에 입금 해 주셔야 예약이 확정됩니다.
+                        </p>
+                    </>
+                }
+            </div>
+
+            <button className='ReservationBtn' onClick={() => saveReservation()}>예약완료</button>
 
 
         </div>

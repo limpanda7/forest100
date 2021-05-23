@@ -25,21 +25,22 @@ app.get('/api/getReserved', (req, res) => {
     });
 });
 app.post('/api/saveReservation', (req, res) => {
+    const body = req.body;
     let values = [];
-    for (const element of req.body.picked) {
-        values.push([element, "N"]);
+    for (const element of body.picked) {
+        values.push([element, body.name, body.adult, body.baby, body.dog, body.barbecue, body.barbecueEvent, body.price, body.priceOption, "N"]);
     }
-    connection.query('INSERT INTO reservation (date, confirm) VALUES ?', [values], (err, data) => {
+    connection.query('INSERT INTO reservation (date, name, adult, baby, dog, barbecue, barbecue_event, price, price_option, confirm) VALUES ?', [values], (err, data) => {
         res.send(data);
     });
 })
 
-// 리액트 정적 파일 제공
-app.use(express.static(path.join(__dirname, 'client/build')));
+// // 리액트 정적 파일 제공
+// app.use(express.static(path.join(__dirname, 'client/build')));
 
 // 라우트 설정
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname+'/client/build/index.html'));
+    res.sendFile(path.join(__dirname+'/client/public/index.html'));
 });
 
 // 기본 포트를 app 객체에 설정
