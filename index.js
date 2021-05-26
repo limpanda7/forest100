@@ -28,9 +28,9 @@ app.post('/api/saveReservation', (req, res) => {
     const body = req.body;
     let values = [];
     for (const element of body.picked) {
-        values.push([element, body.name, body.adult, body.baby, body.dog, body.barbecue, body.barbecueEvent, body.price, body.priceOption, "N"]);
+        values.push([element, body.name, body.phone, body.adult, body.baby, body.dog, body.barbecue, body.barbecueEvent, body.price, body.priceOption, "N"]);
     }
-    connection.query('INSERT INTO reservation (date, name, adult, baby, dog, barbecue, barbecue_event, price, price_option, confirm) VALUES ?', [values], (err, data) => {
+    connection.query('INSERT INTO reservation (date, name, phone, adult, baby, dog, barbecue, barbecue_event, price, price_option, confirm) VALUES ?', [values], (err, data) => {
         res.send(data);
     });
 })

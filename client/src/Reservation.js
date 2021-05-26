@@ -14,6 +14,7 @@ const Reservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
     const [priceOption, setPriceOption] = useState('refundable');
     const [discount, setDiscount] = useState(0);
     const [name, setName] = useState('');
+    const [phone, setPhone] = useState('');
 
     useEffect(() => {
         calcPrice();
@@ -28,11 +29,14 @@ const Reservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
     }, [howMany, barbecue, barbecueEvent, priceOption])
 
     const saveReservation = () => {
-        axios.post('/api/saveReservation', {picked, name, adult, baby, dog, barbecue, barbecueEvent, price, priceOption})
+        axios.post('/api/saveReservation', {picked, name, phone, adult, baby, dog, barbecue, barbecueEvent, price, priceOption})
             .then((res) => {
-                alert('예약 신청이 완료되었습니다.');
-                setCurrentPage('Home');
-                getReserved();
+                if (priceOption === 'refundable') {
+                    alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${price * 0.1}원입니다.`);
+                } else {
+                    alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${price}원입니다.`);
+                }
+                window.location.reload();
             })
     }
 
@@ -116,7 +120,7 @@ const Reservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
                 <label htmlFor='refundable'><b>환불가능 옵션</b></label>
                 <p>
                     예약할 때 예약금을 10% 지불하고, 체크인 이틀 전 나머지 90%를 지불합니다. <br/>
-                    예약을 취소하더라도 예약금은 환불되지 않습니다. 원활한 서비스를 위해 양해 부탁드립니다 :)
+                    예약을 취소하더라도 예약금은 환불되지 않습니다. 원활한 서비스를 위해 양해 부탁드립니다 :-)
                 </p>
                 <br/>
                 <input type='radio' id='nonrefundable' onClick={() => setPriceOption('nonrefundable')} checked={priceOption === 'nonrefundable'}/>
@@ -152,7 +156,9 @@ const Reservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
                 <h2>입금하기</h2>
                 <div className='BankAccount'>카카오뱅크 3333058451192 남은비</div>
                 <span>입금하실 분 성함:</span>
-                <input type='text' size='6' onChange={(e) => setName(e.target.value)}/>
+                <input type='text' size='6' onChange={(e) => setName(e.target.value)}/><br/>
+                <span>전화번호:</span>
+                <input type='text' size='14' onChange={(e) => setPhone(e.target.value)}/>
                 {
                     priceOption === 'refundable' &&
                         <>
