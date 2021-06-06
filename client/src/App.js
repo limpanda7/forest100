@@ -97,6 +97,7 @@ const App = () => {
         slidesToShow: 1,
         slidesToScroll: 1,
         adaptiveHeight: true,
+        arrows: false,
     };
 
     if (currentPage === 'Home') {

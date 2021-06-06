@@ -1,7 +1,12 @@
 .App {
-  width: 95vw;
-  margin: 0;
-  padding: 10px;
+  width: 100%;
+  max-width: 375px;
+  margin: 0 auto;
+  padding: 15px;
+  background: url('./images/background.jpg');
+  background-attachment: fixed;
+  background-size: cover;
+  font-family: 'Sunflower', sans-serif;
 
   .Title {
     text-align: center;
