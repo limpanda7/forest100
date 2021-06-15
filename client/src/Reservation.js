@@ -52,7 +52,7 @@ const Reservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
         const days = picked.length - 1;
         let price = (240000 + (12000 * (howMany - 2))) * days;
         if (adult + baby >= 5) {
-            price += 30000 * days;
+            price += 50000 * days;
         }
         if (barbecue === 'Y' && barbecueEvent === false) {
             price += 20000;
@@ -139,7 +139,7 @@ const Reservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
                     }
                     {
                         adult + baby >= 5 &&
-                        <p><b>사랑방:</b> 30,000원 x {picked.length - 1}박</p>
+                        <p><b>사랑방:</b> 50,000원 x {picked.length - 1}박</p>
                     }
                     {
                         barbecue === 'Y' &&

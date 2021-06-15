@@ -2,6 +2,7 @@
 const express = require('express');
 const mysql = require('mysql');
 const path = require('path');
+const TelegramBot = require('node-telegram-bot-api');
 
 // express 객체 생성
 const app = express();
@@ -18,6 +19,10 @@ const connection = mysql.createConnection({
 })
 connection.connect();
 
+// 텔레그램 봇
+const token = '1857829748:AAEQqFmUc4AWxad1-t1KRjQaXoXORjV91I4';
+const bot = new TelegramBot(token, {polling: true});
+
 // API
 app.get('/api/getReserved', (req, res) => {
     connection.query('SELECT * FROM reservation', (err, data) => {
@@ -32,6 +37,7 @@ app.post('/api/saveReservation', (req, res) => {
     }
     connection.query('INSERT INTO reservation (date, name, phone, adult, baby, dog, barbecue, barbecue_event, price, price_option, confirm) VALUES ?', [values], (err, data) => {
         res.send(data);
+        bot.sendMessage('-558393640', '신규 예약이 들어왔습니다. 데이터베이스를 확인해보세요 :)');
     });
 })
 
