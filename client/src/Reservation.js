@@ -95,7 +95,7 @@ const Reservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
                     <span>{dog}</span>
                     <button onClick={() => setDog(dog + 1)}>+</button>
                 </div>
-                <p className='Notice'>5명 이상 숙박 시 사랑방 이용요금<br/>(1박 30,000원)이 추가됩니다.</p>
+                <p className='Notice'>5명 이상 숙박 시 사랑방 이용요금<br/>(1박 50,000원)이 추가됩니다.</p>
             </div>
 
             <div className='Barbecue'>
