@@ -8,6 +8,7 @@ const Reservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
     const [adult, setAdult] = useState(2);
     const [baby, setBaby] = useState(0);
     const [dog, setDog] = useState(0);
+    const [guestRoom, setGuestRoom] = useState('N');
     const [barbecue, setBarbecue] = useState('N');
     const [barbecueEvent, setBarbecueEvent] = useState(false);
     const [price, setPrice] = useState(0);
@@ -26,7 +27,7 @@ const Reservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
 
     useEffect(() => {
         calcPrice();
-    }, [howMany, barbecue, barbecueEvent, priceOption])
+    }, [howMany, guestRoom, barbecue, barbecueEvent, priceOption])
 
     const saveReservation = () => {
         axios.post('/api/saveReservation', {picked, name, phone, adult, baby, dog, barbecue, barbecueEvent, price, priceOption})
@@ -51,7 +52,7 @@ const Reservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
     const calcPrice = () => {
         const days = picked.length - 1;
         let price = (240000 + (12000 * (howMany - 2))) * days;
-        if (adult + baby >= 5) {
+        if (guestRoom === 'Y') {
             price += 50000 * days;
         }
         if (barbecue === 'Y' && barbecueEvent === false) {
@@ -77,41 +78,56 @@ const Reservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
 
             <div className='HowMany'>
                 <h2>인원수 선택</h2>
-                <div className='People'>
+                <div>
                     <p>성인</p>
                     <button onClick={() => {if (adult > 1) setAdult(adult - 1)}}>-</button>
                     <span>{adult}</span>
                     <button onClick={() => setAdult(adult + 1)}>+</button>
                 </div>
-                <div className='Baby'>
+                <div>
                     <p>유아</p>
                     <button onClick={() => {if (baby > 0) setBaby(baby - 1)}}>-</button>
                     <span>{baby}</span>
                     <button onClick={() => setBaby(baby + 1)}>+</button>
                 </div>
-                <div className='Dog'>
+                <div>
                     <p>반려견</p>
                     <button onClick={() => {if (dog > 0) setDog(dog - 1)}}>-</button>
                     <span>{dog}</span>
                     <button onClick={() => setDog(dog + 1)}>+</button>
                 </div>
-                <p className='Notice'>5명 이상 숙박 시 사랑방 이용요금<br/>(1박 50,000원)이 추가됩니다.</p>
             </div>
+
+            {
+                adult + baby > 4 &&
+                    <div>
+                        <p>사랑방 이용 (1박 50,000원)</p>
+                        <div>
+                            <input type='radio' id='guestRoomY' onClick={() => setGuestRoom('Y')} checked={guestRoom === 'Y'}/>
+                            <label htmlFor='guestRoomY'>예</label>
+                            <input type='radio' id='guestRoomN' onClick={() => setGuestRoom('N')} checked={guestRoom === 'N'}/>
+                            <label htmlFor='guestRoomN'>아니오</label>
+                        </div>
+                    </div>
+            }
 
             <div className='Barbecue'>
                 <h2>바베큐 선택</h2>
-                <div className='BarbecueBtn'>
+                <div className='RadioBtn'>
                     <input type='radio' id='barbecueY' onClick={() => setBarbecue('Y')} checked={barbecue === 'Y'}/>
                     <label htmlFor='barbecueY'>예</label>
                     <input type='radio' id='barbecueN' onClick={() => setBarbecue('N')} checked={barbecue === 'N'}/>
                     <label htmlFor='barbecueN'>아니오</label>
                 </div>
-                <p>
-                    ★★★유투브 영상 댓글 이벤트★★★<br/>
-                    숙박 하신 후 <a href='https://youtu.be/2PQT69JwiEY' target='_blank'>숙소 소개영상</a>에 댓글을 달아 주시면 바베큐를 무료로 이용하실 수 있습니다.<br/>
-                    이벤트에 참여하시려면 체크하세요
-                    <input type='checkbox' onClick={(e) => setBarbecueEvent(e.target.checked)}/>
-                </p>
+                {
+                    barbecue === 'Y' &&
+                    <p>
+                        ★★★유투브 영상 댓글 이벤트★★★<br/>
+                        숙박 하신 후 <a href='https://youtu.be/2PQT69JwiEY' target='_blank'>숙소 소개영상</a>에 댓글을 달아 주시면 바베큐를 무료로 이용하실 수 있습니다.<br/>
+                        이벤트에 참여하시려면 체크하세요
+                        <input type='checkbox' onClick={(e) => setBarbecueEvent(e.target.checked)}/>
+                    </p>
+                }
             </div>
 
             <div className='PriceOption'>
@@ -132,13 +148,13 @@ const Reservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
                 <h2>총 이용요금</h2>
                 <h2 className='Price'>{price}원</h2>
                 <div className='PriceDetail'>
-                    <p><b>기본요금:</b> 240,000원 x {picked.length - 1}박</p>
+                    <p><b>2인기준:</b> 240,000원 x {picked.length - 1}박</p>
                     {
                         howMany > 2 &&
                         <p><b>인원초과:</b> 12,000원 x {howMany - 2}명 x {picked.length - 1}박</p>
                     }
                     {
-                        adult + baby >= 5 &&
+                        guestRoom === 'Y' &&
                         <p><b>사랑방:</b> 50,000원 x {picked.length - 1}박</p>
                     }
                     {
