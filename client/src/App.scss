@@ -28,6 +28,12 @@
     width: 100%;
   }
 
+  .Video {
+    width: 100%;
+    height: 250px;
+    margin-bottom: 20px;
+  }
+
   .Clean {
     border: 2px solid deepskyblue;
     border-radius: 12px;
@@ -55,7 +61,7 @@
     }
   }
 
-  iframe {
+  .Map {
     width: 100%;
     height: 300px;
     border: 0;

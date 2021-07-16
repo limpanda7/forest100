@@ -109,37 +109,11 @@ const App = () => {
                     편안한 시골체험을 해보세요:)
                 </h2>
 
-                <h4>[외부사진]</h4>
-                <div className='Slider'>
-                    <Slider {...sliderSetting}>
-                        <div><img src={outer1}/></div>
-                        <div><img src={outer2}/></div>
-                        <div><img src={outer3}/></div>
-                        <div><img src={outer4}/></div>
-                        <div><img src={outer5}/></div>
-                        <div><img src={outer6}/></div>
-                        <div><img src={outer7}/></div>
-                        <div><img src={outer8}/></div>
-                        <div><img src={outer9}/></div>
-                        <div><img src={outer10}/></div>
-                    </Slider>
-                </div>
-
-                <h4>[내부사진]</h4>
-                <div className='Slider'>
-                    <Slider {...sliderSetting}>
-                        <div><img src={inner1}/></div>
-                        <div><img src={inner2}/></div>
-                        <div><img src={inner3}/></div>
-                        <div><img src={inner4}/></div>
-                        <div><img src={inner5}/></div>
-                        <div><img src={inner6}/></div>
-                        <div><img src={inner7}/></div>
-                        <div><img src={inner8}/></div>
-                        <div><img src={inner9}/></div>
-                        <div><img src={inner10}/></div>
-                    </Slider>
-                </div>
+                <iframe className='Video'
+                    src="https://www.youtube.com/embed/2PQT69JwiEY"
+                    title="YouTube video player" frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen></iframe>
 
                 <div className='Clean'>
                     코로나확산 방지를 위해 마스크를 반드시 착용해주시고 손씻기와 방역에 동참해주시길 부탁드립니다.<br/>
@@ -188,7 +162,7 @@ const App = () => {
                 <hr/>
                 <h2>위치</h2>
 
-                <iframe
+                <iframe className='Map'
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3166.511124703915!2d129.1265640155865!3d37.472263137278524!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3561b9b40c1818d9%3A0xef52d1dc46730d66!2z6rCV7JuQ64-EIOuPme2VtOyLnCDrjIDqtazrj5kg6rWs66-47Iuk6ri4IDk2LTE!5e0!3m2!1sko!2skr!4v1621694052376!5m2!1sko!2skr"
                     allowFullScreen="" loading="lazy"/>
                 <a href='geo:37.4722631,129.126564?q=구미실길+96-1' target='_blank'>지도 앱에서 보기</a>
