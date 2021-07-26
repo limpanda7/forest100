@@ -228,8 +228,8 @@ const App = () => {
 
                 <h2>문의</h2>
                 <ul className='List'>
-                    <li>위치문의: 010-3346-8757</li>
-                    <li>예약문의: 010-3024-1517</li>
+                    <li>카카오톡 ID: eunbibi1001</li>
+                    <li>인스타그램 DM: f_orest100</li>
                 </ul>
 
             </div>
