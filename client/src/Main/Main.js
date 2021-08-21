@@ -14,12 +14,12 @@ const Main = () => {
             </div>
 
             <Link to='/forest'>
-                <FontAwesomeIcon icon={faHome} size="3x"/>
+                <FontAwesomeIcon icon={faHome} size="3x" className={'Icon'}/>
                 <div className={'Button'}>백년 한옥 별채</div>
             </Link>
 
             <Link to='/on-off'>
-                <FontAwesomeIcon icon={faToggleOn} size="3x"/>
+                <FontAwesomeIcon icon={faToggleOn} size="3x" className={'Icon'}/>
                 <div className={'Button'}>ON OFF 스테이</div>
             </Link>
         </div>
