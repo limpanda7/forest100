@@ -37,7 +37,7 @@ app.post('/api/saveReservation', (req, res) => {
     }
     connection.query('INSERT INTO reservation (date, name, phone, adult, baby, dog, barbecue, barbecue_event, price, price_option, confirm) VALUES ?', [values], (err, data) => {
         res.send(data);
-        bot.sendMessage('-558393640', '신규 예약이 들어왔습니다. 데이터베이스를 확인해보세요 :)');
+        bot.sendMessage('-558393640', `${body.name}님의 신규 예약이 들어왔습니다. 데이터베이스를 확인해보세요 :)`);
     });
 })
 
