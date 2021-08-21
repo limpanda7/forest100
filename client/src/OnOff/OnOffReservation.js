@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import axios from "axios";
-import './App.scss';
+import './OnOff.scss';
 
-const Reservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
+const OnOffReservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
 
     const [howMany, setHowMany] = useState(2);
     const [adult, setAdult] = useState(2);
@@ -202,4 +202,4 @@ const Reservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
     );
 }
 
-export default Reservation;
+export default OnOffReservation;

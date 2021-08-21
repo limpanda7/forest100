@@ -1,0 +1,29 @@
+.Layout {
+  width: 100%;
+  max-width: 450px;
+  margin: 0 auto;
+  height: 100%;
+
+  .Header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid black;
+    background: white;
+
+    a {
+      text-decoration: none;
+      color: black;
+      cursor: pointer;
+      padding: 10px;
+    }
+  }
+
+  .Children {
+    padding: 60px 10px 10px 10px;
+  }
+}

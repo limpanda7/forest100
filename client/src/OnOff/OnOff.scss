@@ -1,16 +1,10 @@
-.App {
-  width: 100%;
-  max-width: 375px;
-  margin: 0 auto;
-  padding: 15px;
-  background: url('./images/background.jpg');
-  background-attachment: fixed;
-  background-size: cover;
+.OnOff {
   font-family: 'Sunflower', sans-serif;
 
   .Title {
     text-align: center;
     font-size: 18px;
+    margin: 10px 0;
     span {
       font-size: 35px;
     }

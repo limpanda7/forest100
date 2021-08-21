@@ -1,0 +1,175 @@
+.Forest {
+  font-family: 'Sunflower', sans-serif;
+
+  .Title {
+    text-align: center;
+    font-size: 18px;
+    span {
+      font-size: 35px;
+    }
+  }
+
+  h4 {
+    text-align: center;
+  }
+
+  .Slider {
+    margin-bottom: 50px;
+  }
+
+  img {
+    width: 100%;
+  }
+
+  .Video {
+    width: 100%;
+    height: 250px;
+    margin-bottom: 20px;
+  }
+
+  .Clean {
+    border: 2px solid deepskyblue;
+    border-radius: 12px;
+    padding: 12px;
+  }
+
+  .List {
+    padding-left: 25px;
+    li {
+      padding-bottom: 10px;
+    }
+  }
+
+  .Beds {
+    padding-bottom: 30px;
+    display: flex;
+
+    .Bed {
+      width: 100%;
+      border: 1px solid lightgray;
+      border-radius: 12px;
+      float: left;
+      padding: 24px 16px;
+      margin: 0 6px;
+    }
+  }
+
+  .Map {
+    width: 100%;
+    height: 300px;
+    border: 0;
+  }
+
+  .LocationBtn {
+    width: 100%;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    border: 1px solid rgb(34,34,34);
+    border-radius: 8px;
+    background: white;
+    padding: 13px 23px;
+    margin-bottom: 20px;
+  }
+
+  .Calendar {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .ReservationBtn {
+    width: 100%;
+    margin-bottom: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    border: 0;
+    border-radius: 8px;
+    background: black;
+    padding: 13px 23px;
+  }
+
+  .Reservation {
+    overflow: hidden;
+
+    h2 {
+      margin: 35px 0 15px 0;
+    }
+
+    .HowMany {
+      p {
+        display: inline-block;
+        width: 100px;
+        padding: 0 20px;
+        margin: 0;
+      }
+      span {
+        padding: 0 20px;
+      }
+      .Notice {
+        width: 90%;
+        padding-top: 10px;
+      }
+    }
+
+    .Barbecue {
+      h2 {
+        display: inline-block;
+      }
+      .BarbecueBtn{
+        float: right;
+        margin-top: 40px;
+        input {
+          margin-left: 15px;
+        }
+      }
+      p {
+        margin-top: 0;
+        h3 {
+          text-align: center;
+        }
+      }
+    }
+
+    .PriceTotal {
+      overflow: hidden;
+      h2 {
+        float: left;
+        display: inline-block;
+      }
+      .Price {
+        float: right;
+        margin-right: 20px;
+      }
+      .PriceDetail {
+        float: right;
+        margin-right: 20px;
+        border: 1px solid lightgray;
+        border-radius: 8px;
+        padding: 0 10px;
+      }
+    }
+
+    .PriceOption {
+      margin-top: 30px;
+      p {
+        margin-bottom: 0;
+      }
+    }
+
+    .Deposit {
+      input {
+        margin-left: 10px;
+        height: 20px;
+      }
+      .BankAccount {
+        border: 1px solid black;
+        border-radius: 8px;
+        padding: 10px;
+        text-align: center;
+        margin-bottom: 15px;
+      }
+    }
+  }
+}
