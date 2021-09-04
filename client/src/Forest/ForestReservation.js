@@ -30,6 +30,12 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, getReserved}) => 
     }, [howMany, guestRoom, barbecue, barbecueEvent, priceOption])
 
     const saveReservation = () => {
+
+        if (name === '' || phone === '') {
+            alert('정보를 모두 입력해주세요.')
+            return false;
+        }
+
         axios.post('/api/saveReservation', {picked, name, phone, adult, baby, dog, barbecue, barbecueEvent, price, priceOption})
             .then((res) => {
                 if (priceOption === 'refundable') {
