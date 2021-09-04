@@ -1,5 +1,4 @@
 .OnOff {
-  font-family: 'Sunflower', sans-serif;
 
   .Title {
     text-align: center;
@@ -10,7 +9,11 @@
     }
   }
 
-  h4 {
+  .TitleSub {
+    text-align: center;
+  }
+
+  h3, h4 {
     text-align: center;
   }
 

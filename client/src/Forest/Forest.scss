@@ -1,5 +1,4 @@
 .Forest {
-  font-family: 'Sunflower', sans-serif;
 
   .Title {
     text-align: center;
@@ -65,8 +64,7 @@
     cursor: pointer;
     font-size: 16px;
     font-weight: 600;
-    color: darkcyan;
-    border: 1px solid darkcyan;
+    border: 1px solid black;
     border-radius: 8px;
     background: white;
     padding: 13px 23px;
@@ -87,7 +85,7 @@
     color: white;
     border: 0;
     border-radius: 8px;
-    background: darkcyan;
+    background: black;
     padding: 13px 23px;
   }
 

@@ -85,12 +85,24 @@ const OnOff = () => {
                 {
                     currentPage === 'Home' &&
                     <>
-                        <div className='Title'>
-                            <span>On Off 스테이</span><br/>
-                            -10월 중순 오픈 예정-<br/><br/>
-                            ON>> 스위치를 켜고 아이디어를 생산하는 공간<br/>
-                            OFF >> 스위치를 끄고 나만의 쉼을 찾는 공간
+                        <h2 className='Title'>
+                            <span>On Off 스테이</span>에서<br/>
+                            워케이션을 즐겨보세요.
+                        </h2>
+
+                        <div className='TitleSub'>
+                            <b>ON >></b> 스위치를 켜고 아이디어를 생산하는 공간<br/>
+                            <b>OFF >></b> 스위치를 끄고 나만의 쉼을 찾는 공간
                         </div>
+
+                        <hr/>
+
+                        <h3>‘워케이션’이란 단어를 들어보셨나요?</h3>
+                        <ul>
+                            <li>워케이션이란 <b>WORK</b>와 <b>VACATION</b>의 합성어로, <u>집이 아닌 다른 곳에서 일하면서 휴가와 같은 분위기를 즐기는 여행 형태</u>를 뜻합니다.</li>
+                            <li>에어비앤비가 한국인 천여명을 대상으로 진행한 설문조사 결과에 따르면, 응답자의 <b>61%</b>가 워케이션을 시도해 볼 의향이 있다고 밝혔습니다.</li>
+                            <li>피로가 느껴지는 일상적 장소에서 벗어나, <u>자연 속에서 휴식하고자 하는 사람들의 심리</u>를 발견할 수 있습니다. </li>
+                        </ul>
 
                         {/*<ul className='List'>*/}
                         {/*    <li>넓은 마당이 있어 차량 3대 이상도 주차가 가능합니다.</li>*/}
@@ -190,7 +202,9 @@ const OnOff = () => {
                         {/*    onChange={(value) => calcRange(value)}*/}
                         {/*/>*/}
 
-                        {/*<button className='ReservationBtn' onClick={() => moveToReservation()}>선택한 날짜로 예약하기</button>*/}
+                        <hr/>
+                        <br/>
+                        <button className='ReservationBtn'>10월 중순 오픈 예정</button>
 
                         <hr/>
 

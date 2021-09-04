@@ -76,8 +76,8 @@ const Forest = () => {
                 currentPage === 'Home' &&
                     <>
                         <h2 className='Title'>
-                            <span>백년 한옥 별채</span><br/>
-                            편안한 시골체험을 해보세요:)
+                            <span>백년 한옥 별채</span>에서<br/>
+                            편안한 시골체험을 해보세요.
                         </h2>
 
                         <iframe className='Video'
