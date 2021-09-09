@@ -11,6 +11,7 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, getReserved}) => 
     const [guestRoom, setGuestRoom] = useState('N');
     const [barbecue, setBarbecue] = useState('N');
     const [barbecueEvent, setBarbecueEvent] = useState(false);
+    const [basePriceTxt, setBasePriceTxt] = useState('280,000');
     const [price, setPrice] = useState(0);
     const [priceOption, setPriceOption] = useState('refundable');
     const [discount, setDiscount] = useState(0);
@@ -57,7 +58,16 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, getReserved}) => 
 
     const calcPrice = () => {
         const days = picked.length - 1;
-        let price = (240000 + (12000 * (howMany - 2))) * days;
+        let basePrice = 280000;
+
+        for (const day of picked) {
+            if (day.slice(0,4) === '2021' && day.slice(5,7) < 10) {
+                basePrice = 240000;
+                setBasePriceTxt('240,000');
+            }
+        }
+
+        let price = (basePrice + (12000 * (howMany - 2))) * days;
         if (guestRoom === 'Y') {
             price += 50000 * days;
         }
@@ -154,7 +164,7 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, getReserved}) => 
                 <h2>총 이용요금</h2>
                 <h2 className='Price'>{price}원</h2>
                 <div className='PriceDetail'>
-                    <p><b>2인기준:</b> 240,000원 x {picked.length - 1}박</p>
+                    <p><b>2인기준:</b> {basePriceTxt}원 x {picked.length - 1}박</p>
                     {
                         howMany > 2 &&
                         <p><b>인원초과:</b> 12,000원 x {howMany - 2}명 x {picked.length - 1}박</p>
