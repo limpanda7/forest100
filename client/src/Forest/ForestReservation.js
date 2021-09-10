@@ -11,7 +11,6 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, getReserved}) => 
     const [guestRoom, setGuestRoom] = useState('N');
     const [barbecue, setBarbecue] = useState('N');
     const [barbecueEvent, setBarbecueEvent] = useState(false);
-    const [basePriceTxt, setBasePriceTxt] = useState('280,000');
     const [price, setPrice] = useState(0);
     const [priceOption, setPriceOption] = useState('refundable');
     const [discount, setDiscount] = useState(0);
@@ -24,6 +23,9 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, getReserved}) => 
 
     useEffect(() => {
         calcHowMany();
+        if (adult + baby <= 4) {
+            setGuestRoom('N');
+        }
     }, [adult, baby, dog])
 
     useEffect(() => {
@@ -52,22 +54,15 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, getReserved}) => 
         if (adult === 1 && baby === 0 && dog=== 0) {
             setHowMany(2);
         } else {
-            setHowMany(adult + baby+ dog);
+            setHowMany(adult + baby + dog);
         }
     }
 
     const calcPrice = () => {
         const days = picked.length - 1;
-        let basePrice = 280000;
 
-        for (const day of picked) {
-            if (day.slice(0,4) === '2021' && day.slice(5,7) < 10) {
-                basePrice = 240000;
-                setBasePriceTxt('240,000');
-            }
-        }
+        let price = (300000 + (12000 * (howMany - 2))) * days;
 
-        let price = (basePrice + (12000 * (howMany - 2))) * days;
         if (guestRoom === 'Y') {
             price += 50000 * days;
         }
@@ -120,9 +115,9 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, getReserved}) => 
                         <p>사랑방 이용 (1박 50,000원)</p>
                         <div>
                             <input type='radio' id='guestRoomY' onClick={() => setGuestRoom('Y')} checked={guestRoom === 'Y'}/>
-                            <label htmlFor='guestRoomY'>예</label>
+                            <label htmlFor='guestRoomY'><span></span>예</label>
                             <input type='radio' id='guestRoomN' onClick={() => setGuestRoom('N')} checked={guestRoom === 'N'}/>
-                            <label htmlFor='guestRoomN'>아니오</label>
+                            <label htmlFor='guestRoomN'><span></span>아니오</label>
                         </div>
                     </div>
             }
@@ -131,9 +126,9 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, getReserved}) => 
                 <h2>바베큐 선택</h2>
                 <div className='RadioBtn'>
                     <input type='radio' id='barbecueY' onClick={() => setBarbecue('Y')} checked={barbecue === 'Y'}/>
-                    <label htmlFor='barbecueY'>예</label>
+                    <label htmlFor='barbecueY'><span></span>예</label>
                     <input type='radio' id='barbecueN' onClick={() => setBarbecue('N')} checked={barbecue === 'N'}/>
-                    <label htmlFor='barbecueN'>아니오</label>
+                    <label htmlFor='barbecueN'><span></span>아니오</label>
                 </div>
                 {
                     barbecue === 'Y' &&
@@ -149,22 +144,22 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, getReserved}) => 
             <div className='PriceOption'>
                 <h2>환불옵션 선택</h2>
                 <input type='radio' id='refundable' onClick={() => setPriceOption('refundable')} checked={priceOption === 'refundable'}/>
-                <label htmlFor='refundable'><b>환불가능 옵션</b></label>
+                <label htmlFor='refundable'><span></span><b>환불가능 옵션</b></label>
                 <p>
                     예약할 때 예약금을 10% 지불하고, 체크인 이틀 전 나머지 90%를 지불합니다. <br/>
                     예약을 취소하더라도 예약금은 환불되지 않습니다. 원활한 서비스를 위해 양해 부탁드립니다 :-)
                 </p>
                 <br/>
                 <input type='radio' id='nonrefundable' onClick={() => setPriceOption('nonrefundable')} checked={priceOption === 'nonrefundable'}/>
-                <label htmlFor='nonrefundable'><b>환불불가 옵션 (10% 할인)</b></label>
+                <label htmlFor='nonrefundable'><span></span><b>환불불가 옵션 (10% 할인)</b></label>
                 <p>예약할 때 100% 지불합니다. 예약을 취소하더라도 환불이 불가합니다.</p>
             </div>
 
             <div className='PriceTotal'>
                 <h2>총 이용요금</h2>
-                <h2 className='Price'>{price}원</h2>
+                <h2 className='Price'>{price.toLocaleString()}원</h2>
                 <div className='PriceDetail'>
-                    <p><b>2인기준:</b> {basePriceTxt}원 x {picked.length - 1}박</p>
+                    <p><b>2인기준:</b> 300,000원 x {picked.length - 1}박</p>
                     {
                         howMany > 2 &&
                         <p><b>인원초과:</b> 12,000원 x {howMany - 2}명 x {picked.length - 1}박</p>
@@ -179,7 +174,7 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, getReserved}) => 
                     }
                     {
                         discount > 0 &&
-                        <p><b>할인금액:</b> {discount}원</p>
+                        <p><b>환불옵션 할인금액:</b> {discount}원</p>
                     }
                 </div>
             </div>
@@ -195,7 +190,7 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, getReserved}) => 
                     priceOption === 'refundable' &&
                         <>
                             <p>
-                                위 계좌로 예약금 <b>{price * 0.1}원</b>을 입금해주세요.<br/>
+                                위 계좌로 예약금 <b>{(price * 0.1).toLocaleString()}원</b>을 입금해주세요.<br/>
                                 3시간 내에 입금 해 주셔야 예약이 확정됩니다.
                             </p>
                         </>
@@ -204,7 +199,7 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, getReserved}) => 
                     priceOption === 'nonrefundable' &&
                     <>
                         <p>
-                            위 계좌로 <b>{price}원</b>을 입금해주세요.<br/>
+                            위 계좌로 <b>{price.toLocaleString()}원</b>을 입금해주세요.<br/>
                             3시간 내에 입금 해 주셔야 예약이 확정됩니다.
                         </p>
                     </>
