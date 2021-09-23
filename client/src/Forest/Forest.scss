@@ -171,8 +171,6 @@
       }
 
       p {
-        margin-top: 0;
-
         h3 {
           text-align: center;
         }
@@ -206,6 +204,7 @@
 
       p {
         margin-bottom: 0;
+        word-break: keep-all;
       }
     }
 
