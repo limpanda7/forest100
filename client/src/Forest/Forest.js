@@ -86,11 +86,6 @@ const Forest = () => {
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowFullScreen></iframe>
 
-                        <div className='Clean'>
-                            코로나확산 방지를 위해 마스크를 반드시 착용해주시고 손씻기와 방역에 동참해주시길 부탁드립니다.<br/>
-                            침구는 항상 청결하게 준비되어 있으니 안심하시고 찾아주세요!
-                        </div>
-
                         <ul className='List'>
                             <li>
                                 100년된 한옥의 별채입니다 :-)<br/>

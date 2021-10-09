@@ -33,9 +33,25 @@ app.post('/api/saveReservation', (req, res) => {
     const body = req.body;
     let values = [];
     for (const element of body.picked) {
+        values.push([element, body.name, body.phone, body.adult, body.baby, body.dog, body.guestRoom, body.barbecue, body.barbecueEvent, body.price, body.priceOption, "N"]);
+    }
+    connection.query('INSERT INTO reservation (date, name, phone, adult, baby, dog, guest_room, barbecue, barbecue_event, price, price_option, confirm) VALUES ?', [values], (err, data) => {
+        res.send(data);
+        bot.sendMessage('-558393640', `${body.name}님의 신규 예약이 들어왔습니다. 데이터베이스를 확인해보세요 :)`);
+    });
+})
+app.get('/api/getReserved2', (req, res) => {
+    connection.query('SELECT * FROM reservation2', (err, data) => {
+        res.send(data);
+    });
+});
+app.post('/api/saveReservation2', (req, res) => {
+    const body = req.body;
+    let values = [];
+    for (const element of body.picked) {
         values.push([element, body.name, body.phone, body.adult, body.baby, body.dog, body.barbecue, body.barbecueEvent, body.price, body.priceOption, "N"]);
     }
-    connection.query('INSERT INTO reservation (date, name, phone, adult, baby, dog, barbecue, barbecue_event, price, price_option, confirm) VALUES ?', [values], (err, data) => {
+    connection.query('INSERT INTO reservation2 (date, name, phone, adult, baby, dog, barbecue, barbecue_event, price, price_option, confirm) VALUES ?', [values], (err, data) => {
         res.send(data);
         bot.sendMessage('-558393640', `${body.name}님의 신규 예약이 들어왔습니다. 데이터베이스를 확인해보세요 :)`);
     });

@@ -8,7 +8,6 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
     const [adult, setAdult] = useState(2);
     const [baby, setBaby] = useState(0);
     const [dog, setDog] = useState(0);
-    const [guestRoom, setGuestRoom] = useState('N');
     const [barbecue, setBarbecue] = useState('N');
     const [barbecueEvent, setBarbecueEvent] = useState(false);
     const [price, setPrice] = useState(0);
@@ -27,10 +26,16 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
 
     useEffect(() => {
         calcPrice();
-    }, [howMany, guestRoom, barbecue, barbecueEvent, priceOption])
+    }, [howMany, barbecue, barbecueEvent, priceOption])
 
     const saveReservation = () => {
-        axios.post('/api/saveReservation', {picked, name, phone, adult, baby, dog, barbecue, barbecueEvent, price, priceOption})
+
+        if (name === '' || phone === '') {
+            alert('정보를 모두 입력해주세요.')
+            return false;
+        }
+
+        axios.post('/api/saveReservation2', {picked, name, phone, adult, baby, dog, barbecue, barbecueEvent, price, priceOption})
             .then((res) => {
                 if (priceOption === 'refundable') {
                     alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${price * 0.1}원입니다.`);
@@ -52,9 +57,6 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
     const calcPrice = () => {
         const days = picked.length - 1;
         let price = (240000 + (12000 * (howMany - 2))) * days;
-        if (guestRoom === 'Y') {
-            price += 50000 * days;
-        }
         if (barbecue === 'Y' && barbecueEvent === false) {
             price += 20000;
         }
@@ -98,19 +100,6 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
                 </div>
             </div>
 
-            {
-                adult + baby > 4 &&
-                    <div>
-                        <p>사랑방 이용 (1박 50,000원)</p>
-                        <div>
-                            <input type='radio' id='guestRoomY' onClick={() => setGuestRoom('Y')} checked={guestRoom === 'Y'}/>
-                            <label htmlFor='guestRoomY'>예</label>
-                            <input type='radio' id='guestRoomN' onClick={() => setGuestRoom('N')} checked={guestRoom === 'N'}/>
-                            <label htmlFor='guestRoomN'>아니오</label>
-                        </div>
-                    </div>
-            }
-
             <div className='Barbecue'>
                 <h2>바베큐 선택</h2>
                 <div className='RadioBtn'>
@@ -146,16 +135,12 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
 
             <div className='PriceTotal'>
                 <h2>총 이용요금</h2>
-                <h2 className='Price'>{price}원</h2>
+                <h2 className='Price'>{price.toLocaleString()}원</h2>
                 <div className='PriceDetail'>
                     <p><b>2인기준:</b> 240,000원 x {picked.length - 1}박</p>
                     {
                         howMany > 2 &&
                         <p><b>인원초과:</b> 12,000원 x {howMany - 2}명 x {picked.length - 1}박</p>
-                    }
-                    {
-                        guestRoom === 'Y' &&
-                        <p><b>사랑방:</b> 50,000원 x {picked.length - 1}박</p>
                     }
                     {
                         barbecue === 'Y' &&

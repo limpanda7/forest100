@@ -8,6 +8,12 @@ import Slider from 'react-slick';
 import OnOffReservation from "./OnOffReservation";
 import Layout from "../Layout/Layout";
 
+import img1 from '../images/OnOff/1.webp';
+import img2 from '../images/OnOff/2.webp';
+import img3 from '../images/OnOff/3.webp';
+import img4 from '../images/OnOff/4.webp';
+import img5 from '../images/OnOff/5.webp';
+
 const OnOff = () => {
 
     const [reserved, setReserved] = useState([]);
@@ -15,12 +21,14 @@ const OnOff = () => {
     const [picked, setPicked] = useState([]);
     const [currentPage, setCurrentPage] = useState('Home');
 
+    const imgArr = [img1, img2, img3, img4, img5];
+
     useEffect(() => {
         getReserved();
     }, []);
 
     const getReserved = () => {
-        axios.get('/api/getReserved')
+        axios.get('/api/getReserved2')
             .then((res) => {
                 let tempArr = [];
                 for (const element of res.data) {
@@ -95,13 +103,22 @@ const OnOff = () => {
                             <b>OFF >></b> 스위치를 끄고 나만의 쉼을 찾는 공간
                         </div>
 
-                        <hr/>
+                        <br/>
+
+                        <div className='Slider'>
+                            <Slider {...sliderSetting}>
+                                <div><img src={img1}/></div>
+                                <div><img src={img2}/></div>
+                                <div><img src={img3}/></div>
+                                <div><img src={img4}/></div>
+                                <div><img src={img5}/></div>
+                            </Slider>
+                        </div>
 
                         <h3>‘워케이션’이란 단어를 들어보셨나요?</h3>
                         <ul className='List'>
                             <li>워케이션이란 <b>WORK</b>와 <b>VACATION</b>의 합성어로, 집이 아닌 다른 곳에서 일하면서 휴가와 같은 분위기를 즐기는 여행 형태를 뜻합니다.</li>
-                            <li>에어비앤비가 한국인 천여명을 대상으로 진행한 설문조사 결과에 따르면, 응답자의 <b>61%</b>가 워케이션을 시도해 볼 의향이 있다고 밝혔습니다.</li>
-                            <li>피로가 느껴지는 일상적 장소에서 벗어나, 자연 속에서 휴식을 취해보세요. </li>
+                            <li>피로가 느껴지는 일상적 장소에서 벗어나, 시골풍경 속에서 휴식을 취해보세요. </li>
                         </ul>
 
                         {/*<hr/>*/}
@@ -169,36 +186,33 @@ const OnOff = () => {
                         {/*    </ul>*/}
                         {/*}*/}
 
-                        {/*<hr/>*/}
+                        <hr/>
 
-                        {/*<h2>이용요금 안내</h2>*/}
-                        {/*<p>성인 2인 기준: 1박 240,000원</p>*/}
-                        {/*<ul className='List'>*/}
-                        {/*    <li>2인 초과 시 1인당: 1박 12,000원</li>*/}
-                        {/*    <li>4인 초과 시 사랑방을 이용하실 수 있습니다.<br/>(1박 50,000원)</li>*/}
-                        {/*    <li>바베큐 이용요금: 20,000원</li>*/}
-                        {/*    <li>입금계좌: 카카오 3333058451192 남은비</li>*/}
-                        {/*</ul>*/}
-
-                        {/*<hr/>*/}
-
-                        {/*<h2>예약하기</h2>*/}
-                        {/*<Calendar*/}
-                        {/*    className='Calendar'*/}
-                        {/*    minDate={new Date()}*/}
-                        {/*    calendarType='US'*/}
-                        {/*    tileDisabled={({ date }) => {*/}
-                        {/*        if(reserved.find(x => x === moment(date).format("YYYY-MM-DD"))){*/}
-                        {/*            return true;*/}
-                        {/*        }*/}
-                        {/*    }}*/}
-                        {/*    selectRange={true}*/}
-                        {/*    onChange={(value) => calcRange(value)}*/}
-                        {/*/>*/}
+                        <h2>이용요금 안내</h2>
+                        <p style={{color: 'red'}}>★ 오픈이벤트 40% 할인 적용 중 ★</p>
+                        <p>성인 2인 기준: 1박 240,000원</p>
+                        <ul className='List'>
+                           <li>2인 초과 시 1인당: 1박 12,000원</li>
+                           <li>바베큐 이용요금: 20,000원</li>
+                           <li>입금계좌: 카카오 3333058451192 남은비</li>
+                        </ul>
 
                         <hr/>
-                        <br/>
-                        <button className='ReservationBtn'>10월 중순 오픈 예정</button>
+
+                        <h2>예약하기</h2>
+                        <Calendar
+                            className='Calendar'
+                            minDate={new Date()}
+                            calendarType='US'
+                            tileDisabled={({ date }) => {
+                                if(reserved.find(x => x === moment(date).format("YYYY-MM-DD"))){
+                                    return true;
+                                }
+                            }}
+                            selectRange={true}
+                            onChange={(value) => calcRange(value)}
+                        />
+                        <button className='ReservationBtn' onClick={() => moveToReservation()}>선택한 날짜로 예약하기</button>
 
                         <hr/>
 
