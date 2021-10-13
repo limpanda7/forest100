@@ -3,17 +3,13 @@
   .Title {
     text-align: center;
     font-size: 18px;
-    margin: 10px 0;
+
     span {
       font-size: 35px;
     }
   }
 
-  .TitleSub {
-    text-align: center;
-  }
-
-  h3, h4 {
+  h4 {
     text-align: center;
   }
 
@@ -39,6 +35,7 @@
 
   .List {
     padding-left: 25px;
+
     li {
       padding-bottom: 10px;
     }
@@ -69,7 +66,7 @@
     cursor: pointer;
     font-size: 16px;
     font-weight: 600;
-    border: 1px solid rgb(34,34,34);
+    border: 1px solid black;
     border-radius: 8px;
     background: white;
     padding: 13px 23px;
@@ -97,6 +94,46 @@
   .Reservation {
     overflow: hidden;
 
+    input[type=radio] {
+      display: none;
+    }
+
+    input[type=radio] + label {
+      font-weight: 400;
+      font-size: 14px;
+      margin-right: 10px;
+    }
+
+    input[type=radio] + label span {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      margin: -2px 10px 0 0;
+      vertical-align: middle;
+      cursor: pointer;
+      border-radius: 50%;
+      border: 3px solid #ffffff;
+    }
+
+    input[type=radio] + label span {
+      background-color: #fff;
+    }
+
+    input[type=radio]:checked + label {
+      color: #333;
+      font-weight: 700;
+    }
+
+    input[type=radio]:checked + label span {
+      background-color: darkcyan;
+      border: 2px solid #ffffff;
+      box-shadow: 2px 2px 2px rgba(0, 0, 0, .1);
+    }
+
+    input[type="radio"] + label span, input[type="radio"]:checked + label span {
+      transition: background-color 0.24s linear;
+    }
+
     h2 {
       margin: 35px 0 15px 0;
     }
@@ -108,9 +145,11 @@
         padding: 0 20px;
         margin: 0;
       }
+
       span {
         padding: 0 20px;
       }
+
       .Notice {
         width: 90%;
         padding-top: 10px;
@@ -121,15 +160,17 @@
       h2 {
         display: inline-block;
       }
-      .BarbecueBtn{
+
+      .BarbecueBtn {
         float: right;
         margin-top: 40px;
+
         input {
           margin-left: 15px;
         }
       }
+
       p {
-        margin-top: 0;
         h3 {
           text-align: center;
         }
@@ -138,14 +179,17 @@
 
     .PriceTotal {
       overflow: hidden;
+
       h2 {
         float: left;
         display: inline-block;
       }
+
       .Price {
         float: right;
         margin-right: 20px;
       }
+
       .PriceDetail {
         float: right;
         margin-right: 20px;
@@ -157,8 +201,10 @@
 
     .PriceOption {
       margin-top: 30px;
+
       p {
         margin-bottom: 0;
+        word-break: keep-all;
       }
     }
 
@@ -167,6 +213,7 @@
         margin-left: 10px;
         height: 20px;
       }
+
       .BankAccount {
         border: 1px solid black;
         border-radius: 8px;

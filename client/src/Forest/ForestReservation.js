@@ -115,9 +115,9 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, getReserved}) => 
                         <p>사랑방 이용 (1박 50,000원)</p>
                         <div>
                             <input type='radio' id='guestRoomY' onClick={() => setGuestRoom('Y')} checked={guestRoom === 'Y'}/>
-                            <label htmlFor='guestRoomY'><span></span>예</label>
+                            <label htmlFor='guestRoomY'><span/>예</label>
                             <input type='radio' id='guestRoomN' onClick={() => setGuestRoom('N')} checked={guestRoom === 'N'}/>
-                            <label htmlFor='guestRoomN'><span></span>아니오</label>
+                            <label htmlFor='guestRoomN'><span/>아니오</label>
                         </div>
                     </div>
             }
@@ -126,9 +126,9 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, getReserved}) => 
                 <h2>바베큐 선택</h2>
                 <div className='RadioBtn'>
                     <input type='radio' id='barbecueY' onClick={() => setBarbecue('Y')} checked={barbecue === 'Y'}/>
-                    <label htmlFor='barbecueY'><span></span>예</label>
+                    <label htmlFor='barbecueY'><span/>예</label>
                     <input type='radio' id='barbecueN' onClick={() => setBarbecue('N')} checked={barbecue === 'N'}/>
-                    <label htmlFor='barbecueN'><span></span>아니오</label>
+                    <label htmlFor='barbecueN'><span/>아니오</label>
                 </div>
                 {
                     barbecue === 'Y' &&
@@ -144,14 +144,14 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, getReserved}) => 
             <div className='PriceOption'>
                 <h2>환불옵션 선택</h2>
                 <input type='radio' id='refundable' onClick={() => setPriceOption('refundable')} checked={priceOption === 'refundable'}/>
-                <label htmlFor='refundable'><span></span><b>환불가능 옵션</b></label>
+                <label htmlFor='refundable'><span/><b>환불가능 옵션</b></label>
                 <p>
                     예약할 때 예약금을 10% 지불하고, 체크인 이틀 전 나머지 90%를 지불합니다. <br/>
                     예약을 취소하더라도 예약금은 환불되지 않습니다. 원활한 서비스를 위해 양해 부탁드립니다 :-)
                 </p>
                 <br/>
                 <input type='radio' id='nonrefundable' onClick={() => setPriceOption('nonrefundable')} checked={priceOption === 'nonrefundable'}/>
-                <label htmlFor='nonrefundable'><span></span><b>환불불가 옵션 (10% 할인)</b></label>
+                <label htmlFor='nonrefundable'><span/><b>환불불가 옵션 (10% 할인)</b></label>
                 <p>예약할 때 100% 지불합니다. 예약을 취소하더라도 환불이 불가합니다.</p>
             </div>
 
