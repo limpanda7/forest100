@@ -1,18 +1,26 @@
 import React, {useState, useEffect} from 'react';
 import axios from "axios";
-import './OnOff.scss';
+import {Helmet} from "react-helmet";
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 import moment from 'moment';
 import Slider from 'react-slick';
+import './OnOff.scss';
 import OnOffReservation from "./OnOffReservation";
 import Layout from "../Layout/Layout";
 
-import img1 from '../images/OnOff/1.webp';
-import img2 from '../images/OnOff/2.webp';
-import img3 from '../images/OnOff/3.webp';
-import img4 from '../images/OnOff/4.webp';
-import img5 from '../images/OnOff/5.webp';
+import img1 from '../images/OnOff/1.jpg';
+import img2 from '../images/OnOff/2.jpg';
+import img3 from '../images/OnOff/3.jpg';
+import img4 from '../images/OnOff/4.jpg';
+import img5 from '../images/OnOff/5.jpg';
+import img6 from '../images/OnOff/6.jpg';
+import img7 from '../images/OnOff/7.jpg';
+import img8 from '../images/OnOff/8.jpg';
+import img9 from '../images/OnOff/9.jpg';
+import img10 from '../images/OnOff/10.jpg';
+import img11 from '../images/OnOff/11.jpg';
+import img12 from '../images/OnOff/12.jpg';
 
 const OnOff = () => {
 
@@ -20,8 +28,6 @@ const OnOff = () => {
     const [showLocation, setShowLocation] = useState(false);
     const [picked, setPicked] = useState([]);
     const [currentPage, setCurrentPage] = useState('Home');
-
-    const imgArr = [img1, img2, img3, img4, img5];
 
     useEffect(() => {
         getReserved();
@@ -90,6 +96,9 @@ const OnOff = () => {
     return (
         <Layout>
             <div className="OnOff">
+                <Helmet>
+                    <title>::: ON OFF 스테이 :::</title>
+                </Helmet>
                 {
                     currentPage === 'Home' &&
                     <>
@@ -98,13 +107,6 @@ const OnOff = () => {
                             워케이션을 즐겨보세요.
                         </h2>
 
-                        <div className='TitleSub'>
-                            <b>ON >></b> 스위치를 켜고 아이디어를 생산하는 공간<br/>
-                            <b>OFF >></b> 스위치를 끄고 나만의 쉼을 찾는 공간
-                        </div>
-
-                        <br/>
-
                         <div className='Slider'>
                             <Slider {...sliderSetting}>
                                 <div><img src={img1}/></div>
@@ -112,13 +114,20 @@ const OnOff = () => {
                                 <div><img src={img3}/></div>
                                 <div><img src={img4}/></div>
                                 <div><img src={img5}/></div>
+                                <div><img src={img6}/></div>
+                                <div><img src={img7}/></div>
+                                <div><img src={img8}/></div>
+                                <div><img src={img9}/></div>
+                                <div><img src={img10}/></div>
+                                <div><img src={img11}/></div>
+                                <div><img src={img12}/></div>
                             </Slider>
                         </div>
 
-                        <h3>‘워케이션’이란 단어를 들어보셨나요?</h3>
                         <ul className='List'>
-                            <li>워케이션이란 <b>WORK</b>와 <b>VACATION</b>의 합성어로, 집이 아닌 다른 곳에서 일하면서 휴가와 같은 분위기를 즐기는 여행 형태를 뜻합니다.</li>
-                            <li>피로가 느껴지는 일상적 장소에서 벗어나, 시골풍경 속에서 휴식을 취해보세요. </li>
+                        <li>도심생활에 지친 직장인이 모두의 세컨하우스를 만들어 드리고자 가꾼 공간입니다 :)</li>
+                        <li>호스트부부는 서울에 살고있지만 주말에는 강원도에서 제2의 삶을 계획하며 이루고 있습니다.<br/>
+                        보다 좋은 공간을 제공드리기 위해 노력하겠습니다.</li>
                         </ul>
 
                         {/*<hr/>*/}
@@ -157,34 +166,51 @@ const OnOff = () => {
                             src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d395.7307178455782!2d129.0677103!3d37.4879664!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3561becc4f8ba9e7%3A0x3056ae1168a133e3!2z6rCV7JuQ64-EIOuPme2VtOyLnCDsgrztmZTrj5kg66y066aJMeq4uCA5LTI!5e0!3m2!1sko!2skr!4v1629545600943!5m2!1sko!2skr"
                             allowFullScreen="" loading="lazy"/>
                         <a href='geo:37.4879664,129.0677103?q=무릉1길+9-2' target='_blank'>지도 앱에서 보기</a>
-                        {/*<p>주변에 주택이 많고 대부분 농사를 지으시는 분들입니다. 시골감성을 마음껏 누리세요!</p>*/}
 
-                        {/*<button className='LocationBtn' onClick={() => toggleLocation()}>자세한 위치 정보</button>*/}
+                        <button className='LocationBtn' onClick={() => toggleLocation()}>자세한 위치 정보</button>
 
-                        {/*{*/}
-                        {/*    showLocation &&*/}
-                        {/*    <ul className='List Location'>*/}
-                        {/*        <li><b>도로명 주소</b><br/>*/}
-                        {/*            강원도 동해시 구미실길 96-1</li>*/}
-                        {/*        <li>SK주유소를 끼고 오른쪽 아랫길로 내려와 담벼락을 끼고 쭉 오시면, 언덕길 지나 3거리에서 좌회전 하면 숙소가 보입니다.<br/>*/}
-                        {/*            (가끔 네비가 다른 곳으로 인도하는 경우가 있다고 하는데 참고해주세요!)</li>*/}
-                        {/*        <li>동해역(ktx, 무궁화) > 숙소<br/>*/}
-                        {/*            - 버스 21-1 (22분) +도보8분<br/>*/}
-                        {/*            - 택시 3.9km (6분)</li>*/}
-                        {/*        <li><b>인근해변</b><br/>*/}
-                        {/*            -추암 촛대바위/해수욕장<br/>*/}
-                        {/*            버스 :북평국가산업단지 정류장 >161 or 162번<br/>*/}
-                        {/*            약 18분<br/>*/}
-                        {/*            택시 :3km 약4분<br/>*/}
-                        {/*            #백사장은 작으나 야경이 멋지고 음식점과 카페가 많습니다.<br/><br/>*/}
+                        {
+                           showLocation &&
+                           <ul className='List Location'>
+                               <li><b>도로명 주소</b><br/>
+                                    강원도 동해시 무릉1길 9-2</li>
+                               <li>주차는 무릉복지회관 맞은편으로 해주시면 됩니다.</li>
 
-                        {/*            -삼척쏠비치 :4.3km 자가용으로 6분<br/>*/}
-                        {/*            #추암해수욕장과 인접해있으며 워터파크가 있습니다.<br/><br/>*/}
+                               <li><b>교통</b><br/>
+                                *동해역( KTX) <br/>
+                                -버스: 171 송정동주민센터>삼화동주민센터 (35분)<br/>
+                                        111,311, 132, 131  송정동주민센터>삼화시장 (37분)<br/>
+                                - 택시 6.4km (11분) <br/>
+                                <br/>
+                                *동해시종합버스터미널<br/>
+                                -버스:111, 311, 132 동해감리교회>삼화시장 (58분)<br/>
+                                -택시:8.9km (15분) 
+                               </li>
 
-                        {/*            -망상해수욕장:16km 자가용으로 22분<br/>*/}
-                        {/*            #백사장이 넓은편이며 오토캠핑과 서핑을 즐기기에 적합합니다.</li>*/}
-                        {/*    </ul>*/}
-                        {/*}*/}
+                               <li><b>인근해변 & 관광지</b><br/>
+                               -무릉별유천지 :4.8km  약14분<br/>
+                                펜트하우스3 촬영지로 스카이 글라이더,루지, 알파인코스터 ,짚라인 등 이용할 수 있습니다:) <br/>
+                                <br/>
+                                -무릉건강숲  : 4.2km 약6분<br/>
+                                # 2만 4천평 규모의 친환경 힐링센터로 각종 테마체험을 즐기실 수 있습니다. <br/>
+                                <br/>
+                                -무릉계곡 삼화사 :4.2km 약6분<br/>
+                                #템플스테이 체험 가능하며 입장료는 무료입니다 (템플스테이 인원 외 2,000원) <br/>
+                                <br/>
+                                -추암 촛대바위/해수욕장 : 9.2km 약12분<br/>
+                                #백사장은 작으나 야경이 멋지고 횟집과 카페가 있습니다:) <br/>
+                                <br/>
+                                -삼척쏠비치 :11km  약14분<br/>
+                                #추암해수욕장과 인접해있으며 워터파크가 있으며 산토리니테라스에서 이국적인 분위기를 느낄 수 있습니다 :) <br/>
+                                <br/>
+                                -한섬해수욕장: 9.1km 약15분<br/>
+                                #시내근처에 있는 해수욕장으로  산책로가 있고 바다뷰 터널 핫스팟이 있습니다 :) <br/>
+                                <br/>
+                                -망상해수욕장:17km  23분<br/>
+                                #백사장이 넓은편이며 오토캠핑과 서핑을 즐기기에 적합합니다.<br/>
+                                </li>
+                           </ul>
+                        }
 
                         <hr/>
 
@@ -219,7 +245,7 @@ const OnOff = () => {
                         <h2>문의</h2>
                         <ul className='List'>
                             <li>카카오톡 ID: eunbibi1001</li>
-                            <li>인스타그램 DM: on_offstay</li>
+                            <li>인스타그램 DM: on.offstay</li>
                         </ul>
                     </>
                 }

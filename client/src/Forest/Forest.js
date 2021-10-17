@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import axios from "axios";
-import './Forest.scss';
+import { Helmet } from 'react-helmet';
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 import moment from 'moment';
-import Slider from 'react-slick';
+import './Forest.scss';
 import ForestReservation from "./ForestReservation";
 import Layout from "../Layout/Layout";
 
@@ -72,6 +72,9 @@ const Forest = () => {
     return (
         <Layout>
             <div className="Forest">
+                <Helmet>
+                    <title>::: 백년 한옥 별채 :::</title>
+                </Helmet>
             {
                 currentPage === 'Home' &&
                     <>
@@ -141,8 +144,7 @@ const Forest = () => {
                             <ul className='List Location'>
                                 <li><b>도로명 주소</b><br/>
                                     강원도 동해시 구미실길 96-1</li>
-                                <li>SK주유소를 끼고 오른쪽 아랫길로 내려와 담벼락을 끼고 쭉 오시면, 언덕길 지나 3거리에서 좌회전 하면 숙소가 보입니다.<br/>
-                                    (가끔 네비가 다른 곳으로 인도하는 경우가 있다고 하는데 참고해주세요!)</li>
+                                <li>SK주유소를 끼고 오른쪽 아랫길로 내려와 담벼락을 끼고 쭉 오시면, 언덕길 지나 3거리에서 좌회전 하면 숙소가 보입니다.</li>
                                 <li>동해역(ktx, 무궁화) > 숙소<br/>
                                     - 버스 21-1 (22분) +도보8분<br/>
                                     - 택시 3.9km (6분)</li>

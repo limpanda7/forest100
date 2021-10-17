@@ -155,7 +155,7 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
                     priceOption === 'refundable' &&
                         <>
                             <p>
-                                위 계좌로 예약금 <b>{price * 0.1}원</b>을 입금해주세요.<br/>
+                                위 계좌로 예약금 <b>{(price * 0.1).toLocaleString()}원</b>을 입금해주세요.<br/>
                                 3시간 내에 입금 해 주셔야 예약이 확정됩니다.
                             </p>
                         </>
@@ -164,7 +164,7 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
                     priceOption === 'nonrefundable' &&
                     <>
                         <p>
-                            위 계좌로 <b>{price}원</b>을 입금해주세요.<br/>
+                            위 계좌로 <b>{price.toLocaleString()}원</b>을 입금해주세요.<br/>
                             3시간 내에 입금 해 주셔야 예약이 확정됩니다.
                         </p>
                     </>
