@@ -7,7 +7,7 @@ const TelegramBot = require('node-telegram-bot-api');
 // express 객체 생성
 const app = express();
 app.use(express.json())
-app.use(express.urlencoded({ extends: true}))
+app.use(express.urlencoded({ extended: true}))
 
 // 데이터베이스 연결
 const connection = mysql.createConnection({
