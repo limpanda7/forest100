@@ -4,11 +4,12 @@ import { Helmet } from 'react-helmet';
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 import moment from 'moment';
+import {withRouter} from "react-router-dom";
 import './Forest.scss';
 import ForestReservation from "./ForestReservation";
 import Layout from "../Layout/Layout";
 
-const Forest = () => {
+const Forest = ({ history }) => {
 
     const [reserved, setReserved] = useState([]);
     const [showLocation, setShowLocation] = useState(false);
@@ -68,6 +69,8 @@ const Forest = () => {
 
         setPicked(tempArr);
     }
+
+    console.log(history);
 
     return (
         <Layout>
@@ -210,4 +213,4 @@ const Forest = () => {
     );
 }
 
-export default Forest;
+export default withRouter(Forest);
