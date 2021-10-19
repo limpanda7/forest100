@@ -64,6 +64,12 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname+'/client/public/index.html'));
 });
+app.get('/forest', (req, res) => {
+    res.sendFile(path.join(__dirname+'/client/public/index.html'));
+});
+app.get('/on-off', (req, res) => {
+    res.sendFile(path.join(__dirname+'/client/public/index.html'));
+});
 
 // 기본 포트를 app 객체에 설정
 const port = process.env.PORT || 5000;
