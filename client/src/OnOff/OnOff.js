@@ -103,8 +103,7 @@ const OnOff = () => {
                     currentPage === 'Home' &&
                     <>
                         <h2 className='Title'>
-                            <span>ON OFF 스테이</span>에서<br/>
-                            워케이션을 즐겨보세요.
+                            <span>ON OFF 스테이</span>
                         </h2>
 
                         <div className='Slider'>
@@ -125,9 +124,9 @@ const OnOff = () => {
                         </div>
 
                         <ul className='List'>
-                        <li>도심생활에 지친 직장인이 모두의 세컨하우스를 만들어 드리고자 가꾼 공간입니다 :)</li>
-                        <li>호스트부부는 서울에 살고있지만 주말에는 강원도에서 제2의 삶을 계획하며 이루고 있습니다.<br/>
-                        보다 좋은 공간을 제공드리기 위해 노력하겠습니다.</li>
+                            <li>집 전체를 단독으로 사용하시게 됩니다. (부분적인 사용을 원하실 경우 메세지로 요청주세요)</li>
+                            <li>평온한 숙소에서 온 가족 또는 커플이 함께 휴식 시간을 가질 수 있습니다.</li>
+                            <li>공기가 맑고 조용하며 힐링관광지도 있어 관광과 휴식을 동시에 누리기에 적합합니다 :)</li>
                         </ul>
 
                         {/*<hr/>*/}
@@ -166,6 +165,10 @@ const OnOff = () => {
                             src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d395.7307178455782!2d129.0677103!3d37.4879664!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3561becc4f8ba9e7%3A0x3056ae1168a133e3!2z6rCV7JuQ64-EIOuPme2VtOyLnCDsgrztmZTrj5kg66y066aJMeq4uCA5LTI!5e0!3m2!1sko!2skr!4v1629545600943!5m2!1sko!2skr"
                             allowFullScreen="" loading="lazy"/>
                         <a href='geo:37.4879664,129.0677103?q=무릉1길+9-2' target='_blank'>지도 앱에서 보기</a>
+
+                        <p>조용하고 평온한 분위기의 동네입니다.</p>
+                        <p>선한 동네사람들의 온정이 가득하며 시골분위기를 가득 느끼실 수 있습니다.</p>
+                        <p>밤에는 달과별이 잘 보이고 휴식과 업무를 하기에 적합합니다.</p>
 
                         <button className='LocationBtn' onClick={() => toggleLocation()}>자세한 위치 정보</button>
 
