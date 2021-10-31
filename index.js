@@ -37,7 +37,17 @@ app.post('/api/saveReservation', (req, res) => {
     }
     connection.query('INSERT INTO reservation (date, name, phone, adult, baby, dog, guest_room, barbecue, barbecue_event, price, price_option, confirm) VALUES ?', [values], (err, data) => {
         res.send(data);
-        bot.sendMessage('-558393640', `${body.name}님의 백년한옥별채 신규 예약이 들어왔습니다. 데이터베이스를 확인해보세요 :)`);
+        bot.sendMessage('-558393640',
+`백년한옥별채 신규 예약이 들어왔습니다.\n
+기간: ${body.picked}\n
+이름: ${body.name}\n
+전화번호: ${body.phone}\n
+인원수: 성인 ${body.adult}명, 유아 ${body.baby}명, 반려견 ${body.dog}마리\n
+사랑방 이용여부: ${body.guestRoom}\n
+바베큐 이용여부: ${body.barbecue} (이벤트 참여: ${body.barbecueEvent === '0' ? 'X' : 'O'})\n
+이용금액: ${body.price}\n
+환불옵션: ${body.priceOption === 'refundable' ? '환불가능' : '환불불가'}`
+        );
     });
 })
 app.get('/api/getReserved2', (req, res) => {
@@ -53,7 +63,16 @@ app.post('/api/saveReservation2', (req, res) => {
     }
     connection.query('INSERT INTO reservation2 (date, name, phone, adult, baby, dog, barbecue, barbecue_event, price, price_option, confirm) VALUES ?', [values], (err, data) => {
         res.send(data);
-        bot.sendMessage('-558393640', `${body.name}님의 OnOff 스테이 신규 예약이 들어왔습니다. 데이터베이스를 확인해보세요 :)`);
+        bot.sendMessage('-558393640',
+`온오프스테이 신규 예약이 들어왔습니다.\n
+기간: ${body.picked}\n
+이름: ${body.name}\n
+전화번호: ${body.phone}\n
+인원수: 성인 ${body.adult}명, 유아 ${body.baby}명, 반려견 ${body.dog}마리\n
+바베큐 이용여부: ${body.barbecue}\n
+이용금액: ${body.price}\n
+환불옵션: ${body.priceOption === 'refundable' ? '환불가능' : '환불불가'}`
+        );
     });
 })
 

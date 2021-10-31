@@ -21,6 +21,7 @@ import img9 from '../images/OnOff/9.jpg';
 import img10 from '../images/OnOff/10.jpg';
 import img11 from '../images/OnOff/11.jpg';
 import img12 from '../images/OnOff/12.jpg';
+import img13 from '../images/OnOff/13.jpg';
 
 const OnOff = () => {
 
@@ -103,7 +104,9 @@ const OnOff = () => {
                     currentPage === 'Home' &&
                     <>
                         <h2 className='Title'>
-                            <span>ON OFF 스테이</span>
+                            <span>ON OFF 스테이</span><br/>
+                            휴식의 스위치를 ON🔺<br/>
+                            일상의 스트레스는 OFF🔻
                         </h2>
 
                         <div className='Slider'>
@@ -120,6 +123,7 @@ const OnOff = () => {
                                 <div><img src={img10}/></div>
                                 <div><img src={img11}/></div>
                                 <div><img src={img12}/></div>
+                                <div><img src={img13}/></div>
                             </Slider>
                         </div>
 
@@ -150,12 +154,13 @@ const OnOff = () => {
                         <ul className='List'>
                             <li>무선 인터넷</li>
                             <li>도서 및 읽을거리</li>
+                            <li>빔프로젝터</li>
                             <li>난방</li>
                             <li>주방 (냉장고, 인덕션, 전자레인지)</li>
                             <li>기본 조리도구, 식기류</li>
                             <li>전기 그릴 (추가요금 X)</li>
                             <li>바베큐 화로 (추가요금 O)</li>
-                            <li>뒷마당</li>
+                            <li>앞마당</li>
                             <li>무료주차</li>
                         </ul>
 
@@ -219,12 +224,11 @@ const OnOff = () => {
                         <hr/>
 
                         <h2>이용요금 안내</h2>
-                        <p style={{color: 'red'}}>★ 오픈이벤트 40% 할인 적용 중 ★</p>
-                        <p>성인 2인 기준: 1박 240,000원</p>
+                        <p>4인 기준: 1박 300,000원</p>
                         <ul className='List'>
-                           <li>2인 초과 시 1인당: 1박 12,000원</li>
+                           <li>4인 초과 시 1인당: 1박 12,000원</li>
                            <li>바베큐 이용요금: 20,000원</li>
-                           <li>입금계좌: 카카오 3333058451192 남은비</li>
+                           <li>입금계좌: 카카오 3333053810252 채민기</li>
                         </ul>
 
                         <hr/>
@@ -248,7 +252,7 @@ const OnOff = () => {
 
                         <h2>문의</h2>
                         <ul className='List'>
-                            <li>카카오톡 ID: eunbibi1001</li>
+                            <li>카카오톡 ID: skfk1600</li>
                             <li>인스타그램 DM: on.offstay</li>
                         </ul>
                     </>

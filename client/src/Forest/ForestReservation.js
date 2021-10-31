@@ -147,7 +147,7 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, getReserved}) => 
                 <label htmlFor='refundable'><span/><b>환불가능 옵션</b></label>
                 <p>
                     예약할 때 예약금을 10% 지불하고, 체크인 이틀 전 나머지 90%를 지불합니다. <br/>
-                    예약을 취소하더라도 예약금은 환불되지 않습니다. 원활한 서비스를 위해 양해 부탁드립니다 :-)
+                    예약을 취소하더라도 예약금은 환불되지 않습니다.
                 </p>
                 <br/>
                 <input type='radio' id='nonrefundable' onClick={() => setPriceOption('nonrefundable')} checked={priceOption === 'nonrefundable'}/>
