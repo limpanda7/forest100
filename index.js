@@ -37,7 +37,7 @@ app.post('/api/saveReservation', (req, res) => {
     }
     connection.query('INSERT INTO reservation (date, name, phone, adult, baby, dog, guest_room, barbecue, barbecue_event, price, price_option, confirm) VALUES ?', [values], (err, data) => {
         res.send(data);
-        bot.sendMessage('-558393640',
+        bot.sendMessage('-679453093',
 `백년한옥별채 신규 예약이 들어왔습니다.\n
 기간: ${body.picked}\n
 이름: ${body.name}\n
@@ -50,6 +50,8 @@ app.post('/api/saveReservation', (req, res) => {
         );
     });
 })
+
+// 온오프스테이 API
 app.get('/api/getReserved2', (req, res) => {
     connection.query('SELECT * FROM reservation2', (err, data) => {
         res.send(data);
