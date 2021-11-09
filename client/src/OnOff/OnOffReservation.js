@@ -8,6 +8,7 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
     const [adult, setAdult] = useState(4);
     const [baby, setBaby] = useState(0);
     const [dog, setDog] = useState(0);
+    const [bedding, setBedding] = useState(0);
     const [barbecue, setBarbecue] = useState('N');
     const [barbecueEvent, setBarbecueEvent] = useState(false);
     const [price, setPrice] = useState(0);
@@ -26,7 +27,7 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
 
     useEffect(() => {
         calcPrice();
-    }, [howMany, barbecue, barbecueEvent, priceOption])
+    }, [howMany, bedding, barbecue, barbecueEvent, priceOption])
 
     const saveReservation = () => {
 
@@ -35,7 +36,7 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
             return false;
         }
 
-        axios.post('/api/saveReservation2', {picked, name, phone, adult, baby, dog, barbecue, barbecueEvent, price, priceOption})
+        axios.post('/api/saveReservation2', {picked, name, phone, adult, baby, dog, bedding, barbecue, barbecueEvent, price, priceOption})
             .then((res) => {
                 if (priceOption === 'refundable') {
                     alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${(price * 0.1).toLocaleString()}원입니다.`);
@@ -56,7 +57,7 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
 
     const calcPrice = () => {
         const days = picked.length - 1;
-        let price = (300000 + (12000 * (howMany - 4))) * days;
+        let price = (300000 + (12000 * (howMany - 4))) * days + (10000 * bedding);
         if (barbecue === 'Y' && barbecueEvent === false) {
             price += 20000;
         }
@@ -98,6 +99,13 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
                     <span>{dog}</span>
                     <button onClick={() => setDog(dog + 1)}>+</button>
                 </div>
+                <br/>
+                <div>
+                    <p>추가침구</p>
+                    <button onClick={() => {if (bedding > 0) setBedding(bedding - 1)}}>-</button>
+                    <span>{bedding}</span>
+                    <button onClick={() => setBedding(bedding + 1)}>+</button>
+                </div>
             </div>
 
             <div className='Barbecue'>
@@ -132,6 +140,10 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
                     {
                         howMany > 4 &&
                         <p><b>인원초과:</b> 12,000원 x {howMany - 4}명 x {picked.length - 1}박</p>
+                    }
+                    {
+                        bedding > 0 &&
+                        <p><b>추가침구:</b> 10,000원 x {bedding}개</p>
                     }
                     {
                         barbecue === 'Y' &&

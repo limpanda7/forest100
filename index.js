@@ -61,9 +61,9 @@ app.post('/api/saveReservation2', (req, res) => {
     const body = req.body;
     let values = [];
     for (const element of body.picked) {
-        values.push([element, body.name, body.phone, body.adult, body.baby, body.dog, body.barbecue, body.barbecueEvent, body.price, body.priceOption, "N"]);
+        values.push([element, body.name, body.phone, body.adult, body.baby, body.dog, body.bedding, body.barbecue, body.barbecueEvent, body.price, body.priceOption, "N"]);
     }
-    connection.query('INSERT INTO reservation2 (date, name, phone, adult, baby, dog, barbecue, barbecue_event, price, price_option, confirm) VALUES ?', [values], (err, data) => {
+    connection.query('INSERT INTO reservation2 (date, name, phone, adult, baby, dog, bedding, barbecue, barbecue_event, price, price_option, confirm) VALUES ?', [values], (err, data) => {
         res.send(data);
         bot.sendMessage('-558393640',
 `온오프스테이 신규 예약이 들어왔습니다.\n
@@ -71,6 +71,7 @@ app.post('/api/saveReservation2', (req, res) => {
 이름: ${body.name}\n
 전화번호: ${body.phone}\n
 인원수: 성인 ${body.adult}명, 유아 ${body.baby}명, 반려견 ${body.dog}마리\n
+추가침구: ${body.bedding}개\n
 바베큐 이용여부: ${body.barbecue}\n
 이용금액: ${body.price}\n
 환불옵션: ${body.priceOption === 'refundable' ? '환불가능' : '환불불가'}`
