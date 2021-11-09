@@ -8,6 +8,18 @@ import {withRouter} from "react-router-dom";
 import './Forest.scss';
 import ForestReservation from "./ForestReservation";
 import Layout from "../Layout/Layout";
+import Slider from "react-slick";
+
+import img1 from "../images/Forest/1.webp";
+import img2 from "../images/Forest/2.jpg";
+import img3 from "../images/Forest/3.jpg";
+import img4 from "../images/Forest/4.jpg";
+import img5 from "../images/Forest/5.jpg";
+import img6 from "../images/Forest/6.jpg";
+import img7 from "../images/Forest/7.jpg";
+import img8 from "../images/Forest/8.jpg";
+import img9 from "../images/Forest/9.jpg";
+import img10 from "../images/Forest/10.jpg";
 
 const Forest = ({ history }) => {
 
@@ -70,7 +82,15 @@ const Forest = ({ history }) => {
         setPicked(tempArr);
     }
 
-    console.log(history);
+    const sliderSetting = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        adaptiveHeight: true,
+        arrows: false,
+    };
 
     return (
         <Layout>
@@ -85,6 +105,21 @@ const Forest = ({ history }) => {
                             <span>백년 한옥 별채</span>에서<br/>
                             편안한 시골체험을 해보세요.
                         </h2>
+
+                        <div className='Slider'>
+                            <Slider {...sliderSetting}>
+                                <div><img src={img1}/></div>
+                                <div><img src={img2}/></div>
+                                <div><img src={img3}/></div>
+                                <div><img src={img4}/></div>
+                                <div><img src={img5}/></div>
+                                <div><img src={img6}/></div>
+                                <div><img src={img7}/></div>
+                                <div><img src={img8}/></div>
+                                <div><img src={img9}/></div>
+                                <div><img src={img10}/></div>
+                            </Slider>
+                        </div>
 
                         <iframe className='Video'
                                 src="https://www.youtube.com/embed/2PQT69JwiEY"
