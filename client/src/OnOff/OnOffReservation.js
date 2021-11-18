@@ -4,6 +4,11 @@ import './OnOff.scss';
 
 const OnOffReservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
 
+    let basePrice = 300000;
+    if (picked.includes('2022-01-01')) {
+        basePrice = 400000;
+    }
+
     const [howMany, setHowMany] = useState(4);
     const [adult, setAdult] = useState(4);
     const [baby, setBaby] = useState(0);
@@ -57,7 +62,7 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
 
     const calcPrice = () => {
         const days = picked.length - 1;
-        let price = (300000 + (12000 * (howMany - 4))) * days + (10000 * bedding);
+        let price = (basePrice + (12000 * (howMany - 4))) * days + (10000 * bedding);
         if (barbecue === 'Y' && barbecueEvent === false) {
             price += 20000;
         }
@@ -136,7 +141,7 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
                 <h2>총 이용요금</h2>
                 <h2 className='Price'>{price.toLocaleString()}원</h2>
                 <div className='PriceDetail'>
-                    <p><b>4인기준:</b> 300,000원 x {picked.length - 1}박</p>
+                    <p><b>4인기준:</b> {basePrice.toLocaleString()}원 x {picked.length - 1}박</p>
                     {
                         howMany > 4 &&
                         <p><b>인원초과:</b> 12,000원 x {howMany - 4}명 x {picked.length - 1}박</p>
