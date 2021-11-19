@@ -4,11 +4,6 @@ import './OnOff.scss';
 
 const OnOffReservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
 
-    let basePrice = 300000;
-    if (picked.includes('2022-01-01')) {
-        basePrice = 400000;
-    }
-
     const [howMany, setHowMany] = useState(4);
     const [adult, setAdult] = useState(4);
     const [baby, setBaby] = useState(0);
@@ -16,6 +11,7 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
     const [bedding, setBedding] = useState(0);
     const [barbecue, setBarbecue] = useState('N');
     const [barbecueEvent, setBarbecueEvent] = useState(false);
+    const [basePrice, setBasePrice] = useState(0);
     const [price, setPrice] = useState(0);
     const [priceOption, setPriceOption] = useState('refundable');
     const [discount, setDiscount] = useState(0);
@@ -61,18 +57,50 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
     }
 
     const calcPrice = () => {
+
+        const holidays = ['2022-01-01','2022-01-02','2022-01-29','2022-01-30','2022-01-31','2022-02-01','2022-02-02'];
+        let temp1 = 0;
+
+        let dayArr = [];
+        for (const date of picked) {
+            const dayIdx = new Date(date).getDay();
+            if (holidays.includes(date)) {
+                dayArr.push('holiday');
+            } else if (dayIdx === 0 || dayIdx === 6) {
+                dayArr.push('weekend');
+            } else {
+                dayArr.push('weekday');
+            }
+        }
+
+        console.log(dayArr);
+
+        for (let i = 0; i < dayArr.length - 1; i++) {
+            if (dayArr[i + 1] === 'holiday') {
+                temp1 += 400000;
+            } else if (dayArr[i + 1] === 'weekday') {   // 일월화수목
+                temp1 += 200000;
+                console.log(i)
+            } else if (dayArr[i + 1] === 'weekend') {    // 금토
+                temp1 += 300000;
+                console.log(i)
+            }
+        }
+
         const days = picked.length - 1;
-        let price = (basePrice + (12000 * (howMany - 4))) * days + (10000 * bedding);
+        let temp2 = temp1 + (12000 * (howMany - 4)) * days + (10000 * bedding);
         if (barbecue === 'Y' && barbecueEvent === false) {
-            price += 20000;
+            temp2 += 20000;
         }
         if (priceOption === 'nonrefundable') {
             setDiscount(price * 0.1);
-            price *= 0.9;
+            temp2 *= 0.9;
         } else {
             setDiscount(0);
         }
-        setPrice(price);
+
+        setBasePrice(temp1);
+        setPrice(temp2);
     }
 
     return (
@@ -141,7 +169,7 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
                 <h2>총 이용요금</h2>
                 <h2 className='Price'>{price.toLocaleString()}원</h2>
                 <div className='PriceDetail'>
-                    <p><b>4인기준:</b> {basePrice.toLocaleString()}원 x {picked.length - 1}박</p>
+                    <p><b>4인요금:</b> {basePrice.toLocaleString()}원 (총 {picked.length - 1}박)</p>
                     {
                         howMany > 4 &&
                         <p><b>인원초과:</b> 12,000원 x {howMany - 4}명 x {picked.length - 1}박</p>
@@ -156,7 +184,7 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
                     }
                     {
                         discount > 0 &&
-                        <p><b>할인금액:</b> {discount}원</p>
+                        <p><b>할인금액:</b> -{discount.toLocaleString()}원</p>
                     }
                 </div>
             </div>

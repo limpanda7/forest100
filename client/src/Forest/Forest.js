@@ -108,16 +108,16 @@ const Forest = ({ history }) => {
 
                         <div className='Slider'>
                             <Slider {...sliderSetting}>
-                                <div><img src={img1}/></div>
-                                <div><img src={img2}/></div>
-                                <div><img src={img3}/></div>
-                                <div><img src={img4}/></div>
-                                <div><img src={img5}/></div>
-                                <div><img src={img6}/></div>
-                                <div><img src={img7}/></div>
-                                <div><img src={img8}/></div>
-                                <div><img src={img9}/></div>
-                                <div><img src={img10}/></div>
+                                <div><img src={img1} alt={''}/></div>
+                                <div><img src={img2} alt={''}/></div>
+                                <div><img src={img3} alt={''}/></div>
+                                <div><img src={img4} alt={''}/></div>
+                                <div><img src={img5} alt={''}/></div>
+                                <div><img src={img6} alt={''}/></div>
+                                <div><img src={img7} alt={''}/></div>
+                                <div><img src={img8} alt={''}/></div>
+                                <div><img src={img9} alt={''}/></div>
+                                <div><img src={img10} alt={''}/></div>
                             </Slider>
                         </div>
 

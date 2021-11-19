@@ -111,19 +111,19 @@ const OnOff = () => {
 
                         <div className='Slider'>
                             <Slider {...sliderSetting}>
-                                <div><img src={img1}/></div>
-                                <div><img src={img2}/></div>
-                                <div><img src={img3}/></div>
-                                <div><img src={img4}/></div>
-                                <div><img src={img5}/></div>
-                                <div><img src={img6}/></div>
-                                <div><img src={img7}/></div>
-                                <div><img src={img8}/></div>
-                                <div><img src={img9}/></div>
-                                <div><img src={img10}/></div>
-                                <div><img src={img11}/></div>
-                                <div><img src={img12}/></div>
-                                <div><img src={img13}/></div>
+                                <div><img src={img1} alt={''}/></div>
+                                <div><img src={img2} alt={''}/></div>
+                                <div><img src={img3} alt={''}/></div>
+                                <div><img src={img4} alt={''}/></div>
+                                <div><img src={img5} alt={''}/></div>
+                                <div><img src={img11} alt={''}/></div>
+                                <div><img src={img6} alt={''}/></div>
+                                <div><img src={img7} alt={''}/></div>
+                                <div><img src={img8} alt={''}/></div>
+                                <div><img src={img9} alt={''}/></div>
+                                <div><img src={img10} alt={''}/></div>
+                                <div><img src={img12} alt={''}/></div>
+                                <div><img src={img13} alt={''}/></div>
                             </Slider>
                         </div>
 
@@ -134,21 +134,21 @@ const OnOff = () => {
                             <li>반려견은 인원수에 포함됩니다. 털날림이 적은 견종만 가능합니다.</li>
                         </ul>
 
-                        {/*<hr/>*/}
+                        <hr/>
 
-                        {/*<h2>침대/침구 유형</h2>*/}
-                        {/*<div className='Beds'>*/}
-                        {/*    <div className='Bed'>*/}
-                        {/*        <b>1번 침실</b><br/>*/}
-                        {/*        더블 침대 1개*/}
-                        {/*    </div>*/}
-                        {/*    <div className='Bed'>*/}
-                        {/*        <b>2번 침실</b><br/>*/}
-                        {/*        싱글 침대 1개*/}
-                        {/*    </div>*/}
-                        {/*</div>*/}
+                        <h2>침대/침구 유형</h2>
+                        <div className='Beds'>
+                            <div className='Bed'>
+                                <b>1번 침실</b><br/>
+                                퀸사이즈 침대 1개
+                            </div>
+                            <div className='Bed'>
+                                <b>2번 침실</b><br/>
+                                퀸사이즈 침대 1개
+                            </div>
+                        </div>
 
-                        {/*<hr/>*/}
+                        <hr/>
 
                         <h2>편의시설</h2>
                         <ul className='List'>
@@ -224,8 +224,8 @@ const OnOff = () => {
                         <hr/>
 
                         <h2>이용요금 안내</h2>
-                        <p>4인 기준: 1박 300,000원</p>
-                        <p>(신정 연휴: 성수기 요금 적용)</p>
+                        <p>4인기준 1박: 주말 300,000원 / 평일 200,000원</p>
+                        <p>(신정 및 구정연휴: 성수기 요금 적용)</p>
                         <ul className='List'>
                            <li>4인 초과 시 1인당: 1박 12,000원</li>
                            <li>추가침구: 개당 10,000원</li>
