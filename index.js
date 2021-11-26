@@ -44,7 +44,7 @@ app.post('/api/saveReservation', (req, res) => {
 전화번호: ${body.phone}\n
 인원수: 성인 ${body.adult}명, 유아 ${body.baby}명, 반려견 ${body.dog}마리\n
 사랑방 이용여부: ${body.guestRoom}\n
-바베큐 이용여부: ${body.barbecue} (이벤트 참여: ${body.barbecueEvent === '0' ? 'X' : 'O'})\n
+바베큐 이용여부: ${body.barbecue} (이벤트 참여: ${body.barbecueEvent === false ? 'X' : 'O'})\n
 이용금액: ${body.price}\n
 환불옵션: ${body.priceOption === 'refundable' ? '환불가능' : '환불불가'}`
         );
