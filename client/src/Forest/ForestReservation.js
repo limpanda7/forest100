@@ -42,9 +42,9 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, getReserved}) => 
         axios.post('/api/saveReservation', {picked, name, phone, adult, baby, dog, guestRoom, barbecue, barbecueEvent, price, priceOption})
             .then((res) => {
                 if (priceOption === 'refundable') {
-                    alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${price * 0.1}원입니다.`);
+                    alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${(price * 0.1).toLocaleString()}원입니다.`);
                 } else {
-                    alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${price}원입니다.`);
+                    alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${price.toLocaleString()}원입니다.`);
                 }
                 window.location.reload();
             })

@@ -59,48 +59,49 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
     const calcPrice = () => {
 
         const holidays = ['2022-01-01','2022-01-02','2022-01-29','2022-01-30','2022-01-31','2022-02-01','2022-02-02'];
-        let temp1 = 0;
+        let tempPrice = 0;
 
         let dayArr = [];
         for (const date of picked) {
+
             const dayIdx = new Date(date).getDay();
             if (holidays.includes(date)) {
                 dayArr.push('holiday');
             } else if (dayIdx === 0 || dayIdx === 6) {
                 dayArr.push('weekend');
+            } else if (date.slice(5, 7) === '01' || date.slice(5, 7) === '02' || date.slice(5, 7) === '03') {
+                dayArr.push('weekdayDiscount');
             } else {
                 dayArr.push('weekday');
             }
         }
 
-        console.log(dayArr);
-
         for (let i = 0; i < dayArr.length - 1; i++) {
             if (dayArr[i + 1] === 'holiday') {
-                temp1 += 400000;
+                tempPrice += 400000;
             } else if (dayArr[i + 1] === 'weekday') {   // 일월화수목
-                temp1 += 200000;
-                console.log(i)
+                tempPrice += 150000;
             } else if (dayArr[i + 1] === 'weekend') {    // 금토
-                temp1 += 300000;
-                console.log(i)
+                tempPrice += 300000;
+            } else if (dayArr[i + 1] === 'weekdayDiscount') {   // 1~3월 평일 할인
+                tempPrice += 100000;
             }
         }
 
         const days = picked.length - 1;
-        let temp2 = temp1 + (12000 * (howMany - 4)) * days + (10000 * bedding);
+        let totalPrice = tempPrice + (12000 * (howMany - 4)) * days + (10000 * bedding);
         if (barbecue === 'Y' && barbecueEvent === false) {
-            temp2 += 20000;
+            totalPrice += 20000;
         }
         if (priceOption === 'nonrefundable') {
             setDiscount(price * 0.1);
-            temp2 *= 0.9;
+            totalPrice *= 0.9;
         } else {
             setDiscount(0);
         }
 
-        setBasePrice(temp1);
-        setPrice(temp2);
+        setBasePrice(tempPrice);
+        setPrice(totalPrice);
     }
 
     return (
