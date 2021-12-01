@@ -10,7 +10,7 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
     const [dog, setDog] = useState(0);
     const [bedding, setBedding] = useState(0);
     const [barbecue, setBarbecue] = useState('N');
-    const [barbecueEvent, setBarbecueEvent] = useState(false);
+    const [studentEvent, setStudentEvent] = useState('N');
     const [basePrice, setBasePrice] = useState(0);
     const [price, setPrice] = useState(0);
     const [priceOption, setPriceOption] = useState('refundable');
@@ -28,7 +28,7 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
 
     useEffect(() => {
         calcPrice();
-    }, [howMany, bedding, barbecue, barbecueEvent, priceOption])
+    }, [howMany, bedding, barbecue, studentEvent, priceOption])
 
     const saveReservation = () => {
 
@@ -37,7 +37,7 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
             return false;
         }
 
-        axios.post('/api/saveReservation2', {picked, name, phone, adult, baby, dog, bedding, barbecue, barbecueEvent, price, priceOption})
+        axios.post('/api/saveReservation2', {picked, name, phone, adult, baby, dog, bedding, barbecue, studentEvent, price, priceOption})
             .then((res) => {
                 if (priceOption === 'refundable') {
                     alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${(price * 0.1).toLocaleString()}원입니다.`);
@@ -80,17 +80,25 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
             if (dayArr[i + 1] === 'holiday') {
                 tempPrice += 400000;
             } else if (dayArr[i + 1] === 'weekday') {   // 일월화수목
-                tempPrice += 150000;
+                if (studentEvent === 'Y') {
+                    tempPrice += 135000;
+                } else {
+                    tempPrice += 150000;
+                }
             } else if (dayArr[i + 1] === 'weekend') {    // 금토
                 tempPrice += 300000;
             } else if (dayArr[i + 1] === 'weekdayDiscount') {   // 1~3월 평일 할인
-                tempPrice += 100000;
+                if (studentEvent === 'Y') {
+                    tempPrice += 90000;
+                } else {
+                    tempPrice += 100000;
+                }
             }
         }
 
         const days = picked.length - 1;
         let totalPrice = tempPrice + (12000 * (howMany - 4)) * days + (10000 * bedding);
-        if (barbecue === 'Y' && barbecueEvent === false) {
+        if (barbecue === 'Y') {
             totalPrice += 20000;
         }
         if (priceOption === 'nonrefundable') {
@@ -152,6 +160,18 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
                 </div>
             </div>
 
+            <div className='Barbecue'>
+                <h2>대학생 평일 할인</h2>
+                <p>방학을 동해에서 보내자! 학생증을 인증하시는 대학생에게 평일 10% 할인을 제공합니다.</p>
+                <p>(예약하신 분의 학생증을 보내주세요.)</p>
+                <div className='RadioBtn'>
+                    <input type='radio' id='studentY' onClick={() => setStudentEvent('Y')} checked={studentEvent === 'Y'}/>
+                    <label htmlFor='studentY'><span/>예</label>
+                    <input type='radio' id='studentN' onClick={() => setStudentEvent('N')} checked={studentEvent === 'N'}/>
+                    <label htmlFor='studentN'><span/>아니오</label>
+                </div>
+            </div>
+
             <div className='PriceOption'>
                 <h2>환불옵션 선택</h2>
                 <input type='radio' id='refundable' onClick={() => setPriceOption('refundable')} checked={priceOption === 'refundable'}/>
@@ -170,7 +190,7 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
                 <h2>총 이용요금</h2>
                 <h2 className='Price'>{price.toLocaleString()}원</h2>
                 <div className='PriceDetail'>
-                    <p><b>4인요금:</b> {basePrice.toLocaleString()}원 (총 {picked.length - 1}박)</p>
+                    <p><b>숙박요금:</b> {basePrice.toLocaleString()}원 (총 {picked.length - 1}박)</p>
                     {
                         howMany > 4 &&
                         <p><b>인원초과:</b> 12,000원 x {howMany - 4}명 x {picked.length - 1}박</p>
@@ -181,11 +201,11 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
                     }
                     {
                         barbecue === 'Y' &&
-                        <p><b>바베큐:</b> {barbecueEvent ? '0원' : '20,000원'}</p>
+                        <p><b>바베큐:</b> 20,000원</p>
                     }
                     {
                         discount > 0 &&
-                        <p><b>할인금액:</b> -{discount.toLocaleString()}원</p>
+                        <p><b>환불불가할인:</b> -{discount.toLocaleString()}원</p>
                     }
                 </div>
             </div>
