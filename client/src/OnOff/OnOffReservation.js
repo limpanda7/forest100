@@ -162,8 +162,8 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
 
             <div className='Barbecue'>
                 <h2>대학생 평일 할인</h2>
-                <p>방학을 동해에서 보내자! 학생증을 인증하시는 대학생에게 평일 10% 할인을 제공합니다.</p>
-                <p>(예약하신 분의 학생증을 보내주세요.)</p>
+                <p>학생증을 인증하시는 대학생에게 평일 10% 할인을 제공합니다.<br/>
+                    (예약하신 분의 학생증을 보내주세요.)</p>
                 <div className='RadioBtn'>
                     <input type='radio' id='studentY' onClick={() => setStudentEvent('Y')} checked={studentEvent === 'Y'}/>
                     <label htmlFor='studentY'><span/>예</label>
