@@ -27,6 +27,7 @@ const OnOff = () => {
 
     const [reserved, setReserved] = useState([]);
     const [showLocation, setShowLocation] = useState(false);
+    const [showRefund, setShowRefund] = useState(false);
     const [picked, setPicked] = useState([]);
     const [currentPage, setCurrentPage] = useState('Home');
 
@@ -56,8 +57,13 @@ const OnOff = () => {
     }
 
     const toggleLocation = () => {
-        if (showLocation === true) setShowLocation(false);
+        if (showLocation) setShowLocation(false);
         else setShowLocation(true);
+    }
+
+    const toggleRefund = () => {
+        if (showRefund) setShowRefund(false);
+        else setShowRefund(true);
     }
 
     const calcRange = (value) => {
@@ -174,7 +180,9 @@ const OnOff = () => {
                         <p>선한 동네사람들의 온정이 가득하며 시골분위기를 가득 느끼실 수 있습니다.</p>
                         <p>밤에는 달과별이 잘 보이고 휴식과 업무를 하기에 적합합니다.</p>
 
-                        <button className='LocationBtn' onClick={() => toggleLocation()}>자세한 위치 정보</button>
+                        <button className='LocationBtn' onClick={() => toggleLocation()}>
+                            {!showLocation ? '자세한 위치 정보' : '자세한 위치 정보 닫기'}
+                        </button>
 
                         {
                            showLocation &&
@@ -229,7 +237,22 @@ const OnOff = () => {
                             <li>추가침구: 개당 10,000원</li>
                             <li>바베큐 이용요금: 20,000원</li>
                             <li>입금계좌: 카카오 3333053810252 채민기</li>
+                            <li><a onClick={() => toggleRefund()}>환불 규정 보기</a></li>
                         </ul>
+
+                        {
+                            showRefund &&
+                            <ul className='List'>
+                                <li>이용시작일 10일 전까지: 총 결제금액의 100% 환불</li>
+                                <li>이용시작일 9일 전: 총 결제금액의 90% 환불</li>
+                                <li>이용시작일 8일 전: 총 결제금액의 80% 환불</li>
+                                <li>이용시작일 7일 전: 총 결제금액의 70% 환불</li>
+                                <li>이용시작일 6일 전: 총 결제금액의 60% 환불</li>
+                                <li>이용시작일 5일 전: 총 결제금액의 50% 환불</li>
+                                <li>이용시작일 4일 전: 총 결제금액의 40% 환불</li>
+                                <li>이용시작일 3일 전부터 환불불가</li>
+                            </ul>
+                        }
 
                         <hr/>
 

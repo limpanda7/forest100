@@ -17,6 +17,7 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
     const [discount, setDiscount] = useState(0);
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
+    const [showRefund, setShowRefund] = useState(false);
 
     useEffect(() => {
         calcPrice();
@@ -38,12 +39,8 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
         }
 
         axios.post('/api/saveReservation2', {picked, name, phone, adult, baby, dog, bedding, barbecue, studentEvent, price, priceOption})
-            .then((res) => {
-                if (priceOption === 'refundable') {
-                    alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${(price * 0.1).toLocaleString()}원입니다.`);
-                } else {
-                    alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${price.toLocaleString()}원입니다.`);
-                }
+            .then(() => {
+                alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${price.toLocaleString()}원입니다.`);
                 window.location.reload();
             })
     }
@@ -112,6 +109,11 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
         setPrice(totalPrice);
     }
 
+    const toggleRefund = () => {
+        if (showRefund) setShowRefund(false);
+        else setShowRefund(true);
+    }
+
     return (
         <div className='Reservation'>
             <button onClick={() => {setCurrentPage('Home'); setPicked([])}}>뒤로가기</button>
@@ -162,8 +164,7 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
 
             <div className='Barbecue'>
                 <h2>대학생 평일 할인</h2>
-                <p>학생증을 인증하시는 대학생에게 평일 10% 할인을 제공합니다.<br/>
-                    (예약하신 분의 학생증을 보내주세요.)</p>
+                <p>학생증을 인증하시는 대학생에게 평일 10% 할인을 제공합니다.</p>
                 <div className='RadioBtn'>
                     <input type='radio' id='studentY' onClick={() => setStudentEvent('Y')} checked={studentEvent === 'Y'}/>
                     <label htmlFor='studentY'><span/>예</label>
@@ -176,14 +177,26 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
                 <h2>환불옵션 선택</h2>
                 <input type='radio' id='refundable' onClick={() => setPriceOption('refundable')} checked={priceOption === 'refundable'}/>
                 <label htmlFor='refundable'><span/><b>환불가능 옵션</b></label>
-                <p>
-                    예약할 때 예약금을 10% 지불하고, 체크인 이틀 전 나머지 90%를 지불합니다. <br/>
-                    예약을 취소하더라도 예약금은 환불되지 않습니다.
-                </p>
+                <p>예약 취소 시 <a onClick={() => toggleRefund()}>환불 규정</a>에 따라서 환불이 진행됩니다.</p>
+
+                {
+                    showRefund &&
+                    <ul className='List'>
+                        <li>이용시작일 10일 전까지: 총 결제금액의 100% 환불</li>
+                        <li>이용시작일 9일 전: 총 결제금액의 90% 환불</li>
+                        <li>이용시작일 8일 전: 총 결제금액의 80% 환불</li>
+                        <li>이용시작일 7일 전: 총 결제금액의 70% 환불</li>
+                        <li>이용시작일 6일 전: 총 결제금액의 60% 환불</li>
+                        <li>이용시작일 5일 전: 총 결제금액의 50% 환불</li>
+                        <li>이용시작일 4일 전: 총 결제금액의 40% 환불</li>
+                        <li>이용시작일 3일 전부터 환불불가</li>
+                    </ul>
+                }
+
                 <br/>
                 <input type='radio' id='nonrefundable' onClick={() => setPriceOption('nonrefundable')} checked={priceOption === 'nonrefundable'}/>
-                <label htmlFor='nonrefundable'><span/><b>환불불가 옵션 (10% 할인)</b></label>
-                <p>예약할 때 100% 지불합니다. 예약을 취소하더라도 환불이 불가합니다.</p>
+                <label htmlFor='nonrefundable'><span/><b>환불불가 옵션</b></label>
+                <p>10% 할인을 제공합니다. 예약을 취소하더라도 환불이 불가합니다.</p>
             </div>
 
             <div className='PriceTotal'>
@@ -217,24 +230,10 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
                 <input type='text' size='6' onChange={(e) => setName(e.target.value)}/><br/>
                 <span>전화번호:</span>
                 <input type='text' size='14' onChange={(e) => setPhone(e.target.value)}/>
-                {
-                    priceOption === 'refundable' &&
-                        <>
-                            <p>
-                                위 계좌로 예약금 <b>{(price * 0.1).toLocaleString()}원</b>을 입금해주세요.<br/>
-                                3시간 내에 입금 해 주셔야 예약이 확정됩니다.
-                            </p>
-                        </>
-                }
-                {
-                    priceOption === 'nonrefundable' &&
-                    <>
-                        <p>
-                            위 계좌로 <b>{price.toLocaleString()}원</b>을 입금해주세요.<br/>
-                            3시간 내에 입금 해 주셔야 예약이 확정됩니다.
-                        </p>
-                    </>
-                }
+                <p>
+                    위 계좌로 <b>{price.toLocaleString()}원</b>을 입금해주세요.<br/>
+                    3시간 내에 입금 해 주셔야 예약이 확정됩니다.
+                </p>
             </div>
 
             <button className='ReservationBtn' onClick={() => saveReservation()}>예약완료</button>
