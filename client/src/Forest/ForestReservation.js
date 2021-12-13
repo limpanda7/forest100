@@ -44,7 +44,7 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, getReserved}) => 
         axios.post('/api/saveReservation', {picked, name, phone, adult, baby, dog, bedding, guestRoom, barbecue, price, priceOption})
             .then(() => {
                 alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${price.toLocaleString()}원입니다.`);
-                window.location.reload();
+                window.location.href = '/';
             })
     }
 

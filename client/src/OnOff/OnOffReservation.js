@@ -41,7 +41,7 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
         axios.post('/api/saveReservation2', {picked, name, phone, adult, baby, dog, bedding, barbecue, studentEvent, price, priceOption})
             .then(() => {
                 alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${price.toLocaleString()}원입니다.`);
-                window.location.reload();
+                window.location.href = '/';
             })
     }
 
