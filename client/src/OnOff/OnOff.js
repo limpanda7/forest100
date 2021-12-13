@@ -22,6 +22,9 @@ import img10 from '../images/OnOff/10.jpg';
 import img11 from '../images/OnOff/11.jpg';
 import img12 from '../images/OnOff/12.jpg';
 import img13 from '../images/OnOff/13.jpg';
+import img14 from '../images/OnOff/14.jpg';
+import img15 from '../images/OnOff/15.jpg';
+import img16 from '../images/OnOff/16.jpg';
 
 const OnOff = () => {
 
@@ -119,15 +122,17 @@ const OnOff = () => {
                             <Slider {...sliderSetting}>
                                 <div><img src={img1} alt={''}/></div>
                                 <div><img src={img2} alt={''}/></div>
-                                <div><img src={img3} alt={''}/></div>
-                                <div><img src={img4} alt={''}/></div>
+                                <div><img src={img9} alt={''}/></div>
+                                <div><img src={img10} alt={''}/></div>
                                 <div><img src={img5} alt={''}/></div>
                                 <div><img src={img11} alt={''}/></div>
                                 <div><img src={img6} alt={''}/></div>
                                 <div><img src={img7} alt={''}/></div>
                                 <div><img src={img8} alt={''}/></div>
-                                <div><img src={img9} alt={''}/></div>
-                                <div><img src={img10} alt={''}/></div>
+                                <div><img src={img14} alt={''}/></div>
+                                <div><img src={img15} alt={''}/></div>
+                                <div><img src={img16} alt={''}/></div>
+                                <div><img src={img3} alt={''}/></div>
                                 <div><img src={img12} alt={''}/></div>
                                 <div><img src={img13} alt={''}/></div>
                             </Slider>

@@ -8,9 +8,10 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, getReserved}) => 
     const [adult, setAdult] = useState(2);
     const [baby, setBaby] = useState(0);
     const [dog, setDog] = useState(0);
+    const [bedding, setBedding] = useState(0);
     const [guestRoom, setGuestRoom] = useState('N');
     const [barbecue, setBarbecue] = useState('N');
-    const [barbecueEvent, setBarbecueEvent] = useState(false);
+    // const [barbecueEvent, setBarbecueEvent] = useState(false);
     const [price, setPrice] = useState(0);
     const [priceOption, setPriceOption] = useState('refundable');
     const [discount, setDiscount] = useState(0);
@@ -31,7 +32,7 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, getReserved}) => 
 
     useEffect(() => {
         calcPrice();
-    }, [howMany, guestRoom, barbecue, barbecueEvent, priceOption])
+    }, [howMany, bedding, guestRoom, barbecue, priceOption])
 
     const saveReservation = () => {
 
@@ -40,7 +41,7 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, getReserved}) => 
             return false;
         }
 
-        axios.post('/api/saveReservation', {picked, name, phone, adult, baby, dog, guestRoom, barbecue, barbecueEvent, price, priceOption})
+        axios.post('/api/saveReservation', {picked, name, phone, adult, baby, dog, bedding, guestRoom, barbecue, price, priceOption})
             .then(() => {
                 alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${price.toLocaleString()}원입니다.`);
                 window.location.reload();
@@ -58,12 +59,12 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, getReserved}) => 
     const calcPrice = () => {
         const days = picked.length - 1;
 
-        let price = (300000 + (12000 * (howMany - 2))) * days;
+        let price = (300000 + (12000 * (howMany - 2))) * days  + (10000 * bedding);
 
         if (guestRoom === 'Y') {
             price += 50000 * days;
         }
-        if (barbecue === 'Y' && barbecueEvent === false) {
+        if (barbecue === 'Y') {
             price += 20000;
         }
         if (priceOption === 'nonrefundable') {
@@ -109,6 +110,13 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, getReserved}) => 
                     <span>{dog}</span>
                     <button onClick={() => setDog(dog + 1)}>+</button>
                 </div>
+                <br/>
+                <div>
+                    <p>추가침구</p>
+                    <button onClick={() => {if (bedding > 0) setBedding(bedding - 1)}}>-</button>
+                    <span>{bedding}</span>
+                    <button onClick={() => setBedding(bedding + 1)}>+</button>
+                </div>
             </div>
 
             {
@@ -132,15 +140,15 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, getReserved}) => 
                     <input type='radio' id='barbecueN' onClick={() => setBarbecue('N')} checked={barbecue === 'N'}/>
                     <label htmlFor='barbecueN'><span/>아니오</label>
                 </div>
-                {
-                    barbecue === 'Y' &&
-                    <p>
-                        ★★★유투브 영상 댓글 이벤트★★★<br/>
-                        숙박 하신 후 <a href='https://youtu.be/2PQT69JwiEY' target='_blank'>숙소 소개영상</a>에 댓글을 달아 주시면 바베큐를 무료로 이용하실 수 있습니다.<br/>
-                        이벤트에 참여하시려면 체크하세요
-                        <input type='checkbox' onClick={(e) => setBarbecueEvent(e.target.checked)}/>
-                    </p>
-                }
+                {/*{*/}
+                {/*    barbecue === 'Y' &&*/}
+                {/*    <p>*/}
+                {/*        ★★★유투브 영상 댓글 이벤트★★★<br/>*/}
+                {/*        숙박 하신 후 <a href='https://youtu.be/2PQT69JwiEY' target='_blank'>숙소 소개영상</a>에 댓글을 달아 주시면 바베큐를 무료로 이용하실 수 있습니다.<br/>*/}
+                {/*        이벤트에 참여하시려면 체크하세요*/}
+                {/*        <input type='checkbox' onClick={(e) => setBarbecueEvent(e.target.checked)}/>*/}
+                {/*    </p>*/}
+                {/*}*/}
             </div>
 
             <div className='PriceOption'>
@@ -179,23 +187,27 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, getReserved}) => 
                         <p><b>인원초과:</b> 12,000원 x {howMany - 2}명 x {picked.length - 1}박</p>
                     }
                     {
+                        bedding > 0 &&
+                        <p><b>추가침구:</b> 10,000원 x {bedding}개</p>
+                    }
+                    {
                         guestRoom === 'Y' &&
                         <p><b>사랑방:</b> 50,000원 x {picked.length - 1}박</p>
                     }
                     {
                         barbecue === 'Y' &&
-                        <p><b>바베큐:</b> {barbecueEvent ? '0원' : '20,000원'}</p>
+                        <p><b>바베큐:</b> 20,000원</p>
                     }
                     {
                         discount > 0 &&
-                        <p><b>환불옵션 할인금액:</b> {discount}원</p>
+                        <p><b>환불불가할인:</b> {discount.toLocaleString()}원</p>
                     }
                 </div>
             </div>
 
             <div className='Deposit'>
                 <h2>입금하기</h2>
-                <div className='BankAccount'>카카오뱅크 3333058451192 남은비</div>
+                <div className='BankAccount'>카카오 3333058451192 남은비</div>
                 <span>입금하실 분 성함:</span>
                 <input type='text' size='6' onChange={(e) => setName(e.target.value)}/><br/>
                 <span>전화번호:</span>
