@@ -234,3 +234,23 @@
     text-decoration: underline;
   }
 }
+
+.ModalTitle {
+  text-align: center;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.ModalList {
+  padding-left: 10px;
+}
+
+.BtnWrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .ModalBtn {
+    width: 48%;
+    height: 30px;
+  }
+}
