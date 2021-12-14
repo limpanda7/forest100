@@ -122,6 +122,7 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
     const modalStyle = {
         content: {
             width: '80%',
+            maxWidth: '600px',
             maxHeight: '80%',
             top: '50%',
             left: '50%',
