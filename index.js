@@ -23,6 +23,10 @@ connection.connect();
 const token = '1857829748:AAEQqFmUc4AWxad1-t1KRjQaXoXORjV91I4';
 const bot = new TelegramBot(token, {polling: true});
 
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static(path.join(__dirname, "client/build")));
+}
+
 // 백년한옥별채 API
 app.get('/api/getReserved', (req, res) => {
     connection.query('SELECT * FROM reservation', (err, data) => {
@@ -81,12 +85,8 @@ app.post('/api/saveReservation2', (req, res) => {
     });
 })
 
-// 리액트 정적 파일 제공
-app.use(express.static(path.join(__dirname, 'client/build')));
-
-// 라우트 설정
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname+'/client/public/index.html'));
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "client/build", "index.html"));
 });
 
 // 기본 포트를 app 객체에 설정
