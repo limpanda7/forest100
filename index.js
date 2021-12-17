@@ -88,6 +88,14 @@ app.post('/api/saveReservation2', (req, res) => {
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "client/build", "index.html"));
 });
+app.get("/forest", (req, res) => {
+    console.log('forest')
+    res.sendFile(path.join(__dirname, "client/build", "index.html"));
+});
+app.get("/on-off", (req, res) => {
+    console.log('on-off')
+    res.sendFile(path.join(__dirname, "client/build", "index.html"));
+});
 
 // 기본 포트를 app 객체에 설정
 const port = process.env.PORT || 5000;
