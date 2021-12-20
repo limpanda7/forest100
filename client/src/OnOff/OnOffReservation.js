@@ -3,7 +3,7 @@ import axios from "axios";
 import ReactModal from 'react-modal';
 import './OnOff.scss';
 
-const OnOffReservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
+const OnOffReservation = ({picked, setPicked, setCurrentPage}) => {
 
     const [howMany, setHowMany] = useState(4);
     const [adult, setAdult] = useState(4);
