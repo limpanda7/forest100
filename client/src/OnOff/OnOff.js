@@ -53,6 +53,8 @@ const OnOff = () => {
         if (picked.length === 0) {
             alert('예약 날짜를 선택해주세요!')
             return false;
+        } else if (picked.length === 1) {
+            alert('체크인 날짜와 체크아웃 날짜를 선택해주세요.')
         } else {
             setCurrentPage('Reservation');
             window.scrollTo(0, 0);
