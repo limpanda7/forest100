@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import axios from "axios";
 import './Forest.scss';
 
-const ForestReservation = ({picked, setPicked, setCurrentPage, getReserved}) => {
+const ForestReservation = ({picked, setPicked, setCurrentPage}) => {
 
     const [howMany, setHowMany] = useState(2);
     const [adult, setAdult] = useState(2);
@@ -60,6 +60,9 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, getReserved}) => 
         const days = picked.length - 1;
 
         let price = (300000 + (12000 * (howMany - 2))) * days  + (10000 * bedding);
+        if (picked.includes('2022-01-01')) {
+            price = (330000 + (12000 * (howMany - 2))) * days  + (10000 * bedding);
+        }
 
         if (guestRoom === 'Y') {
             price += 50000 * days;
@@ -181,7 +184,7 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, getReserved}) => 
                 <h2>총 이용요금</h2>
                 <h2 className='Price'>{price.toLocaleString()}원</h2>
                 <div className='PriceDetail'>
-                    <p><b>2인기준:</b> 300,000원 x {picked.length - 1}박</p>
+                    <p><b>2인기준:</b> {picked.includes('2022-01-01')? '330,000원' :'300,000원'}x {picked.length - 1}박</p>
                     {
                         howMany > 2 &&
                         <p><b>인원초과:</b> 12,000원 x {howMany - 2}명 x {picked.length - 1}박</p>
