@@ -62,7 +62,7 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage}) => {
                 dayArr.push('holiday');
             } else if (dayIdx === 0 || dayIdx === 6) {
                 dayArr.push('weekend');
-            } else if (date.slice(5, 7) === '01' || date.slice(5, 7) === '02' || date.slice(5, 7) === '03') {
+            } else if (date.slice(5, 7) === '01' || date.slice(5, 7) === '02') {
                 dayArr.push('weekdayDiscount');
             } else {
                 dayArr.push('weekday');
