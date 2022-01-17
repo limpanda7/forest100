@@ -109,7 +109,7 @@ const OnOff = () => {
         <Layout>
             <div className="OnOff">
                 <Helmet>
-                    <title>::: ON OFF 스테이 :::</title>
+                    <title>::: 온오프스테이 :::</title>
                 </Helmet>
                 {
                     currentPage === 'Home' &&

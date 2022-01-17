@@ -104,7 +104,7 @@ const Forest = ({ history }) => {
         <Layout>
             <div className="Forest">
                 <Helmet>
-                    <title>::: 백년 한옥 별채 :::</title>
+                    <title>::: 백년한옥별채 :::</title>
                 </Helmet>
             {
                 currentPage === 'Home' &&
