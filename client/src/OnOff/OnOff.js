@@ -140,6 +140,12 @@ const OnOff = () => {
                             </Slider>
                         </div>
 
+                        <iframe className='Video'
+                                src="https://www.youtube.com/embed/glQLv5OyDQ8"
+                                title="YouTube video player" frameBorder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen></iframe>
+
                         <ul className='List'>
                             <li>주말 예약은 집 전체를 대여하며, 평일 예약은 집의 일부분(침실 1, 영화방, 거실)을 대여합니다.</li>
                             <li>공기가 맑고 조용하며, 주변에 힐링 관광지가 있어 관광과 휴식을 동시에 누리기에 적합합니다.</li>
