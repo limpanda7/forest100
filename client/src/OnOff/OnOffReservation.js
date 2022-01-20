@@ -62,8 +62,8 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage}) => {
                 dayArr.push('holiday');
             } else if (dayIdx === 0 || dayIdx === 6) {
                 dayArr.push('weekend');
-            } else if (date.slice(5, 7) === '01' || date.slice(5, 7) === '02') {
-                dayArr.push('weekdayDiscount');
+            // } else if (date.slice(5, 7) === '01' || date.slice(5, 7) === '02') {
+            //     dayArr.push('weekdayDiscount');
             } else {
                 dayArr.push('weekday');
             }
@@ -74,18 +74,18 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage}) => {
                 tempPrice += 400000;
             } else if (dayArr[i + 1] === 'weekday') {   // 일월화수목
                 if (studentEvent === 'Y') {
-                    tempPrice += 135000;
+                    tempPrice += 180000;
                 } else {
-                    tempPrice += 150000;
+                    tempPrice += 200000;
                 }
             } else if (dayArr[i + 1] === 'weekend') {    // 금토
                 tempPrice += 300000;
-            } else if (dayArr[i + 1] === 'weekdayDiscount') {   // 1~3월 평일 할인
-                if (studentEvent === 'Y') {
-                    tempPrice += 90000;
-                } else {
-                    tempPrice += 100000;
-                }
+            // } else if (dayArr[i + 1] === 'weekdayDiscount') {   // 1~3월 평일 할인
+            //     if (studentEvent === 'Y') {
+            //         tempPrice += 90000;
+            //     } else {
+            //         tempPrice += 100000;
+            //     }
             }
         }
 
@@ -95,7 +95,7 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage}) => {
             totalPrice += 20000;
         }
         if (priceOption === 'nonrefundable') {
-            setDiscount(price * 0.1);
+            setDiscount(totalPrice * 0.1);
             totalPrice *= 0.9;
         } else {
             setDiscount(0);
