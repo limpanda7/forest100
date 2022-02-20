@@ -1,14 +1,14 @@
 import React, {useState, useEffect} from 'react';
 import axios from "axios";
-import moment from 'moment';
 import { Helmet } from 'react-helmet';
-import Slider from "react-slick";
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
+import moment from 'moment';
 import {withRouter} from "react-router-dom";
 import './Forest.scss';
 import ForestReservation from "./ForestReservation";
 import Layout from "../Layout/Layout";
+import Slider from "react-slick";
 
 import img1 from "../images/Forest/1.webp";
 import img2 from "../images/Forest/2.jpg";
