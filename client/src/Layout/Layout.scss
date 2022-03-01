@@ -11,6 +11,7 @@
     width: 100%;
     height: 50px;
     display: flex;
+    justify-content: center;
     align-items: center;
     background: darkcyan;
     z-index: 10;
@@ -20,10 +21,17 @@
       color: white;
       cursor: pointer;
       padding: 10px;
+      position: absolute;
+      top: 0;
+      left: 10px;
+    }
+
+    .Path {
+      color: white;
     }
   }
 
   .Children {
-    padding: 60px 10px 10px 10px;
+    padding: 60px 15px 15px 15px;
   }
 }

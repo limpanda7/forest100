@@ -109,10 +109,10 @@ const Forest = ({ history }) => {
             {
                 currentPage === 'Home' &&
                     <>
-                        <h2 className='Title'>
+                        <div className='Title'>
                             <span>백년 한옥 별채</span>에서<br/>
                             편안한 시골체험을 해보세요.
-                        </h2>
+                        </div>
 
                         <div className='Slider'>
                             <Slider {...sliderSetting}>

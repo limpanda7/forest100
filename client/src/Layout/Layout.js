@@ -1,14 +1,25 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {withRouter, Link} from 'react-router-dom';
 import './Layout.scss';
 
-const Layout = ({ children }) => {
+const Layout = ({ children, history }) => {
+
     return (
         <div className={'Layout'}>
             <div className={'Header'}>
                 <Link to='/'>
-                    {'<'} 숙소목록
+                    {'<'}
                 </Link>
+                <div className='Path'>
+                    {
+                        history.location.pathname === '/forest' &&
+                        '백년 한옥 별채'
+                    }
+                    {
+                        history.location.pathname === '/on-off' &&
+                            'ON OFF 스테이'
+                    }
+                </div>
             </div>
             <div className={'Children'}>
                 {children}
@@ -17,4 +28,4 @@ const Layout = ({ children }) => {
     );
 }
 
-export default Layout;
+export default withRouter(Layout);
