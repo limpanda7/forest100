@@ -205,7 +205,7 @@ const OnOff = () => {
 
                         <p className='Ptitle'>BEDROOM 2</p>
                         <ul>
-                            <li>퀸사이즈 침대/침구</li>
+                            <li>퀸사이즈 침대/침구/에어컨</li>
                             <li>전신거울/빗/드라이기</li>
                         </ul>
 
