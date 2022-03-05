@@ -135,8 +135,6 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage}) => {
 
     return (
         <div className='Reservation'>
-            <button onClick={() => {setCurrentPage('Home'); setPicked([])}}>뒤로가기</button>
-
             <h2>선택한 날짜</h2>
             <ul>
                 {picked.map(element => {return <li>{element}</li>})}

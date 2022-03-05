@@ -101,6 +101,11 @@ const OnOff = () => {
         setPicked(tempArr);
     }
 
+    const goToHome = () => {
+        setCurrentPage('Home');
+        setPicked([]);
+    }
+
     const sliderSetting = {
         dots: true,
         infinite: true,
@@ -112,7 +117,7 @@ const OnOff = () => {
     };
 
     return (
-        <Layout>
+        <Layout currentPage={currentPage} goToHome={goToHome}>
             <div className="OnOff">
                 <Helmet>
                     <title>::: 온오프스테이 :::</title>

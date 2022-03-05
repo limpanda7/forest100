@@ -59,10 +59,10 @@ const ForestReservation = ({picked, setPicked, setCurrentPage}) => {
     const calcPrice = () => {
         const days = picked.length - 1;
 
-        let price = (300000 + (12000 * (howMany - 2))) * days  + (10000 * bedding);
-        if (picked.includes('2022-01-01')) {
-            price = (330000 + (12000 * (howMany - 2))) * days  + (10000 * bedding);
-        }
+        let price = (250000 + (12000 * (howMany - 2))) * days  + (10000 * bedding);
+        // if (picked.includes('2022-01-01')) {
+        //     price = (330000 + (12000 * (howMany - 2))) * days  + (10000 * bedding);
+        // }
 
         if (guestRoom === 'Y') {
             price += 50000 * days;
@@ -86,8 +86,6 @@ const ForestReservation = ({picked, setPicked, setCurrentPage}) => {
 
     return (
         <div className='Reservation'>
-            <button onClick={() => {setCurrentPage('Home'); setPicked([])}}>뒤로가기</button>
-
             <h2>선택한 날짜</h2>
             <ul>
                 {picked.map(element => {return <li>{element}</li>})}

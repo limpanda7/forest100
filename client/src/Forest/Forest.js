@@ -27,7 +27,7 @@ const Forest = ({ history }) => {
     const [showLocation, setShowLocation] = useState(false);
     const [showRefund, setShowRefund] = useState(false);
     const [picked, setPicked] = useState([]);
-    const [currentPage, setCurrentPage] = useState('Home');
+    const [currentPage, setCurrentPage] = useState('Home');     // Home, Reservation
 
     useEffect(() => {
         getReserved();
@@ -90,6 +90,11 @@ const Forest = ({ history }) => {
         setPicked(tempArr);
     }
 
+    const goToHome = () => {
+        setCurrentPage('Home');
+        setPicked([]);
+    }
+
     const sliderSetting = {
         dots: true,
         infinite: true,
@@ -101,7 +106,7 @@ const Forest = ({ history }) => {
     };
 
     return (
-        <Layout>
+        <Layout currentPage={currentPage} goToHome={goToHome}>
             <div className="Forest">
                 <Helmet>
                     <title>::: 백년한옥별채 :::</title>
@@ -214,8 +219,7 @@ const Forest = ({ history }) => {
                         <hr/>
 
                         <h2>이용요금</h2>
-                        <p>성인 2인 기준: 1박 300,000원</p>
-                        <p>(신정: 330,000원)</p>
+                        <p>성인 2인 기준: 1박 250,000원</p>
                         <ul className='List'>
                             <li>2인 초과 시 1인당: 1박 12,000원</li>
                             <li>추가침구: 개당 10,000원</li>

@@ -16,14 +16,18 @@
     background: darkcyan;
     z-index: 10;
 
-    a {
+    .BackWrap {
       text-decoration: none;
       color: white;
       cursor: pointer;
-      padding: 10px;
       position: absolute;
-      top: 0;
-      left: 10px;
+      top: 12px;
+      left: 12px;
+      display: flex;
+    }
+
+    .Back {
+      margin-left: 5px;
     }
 
     .Path {
