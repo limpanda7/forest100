@@ -259,7 +259,7 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, reservedName, res
                     최종 금액은 {price.toLocaleString()}원 입니다.
                 </div>
                 <div className='BtnWrap'>
-                    <button className='ModalBtn Alone' onClick={() => saveReservation()}>확인</button>
+                    <button className='ModalBtn Alone' onClick={() => saveReservation()}>예약하기</button>
                 </div>
             </ReactModal>
         </div>
