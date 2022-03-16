@@ -3,7 +3,7 @@ import axios from "axios";
 import ReactModal from 'react-modal';
 import './OnOff.scss';
 
-const OnOffReservation = ({picked, setPicked, setCurrentPage}) => {
+const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, reservedPhone}) => {
 
     const [howMany, setHowMany] = useState(4);
     const [adult, setAdult] = useState(4);
@@ -20,6 +20,8 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage}) => {
     const [phone, setPhone] = useState('');
     const [showRefund, setShowRefund] = useState(false);
     const [showModal, setShowModal] = useState(false);
+    const [showRevisitModal, setShowRevisitModal] = useState(false);
+    const [revisit, setRevisit] = useState('N');
 
     useEffect(() => {
         calcPrice();
@@ -33,8 +35,18 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage}) => {
         calcPrice();
     }, [howMany, bedding, barbecue, studentEvent, priceOption])
 
+    const checkBeforeSave = () => {
+        if (reservedName.includes(name) && reservedPhone.includes(phone)) {
+            setPrice(price * 0.7);
+            setShowRevisitModal(true);
+            setRevisit('Y');
+        } else {
+            saveReservation();
+        }
+    }
+
     const saveReservation = () => {
-        axios.post('/api/saveReservation2', {picked, name, phone, adult, baby, dog, bedding, barbecue, studentEvent, price, priceOption})
+        axios.post('/api/saveReservation2', {picked, name, phone, adult, baby, dog, bedding, barbecue, studentEvent, price, priceOption, revisit})
             .then(() => {
                 alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${price.toLocaleString()}원입니다.`);
                 window.location.href = '/';
@@ -274,7 +286,21 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage}) => {
                 </ul>
                 <div className='BtnWrap'>
                     <button className='ModalBtn' onClick={() => setShowModal(false)}>거부</button>
-                    <button className='ModalBtn' onClick={() => saveReservation()}>동의</button>
+                    <button className='ModalBtn' onClick={() => checkBeforeSave()}>동의</button>
+                </div>
+            </ReactModal>
+
+            <ReactModal
+                isOpen={showRevisitModal}
+                style={modalStyle}
+            >
+                <div className='ModalTitle'>재방문 할인</div>
+                <div className='ModalContent'>
+                    다시 한 번 찾아주셔서 감사합니다. 30% 할인을 제공드립니다.<br/>
+                    최종 금액은 {price.toLocaleString()}원 입니다.
+                </div>
+                <div className='BtnWrap'>
+                    <button className='ModalBtn Alone' onClick={() => saveReservation()}>확인</button>
                 </div>
             </ReactModal>
 

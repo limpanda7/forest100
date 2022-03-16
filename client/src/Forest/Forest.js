@@ -24,6 +24,8 @@ import img10 from "../images/Forest/10.jpg";
 const Forest = ({ history }) => {
 
     const [reserved, setReserved] = useState([]);
+    const [reservedName, setReservedName] = useState([]);
+    const [reservedPhone, setReservedPhone] = useState([]);
     const [showLocation, setShowLocation] = useState(false);
     const [showRefund, setShowRefund] = useState(false);
     const [picked, setPicked] = useState([]);
@@ -36,11 +38,23 @@ const Forest = ({ history }) => {
     const getReserved = () => {
         axios.get('/api/getReserved')
             .then((res) => {
-                let tempArr = [];
+                let tempReserved = [];
+                let tempReservedName = [];
+                let tempReservedPhone = [];
                 for (const element of res.data) {
-                    tempArr.push(moment(element.date).format('YYYY-MM-DD'));
+                    tempReserved.push(moment(element.date).format('YYYY-MM-DD'));
+
+                    if (!tempReservedName.includes(element.name)) {
+                        tempReservedName.push(element.name);
+                    }
+
+                    if (!tempReservedPhone.includes(element.phone)) {
+                        tempReservedPhone.push(element.phone);
+                    }
                 }
-                setReserved(tempArr);
+                setReserved(tempReserved);
+                setReservedName(tempReservedName);
+                setReservedPhone(tempReservedPhone);
             });
     }
 
@@ -273,7 +287,7 @@ const Forest = ({ history }) => {
             }
             {
                 currentPage === 'Reservation' &&
-                    <ForestReservation picked={picked} setPicked={setPicked} setCurrentPage={setCurrentPage} getReserved={getReserved}/>
+                    <ForestReservation picked={picked} setPicked={setPicked} setCurrentPage={setCurrentPage} getReserved={getReserved} reservedName={reservedName} reservedPhone={reservedPhone}/>
             }
             </div>
         </Layout>

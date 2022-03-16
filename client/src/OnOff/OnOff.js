@@ -29,6 +29,8 @@ import img16 from '../images/OnOff/16.jpg';
 const OnOff = () => {
 
     const [reserved, setReserved] = useState([]);
+    const [reservedName, setReservedName] = useState([]);
+    const [reservedPhone, setReservedPhone] = useState([]);
     const [showLocation, setShowLocation] = useState(false);
     const [showTour, setShowTour] = useState(false);
     const [showRefund, setShowRefund] = useState(false);
@@ -42,11 +44,23 @@ const OnOff = () => {
     const getReserved = () => {
         axios.get('/api/getReserved2')
             .then((res) => {
-                let tempArr = [];
+                let tempReserved = [];
+                let tempReservedName = [];
+                let tempReservedPhone = [];
                 for (const element of res.data) {
-                    tempArr.push(moment(element.date).format('YYYY-MM-DD'));
+                    tempReserved.push(moment(element.date).format('YYYY-MM-DD'));
+
+                    if (!tempReservedName.includes(element.name)) {
+                        tempReservedName.push(element.name);
+                    }
+
+                    if (!tempReservedPhone.includes(element.phone)) {
+                        tempReservedPhone.push(element.phone);
+                    }
                 }
-                setReserved(tempArr);
+                setReserved(tempReserved);
+                setReservedName(tempReservedName);
+                setReservedPhone(tempReservedPhone);
             });
     }
 
@@ -369,7 +383,7 @@ const OnOff = () => {
                 }
                 {
                     currentPage === 'Reservation' &&
-                    <OnOffReservation picked={picked} setPicked={setPicked} setCurrentPage={setCurrentPage} getReserved={getReserved}/>
+                    <OnOffReservation picked={picked} setPicked={setPicked} setCurrentPage={setCurrentPage} getReserved={getReserved} reservedName={reservedName} reservedPhone={reservedPhone}/>
                 }
             </div>
         </Layout>

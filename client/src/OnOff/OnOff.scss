@@ -223,6 +223,10 @@
   padding-left: 10px;
 }
 
+.ModalContent {
+  margin: 10px 0;
+}
+
 .BtnWrap {
   display: flex;
   justify-content: space-between;
@@ -230,5 +234,9 @@
   .ModalBtn {
     width: 48%;
     height: 30px;
+
+    &.Alone {
+      width: 100%;
+    }
   }
 }

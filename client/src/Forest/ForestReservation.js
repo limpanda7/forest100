@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import axios from "axios";
 import './Forest.scss';
+import ReactModal from "react-modal";
 
-const ForestReservation = ({picked, setPicked, setCurrentPage}) => {
+const ForestReservation = ({picked, setPicked, setCurrentPage, reservedName, reservedPhone}) => {
 
     const [howMany, setHowMany] = useState(2);
     const [adult, setAdult] = useState(2);
@@ -18,6 +19,8 @@ const ForestReservation = ({picked, setPicked, setCurrentPage}) => {
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [showRefund, setShowRefund] = useState(false);
+    const [showRevisitModal, setShowRevisitModal] = useState(false);
+    const [revisit, setRevisit] = useState('N');
 
     useEffect(() => {
         calcPrice();
@@ -34,6 +37,16 @@ const ForestReservation = ({picked, setPicked, setCurrentPage}) => {
         calcPrice();
     }, [howMany, bedding, guestRoom, barbecue, priceOption])
 
+    const checkBeforeSave = () => {
+        if (reservedName.includes(name) && reservedPhone.includes(phone)) {
+            setPrice(price * 0.7);
+            setShowRevisitModal(true);
+            setRevisit('Y');
+        } else {
+            saveReservation();
+        }
+    }
+
     const saveReservation = () => {
 
         if (name === '' || phone === '') {
@@ -41,7 +54,7 @@ const ForestReservation = ({picked, setPicked, setCurrentPage}) => {
             return false;
         }
 
-        axios.post('/api/saveReservation', {picked, name, phone, adult, baby, dog, bedding, guestRoom, barbecue, price, priceOption})
+        axios.post('/api/saveReservation', {picked, name, phone, adult, baby, dog, bedding, guestRoom, barbecue, price, priceOption, revisit})
             .then(() => {
                 alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${price.toLocaleString()}원입니다.`);
                 window.location.href = '/';
@@ -83,6 +96,20 @@ const ForestReservation = ({picked, setPicked, setCurrentPage}) => {
         if (showRefund) setShowRefund(false);
         else setShowRefund(true);
     }
+
+    const modalStyle = {
+        content: {
+            width: '80%',
+            maxWidth: '600px',
+            maxHeight: '80%',
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)',
+        },
+    };
 
     return (
         <div className='Reservation'>
@@ -219,9 +246,22 @@ const ForestReservation = ({picked, setPicked, setCurrentPage}) => {
                 </p>
             </div>
 
-            <button className='ReservationBtn' onClick={() => saveReservation()}>예약완료</button>
+            <button className='ReservationBtn' onClick={() => checkBeforeSave()}>예약완료</button>
 
 
+            <ReactModal
+                isOpen={showRevisitModal}
+                style={modalStyle}
+            >
+                <div className='ModalTitle'>재방문 할인</div>
+                <div className='ModalContent'>
+                    다시 한 번 찾아주셔서 감사합니다. 30% 할인을 제공드립니다.<br/>
+                    최종 금액은 {price.toLocaleString()}원 입니다.
+                </div>
+                <div className='BtnWrap'>
+                    <button className='ModalBtn Alone' onClick={() => saveReservation()}>확인</button>
+                </div>
+            </ReactModal>
         </div>
     );
 }

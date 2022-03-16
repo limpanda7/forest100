@@ -37,9 +37,9 @@ app.post('/api/saveReservation', (req, res) => {
     const body = req.body;
     let values = [];
     for (const element of body.picked) {
-        values.push([element, body.name, body.phone, body.adult, body.baby, body.dog, body.bedding, body.guestRoom, body.barbecue, body.price, body.priceOption, "N"]);
+        values.push([element, body.name, body.phone, body.adult, body.baby, body.dog, body.bedding, body.guestRoom, body.barbecue, body.price, body.priceOption, body.revisit, "N"]);
     }
-    connection.query('INSERT INTO reservation (date, name, phone, adult, baby, dog, bedding, guest_room, barbecue, price, price_option, confirm) VALUES ?', [values], (err, data) => {
+    connection.query('INSERT INTO reservation (date, name, phone, adult, baby, dog, bedding, guest_room, barbecue, price, price_option, revisit, confirm) VALUES ?', [values], (err, data) => {
         res.send(data);
         bot.sendMessage('-679453093',
 `백년한옥별채 신규 예약이 들어왔습니다.\n
@@ -51,7 +51,8 @@ app.post('/api/saveReservation', (req, res) => {
 사랑방 이용여부: ${body.guestRoom}\n
 바베큐 이용여부: ${body.barbecue}\n
 이용금액: ${body.price}\n
-환불옵션: ${body.priceOption === 'refundable' ? '환불가능' : '환불불가'}`
+환불옵션: ${body.priceOption === 'refundable' ? '환불가능' : '환불불가'}\n
+재방문여부: ${body.revisit}`
         );
     });
 })
@@ -66,9 +67,9 @@ app.post('/api/saveReservation2', (req, res) => {
     const body = req.body;
     let values = [];
     for (const element of body.picked) {
-        values.push([element, body.name, body.phone, body.adult, body.baby, body.dog, body.bedding, body.barbecue, body.studentEvent, body.price, body.priceOption, "N"]);
+        values.push([element, body.name, body.phone, body.adult, body.baby, body.dog, body.bedding, body.barbecue, body.studentEvent, body.price, body.priceOption, body.revisit, "N"]);
     }
-    connection.query('INSERT INTO reservation2 (date, name, phone, adult, baby, dog, bedding, barbecue, student_event, price, price_option, confirm) VALUES ?', [values], (err, data) => {
+    connection.query('INSERT INTO reservation2 (date, name, phone, adult, baby, dog, bedding, barbecue, student_event, price, price_option, revisit, confirm) VALUES ?', [values], (err, data) => {
         res.send(data);
         bot.sendMessage('-558393640',
 `온오프스테이 신규 예약이 들어왔습니다.\n
@@ -80,7 +81,8 @@ app.post('/api/saveReservation2', (req, res) => {
 바베큐 이용여부: ${body.barbecue}\n
 대학생 평일할인: ${body.studentEvent}\n
 이용금액: ${body.price}\n
-환불옵션: ${body.priceOption === 'refundable' ? '환불가능' : '환불불가'}`
+환불옵션: ${body.priceOption === 'refundable' ? '환불가능' : '환불불가'}\n
+재방문여부: ${body.revisit}`
         );
     });
 })
