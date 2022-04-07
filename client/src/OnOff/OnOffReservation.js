@@ -22,6 +22,8 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
     const [showModal, setShowModal] = useState(false);
     const [showRevisitModal, setShowRevisitModal] = useState(false);
     const [revisit, setRevisit] = useState('N');
+    const [allWeekDay, setAllWeekDay] = useState(false);
+    const [wholeUse, setWholeUse] = useState('N');
 
     useEffect(() => {
         calcPrice();
@@ -33,7 +35,7 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
 
     useEffect(() => {
         calcPrice();
-    }, [howMany, bedding, barbecue, studentEvent, priceOption])
+    }, [howMany, bedding, barbecue, studentEvent, priceOption, wholeUse])
 
     const checkBeforeSave = () => {
         if (reservedName.includes(name) && reservedPhone.includes(phone)) {
@@ -46,7 +48,7 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
     }
 
     const saveReservation = () => {
-        axios.post('/api/saveReservation2', {picked, name, phone, adult, baby, dog, bedding, barbecue, studentEvent, price, priceOption, revisit})
+        axios.post('/api/saveReservation2', {picked, name, phone, adult, baby, dog, bedding, barbecue, studentEvent, price, priceOption, revisit, wholeUse})
             .then(() => {
                 alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${price.toLocaleString()}원입니다.`);
                 window.location.href = '/';
@@ -63,7 +65,10 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
 
     const calcPrice = () => {
 
-        const holidays = ['2022-01-01','2022-01-02','2022-01-29','2022-01-30','2022-01-31','2022-02-01','2022-02-02'];
+        // 연휴
+        const holidays = ['2022-09-09','2022-09-10','2022-09-11','2022-09-12'];
+        // 공휴일에 대한 주말처리
+        const weekends = ['2022-05-05','2022-06-01','2022-06-06','2022-08-15','2022-10-03','2022-10-10'];
         let tempPrice = 0;
 
         let dayArr = [];
@@ -72,7 +77,7 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
             const dayIdx = new Date(date).getDay();
             if (holidays.includes(date)) {
                 dayArr.push('holiday');
-            } else if (dayIdx === 0 || dayIdx === 6) {
+            } else if (dayIdx === 0 || dayIdx === 6 || weekends.includes(date)) {
                 dayArr.push('weekend');
             // } else if (date.slice(5, 7) === '01' || date.slice(5, 7) === '02') {
             //     dayArr.push('weekdayDiscount');
@@ -103,9 +108,17 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
 
         const days = picked.length - 1;
         let totalPrice = tempPrice + (12000 * (howMany - 4)) * days + (10000 * bedding);
+
+        if (!dayArr.includes('holiday') && !dayArr.includes('weekend')) {
+            setAllWeekDay(true);
+            if (wholeUse === 'Y')
+                totalPrice += 50000;
+        }
+
         if (barbecue === 'Y') {
             totalPrice += 20000;
         }
+
         if (priceOption === 'nonrefundable') {
             setDiscount(totalPrice * 0.1);
             totalPrice *= 0.9;
@@ -181,6 +194,19 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
                 </div>
             </div>
 
+            {
+                allWeekDay &&
+                <div className='Barbecue'>
+                    <h2>집 전체 사용</h2>
+                    <div className='RadioBtn'>
+                        <input type='radio' id='wholeUseY' onClick={() => setWholeUse('Y')} checked={wholeUse === 'Y'}/>
+                        <label htmlFor='wholeUseY'><span/>예</label>
+                        <input type='radio' id='wholeUseN' onClick={() => setWholeUse('N')} checked={wholeUse === 'N'}/>
+                        <label htmlFor='wholeUseN'><span/>아니오</label>
+                    </div>
+                </div>
+            }
+
             <div className='Barbecue'>
                 <h2>바베큐 선택</h2>
                 <div className='RadioBtn'>
@@ -191,16 +217,16 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
                 </div>
             </div>
 
-            <div className='Barbecue'>
-                <h2>대학생 평일 할인</h2>
-                <p>학생증을 인증하시는 대학생에게 평일 10% 할인을 제공합니다.</p>
-                <div className='RadioBtn'>
-                    <input type='radio' id='studentY' onClick={() => setStudentEvent('Y')} checked={studentEvent === 'Y'}/>
-                    <label htmlFor='studentY'><span/>예</label>
-                    <input type='radio' id='studentN' onClick={() => setStudentEvent('N')} checked={studentEvent === 'N'}/>
-                    <label htmlFor='studentN'><span/>아니오</label>
-                </div>
-            </div>
+            {/*<div className='Barbecue'>*/}
+            {/*    <h2>대학생 평일 할인</h2>*/}
+            {/*    <p>학생증을 인증하시는 대학생에게 평일 10% 할인을 제공합니다.</p>*/}
+            {/*    <div className='RadioBtn'>*/}
+            {/*        <input type='radio' id='studentY' onClick={() => setStudentEvent('Y')} checked={studentEvent === 'Y'}/>*/}
+            {/*        <label htmlFor='studentY'><span/>예</label>*/}
+            {/*        <input type='radio' id='studentN' onClick={() => setStudentEvent('N')} checked={studentEvent === 'N'}/>*/}
+            {/*        <label htmlFor='studentN'><span/>아니오</label>*/}
+            {/*    </div>*/}
+            {/*</div>*/}
 
             <div className='PriceOption'>
                 <h2>환불옵션 선택</h2>
@@ -240,6 +266,10 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
                     {
                         bedding > 0 &&
                         <p><b>추가침구:</b> 10,000원 x {bedding}개</p>
+                    }
+                    {
+                        wholeUse === 'Y' &&
+                        <p><b>집 전체 사용:</b> 50,000원</p>
                     }
                     {
                         barbecue === 'Y' &&
