@@ -72,7 +72,7 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, reservedName, res
     const calcPrice = () => {
         const days = picked.length - 1;
 
-        let price = (250000 + (12000 * (howMany - 2))) * days  + (10000 * bedding);
+        let price = (300000 + (12000 * (howMany - 2))) * days  + (10000 * bedding);
         // if (picked.includes('2022-01-01')) {
         //     price = (330000 + (12000 * (howMany - 2))) * days  + (10000 * bedding);
         // }
@@ -209,7 +209,7 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, reservedName, res
                 <h2>총 이용요금</h2>
                 <h2 className='Price'>{price.toLocaleString()}원</h2>
                 <div className='PriceDetail'>
-                    <p><b>2인기준:</b> 250,000원 x {picked.length - 1}박</p>
+                    <p><b>2인기준:</b> 300,000원 x {picked.length - 1}박</p>
                     {
                         howMany > 2 &&
                         <p><b>인원초과:</b> 12,000원 x {howMany - 2}명 x {picked.length - 1}박</p>

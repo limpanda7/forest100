@@ -20,6 +20,7 @@ import img7 from "../images/Forest/7.jpg";
 import img8 from "../images/Forest/8.jpg";
 import img9 from "../images/Forest/9.jpg";
 import img10 from "../images/Forest/10.jpg";
+import img11 from "../images/Forest/11.jpg";
 
 const Forest = ({ history }) => {
 
@@ -143,6 +144,7 @@ const Forest = ({ history }) => {
                                 <div><img src={img6} alt={''}/></div>
                                 <div><img src={img7} alt={''}/></div>
                                 <div><img src={img8} alt={''}/></div>
+                                <div><img src={img11} alt={''}/></div>
                                 <div><img src={img9} alt={''}/></div>
                                 <div><img src={img10} alt={''}/></div>
                             </Slider>
@@ -233,7 +235,7 @@ const Forest = ({ history }) => {
                         <hr/>
 
                         <h2>이용요금</h2>
-                        <p>성인 2인 기준: 1박 250,000원</p>
+                        <p>성인 2인 기준: 1박 300,000원</p>
                         <ul className='List'>
                             <li>2인 초과 시 1인당: 1박 12,000원</li>
                             <li>추가침구: 개당 10,000원</li>

@@ -11,8 +11,6 @@ import Layout from "../Layout/Layout";
 
 import img1 from '../images/OnOff/1.jpg';
 import img2 from '../images/OnOff/2.jpg';
-import img3 from '../images/OnOff/3.jpg';
-import img4 from '../images/OnOff/4.jpg';
 import img5 from '../images/OnOff/5.jpg';
 import img6 from '../images/OnOff/6.jpg';
 import img7 from '../images/OnOff/7.jpg';
@@ -24,7 +22,6 @@ import img12 from '../images/OnOff/12.jpg';
 import img13 from '../images/OnOff/13.jpg';
 import img14 from '../images/OnOff/14.jpg';
 import img15 from '../images/OnOff/15.jpg';
-import img16 from '../images/OnOff/16.jpg';
 
 const OnOff = () => {
 
@@ -158,8 +155,6 @@ const OnOff = () => {
                                 <div><img src={img8} alt={''}/></div>
                                 <div><img src={img14} alt={''}/></div>
                                 <div><img src={img15} alt={''}/></div>
-                                <div><img src={img16} alt={''}/></div>
-                                <div><img src={img3} alt={''}/></div>
                                 <div><img src={img12} alt={''}/></div>
                                 <div><img src={img13} alt={''}/></div>
                             </Slider>
@@ -196,15 +191,15 @@ const OnOff = () => {
 
                         <p className='Ptitle'>KITCHEN</p>
                         <ul>
-                            <li>냉장고/인덕션/전기포트/전자레인지/전기그릴</li>
-                            <li>식기/컵/냄비/프라이팬/수저세트/가위/칼/집게/와인오프너/와인잔</li>
-                            <li>원두가루/커피포트</li>
+                            <li>냉장고/인덕션/전자레인지/전기그릴</li>
+                            <li>식기/컵/냄비/프라이팬/수저/가위/칼/집게/와인잔/와인오프너</li>
+                            <li>드립백/전기포트</li>
                         </ul>
 
                         <p className='Ptitle'>SECOND KITCHEN</p>
                         <ul>
                             <li>냉장고</li>
-                            <li>식기/냄비/프라이팬/수저세트/가위/칼/집게/컵</li>
+                            <li>식기/냄비/프라이팬/수저/가위/칼/집게/컵</li>
                         </ul>
 
                         <p className='Ptitle'>LIVINGROOM</p>
@@ -243,7 +238,7 @@ const OnOff = () => {
 
                         <p className='Ptitle'>GARDEN & ROOFTOP</p>
                         <ul>
-                            <li>2인 사이드테이블 및 의자 / 야외조명</li>
+                            <li>4인 테이블 및 의자 / 야외조명</li>
                             <li>바베큐존 (바베큐신청시 화로,토치,집게,숯 제공 / 이용요금 2만원)</li>
                         </ul>
 
