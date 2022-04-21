@@ -145,6 +145,7 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, reservedName, res
                     <span>{bedding}</span>
                     <button onClick={() => setBedding(bedding + 1)}>+</button>
                 </div>
+                <div className='BeddingDesc'>(더블침대와 싱글침대가 준비되어 있으니, 인원수를 고려하여 침구를 적절히 추가해주세요)</div>
             </div>
 
             {
