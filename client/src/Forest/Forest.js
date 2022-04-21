@@ -262,7 +262,10 @@ const Forest = ({ history }) => {
                         <hr/>
 
                         <h2>예약하기</h2>
-                        <p>체크인 날짜와 체크아웃 날짜를 선택해주세요.</p>
+                        <p>
+                            체크인 날짜와 체크아웃 날짜를 선택해주세요.<br/>
+                            (체크인 3시 / 체크아웃 11시)
+                        </p>
                         <Calendar
                             className='Calendar'
                             minDate={new Date()}
