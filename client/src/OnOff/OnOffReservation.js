@@ -194,18 +194,18 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
                 </div>
             </div>
 
-            {
-                allWeekDay &&
-                <div className='Barbecue'>
-                    <h2>집 전체 사용</h2>
-                    <div className='RadioBtn'>
-                        <input type='radio' id='wholeUseY' onClick={() => setWholeUse('Y')} checked={wholeUse === 'Y'}/>
-                        <label htmlFor='wholeUseY'><span/>예</label>
-                        <input type='radio' id='wholeUseN' onClick={() => setWholeUse('N')} checked={wholeUse === 'N'}/>
-                        <label htmlFor='wholeUseN'><span/>아니오</label>
-                    </div>
-                </div>
-            }
+            {/*{*/}
+            {/*    allWeekDay &&*/}
+            {/*    <div className='Barbecue'>*/}
+            {/*        <h2>집 전체 사용</h2>*/}
+            {/*        <div className='RadioBtn'>*/}
+            {/*            <input type='radio' id='wholeUseY' onClick={() => setWholeUse('Y')} checked={wholeUse === 'Y'}/>*/}
+            {/*            <label htmlFor='wholeUseY'><span/>예</label>*/}
+            {/*            <input type='radio' id='wholeUseN' onClick={() => setWholeUse('N')} checked={wholeUse === 'N'}/>*/}
+            {/*            <label htmlFor='wholeUseN'><span/>아니오</label>*/}
+            {/*        </div>*/}
+            {/*    </div>*/}
+            {/*}*/}
 
             <div className='Barbecue'>
                 <h2>바베큐 선택</h2>
@@ -267,10 +267,10 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
                         bedding > 0 &&
                         <p><b>추가침구:</b> 10,000원 x {bedding}개</p>
                     }
-                    {
-                        wholeUse === 'Y' &&
-                        <p><b>집 전체 사용:</b> 50,000원</p>
-                    }
+                    {/*{*/}
+                    {/*    wholeUse === 'Y' &&*/}
+                    {/*    <p><b>집 전체 사용:</b> 50,000원</p>*/}
+                    {/*}*/}
                     {
                         barbecue === 'Y' &&
                         <p><b>바베큐:</b> 20,000원</p>

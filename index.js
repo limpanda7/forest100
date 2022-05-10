@@ -79,11 +79,9 @@ app.post('/api/saveReservation2', (req, res) => {
 인원수: 성인 ${body.adult}명, 유아 ${body.baby}명, 반려견 ${body.dog}마리\n
 추가침구: ${body.bedding}개\n
 바베큐 이용여부: ${body.barbecue}\n
-대학생 평일할인: ${body.studentEvent}\n
 이용금액: ${body.price}\n
 환불옵션: ${body.priceOption === 'refundable' ? '환불가능' : '환불불가'}\n
-재방문여부: ${body.revisit}\n
-평일 전체사용 요청: ${body.wholeUse}`
+재방문여부: ${body.revisit}\n`
         );
     });
 })
