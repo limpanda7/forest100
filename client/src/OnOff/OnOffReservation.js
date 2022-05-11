@@ -171,13 +171,13 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
                     <p>성인</p>
                     <button onClick={() => {if (adult > 1) setAdult(adult - 1)}}>-</button>
                     <span>{adult}</span>
-                    <button onClick={() => setAdult(adult + 1)}>+</button>
+                    <button onClick={() => {if (howMany < 6) setAdult(adult + 1)}}>+</button>
                 </div>
                 <div>
                     <p>유아</p>
                     <button onClick={() => {if (baby > 0) setBaby(baby - 1)}}>-</button>
                     <span>{baby}</span>
-                    <button onClick={() => setBaby(baby + 1)}>+</button>
+                    <button onClick={() => {if (howMany < 6) setBaby(baby + 1)}}>+</button>
                 </div>
                 <div>
                     <p>반려견</p>
@@ -190,7 +190,7 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
                     <p>추가침구</p>
                     <button onClick={() => {if (bedding > 0) setBedding(bedding - 1)}}>-</button>
                     <span>{bedding}</span>
-                    <button onClick={() => setBedding(bedding + 1)}>+</button>
+                    <button onClick={() => {if (bedding < 2) setBedding(bedding + 1)}}>+</button>
                 </div>
             </div>
 
