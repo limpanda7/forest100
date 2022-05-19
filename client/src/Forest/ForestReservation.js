@@ -236,7 +236,7 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, reservedName, res
 
             <div className='Deposit'>
                 <h2>입금하기</h2>
-                <div className='BankAccount'>신한 110292452954 남은비</div>
+                <div className='BankAccount'>카카오뱅크 3333058451192 남은비</div>
                 <span>입금하실 분 성함:</span>
                 <input type='text' size='6' onChange={(e) => setName(e.target.value)}/><br/>
                 <span>전화번호:</span>
