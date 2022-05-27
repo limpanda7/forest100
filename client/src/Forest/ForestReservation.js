@@ -72,7 +72,7 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, reservedName, res
     const calcPrice = () => {
         const days = picked.length - 1;
 
-        let price = (300000 + (12000 * (howMany - 2))) * days  + (10000 * bedding);
+        let price = (global.config.forest + (12000 * (howMany - 2))) * days  + (10000 * bedding);
         // if (picked.includes('2022-01-01')) {
         //     price = (330000 + (12000 * (howMany - 2))) * days  + (10000 * bedding);
         // }
@@ -210,7 +210,7 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, reservedName, res
                 <h2>총 이용요금</h2>
                 <h2 className='Price'>{price.toLocaleString()}원</h2>
                 <div className='PriceDetail'>
-                    <p><b>2인기준:</b> 300,000원 x {picked.length - 1}박</p>
+                    <p><b>2인기준:</b> {global.config.forest.toLocaleString()}원 x {picked.length - 1}박</p>
                     {
                         howMany > 2 &&
                         <p><b>인원초과:</b> 12,000원 x {howMany - 2}명 x {picked.length - 1}박</p>
@@ -237,13 +237,15 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, reservedName, res
             <div className='Deposit'>
                 <h2>입금하기</h2>
                 <div className='BankAccount'>카카오뱅크 3333058451192 남은비</div>
-                <span>입금하실 분 성함:</span>
-                <input type='text' size='6' onChange={(e) => setName(e.target.value)}/><br/>
-                <span>전화번호:</span>
-                <input type='text' size='14' onChange={(e) => setPhone(e.target.value)}/>
                 <p>
                     위 계좌로 <b>{price.toLocaleString()}원</b>을 입금해주세요.<br/>
                     3시간 내에 입금 해 주셔야 예약이 확정됩니다.
+                </p>
+                <p>
+                    <span>입금하실 분 성함:</span>
+                    <input type='text' size='6' onChange={(e) => setName(e.target.value)}/><br/>
+                    <span>전화번호:</span>
+                    <input type='text' size='14' maxLength={11} onChange={(e) => setPhone(e.target.value)}/>
                 </p>
             </div>
 

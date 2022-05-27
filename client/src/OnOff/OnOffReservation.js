@@ -285,13 +285,15 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
             <div className='Deposit'>
                 <h2>입금하기</h2>
                 <div className='BankAccount'>카카오 3333053810252 채민기</div>
-                <span>입금하실 분 성함:</span>
-                <input type='text' size='6' onChange={(e) => setName(e.target.value)}/><br/>
-                <span>전화번호:</span>
-                <input type='text' size='14' onChange={(e) => setPhone(e.target.value)}/>
                 <p>
                     위 계좌로 <b>{price.toLocaleString()}원</b>을 입금해주세요.<br/>
                     3시간 내에 입금 해 주셔야 예약이 확정됩니다.
+                </p>
+                <p>
+                    <span>입금하실 분 성함:</span>
+                    <input type='text' size='6' onChange={(e) => setName(e.target.value)}/><br/>
+                    <span>전화번호:</span>
+                    <input type='text' size='14' onChange={(e) => setPhone(e.target.value)}/>
                 </p>
             </div>
 

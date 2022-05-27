@@ -235,7 +235,7 @@ const Forest = ({ history }) => {
                         <hr/>
 
                         <h2>이용요금</h2>
-                        <p>성인 2인 기준: 1박 300,000원</p>
+                        <p>성인 2인 기준: 1박 {global.config.forest.toLocaleString()}원</p>
                         <ul className='List'>
                             <li>2인 초과 시 1인당: 1박 12,000원</li>
                             <li>추가침구: 개당 10,000원</li>
