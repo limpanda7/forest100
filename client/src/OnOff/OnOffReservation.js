@@ -5,7 +5,7 @@ import './OnOff.scss';
 
 const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, reservedPhone}) => {
 
-    const [howMany, setHowMany] = useState(4);
+    const [howMany, setHowMany] = useState(4);      // 반려견 표함 총 인원수
     const [adult, setAdult] = useState(4);
     const [baby, setBaby] = useState(0);
     const [dog, setDog] = useState(0);
@@ -192,6 +192,12 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
                     <span>{bedding}</span>
                     <button onClick={() => {if (bedding < 2) setBedding(bedding + 1)}}>+</button>
                 </div>
+                {
+                    (adult + baby) >= 5 &&
+                    <div>
+                        <span>(5명 이상일 시 추가침구가 권장됩니다.)</span>
+                    </div>
+                }
             </div>
 
             {/*{*/}
