@@ -321,7 +321,7 @@ const OnOff = () => {
 
                         <h2>PRICE</h2>
                         <p>
-                            4인기준 1박: <b>주말 300,000원 / 평일 200,000원</b><br/>
+                            4인기준 1박: <b>주말 {global.config.onoff_weekend.toLocaleString()}원 / 평일 {global.config.onoff_weekday.toLocaleString()}원</b><br/>
                             설날∙추석에는 연휴요금 적용됩니다.
                         </p>
                         <ul>
