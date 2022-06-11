@@ -191,7 +191,7 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
                     <p>추가침구</p>
                     <button onClick={() => {if (bedding > 0) setBedding(bedding - 1)}}>-</button>
                     <span>{bedding}</span>
-                    <button onClick={() => {if (bedding < 2) setBedding(bedding + 1)}}>+</button>
+                    <button onClick={() => {if (bedding < 1) setBedding(bedding + 1)}}>+</button>
                 </div>
                 {
                     (adult + baby) >= 5 &&
