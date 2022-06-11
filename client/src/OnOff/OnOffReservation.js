@@ -300,7 +300,11 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
                     <span>입금하실 분 성함:</span>
                     <input type='text' size='6' onChange={(e) => setName(e.target.value)}/><br/>
                     <span>전화번호:</span>
-                    <input type='text' size='14' onChange={(e) => setPhone(e.target.value)}/>
+                    <input type='text' size='14' pattern='[0-9]*' value={phone} maxLength={11}
+                           onChange={(e) => {
+                               if (e.target.validity.valid) setPhone(e.target.value)
+                           }}
+                    />
                 </p>
             </div>
 

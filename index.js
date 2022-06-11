@@ -1,13 +1,15 @@
 // 모듈 불러오기
-const express = require('express');
-const mysql = require('mysql');
-const path = require('path');
-const TelegramBot = require('node-telegram-bot-api');
+import express from 'express';
+import mysql from 'mysql';
+import path from 'path';
+import TelegramBot from 'node-telegram-bot-api';
+import axios from 'axios';
+import mms from './mms.js';
 
 // express 객체 생성
 const app = express();
 app.use(express.json())
-app.use(express.urlencoded({ extended: true}))
+app.use(express.urlencoded({extended: true}))
 
 // 데이터베이스 연결
 const connection = mysql.createConnection({
@@ -84,6 +86,21 @@ app.post('/api/saveReservation2', (req, res) => {
 재방문여부: ${body.revisit}\n`
         );
     });
+
+    // 안내문자 발송
+    axios.post('https://api-sms.cloud.toast.com/sms/v3.0/appKeys/KRoL3w8pZsaHJkVL/sender/mms',  {
+        "title": "온오프스테이 안내문자",
+        "body": mms,
+        "sendNo":"0264991922",
+        "recipientList":[{ "recipientNo": body.phone }]
+    }, {
+        headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+            'X-Secret-Key': 'MZ4nmv2P'
+        }
+    }).then((axiosRes) => {
+        console.log(axiosRes.data)
+    })
 })
 
 app.get("/", (req, res) => {
