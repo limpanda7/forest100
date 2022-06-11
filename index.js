@@ -2,6 +2,7 @@
 import express from 'express';
 import mysql from 'mysql';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import TelegramBot from 'node-telegram-bot-api';
 import axios from 'axios';
 import mms from './mms.js';
@@ -10,6 +11,9 @@ import mms from './mms.js';
 const app = express();
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // 데이터베이스 연결
 const connection = mysql.createConnection({
