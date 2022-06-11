@@ -94,7 +94,7 @@ app.post('/api/saveReservation2', (req, res) => {
     // 안내문자 발송
     axios.post('https://api-sms.cloud.toast.com/sms/v3.0/appKeys/KRoL3w8pZsaHJkVL/sender/mms',  {
         "title": "온오프스테이 안내문자",
-        "body": mms,
+        "body": mms(body.price),
         "sendNo":"0264991922",
         "recipientList":[{ "recipientNo": body.phone }]
     }, {
