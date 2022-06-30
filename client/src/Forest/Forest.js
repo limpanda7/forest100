@@ -21,6 +21,8 @@ import img8 from "../images/Forest/8.jpg";
 import img9 from "../images/Forest/9.jpg";
 import img10 from "../images/Forest/10.jpg";
 import img11 from "../images/Forest/11.jpg";
+import ssImg1 from "../images/Forest/ss1.png";
+import ssImg2 from "../images/Forest/ss2.png";
 
 const Forest = ({ history }) => {
 
@@ -136,13 +138,15 @@ const Forest = ({ history }) => {
 
                         <div className='Slider'>
                             <Slider {...sliderSetting}>
+                                <div><span>(출처: JTBC)</span><img src={ssImg2} alt={''}/></div>
+                                <div><img src={img7} alt={''}/></div>
+                                <div><span>(출처: JTBC)</span><img src={ssImg1} alt={''}/></div>
+                                <div><img src={img5} alt={''}/></div>
                                 <div><img src={img1} alt={''}/></div>
                                 <div><img src={img2} alt={''}/></div>
                                 <div><img src={img3} alt={''}/></div>
                                 <div><img src={img4} alt={''}/></div>
-                                <div><img src={img5} alt={''}/></div>
                                 <div><img src={img6} alt={''}/></div>
-                                <div><img src={img7} alt={''}/></div>
                                 <div><img src={img8} alt={''}/></div>
                                 <div><img src={img11} alt={''}/></div>
                                 <div><img src={img9} alt={''}/></div>

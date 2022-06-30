@@ -15,12 +15,19 @@ const Main = () => {
 
             <Link to='/forest'>
                 <FontAwesomeIcon icon={faHome} size="3x" className={'Icon'}/>
-                <div className={'Button'}>백년 한옥 별채</div>
+                <div className={'Button'}>
+                    <span>소녀시대가 방문한 숙소!</span>
+                    <br/>
+                    " 백년 한옥 별채 "</div>
             </Link>
 
             <Link to='/on-off'>
                 <FontAwesomeIcon icon={faToggleOn} size="3x" className={'Icon'}/>
-                <div className={'Button'}>ON OFF 스테이</div>
+                <div className={'Button'}>
+                    <span>동해 최고의 감성 숙소</span>
+                    <br/>
+                    " ON OFF 스테이 "
+                </div>
             </Link>
         </div>
     );
