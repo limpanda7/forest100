@@ -90,7 +90,11 @@ router.post('/saveReservation2', (req, res) => {
             'X-Secret-Key': 'MZ4nmv2P'
         }
     }).then((axiosRes) => {
-        console.log(axiosRes.data)
+        if (axiosRes.data.header.resultMessage === 'SUCCESS') {
+            bot.sendMessage('-558393640', '문자 발송에 성공하였습니다.');
+        } else {
+            bot.sendMessage('-558393640', '문자 발송에 실패하였습니다.');
+        }
     })
 })
 
