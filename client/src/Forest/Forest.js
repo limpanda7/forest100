@@ -147,9 +147,7 @@ const Forest = ({ history }) => {
                                 <div><img src={img3} alt={''}/></div>
                                 <div><img src={img4} alt={''}/></div>
                                 <div><img src={img6} alt={''}/></div>
-                                <div><img src={img8} alt={''}/></div>
                                 <div><img src={img11} alt={''}/></div>
-                                <div><img src={img9} alt={''}/></div>
                                 <div><img src={img10} alt={''}/></div>
                             </Slider>
                         </div>
