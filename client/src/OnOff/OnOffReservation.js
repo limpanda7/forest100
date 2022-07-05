@@ -9,7 +9,7 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
     const [adult, setAdult] = useState(4);
     const [baby, setBaby] = useState(0);
     const [dog, setDog] = useState(0);
-    // const [bedding, setBedding] = useState(0);
+    const [bedding, setBedding] = useState(0);
     const [barbecue, setBarbecue] = useState('N');
     const [studentEvent, setStudentEvent] = useState('N');
     const [basePrice, setBasePrice] = useState(0);
@@ -35,7 +35,7 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
 
     useEffect(() => {
         calcPrice();
-    }, [howMany, barbecue, studentEvent, priceOption, wholeUse])
+    }, [howMany, bedding, barbecue, studentEvent, priceOption, wholeUse])
 
     // 재방문 여부 확인
     const checkBeforeSave = () => {
@@ -49,7 +49,11 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
     }
 
     const saveReservation = () => {
-        axios.post('/api/saveReservation2', {picked, name, phone, adult, baby, dog, barbecue, studentEvent, price, priceOption, revisit, wholeUse})
+        let autoBedding = 0;
+        if (adult + baby > 4) {
+            autoBedding = 1;
+        }
+        axios.post('/api/saveReservation2', {picked, name, phone, adult, baby, dog, autoBedding, barbecue, studentEvent, price, priceOption, revisit, wholeUse})
             .then(() => {
                 alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${price.toLocaleString()}원입니다.`);
                 window.location.href = '/';
