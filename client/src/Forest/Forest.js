@@ -23,6 +23,14 @@ import img10 from "../images/Forest/10.jpg";
 import img11 from "../images/Forest/11.jpg";
 import ssImg1 from "../images/Forest/ss1.png";
 import ssImg2 from "../images/Forest/ss2.png";
+import ssImg3 from "../images/Forest/ss3.png";
+import ssImg4 from "../images/Forest/ss4.png";
+import ssImg5 from "../images/Forest/ss5.png";
+import ssImg6 from "../images/Forest/ss6.png";
+import ssImg7 from "../images/Forest/ss7.png";
+import ssImg8 from "../images/Forest/ss8.png";
+import ssImg9 from "../images/Forest/ss9.png";
+import ssImg10 from "../images/Forest/ss10.png";
 
 const Forest = ({ history }) => {
 
@@ -114,6 +122,7 @@ const Forest = ({ history }) => {
 
     const sliderSetting = {
         dots: true,
+        dotsClass: 'dots',
         infinite: true,
         speed: 500,
         slidesToShow: 1,
@@ -138,9 +147,17 @@ const Forest = ({ history }) => {
 
                         <div className='Slider'>
                             <Slider {...sliderSetting}>
-                                <div><span>(출처: JTBC)</span><img src={ssImg2} alt={''}/></div>
-                                <div><img src={img7} alt={''}/></div>
                                 <div><span>(출처: JTBC)</span><img src={ssImg1} alt={''}/></div>
+                                <div><span>(출처: JTBC)</span><img src={ssImg2} alt={''}/></div>
+                                <div><span>(출처: JTBC)</span><img src={ssImg3} alt={''}/></div>
+                                <div><span>(출처: JTBC)</span><img src={ssImg4} alt={''}/></div>
+                                <div><span>(출처: JTBC)</span><img src={ssImg5} alt={''}/></div>
+                                <div><span>(출처: JTBC)</span><img src={ssImg6} alt={''}/></div>
+                                <div><span>(출처: JTBC)</span><img src={ssImg7} alt={''}/></div>
+                                <div><span>(출처: JTBC)</span><img src={ssImg8} alt={''}/></div>
+                                <div><span>(출처: JTBC)</span><img src={ssImg9} alt={''}/></div>
+                                <div><span>(출처: JTBC)</span><img src={ssImg10} alt={''}/></div>
+                                <div><img src={img7} alt={''}/></div>
                                 <div><img src={img5} alt={''}/></div>
                                 <div><img src={img1} alt={''}/></div>
                                 <div><img src={img2} alt={''}/></div>
