@@ -49,7 +49,11 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
     }
 
     const saveReservation = () => {
-        axios.post('/api/saveReservation2', {picked, name, phone, adult, baby, dog, bedding, barbecue, studentEvent, price, priceOption, revisit, wholeUse})
+        let autoBedding = 0;
+        if (adult + baby > 4) {
+            autoBedding = 1;
+        }
+        axios.post('/api/saveReservation2', {picked, name, phone, adult, baby, dog, autoBedding, barbecue, studentEvent, price, priceOption, revisit, wholeUse})
             .then(() => {
                 alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${price.toLocaleString()}원입니다.`);
                 window.location.href = '/';
@@ -108,7 +112,8 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
         }
 
         const days = picked.length - 1;
-        let totalPrice = tempPrice + (12000 * (howMany - 4)) * days + (10000 * bedding);
+        let totalPrice = tempPrice + (15000 * (howMany - 4)) * days;
+        // let totalPrice = tempPrice + (12000 * (howMany - 4)) * days + (10000 * bedding);
 
         if (!dayArr.includes('holiday') && !dayArr.includes('weekend')) {
             setAllWeekDay(true);
@@ -167,7 +172,7 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
             </ul>
 
             <div className='HowMany'>
-                <h2>인원수 선택</h2>
+                <h2>인원수 선택 (최대 6인)</h2>
                 <div>
                     <p>성인</p>
                     <button onClick={() => {if (adult > 1) setAdult(adult - 1)}}>-</button>
@@ -187,18 +192,18 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
                     <button onClick={() => setDog(dog + 1)}>+</button>
                 </div>
                 <br/>
-                <div>
-                    <p>추가침구</p>
-                    <button onClick={() => {if (bedding > 0) setBedding(bedding - 1)}}>-</button>
-                    <span>{bedding}</span>
-                    <button onClick={() => {if (bedding < 1) setBedding(bedding + 1)}}>+</button>
-                </div>
-                {
-                    (adult + baby) >= 5 &&
-                    <div>
-                        <span>(5명 이상일 시 추가침구가 권장됩니다.)</span>
-                    </div>
-                }
+                {/*<div>*/}
+                {/*    <p>추가침구</p>*/}
+                {/*    <button onClick={() => {if (bedding > 0) setBedding(bedding - 1)}}>-</button>*/}
+                {/*    <span>{bedding}</span>*/}
+                {/*    <button onClick={() => {if (bedding < 1) setBedding(bedding + 1)}}>+</button>*/}
+                {/*</div>*/}
+                {/*{*/}
+                {/*    (adult + baby) >= 5 &&*/}
+                {/*    <div>*/}
+                {/*        <span>(5명 이상일 시 추가침구가 권장됩니다.)</span>*/}
+                {/*    </div>*/}
+                {/*}*/}
             </div>
 
             {/*{*/}
@@ -268,12 +273,12 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
                     <p><b>숙박요금:</b> {basePrice.toLocaleString()}원 (총 {picked.length - 1}박)</p>
                     {
                         howMany > 4 &&
-                        <p><b>인원초과:</b> 12,000원 x {howMany - 4}명 x {picked.length - 1}박</p>
+                        <p><b>인원초과:</b> 15,000원 x {howMany - 4}명 x {picked.length - 1}박</p>
                     }
-                    {
-                        bedding > 0 &&
-                        <p><b>추가침구:</b> 10,000원 x {bedding}개</p>
-                    }
+                    {/*{*/}
+                    {/*    bedding > 0 &&*/}
+                    {/*    <p><b>추가침구:</b> 10,000원 x {bedding}개</p>*/}
+                    {/*}*/}
                     {/*{*/}
                     {/*    wholeUse === 'Y' &&*/}
                     {/*    <p><b>집 전체 사용:</b> 50,000원</p>*/}

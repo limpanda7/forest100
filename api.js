@@ -60,7 +60,7 @@ router.post('/saveReservation2', (req, res) => {
     const body = req.body;
     let values = [];
     for (const element of body.picked) {
-        values.push([element, body.name, body.phone, body.adult, body.baby, body.dog, body.bedding, body.barbecue, body.studentEvent, body.price, body.priceOption, body.revisit, body.wholeUse, "N"]);
+        values.push([element, body.name, body.phone, body.adult, body.baby, body.dog, body.autoBedding, body.barbecue, body.studentEvent, body.price, body.priceOption, body.revisit, body.wholeUse, "N"]);
     }
     connection.query('INSERT INTO reservation2 (date, name, phone, adult, baby, dog, bedding, barbecue, student_event, price, price_option, revisit, whole_use, confirm) VALUES ?', [values], (err, data) => {
         res.send(data);
@@ -70,7 +70,7 @@ router.post('/saveReservation2', (req, res) => {
 이름: ${body.name}\n
 전화번호: ${body.phone}\n
 인원수: 성인 ${body.adult}명, 유아 ${body.baby}명, 반려견 ${body.dog}마리\n
-추가침구: ${body.bedding}개\n
+추가침구: ${body.autoBedding}개\n
 바베큐 이용여부: ${body.barbecue}\n
 이용금액: ${body.price}\n
 환불옵션: ${body.priceOption === 'refundable' ? '환불가능' : '환불불가'}\n
