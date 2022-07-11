@@ -145,6 +145,12 @@ const Forest = ({ history }) => {
                             편안한 시골체험을 해보세요.
                         </div>
 
+                        <iframe className='Video'
+                                src="https://www.youtube.com/embed/2PQT69JwiEY"
+                                title="YouTube video player" frameBorder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen></iframe>
+
                         <div className='Slider'>
                             <Slider {...sliderSetting}>
                                 <div><span>(출처: JTBC)</span><img src={ssImg1} alt={''}/></div>
@@ -169,12 +175,6 @@ const Forest = ({ history }) => {
                             </Slider>
                         </div>
 
-                        <iframe className='Video'
-                                src="https://www.youtube.com/embed/2PQT69JwiEY"
-                                title="YouTube video player" frameBorder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowFullScreen></iframe>
-
                         <ul className='List'>
                             <li>
                                 100년된 한옥의 별채입니다 :-)<br/>
@@ -195,7 +195,7 @@ const Forest = ({ history }) => {
                             </div>
                             <div className='Bed'>
                                 <b>2번 침실</b><br/>
-                                싱글 침대 1개
+                                더블 침대 1개
                             </div>
                         </div>
 
@@ -254,7 +254,10 @@ const Forest = ({ history }) => {
                         <hr/>
 
                         <h2>이용요금</h2>
-                        <p>성인 2인 기준: 1박 {global.config.forest.toLocaleString()}원</p>
+                        <p>
+                            2인기준 1박: <b>주말 {global.config.forest_weekend.toLocaleString()}원 / 평일 {global.config.forest_weekday.toLocaleString()}원</b><br/>
+                            설날∙추석에는 연휴요금 적용됩니다.
+                        </p>
                         <ul className='List'>
                             <li>2인 초과 시 1인당: 1박 12,000원</li>
                             <li>추가침구: 개당 10,000원</li>

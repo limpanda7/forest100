@@ -22,7 +22,7 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
     const [showModal, setShowModal] = useState(false);
     const [showRevisitModal, setShowRevisitModal] = useState(false);
     const [revisit, setRevisit] = useState('N');
-    const [allWeekDay, setAllWeekDay] = useState(false);
+    // const [allWeekDay, setAllWeekDay] = useState(false);
     const [wholeUse, setWholeUse] = useState('N');
 
     useEffect(() => {
@@ -115,11 +115,11 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
         let totalPrice = tempPrice + (15000 * (howMany - 4)) * days;
         // let totalPrice = tempPrice + (12000 * (howMany - 4)) * days + (10000 * bedding);
 
-        if (!dayArr.includes('holiday') && !dayArr.includes('weekend')) {
-            setAllWeekDay(true);
-            if (wholeUse === 'Y')
-                totalPrice += 50000;
-        }
+        // if (!dayArr.includes('holiday') && !dayArr.includes('weekend')) {
+        //     setAllWeekDay(true);
+        //     if (wholeUse === 'Y')
+        //         totalPrice += 50000;
+        // }
 
         if (barbecue === 'Y') {
             totalPrice += 20000;

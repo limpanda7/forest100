@@ -13,6 +13,7 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, reservedName, res
     const [guestRoom, setGuestRoom] = useState('N');
     const [barbecue, setBarbecue] = useState('N');
     // const [barbecueEvent, setBarbecueEvent] = useState(false);
+    const [basePrice, setBasePrice] = useState(0);
     const [price, setPrice] = useState(0);
     const [priceOption, setPriceOption] = useState('refundable');
     const [discount, setDiscount] = useState(0);
@@ -37,6 +38,7 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, reservedName, res
         calcPrice();
     }, [howMany, bedding, guestRoom, barbecue, priceOption])
 
+    // 재방문 여부 확인
     const checkBeforeSave = () => {
         if (reservedName.includes(name) && reservedPhone.includes(phone)) {
             setPrice(price * 0.7);
@@ -70,26 +72,58 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, reservedName, res
     }
 
     const calcPrice = () => {
+
+        // 연휴
+        const holidays = ['2022-09-09','2022-09-10','2022-09-11','2022-09-12'];
+        // 공휴일에 대한 주말처리
+        const weekends = ['2022-05-05','2022-06-01','2022-06-06','2022-08-15','2022-10-03','2022-10-10'];
+        let tempPrice = 0;
+
+        let dayArr = [];
+
+        for (const date of picked) {
+
+            const dayIdx = new Date(date).getDay();
+            if (holidays.includes(date)) {
+                dayArr.push('holiday');
+            } else if (dayIdx === 0 || dayIdx === 6 || weekends.includes(date)) {
+                dayArr.push('weekend');
+                // } else if (date.slice(5, 7) === '01' || date.slice(5, 7) === '02') {
+                //     dayArr.push('weekdayDiscount');
+            } else {
+                dayArr.push('weekday');
+            }
+        }
+
+        for (let i = 0; i < dayArr.length - 1; i++) {
+            if (dayArr[i + 1] === 'holiday') {
+                tempPrice += global.config.forest_holiday;
+            } else if (dayArr[i + 1] === 'weekday') {   // 일월화수목
+                tempPrice += global.config.forest_weekday;
+            } else if (dayArr[i + 1] === 'weekend') {    // 금토
+                tempPrice += global.config.forest_weekend;
+            }
+        }
+
         const days = picked.length - 1;
 
-        let price = (global.config.forest + (12000 * (howMany - 2))) * days  + (10000 * bedding);
-        // if (picked.includes('2022-01-01')) {
-        //     price = (330000 + (12000 * (howMany - 2))) * days  + (10000 * bedding);
-        // }
+        let totalPrice = (tempPrice + (12000 * (howMany - 2))) * days  + (10000 * bedding);
 
         if (guestRoom === 'Y') {
-            price += 50000 * days;
+            totalPrice += 50000 * days;
         }
         if (barbecue === 'Y') {
-            price += 20000;
+            totalPrice += 20000;
         }
         if (priceOption === 'nonrefundable') {
-            setDiscount(price * 0.1);
-            price *= 0.9;
+            setDiscount(totalPrice * 0.1);
+            totalPrice *= 0.9;
         } else {
             setDiscount(0);
         }
-        setPrice(price);
+
+        setBasePrice(tempPrice);
+        setPrice(totalPrice);
     }
 
     const toggleRefund = () => {
@@ -145,7 +179,7 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, reservedName, res
                     <span>{bedding}</span>
                     <button onClick={() => setBedding(bedding + 1)}>+</button>
                 </div>
-                <div className='BeddingDesc'>(더블침대와 싱글침대가 준비되어 있으니, 인원수를 고려하여 침구를 적절히 추가해주세요)</div>
+                <div className='BeddingDesc'>(더블침대 2개가 준비되어 있으니<br/> 인원수를 고려하여 침구를 적절히 추가해주세요)</div>
             </div>
 
             {
@@ -210,7 +244,7 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, reservedName, res
                 <h2>총 이용요금</h2>
                 <h2 className='Price'>{price.toLocaleString()}원</h2>
                 <div className='PriceDetail'>
-                    <p><b>2인기준:</b> {global.config.forest.toLocaleString()}원 x {picked.length - 1}박</p>
+                    <p><b>숙박요금:</b> {basePrice.toLocaleString()}원 (총 {picked.length - 1}박)</p>
                     {
                         howMany > 2 &&
                         <p><b>인원초과:</b> 12,000원 x {howMany - 2}명 x {picked.length - 1}박</p>
@@ -229,7 +263,7 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, reservedName, res
                     }
                     {
                         discount > 0 &&
-                        <p><b>환불불가할인:</b> {discount.toLocaleString()}원</p>
+                        <p><b>환불불가할인:</b> -{discount.toLocaleString()}원</p>
                     }
                 </div>
             </div>
@@ -245,7 +279,11 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, reservedName, res
                     <span>입금하실 분 성함:</span>
                     <input type='text' size='6' onChange={(e) => setName(e.target.value)}/><br/>
                     <span>전화번호:</span>
-                    <input type='text' size='14' maxLength={11} onChange={(e) => setPhone(e.target.value)}/>
+                    <input type='text' size='14' pattern='[0-9]*' value={phone} maxLength={11}
+                           onChange={(e) => {
+                               if (e.target.validity.valid) setPhone(e.target.value)
+                           }}
+                    />
                 </p>
             </div>
 
