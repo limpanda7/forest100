@@ -107,7 +107,7 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, reservedName, res
 
         const days = picked.length - 1;
 
-        let totalPrice = (tempPrice + (12000 * (howMany - 2))) * days  + (10000 * bedding);
+        let totalPrice = tempPrice + (12000 * (howMany - 2)) * days  + (10000 * bedding);
 
         if (guestRoom === 'Y') {
             totalPrice += 50000 * days;
