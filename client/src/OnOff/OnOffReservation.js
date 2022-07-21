@@ -177,13 +177,13 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
                     <p>성인</p>
                     <button onClick={() => {if (adult > 1) setAdult(adult - 1)}}>-</button>
                     <span>{adult}</span>
-                    <button onClick={() => {if (howMany < 6) setAdult(adult + 1)}}>+</button>
+                    <button onClick={() => {if (adult + baby < 6) setAdult(adult + 1)}}>+</button>
                 </div>
                 <div>
                     <p>유아</p>
                     <button onClick={() => {if (baby > 0) setBaby(baby - 1)}}>-</button>
                     <span>{baby}</span>
-                    <button onClick={() => {if (howMany < 6) setBaby(baby + 1)}}>+</button>
+                    <button onClick={() => {if (adult + baby < 6) setBaby(baby + 1)}}>+</button>
                 </div>
                 <div>
                     <p>반려견</p>
