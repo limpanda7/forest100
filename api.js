@@ -3,7 +3,6 @@ import mysql from "mysql";
 import TelegramBot from "node-telegram-bot-api";
 import axios from "axios";
 import {forestMMS, onOffMMS} from "./mms.js";
-import moment from "moment";
 
 const router = express.Router();
 
