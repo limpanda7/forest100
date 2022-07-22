@@ -6,7 +6,7 @@ import axios from "axios";
 
 const Admin = () => {
 
-    const [password, setPassword] = useState('1001');
+    const [password, setPassword] = useState('');
     const [dbReserved, setDbReserved] = useState([]);
     const [airReserved, setAirReserved] = useState([]);
     const [airOnlyOut, setAirOnlyOut] = useState([]);
@@ -15,7 +15,7 @@ const Admin = () => {
 
     useEffect(() => {
         getReserved();
-        getAirbnb();
+        // getAirbnb();
     }, []);
 
     const getReserved = () => {
@@ -29,21 +29,21 @@ const Admin = () => {
             });
     };
 
-    const getAirbnb = () => {
-        axios.get('/api/getAirbnb')
-            .then((res) => {
-                let tempReserved = [];
-                let tempOnlyOut = [];
-                for (const element of res.data.reserved) {
-                    tempReserved.push(element);
-                }
-                for (const element of res.data.onlyOut) {
-                    tempOnlyOut.push(element);
-                }
-                setAirReserved(tempReserved);
-                setAirOnlyOut(tempOnlyOut);
-            })
-    }
+    // const getAirbnb = () => {
+    //     axios.get('/api/getAirbnb')
+    //         .then((res) => {
+    //             let tempReserved = [];
+    //             let tempOnlyOut = [];
+    //             for (const element of res.data.reserved) {
+    //                 tempReserved.push(element);
+    //             }
+    //             for (const element of res.data.onlyOut) {
+    //                 tempOnlyOut.push(element);
+    //             }
+    //             setAirReserved(tempReserved);
+    //             setAirOnlyOut(tempOnlyOut);
+    //         })
+    // }
 
     const updateDb = () => {
         if (picked === '') {
@@ -89,22 +89,22 @@ const Admin = () => {
                     <button className='GoBtn' onClick={updateDb}>GO!</button>
                 </div>
 
-                <h2>에어비앤비</h2>
-                <Calendar
-                    className='Calendar'
-                    minDate={new Date()}
-                    calendarType='US'
-                    tileClassName={({ date }) => {
-                        if(airReserved.find(x => x === moment(date).format("YYYY-MM-DD"))){
-                            return 'ReservedDay';
-                        }
-                    }}
-                    tileContent={({ date }) => {
-                        if(airOnlyOut.find(x => x === moment(date).format("YYYY-MM-DD"))){
-                            return <div className='OnlyOut'>퇴실만</div>;
-                        }
-                    }}
-                />
+                {/*<h2>에어비앤비</h2>*/}
+                {/*<Calendar*/}
+                {/*    className='Calendar'*/}
+                {/*    minDate={new Date()}*/}
+                {/*    calendarType='US'*/}
+                {/*    tileClassName={({ date }) => {*/}
+                {/*        if(airReserved.find(x => x === moment(date).format("YYYY-MM-DD"))){*/}
+                {/*            return 'ReservedDay';*/}
+                {/*        }*/}
+                {/*    }}*/}
+                {/*    tileContent={({ date }) => {*/}
+                {/*        if(airOnlyOut.find(x => x === moment(date).format("YYYY-MM-DD"))){*/}
+                {/*            return <div className='OnlyOut'>퇴실만</div>;*/}
+                {/*        }*/}
+                {/*    }}*/}
+                {/*/>*/}
             </div>
         );
     }
