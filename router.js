@@ -11,11 +11,12 @@ router.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "client/build", "index.html"));
 });
 router.get("/forest", (req, res) => {
-    console.log('forest')
     res.sendFile(path.join(__dirname, "client/build", "index.html"));
 });
 router.get("/on-off", (req, res) => {
-    console.log('on-off')
+    res.sendFile(path.join(__dirname, "client/build", "index.html"));
+});
+router.get("/admin", (req, res) => {
     res.sendFile(path.join(__dirname, "client/build", "index.html"));
 });
 
