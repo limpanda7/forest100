@@ -166,12 +166,12 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, reservedName, res
                     <span>{baby}</span>
                     <button onClick={() => setBaby(baby + 1)}>+</button>
                 </div>
-                <div>
-                    <p>반려견</p>
-                    <button onClick={() => {if (dog > 0) setDog(dog - 1)}}>-</button>
-                    <span>{dog}</span>
-                    <button onClick={() => setDog(dog + 1)}>+</button>
-                </div>
+                {/*<div>*/}
+                {/*    <p>반려견</p>*/}
+                {/*    <button onClick={() => {if (dog > 0) setDog(dog - 1)}}>-</button>*/}
+                {/*    <span>{dog}</span>*/}
+                {/*    <button onClick={() => setDog(dog + 1)}>+</button>*/}
+                {/*</div>*/}
                 <br/>
                 <div>
                     <p>추가침구</p>
