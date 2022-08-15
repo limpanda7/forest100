@@ -6,7 +6,7 @@ import './OnOff.scss';
 const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, reservedPhone}) => {
 
     const [howMany, setHowMany] = useState(4);      // 반려견 표함 총 인원수
-    const [adult, setAdult] = useState(4);
+    const [person, setPerson] = useState(4);
     const [baby, setBaby] = useState(0);
     const [dog, setDog] = useState(0);
     const [bedding, setBedding] = useState(0);
@@ -31,7 +31,7 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
 
     useEffect(() => {
         calcHowMany();
-    }, [adult, baby, dog])
+    }, [person, baby, dog])
 
     useEffect(() => {
         calcPrice();
@@ -50,10 +50,10 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
 
     const saveReservation = () => {
         let autoBedding = 0;
-        if (adult + baby > 4) {
+        if (person + baby > 4) {
             autoBedding = 1;
         }
-        axios.post('/api/saveReservation2', {picked, name, phone, adult, baby, dog, autoBedding, barbecue, studentEvent, price, priceOption, revisit, wholeUse})
+        axios.post('/api/saveReservation2', {picked, name, phone, person, baby, dog, autoBedding, barbecue, studentEvent, price, priceOption, revisit, wholeUse})
             .then(() => {
                 alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${price.toLocaleString()}원입니다.`);
                 window.location.href = '/';
@@ -61,10 +61,10 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
     }
 
     const calcHowMany = () => {
-        if (adult + dog < 4) {
+        if (person + dog < 4) {
             setHowMany(4);
         } else {
-            setHowMany(adult + dog);
+            setHowMany(person + dog);
         }
     }
 
@@ -175,15 +175,15 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
                 <h2>인원수 선택 (최대 6인)</h2>
                 <div>
                     <p>인원</p>
-                    <button onClick={() => {if (adult > 1) setAdult(adult - 1)}}>-</button>
-                    <span>{adult}</span>
-                    <button onClick={() => {if (adult + baby < 6) setAdult(adult + 1)}}>+</button>
+                    <button onClick={() => {if (person > 1) setPerson(person - 1)}}>-</button>
+                    <span>{person}</span>
+                    <button onClick={() => {if (person + baby < 6) setPerson(person + 1)}}>+</button>
                 </div>
                 <div>
                     <p>영유아(36개월 미만)</p>
                     <button onClick={() => {if (baby > 0) setBaby(baby - 1)}}>-</button>
                     <span>{baby}</span>
-                    <button onClick={() => {if (adult + baby < 6) setBaby(baby + 1)}}>+</button>
+                    <button onClick={() => {if (person + baby < 6) setBaby(baby + 1)}}>+</button>
                 </div>
                 <div>
                     <p>반려견</p>
@@ -199,7 +199,7 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
                 {/*    <button onClick={() => {if (bedding < 1) setBedding(bedding + 1)}}>+</button>*/}
                 {/*</div>*/}
                 {/*{*/}
-                {/*    (adult + baby) >= 5 &&*/}
+                {/*    (person + baby) >= 5 &&*/}
                 {/*    <div>*/}
                 {/*        <span>(5명 이상일 시 추가침구가 권장됩니다.)</span>*/}
                 {/*    </div>*/}
