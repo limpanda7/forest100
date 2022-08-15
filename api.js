@@ -27,19 +27,19 @@ router.get('/getReserved', (req, res) => {
     });
 });
 router.post('/saveReservation', (req, res) => {
-    const {picked, name, phone, adult, baby, dog, bedding, guestRoom, barbecue, price, priceOption, revisit} = req.body;
+    const {picked, name, phone, person, baby, dog, bedding, guestRoom, barbecue, price, priceOption, revisit} = req.body;
     let values = [];
     for (const element of picked) {
-        values.push([element, name, phone, adult, baby, dog, bedding, guestRoom, barbecue, price, priceOption, revisit, "N"]);
+        values.push([element, name, phone, person, baby, dog, bedding, guestRoom, barbecue, price, priceOption, revisit, "N"]);
     }
-    connection.query('INSERT INTO reservation (date, name, phone, adult, baby, dog, bedding, guest_room, barbecue, price, price_option, revisit, confirm) VALUES ?', [values], (err, data) => {
+    connection.query('INSERT INTO reservation (date, name, phone, person, baby, dog, bedding, guest_room, barbecue, price, price_option, revisit, confirm) VALUES ?', [values], (err, data) => {
         res.send(data);
         bot.sendMessage('-679453093',
             `백년한옥별채 신규 예약이 들어왔습니다.\n
 기간: ${picked}\n
 이름: ${name}\n
 전화번호: ${phone}\n
-인원수: 성인 ${adult}명, 유아 ${baby}명, 반려견 ${dog}마리\n
+인원수: ${person}명, 영유아 ${baby}명, 반려견 ${dog}마리\n
 추가침구: ${bedding}개\n
 사랑방 이용여부: ${guestRoom}\n
 바베큐 이용여부: ${barbecue}\n
@@ -52,7 +52,7 @@ router.post('/saveReservation', (req, res) => {
     // 안내문자 발송
     axios.post('https://api-sms.cloud.toast.com/sms/v3.0/appKeys/KRoL3w8pZsaHJkVL/sender/mms',  {
         "title": "백년한옥별채 안내문자",
-        "body": forestMMS(picked, adult, baby, dog, bedding, guestRoom, barbecue, price),
+        "body": forestMMS(picked, person, baby, dog, bedding, guestRoom, barbecue, price),
         "sendNo":"0264991922",
         "recipientList":[{ "recipientNo": phone }]
     }, {
@@ -89,19 +89,19 @@ router.get('/getReserved2', (req, res) => {
     });
 });
 router.post('/saveReservation2', (req, res) => {
-    const {picked, name, phone, adult, baby, dog, autoBedding, barbecue, studentEvent, price, priceOption, revisit, wholeUse} = req.body;
+    const {picked, name, phone, person, baby, dog, autoBedding, barbecue, studentEvent, price, priceOption, revisit, wholeUse} = req.body;
     let values = [];
     for (const element of picked) {
-        values.push([element, name, phone, adult, baby, dog, autoBedding, barbecue, studentEvent, price, priceOption, revisit, wholeUse, "N"]);
+        values.push([element, name, phone, person, baby, dog, autoBedding, barbecue, studentEvent, price, priceOption, revisit, wholeUse, "N"]);
     }
-    connection.query('INSERT INTO reservation2 (date, name, phone, adult, baby, dog, bedding, barbecue, student_event, price, price_option, revisit, whole_use, confirm) VALUES ?', [values], (err, data) => {
+    connection.query('INSERT INTO reservation2 (date, name, phone, person, baby, dog, bedding, barbecue, student_event, price, price_option, revisit, whole_use, confirm) VALUES ?', [values], (err, data) => {
         res.send(data);
         bot.sendMessage('-558393640',
             `온오프스테이 신규 예약이 들어왔습니다.\n
 기간: ${picked}\n
 이름: ${name}\n
 전화번호: ${phone}\n
-인원수: 성인 ${adult}명, 유아 ${baby}명, 반려견 ${dog}마리\n
+인원수: ${person}명, 영유아 ${baby}명, 반려견 ${dog}마리\n
 추가침구: ${autoBedding}개\n
 바베큐 이용여부: ${barbecue}\n
 이용금액: ${price}\n
@@ -113,7 +113,7 @@ router.post('/saveReservation2', (req, res) => {
     // 안내문자 발송
     axios.post('https://api-sms.cloud.toast.com/sms/v3.0/appKeys/KRoL3w8pZsaHJkVL/sender/mms',  {
         "title": "온오프스테이 안내문자",
-        "body": onOffMMS(picked, adult, baby, dog, barbecue, price),
+        "body": onOffMMS(picked, person, baby, dog, barbecue, price),
         "sendNo":"0264991922",
         "recipientList":[{ "recipientNo": phone }]
     }, {

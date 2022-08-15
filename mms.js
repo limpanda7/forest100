@@ -4,7 +4,7 @@ export const forestMMS = (picked, adult, baby, dog, bedding, guestRoom, barbecue
         '(입금계좌: 카카오 3333058451192 남은비)\n' +
         '\n' +
         '[예약정보]\n' +
-        `성인 ${adult}명, 유아 ${baby}명, 반려견 ${dog}마리\n` +
+        `인원 ${adult}명, 영유아 ${baby}명, 반려견 ${dog}마리\n` +
         `추가침구: ${bedding}개\n` +
         `사랑방 이용여부: ${guestRoom}\n` +
         `바베큐 이용여부: ${barbecue}\n` +
@@ -55,7 +55,7 @@ export const onOffMMS = (picked, adult, baby, dog, barbecue, price) => {
         '(입금계좌: 카카오 3333053810252 채민기)\n' +
         '\n' +
         '[예약정보]\n' +
-        `성인 ${adult}명, 유아 ${baby}명, 반려견 ${dog}마리\n` +
+        `인원 ${adult}명, 영유아 ${baby}명, 반려견 ${dog}마리\n` +
         `바베큐 이용여부: ${barbecue}\n` +
         '\n' +
         '아래는 숙소 안내사항입니다.\n' +

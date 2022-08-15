@@ -61,10 +61,10 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
     }
 
     const calcHowMany = () => {
-        if (adult + baby + dog < 4) {
+        if (adult + dog < 4) {
             setHowMany(4);
         } else {
-            setHowMany(adult + baby + dog);
+            setHowMany(adult + dog);
         }
     }
 
@@ -174,13 +174,13 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
             <div className='HowMany'>
                 <h2>인원수 선택 (최대 6인)</h2>
                 <div>
-                    <p>성인</p>
+                    <p>인원</p>
                     <button onClick={() => {if (adult > 1) setAdult(adult - 1)}}>-</button>
                     <span>{adult}</span>
                     <button onClick={() => {if (adult + baby < 6) setAdult(adult + 1)}}>+</button>
                 </div>
                 <div>
-                    <p>유아</p>
+                    <p>영유아(36개월 미만)</p>
                     <button onClick={() => {if (baby > 0) setBaby(baby - 1)}}>-</button>
                     <span>{baby}</span>
                     <button onClick={() => {if (adult + baby < 6) setBaby(baby + 1)}}>+</button>

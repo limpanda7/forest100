@@ -6,7 +6,7 @@ import ReactModal from "react-modal";
 const ForestReservation = ({picked, setPicked, setCurrentPage, reservedName, reservedPhone}) => {
 
     const [howMany, setHowMany] = useState(2);
-    const [adult, setAdult] = useState(2);
+    const [person, setPerson] = useState(2);
     const [baby, setBaby] = useState(0);
     const [dog, setDog] = useState(0);
     const [bedding, setBedding] = useState(0);
@@ -29,10 +29,10 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, reservedName, res
 
     useEffect(() => {
         calcHowMany();
-        if (adult + baby <= 4) {
+        if (person + baby <= 4) {
             setGuestRoom('N');
         }
-    }, [adult, baby, dog])
+    }, [person, baby, dog])
 
     useEffect(() => {
         calcPrice();
@@ -56,7 +56,7 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, reservedName, res
             return false;
         }
 
-        axios.post('/api/saveReservation', {picked, name, phone, adult, baby, dog, bedding, guestRoom, barbecue, price, priceOption, revisit})
+        axios.post('/api/saveReservation', {picked, name, phone, person, baby, dog, bedding, guestRoom, barbecue, price, priceOption, revisit})
             .then(() => {
                 alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${price.toLocaleString()}원입니다.`);
                 window.location.href = '/';
@@ -64,10 +64,10 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, reservedName, res
     }
 
     const calcHowMany = () => {
-        if (adult === 1 && baby === 0 && dog=== 0) {
+        if (person === 1 && dog=== 0) {
             setHowMany(2);
         } else {
-            setHowMany(adult + baby + dog);
+            setHowMany(person + dog);
         }
     }
 
@@ -155,13 +155,13 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, reservedName, res
             <div className='HowMany'>
                 <h2>인원수 선택</h2>
                 <div>
-                    <p>성인</p>
-                    <button onClick={() => {if (adult > 1) setAdult(adult - 1)}}>-</button>
-                    <span>{adult}</span>
-                    <button onClick={() => setAdult(adult + 1)}>+</button>
+                    <p>인원</p>
+                    <button onClick={() => {if (person > 1) setPerson(person - 1)}}>-</button>
+                    <span>{person}</span>
+                    <button onClick={() => setPerson(person + 1)}>+</button>
                 </div>
                 <div>
-                    <p>유아</p>
+                    <p>영유아(36개월 미만)</p>
                     <button onClick={() => {if (baby > 0) setBaby(baby - 1)}}>-</button>
                     <span>{baby}</span>
                     <button onClick={() => setBaby(baby + 1)}>+</button>
@@ -183,7 +183,7 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, reservedName, res
             </div>
 
             {
-                adult + baby > 4 &&
+                person + baby > 4 &&
                     <div>
                         <p>사랑방 이용 (1박 50,000원)</p>
                         <div>
