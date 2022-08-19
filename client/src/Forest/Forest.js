@@ -111,11 +111,11 @@ const Forest = ({ history }) => {
                 return false;
             }
         }
-
-        if (tempArr.length <= 2) {
-            alert('2박 이상 예약 가능합니다.');
-            return false;
-        }
+        //
+        // if (tempArr.length <= 2) {
+        //     alert('2박 이상 예약 가능합니다.');
+        //     return false;
+        // }
 
         setPicked(tempArr);
     }
@@ -188,7 +188,7 @@ const Forest = ({ history }) => {
                             <li>넓은 마당이 있어 차량 3대 이상도 주차가 가능합니다.</li>
                             <li>텃밭에서 나는 채소들을 직접 재배하여 요리할 수 있도록 제공합니다.</li>
                             {/*<li>반려견은 인원수에 포함합니다. 털날림이 적은 견종만 가능합니다.</li>*/}
-                            <li>2박 이상 예약 가능합니다.</li>
+                            {/*<li>2박 이상 예약 가능합니다.</li>*/}
                         </ul>
 
                         <hr/>
