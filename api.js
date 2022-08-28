@@ -20,20 +20,26 @@ connection.connect();
 const token = '1857829748:AAEQqFmUc4AWxad1-t1KRjQaXoXORjV91I4';
 const bot = new TelegramBot(token, {polling: true});
 
-// 백년한옥별채 API
+/*
+  백년한옥별채 API
+ */
 router.get('/getReserved', (req, res) => {
-    connection.query('SELECT * FROM reservation', (err, data) => {
+    connection.query('SELECT * FROM forest_reservation', (err, data) => {
         res.send(data);
     });
 });
 router.post('/saveReservation', (req, res) => {
     const {picked, name, phone, person, baby, dog, bedding, guestRoom, barbecue, price, priceOption, revisit} = req.body;
+
+    // 1. 예약내역 DB 추가
     let values = [];
     for (const element of picked) {
-        values.push([element, name, phone, person, baby, dog, bedding, guestRoom, barbecue, price, priceOption, revisit, "N"]);
+        values.push([element, name, phone, person, baby, dog, bedding, guestRoom, barbecue, price, priceOption, revisit]);
     }
-    connection.query('INSERT INTO reservation (date, name, phone, person, baby, dog, bedding, guest_room, barbecue, price, price_option, revisit, confirm) VALUES ?', [values], (err, data) => {
+    connection.query('INSERT INTO forest_reservation (date, name, phone, person, baby, dog, bedding, guest_room, barbecue, price, price_option, revisit) VALUES ?', [values], (err, data) => {
         res.send(data);
+
+        // 2. 텔레그램 발송
         bot.sendMessage('-679453093',
             `백년한옥별채 신규 예약이 들어왔습니다.\n
 기간: ${picked}\n
@@ -49,7 +55,7 @@ router.post('/saveReservation', (req, res) => {
         );
     });
 
-    // 안내문자 발송
+    // 3.안내문자 발송
     axios.post('https://api-sms.cloud.toast.com/sms/v3.0/appKeys/KRoL3w8pZsaHJkVL/sender/mms',  {
         "title": "백년한옥별채 안내문자",
         "body": forestMMS(picked, person, baby, dog, bedding, guestRoom, barbecue, price),
@@ -67,35 +73,46 @@ router.post('/saveReservation', (req, res) => {
             bot.sendMessage('-679453093', '문자 발송에 실패하였습니다.');
         }
     })
+
+    // 4. 어드민 DB 추가
+    let adminValues = [];
+    adminValues.push([picked[0], picked[picked.length - 1], name, phone, person, baby, dog, bedding, guestRoom, barbecue, price, priceOption, revisit]);
+    connection.query('INSERT INTO forest_admin (checkin_date, checkout_date, name, phone, person, baby, dog, bedding, guest_room, barbecue, price, price_option, revisit) VALUES ?', [adminValues], () => {});
 })
 router.post('/updateDb', (req, res) => {
     const {picked, action} = req.body;
     if (action === 'open') {
-        connection.query('DELETE FROM reservation WHERE date = ?', picked, (err, data) => {
+        connection.query('DELETE FROM forest_reservation WHERE date = ?', picked, (err, data) => {
             res.send(data);
         });
     }
     if (action === 'close') {
-        connection.query('INSERT INTO reservation (date) VALUES (?)', picked, (err, data) => {
+        connection.query('INSERT INTO forest_reservation (date) VALUES (?)', picked, (err, data) => {
             res.send(data);
         });
     }
 })
 
-// 온오프스테이 API
+/*
+  온오프스테이 API
+ */
 router.get('/getReserved2', (req, res) => {
-    connection.query('SELECT * FROM reservation2', (err, data) => {
+    connection.query('SELECT * FROM onoff_reservation', (err, data) => {
         res.send(data);
     });
 });
 router.post('/saveReservation2', (req, res) => {
     const {picked, name, phone, person, baby, dog, autoBedding, barbecue, studentEvent, price, priceOption, revisit, wholeUse} = req.body;
+
+    // 1. 예약내역 DB 추가
     let values = [];
     for (const element of picked) {
-        values.push([element, name, phone, person, baby, dog, autoBedding, barbecue, studentEvent, price, priceOption, revisit, wholeUse, "N"]);
+        values.push([element, name, phone, person, baby, dog, autoBedding, barbecue, studentEvent, price, priceOption, revisit, wholeUse]);
     }
-    connection.query('INSERT INTO reservation2 (date, name, phone, person, baby, dog, bedding, barbecue, student_event, price, price_option, revisit, whole_use, confirm) VALUES ?', [values], (err, data) => {
+    connection.query('INSERT INTO onoff_reservation (date, name, phone, person, baby, dog, bedding, barbecue, student_event, price, price_option, revisit, whole_use) VALUES ?', [values], (err, data) => {
         res.send(data);
+
+        // 2. 텔레그램 발송
         bot.sendMessage('-558393640',
             `온오프스테이 신규 예약이 들어왔습니다.\n
 기간: ${picked}\n
@@ -110,7 +127,7 @@ router.post('/saveReservation2', (req, res) => {
         );
     });
 
-    // 안내문자 발송
+    // 3. 안내문자 발송
     axios.post('https://api-sms.cloud.toast.com/sms/v3.0/appKeys/KRoL3w8pZsaHJkVL/sender/mms',  {
         "title": "온오프스테이 안내문자",
         "body": onOffMMS(picked, person, baby, dog, barbecue, price),
@@ -128,16 +145,21 @@ router.post('/saveReservation2', (req, res) => {
             bot.sendMessage('-558393640', '문자 발송에 실패하였습니다.');
         }
     })
+
+    // 4. 어드민 DB 추가
+    let adminValues = [];
+    adminValues.push([picked[0], picked[picked.length - 1], name, phone, person, baby, dog, autoBedding, barbecue, studentEvent, price, priceOption, revisit, wholeUse]);
+    connection.query('INSERT INTO onoff_admin (checkin_date, checkout_date, name, phone, person, baby, dog, bedding, barbecue, student_event, price, price_option, revisit, whole_use) VALUES ?', [adminValues], () => {});
 })
 router.post('/updateDb2', (req, res) => {
     const {picked, action} = req.body;
     if (action === 'open') {
-        connection.query('DELETE FROM reservation2 WHERE date = ?', picked, (err, data) => {
+        connection.query('DELETE FROM onoff_reservation WHERE date = ?', picked, (err, data) => {
             res.send(data);
         });
     }
     if (action === 'close') {
-        connection.query('INSERT INTO reservation2 (date) VALUES (?)', picked, (err, data) => {
+        connection.query('INSERT INTO onoff_reservation (date) VALUES (?)', picked, (err, data) => {
             res.send(data);
         });
     }
