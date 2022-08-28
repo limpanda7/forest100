@@ -76,8 +76,8 @@ router.post('/saveReservation', (req, res) => {
 
     // 4. 어드민 DB 추가
     let adminValues = [];
-    adminValues.push([picked[0], picked[picked.length - 1], name, phone, person, baby, dog, bedding, guestRoom, barbecue, price, priceOption, revisit]);
-    connection.query('INSERT INTO forest_admin (checkin_date, checkout_date, name, phone, person, baby, dog, bedding, guest_room, barbecue, price, price_option, revisit) VALUES ?', [adminValues], () => {});
+    adminValues.push(['homepage', picked[0], picked[picked.length - 1], name, phone, person, baby, dog, bedding, guestRoom, barbecue, price, priceOption, revisit]);
+    connection.query('INSERT INTO forest_admin (type, checkin_date, checkout_date, name, phone, person, baby, dog, bedding, guest_room, barbecue, price, price_option, revisit) VALUES ?', [adminValues], () => {});
 })
 router.post('/updateDb', (req, res) => {
     const {picked, action} = req.body;
@@ -148,8 +148,8 @@ router.post('/saveReservation2', (req, res) => {
 
     // 4. 어드민 DB 추가
     let adminValues = [];
-    adminValues.push([picked[0], picked[picked.length - 1], name, phone, person, baby, dog, autoBedding, barbecue, studentEvent, price, priceOption, revisit, wholeUse]);
-    connection.query('INSERT INTO onoff_admin (checkin_date, checkout_date, name, phone, person, baby, dog, bedding, barbecue, student_event, price, price_option, revisit, whole_use) VALUES ?', [adminValues], () => {});
+    adminValues.push(['homepage', picked[0], picked[picked.length - 1], name, phone, person, baby, dog, autoBedding, barbecue, studentEvent, price, priceOption, revisit, wholeUse]);
+    connection.query('INSERT INTO onoff_admin (type, checkin_date, checkout_date, name, phone, person, baby, dog, bedding, barbecue, student_event, price, price_option, revisit, whole_use) VALUES ?', [adminValues], () => {});
 })
 router.post('/updateDb2', (req, res) => {
     const {picked, action} = req.body;
