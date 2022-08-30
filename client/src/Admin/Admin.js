@@ -8,14 +8,17 @@ import forest from "../Forest/Forest";
 const Admin = () => {
 
     const [password, setPassword] = useState('');
+
     const [forestReserved, setForestReserved] = useState([]);
+    const [forestPicked, setForestPicked] = useState('');
+    const [forestAction, setForestAction] = useState('open');
+
     const [onOffReserved, setOnOffReserved] = useState([]);
-    const [picked, setPicked] = useState('');
-    const [action, setAction] = useState('open');
+    const [onOffPicked, setOnOffPicked] = useState('');
+    const [onOffAction, setOnOffAction] = useState('open');
 
     useEffect(() => {
         getReserved();
-        // getAirbnb();
     }, []);
 
     const getReserved = () => {
@@ -37,20 +40,34 @@ const Admin = () => {
             });
     };
 
-    const updateDb = () => {
-        if (picked === '') {
+    const updateDb = (target) => {
+        if (target === 'forest' && forestPicked === '') {
+            alert('날짜를 선택해주세요!');
+            return false;
+        }
+        if (target === 'onOff' && onOffPicked === '') {
             alert('날짜를 선택해주세요!');
             return false;
         }
 
-        if (password === '1001') {
-            axios.post('/api/updateDb', {picked, action})
+        if (target === 'forest') {
+            const params = {
+                picked: forestPicked,
+                action: forestAction
+            }
+
+            axios.post('/api/updateDb', params)
                 .then(() => {
                     alert('적용되었습니다!');
                     getReserved();
                 })
-        } else if (password === '0192') {
-            axios.post('/api/updateDb2', {picked, action})
+        } else if (target === 'onOff') {
+            const params = {
+                picked: onOffPicked,
+                action: onOffAction
+            }
+
+            axios.post('/api/updateDb2', params)
                 .then(() => {
                     alert('적용되었습니다!');
                     getReserved();
@@ -58,7 +75,7 @@ const Admin = () => {
         }
     }
 
-    if (password === '1001') {
+    if (password === '5769') {
         return (
             <div className='Admin'>
                 <h2>백년한옥별채</h2>
@@ -74,77 +91,23 @@ const Admin = () => {
                     onChange={(value) => {
                         const date = new Date(value);
                         date.setDate(date.getDate() + 1);
-                        setPicked(date.toISOString().split("T")[0])
+                        setForestPicked(date.toISOString().split("T")[0])
                     }}
                 />
 
                 <br/>
 
                 <div>
-                    선택한 날짜 <b>{picked}</b>를
-                    <select onChange={(e) => setAction(e.target.value)}>
+                    선택한 날짜 <b>{forestPicked}</b>를
+                    <select onChange={(e) => setForestAction(e.target.value)}>
                         <option value='open'>열어주세요</option>
                         <option value='close'>닫아주세요</option>
                     </select>
-                    <button className='GoBtn' onClick={updateDb}>GO!</button>
+                    <button className='GoBtn' onClick={() => updateDb('forest')}>GO!</button>
                 </div>
-            </div>
-        );
-    }
-
-    if (password === '0192') {
-        return (
-            <div className='Admin'>
-                <h2>온오프스테이</h2>
-                <Calendar
-                    className='Calendar'
-                    minDate={new Date()}
-                    calendarType='US'
-                    tileClassName={({ date }) => {
-                        if(onOffReserved.find(x => x === moment(date).format("YYYY-MM-DD"))){
-                            return 'ReservedDay';
-                        }
-                    }}
-                    onChange={(value) => {
-                        const date = new Date(value);
-                        date.setDate(date.getDate() + 1);
-                        setPicked(date.toISOString().split("T")[0])
-                    }}
-                />
 
                 <br/>
-
-                <div>
-                    선택한 날짜 <b>{picked}</b>를
-                    <select onChange={(e) => setAction(e.target.value)}>
-                        <option value='open'>열어주세요</option>
-                        <option value='close'>닫아주세요</option>
-                    </select>
-                    <button className='GoBtn' onClick={updateDb}>GO!</button>
-                </div>
-            </div>
-        );
-    }
-
-    if (password === '2717') {
-        return (
-            <div className='Admin'>
-                <h2>백년한옥별채</h2>
-                <Calendar
-                    className='Calendar'
-                    minDate={new Date()}
-                    calendarType='US'
-                    tileClassName={({ date }) => {
-                        if(forestReserved.find(x => x === moment(date).format("YYYY-MM-DD"))){
-                            return 'ReservedDay';
-                        }
-                    }}
-                    onChange={(value) => {
-                        const date = new Date(value);
-                        date.setDate(date.getDate() + 1);
-                        setPicked(date.toISOString().split("T")[0])
-                    }}
-                />
+                <hr/>
 
                 <h2>온오프스테이</h2>
                 <Calendar
@@ -159,19 +122,19 @@ const Admin = () => {
                     onChange={(value) => {
                         const date = new Date(value);
                         date.setDate(date.getDate() + 1);
-                        setPicked(date.toISOString().split("T")[0])
+                        setOnOffPicked(date.toISOString().split("T")[0])
                     }}
                 />
 
                 <br/>
 
                 <div>
-                    선택한 날짜 <b>{picked}</b>를
-                    <select onChange={(e) => setAction(e.target.value)}>
+                    선택한 날짜 <b>{onOffPicked}</b>를
+                    <select onChange={(e) => setOnOffAction(e.target.value)}>
                         <option value='open'>열어주세요</option>
                         <option value='close'>닫아주세요</option>
                     </select>
-                    <button className='GoBtn' onClick={updateDb}>GO!</button>
+                    <button className='GoBtn' onClick={() => updateDb('onOff')}>GO!</button>
                 </div>
             </div>
         );
