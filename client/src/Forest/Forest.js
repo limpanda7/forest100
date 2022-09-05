@@ -21,6 +21,7 @@ import img8 from "../images/Forest/8.jpg";
 import img9 from "../images/Forest/9.jpg";
 import img10 from "../images/Forest/10.jpg";
 import img11 from "../images/Forest/11.jpg";
+import img12 from "../images/Forest/12.webp";
 import ssImg1 from "../images/Forest/ss1.png";
 import ssImg2 from "../images/Forest/ss2.png";
 import ssImg3 from "../images/Forest/ss3.png";
@@ -165,9 +166,9 @@ const Forest = ({ history }) => {
                                 <div><span>(출처: JTBC)</span><img src={ssImg5} alt={''}/></div>
                                 <div><span>(출처: JTBC)</span><img src={ssImg6} alt={''}/></div>
                                 <div><span>(출처: JTBC)</span><img src={ssImg7} alt={''}/></div>
-                                <div><span>(출처: JTBC)</span><img src={ssImg8} alt={''}/></div>
                                 <div><span>(출처: JTBC)</span><img src={ssImg9} alt={''}/></div>
                                 <div><span>(출처: JTBC)</span><img src={ssImg10} alt={''}/></div>
+                                <div><span>(출처: JTBC)</span><img src={ssImg8} alt={''}/></div>
                                 <div><img src={img7} alt={''}/></div>
                                 <div><img src={img5} alt={''}/></div>
                                 <div><img src={img1} alt={''}/></div>
@@ -176,7 +177,7 @@ const Forest = ({ history }) => {
                                 <div><img src={img4} alt={''}/></div>
                                 <div><img src={img6} alt={''}/></div>
                                 <div><img src={img11} alt={''}/></div>
-                                <div><img src={img10} alt={''}/></div>
+                                <div><img src={img12} alt={''}/></div>
                             </Slider>
                         </div>
 
