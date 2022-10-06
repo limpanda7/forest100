@@ -184,7 +184,7 @@ const OnOff = () => {
 
                         <p className='Ptitle'>BATHROOM</p>
                         <ul>
-프                            <li>어메니티 (샴푸/린스/바디워시/바디타올/치약)</li>
+                            <li>어메니티 (샴푸/린스/바디워시/바디타올/치약)</li>
                             <li>수건</li>
                         </ul>
 
