@@ -263,7 +263,7 @@ const Forest = ({ history }) => {
                         <h2>이용요금</h2>
                         <p>
                             2인기준 1박: <b>주말 {global.config.forest_weekend.toLocaleString()}원 / 평일 {global.config.forest_weekday.toLocaleString()}원</b><br/>
-                            설날∙추석에는 연휴요금 적용됩니다.
+                            설날∙추석 등 공휴일에는 연휴요금 적용됩니다.
                         </p>
                         <ul className='List'>
                             <li>2인 초과 시 1인당: 1박 12,000원</li>

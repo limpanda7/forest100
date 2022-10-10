@@ -70,10 +70,10 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
 
     const calcPrice = () => {
 
-        // 연휴
-        const holidays = ['2022-09-09','2022-09-10','2022-09-11','2022-09-12'];
-        // 공휴일에 대한 주말처리
-        const weekends = ['2022-05-05','2022-06-01','2022-06-06','2022-08-15','2022-10-03','2022-10-10'];
+        // 연휴 (체크아웃 일)
+        const holidays = ['2022-12-25','2023-01-21','2023-01-22','2023-01-23','2023-01-24'];
+        // 평일을 주말로 처리하고 싶을 때 (체크아웃 일)
+        const weekends = ['2022-12-26','2023-01-02','2023-03-01','2023-05-05'];
         let tempPrice = 0;
 
         let dayArr = [];
