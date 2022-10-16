@@ -181,142 +181,145 @@ const Forest = ({ history }) => {
                             </Slider>
                         </div>
 
-                        <ul className='List'>
-                            <li>
-                                100년된 한옥의 별채입니다 :-)<br/>
-                                주변에는 피톤치드 가득한 산책로가 있고 여러종류의 꽃과 나무, 그리고 열매도 맛볼수 있습니다.
-                            </li>
-                            <li>넓은 마당이 있어 차량 3대 이상도 주차가 가능합니다.</li>
-                            <li>텃밭에서 나는 채소들을 직접 재배하여 요리할 수 있도록 제공합니다.</li>
-                            {/*<li>반려견은 인원수에 포함합니다. 털날림이 적은 견종만 가능합니다.</li>*/}
-                            {/*<li>2박 이상 예약 가능합니다.</li>*/}
-                        </ul>
-
-                        <hr/>
-
-                        <h2>침대/침구 유형</h2>
-                        <div className='Beds'>
-                            <div className='Bed'>
-                                <b>1번 침실</b><br/>
-                                더블 침대 1개
-                            </div>
-                            <div className='Bed'>
-                                <b>2번 침실</b><br/>
-                                더블 침대 1개
-                            </div>
-                        </div>
-
-                        <hr/>
-
-                        <h2>편의시설</h2>
-                        <ul className='List'>
-                            <li>TV</li>
-                            <li>무선 인터넷</li>
-                            <li>에어컨, 난방</li>
-                            <li>주방 (전자레인지, 냉장고, 전기밥솥)</li>
-                            <li>기본 조리도구, 식기류</li>
-                            <li>바베큐 그릴</li>
-                            <li>발코니</li>
-                            <li>뒷마당</li>
-                            <li>무료주차</li>
-                        </ul>
-
-                        <hr/>
-                        <h2>위치</h2>
-
-                        <iframe className='Map'
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3166.511124703915!2d129.1265640155865!3d37.472263137278524!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3561b9b40c1818d9%3A0xef52d1dc46730d66!2z6rCV7JuQ64-EIOuPme2VtOyLnCDrjIDqtazrj5kg6rWs66-47Iuk6ri4IDk2LTE!5e0!3m2!1sko!2skr!4v1621694052376!5m2!1sko!2skr"
-                                allowFullScreen="" loading="lazy"/>
-                        <a href='geo:37.4722631,129.126564?q=구미실길+96-1' target='_blank'>지도 앱에서 보기</a>
-                        <p>주변에 주택이 많고 대부분 농사를 지으시는 분들입니다. 시골감성을 마음껏 누리세요!</p>
-
-                        <button className='LocationBtn' onClick={() => toggleLocation()}>
-                            {!showLocation ? '자세한 위치 정보' : '자세한 위치 정보 닫기'}
-                        </button>
-
-                        {
-                            showLocation &&
-                            <ul className='List Location'>
-                                <li><b>도로명 주소</b><br/>
-                                    강원도 동해시 구미실길 96-1</li>
-                                <li>SK주유소를 끼고 오른쪽 아랫길로 내려와 담벼락을 끼고 쭉 오시면, 언덕길 지나 3거리에서 좌회전 하면 숙소가 보입니다.</li>
-                                <li>동해역(ktx, 무궁화) > 숙소<br/>
-                                    - 버스 21-1 (22분) +도보8분<br/>
-                                    - 택시 3.9km (6분)</li>
-                                <li><b>인근해변</b><br/>
-                                    -추암 촛대바위/해수욕장<br/>
-                                    버스 :북평국가산업단지 정류장 >161 or 162번<br/>
-                                    약 18분<br/>
-                                    택시 :3km 약4분<br/>
-                                    #백사장은 작으나 야경이 멋지고 음식점과 카페가 많습니다.<br/><br/>
-
-                                    -삼척쏠비치 :4.3km 자가용으로 6분<br/>
-                                    #추암해수욕장과 인접해있으며 워터파크가 있습니다.<br/><br/>
-
-                                    -망상해수욕장:16km 자가용으로 22분<br/>
-                                    #백사장이 넓은편이며 오토캠핑과 서핑을 즐기기에 적합합니다.</li>
-                            </ul>
-                        }
-
-                        <hr/>
-
-                        <h2>이용요금</h2>
-                        <p>
-                            2인기준 1박: <b>주말 {global.config.forest_weekend.toLocaleString()}원 / 평일 {global.config.forest_weekday.toLocaleString()}원</b><br/>
-                            설날∙추석 등 공휴일에는 연휴요금 적용됩니다.
-                        </p>
-                        <ul className='List'>
-                            <li>2인 초과 시 1인당: 1박 12,000원</li>
-                            <li>추가침구: 개당 10,000원</li>
-                            <li>4인 초과 시 사랑방을 이용하실 수 있습니다.<br/>(1박 50,000원)</li>
-                            <li>바베큐 이용요금: 20,000원</li>
-                            <li>입금계좌: 카카오뱅크 3333058451192 남은비</li>
-                            <li><a onClick={() => toggleRefund()}>환불 규정 보기</a></li>
-                        </ul>
-
-                        {
-                            showRefund &&
+                        <section>
                             <ul className='List'>
-                                <li>체크인 10일 전까지: 총 결제금액의 100% 환불</li>
-                                <li>체크인 9일 전: 총 결제금액의 90% 환불</li>
-                                <li>체크인 8일 전: 총 결제금액의 80% 환불</li>
-                                <li>체크인 7일 전: 총 결제금액의 70% 환불</li>
-                                <li>체크인 6일 전: 총 결제금액의 60% 환불</li>
-                                <li>체크인 5일 전: 총 결제금액의 50% 환불</li>
-                                <li>체크인 4일 전: 총 결제금액의 40% 환불</li>
-                                <li>체크인 3일 전부터 환불불가</li>
+                                <li>
+                                    100년된 한옥의 별채입니다 :-)<br/>
+                                    주변에는 피톤치드 가득한 산책로가 있고 여러종류의 꽃과 나무, 그리고 열매도 맛볼수 있습니다.
+                                </li>
+                                <li>넓은 마당이 있어 차량 3대 이상도 주차가 가능합니다.</li>
+                                <li>텃밭에서 나는 채소들을 직접 재배하여 요리할 수 있도록 제공합니다.</li>
+                                {/*<li>반려견은 인원수에 포함합니다. 털날림이 적은 견종만 가능합니다.</li>*/}
+                                {/*<li>2박 이상 예약 가능합니다.</li>*/}
                             </ul>
-                        }
+                        </section>
 
-                        <hr/>
+                        <section>
+                            <h2>침대/침구 유형</h2>
+                            <div className='Beds'>
+                                <div className='Bed'>
+                                    <b>1번 침실</b><br/>
+                                    더블 침대 1개
+                                </div>
+                                <div className='Bed'>
+                                    <b>2번 침실</b><br/>
+                                    더블 침대 1개
+                                </div>
+                            </div>
+                        </section>
 
-                        <h2>예약하기</h2>
-                        <p>
-                            체크인 날짜와 체크아웃 날짜를 선택해주세요.<br/>
-                            (체크인 3시 / 체크아웃 11시)
-                        </p>
-                        <Calendar
-                            className='Calendar'
-                            minDate={new Date()}
-                            calendarType='US'
-                            tileDisabled={({ date }) => {
-                                if(reserved.find(x => x === moment(date).format("YYYY-MM-DD"))){
-                                    return true;
-                                }
-                            }}
-                            selectRange={true}
-                            onChange={(value) => calcRange(value)}
-                        />
+                        <section>
+                            <h2>편의시설</h2>
+                            <ul className='List'>
+                                <li>TV</li>
+                                <li>무선 인터넷</li>
+                                <li>에어컨, 난방</li>
+                                <li>주방 (전자레인지, 냉장고, 전기밥솥)</li>
+                                <li>기본 조리도구, 식기류</li>
+                                <li>바베큐 그릴</li>
+                                <li>발코니</li>
+                                <li>뒷마당</li>
+                                <li>무료주차</li>
+                            </ul>
+                        </section>
 
-                        <button className='ReservationBtn' onClick={() => moveToReservation()}>선택한 날짜로 예약하기</button>
+                        <section>
+                            <h2>위치</h2>
 
-                        <hr/>
+                            <iframe className='Map'
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3166.511124703915!2d129.1265640155865!3d37.472263137278524!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3561b9b40c1818d9%3A0xef52d1dc46730d66!2z6rCV7JuQ64-EIOuPme2VtOyLnCDrjIDqtazrj5kg6rWs66-47Iuk6ri4IDk2LTE!5e0!3m2!1sko!2skr!4v1621694052376!5m2!1sko!2skr"
+                                    allowFullScreen="" loading="lazy"/>
+                            <a href='geo:37.4722631,129.126564?q=구미실길+96-1' target='_blank'>지도 앱에서 보기</a>
+                            <p>주변에 주택이 많고 대부분 농사를 지으시는 분들입니다. 시골감성을 마음껏 누리세요!</p>
 
-                        <h2>문의</h2>
-                        <ul className='List'>
-                            <li>카카오톡 ID: eunbibi1001</li>
-                            <li>인스타그램 DM: f_orest100</li>
-                        </ul>
+                            <button className='LocationBtn' onClick={() => toggleLocation()}>
+                                {!showLocation ? '자세한 위치 정보' : '자세한 위치 정보 닫기'}
+                            </button>
+
+                            {
+                                showLocation &&
+                                <ul className='List Location'>
+                                    <li><b>도로명 주소</b><br/>
+                                        강원도 동해시 구미실길 96-1</li>
+                                    <li>SK주유소를 끼고 오른쪽 아랫길로 내려와 담벼락을 끼고 쭉 오시면, 언덕길 지나 3거리에서 좌회전 하면 숙소가 보입니다.</li>
+                                    <li>동해역(ktx, 무궁화) > 숙소<br/>
+                                        - 버스 21-1 (22분) +도보8분<br/>
+                                        - 택시 3.9km (6분)</li>
+                                    <li><b>인근해변</b><br/>
+                                        -추암 촛대바위/해수욕장<br/>
+                                        버스 :북평국가산업단지 정류장 >161 or 162번<br/>
+                                        약 18분<br/>
+                                        택시 :3km 약4분<br/>
+                                        #백사장은 작으나 야경이 멋지고 음식점과 카페가 많습니다.<br/><br/>
+
+                                        -삼척쏠비치 :4.3km 자가용으로 6분<br/>
+                                        #추암해수욕장과 인접해있으며 워터파크가 있습니다.<br/><br/>
+
+                                        -망상해수욕장:16km 자가용으로 22분<br/>
+                                        #백사장이 넓은편이며 오토캠핑과 서핑을 즐기기에 적합합니다.</li>
+                                </ul>
+                            }
+                        </section>
+
+                        <section>
+                            <h2>이용요금</h2>
+                            <p>
+                                2인기준 1박: <b>주말 {global.config.forest_weekend.toLocaleString()}원 / 평일 {global.config.forest_weekday.toLocaleString()}원</b><br/>
+                                설날∙추석 등 공휴일에는 연휴요금 적용됩니다.
+                            </p>
+                            <ul className='List'>
+                                <li>2인 초과 시 1인당: 1박 12,000원</li>
+                                <li>추가침구: 개당 10,000원</li>
+                                <li>4인 초과 시 사랑방을 이용하실 수 있습니다.<br/>(1박 50,000원)</li>
+                                <li>바베큐 이용요금: 20,000원</li>
+                                <li>입금계좌: 카카오뱅크 3333058451192 남은비</li>
+                                <li><a onClick={() => toggleRefund()}>환불 규정 보기</a></li>
+                            </ul>
+
+                            {
+                                showRefund &&
+                                <ul className='List Refund'>
+                                    <li>체크인 10일 전까지: 총 결제금액의 100% 환불</li>
+                                    <li>체크인 9일 전: 총 결제금액의 90% 환불</li>
+                                    <li>체크인 8일 전: 총 결제금액의 80% 환불</li>
+                                    <li>체크인 7일 전: 총 결제금액의 70% 환불</li>
+                                    <li>체크인 6일 전: 총 결제금액의 60% 환불</li>
+                                    <li>체크인 5일 전: 총 결제금액의 50% 환불</li>
+                                    <li>체크인 4일 전: 총 결제금액의 40% 환불</li>
+                                    <li>체크인 3일 전부터 환불불가</li>
+                                </ul>
+                            }
+                        </section>
+
+                        <section>
+                            <h2>예약하기</h2>
+                            <p>
+                                체크인 날짜와 체크아웃 날짜를 선택해주세요.<br/>
+                                (체크인 3시 / 체크아웃 11시)
+                            </p>
+                            <Calendar
+                                className='Calendar'
+                                minDate={new Date()}
+                                calendarType='US'
+                                tileDisabled={({ date }) => {
+                                    if(reserved.find(x => x === moment(date).format("YYYY-MM-DD"))){
+                                        return true;
+                                    }
+                                }}
+                                selectRange={true}
+                                onChange={(value) => calcRange(value)}
+                            />
+
+                            <button className='ReservationBtn' onClick={() => moveToReservation()}>선택한 날짜로 예약하기</button>
+                        </section>
+
+                        <section>
+                            <h2>문의</h2>
+                            <ul className='List'>
+                                <li>카카오톡 ID: eunbibi1001</li>
+                                <li>인스타그램 DM: f_orest100</li>
+                            </ul>
+                        </section>
                     </>
             }
             {

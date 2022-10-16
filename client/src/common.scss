@@ -1,0 +1,188 @@
+h2 {
+  margin: 0 0 10px 0;
+}
+
+ul {
+  margin: 0;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+
+section {
+  border-bottom: 1px solid lightgray;
+  padding: 20px 0;
+}
+
+.Title {
+  text-align: center;
+  font-size: 18px;
+  margin-bottom: 20px;
+
+  span {
+    font-size: 35px;
+    font-weight: bold;
+  }
+}
+
+.Reservation {
+  overflow: hidden;
+
+  input[type=radio] {
+    display: none;
+  }
+
+  input[type=radio] + label {
+    font-weight: 400;
+    font-size: 14px;
+    margin-right: 10px;
+  }
+
+  input[type=radio] + label span {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    margin: -2px 10px 0 0;
+    vertical-align: middle;
+    cursor: pointer;
+    border-radius: 50%;
+    border: 3px solid #ffffff;
+  }
+
+  input[type=radio] + label span {
+    background-color: #fff;
+  }
+
+  input[type=radio]:checked + label {
+    color: #333;
+    font-weight: 700;
+  }
+
+  input[type=radio]:checked + label span {
+    background-color: darkcyan;
+    border: 2px solid #ffffff;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, .1);
+  }
+
+  input[type="radio"] + label span, input[type="radio"]:checked + label span {
+    transition: background-color 0.24s linear;
+  }
+
+  h2 {
+    font-weight: bold;
+    font-size: 24px;
+  }
+
+  .HowMany {
+    p {
+      display: inline-block;
+      width: 140px;
+      padding: 0 20px;
+      margin: 0;
+    }
+
+    span {
+      padding: 0 20px;
+    }
+
+    .Notice {
+      width: 90%;
+      padding-top: 10px;
+    }
+
+    .BeddingDesc {
+      padding: 5px 20px 0;
+      font-size: 15px;
+    }
+  }
+
+  .Barbecue {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 60px;
+    padding-bottom: 20px;
+
+    h2 {
+      margin-bottom: 0;
+    }
+  }
+
+  .PriceTotal {
+    overflow: hidden;
+
+    h2 {
+      float: left;
+      display: inline-block;
+    }
+
+    .Price {
+      float: right;
+      margin-right: 20px;
+    }
+
+    .PriceDetail {
+      float: right;
+      margin-right: 20px;
+      border: 1px solid lightgray;
+      border-radius: 8px;
+      padding: 0 10px;
+    }
+  }
+
+  .PriceOption {
+    p {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      word-break: keep-all;
+    }
+  }
+
+  .Deposit {
+    input {
+      margin-left: 10px;
+      height: 20px;
+    }
+
+    .BankAccount {
+      border: 1px solid black;
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+  }
+}
+
+.ModalTitle {
+  text-align: center;
+  font-size: 25px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.ModalList {
+  padding-left: 10px;
+}
+
+.ModalContent {
+  margin: 10px 0;
+}
+
+.BtnWrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+
+  .ModalBtn {
+    width: 48%;
+    height: 30px;
+
+    &.Alone {
+      width: 100%;
+    }
+  }
+}

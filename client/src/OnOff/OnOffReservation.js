@@ -16,6 +16,8 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
     const [price, setPrice] = useState(0);
     const [priceOption, setPriceOption] = useState('refundable');
     const [discount, setDiscount] = useState(0);
+    const [receipt, setReceipt] = useState('N');
+    const [tax, setTax] = useState(0);
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [showRefund, setShowRefund] = useState(false);
@@ -35,7 +37,7 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
 
     useEffect(() => {
         calcPrice();
-    }, [howMany, bedding, barbecue, studentEvent, priceOption, wholeUse])
+    }, [howMany, bedding, barbecue, receipt, studentEvent, priceOption, wholeUse])
 
     // 재방문 여부 확인
     const checkBeforeSave = () => {
@@ -53,7 +55,7 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
         if (person + baby > 4) {
             autoBedding = 1;
         }
-        axios.post('/api/saveReservation2', {picked, name, phone, person, baby, dog, autoBedding, barbecue, studentEvent, price, priceOption, revisit, wholeUse})
+        axios.post('/api/saveReservation2', {picked, name, phone, person, baby, dog, autoBedding, barbecue, studentEvent, price, priceOption, receipt, revisit, wholeUse})
             .then(() => {
                 alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${price.toLocaleString()}원입니다.`);
                 window.location.href = '/';
@@ -132,6 +134,13 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
             setDiscount(0);
         }
 
+        if (receipt === 'Y') {
+            setTax(totalPrice * 0.1);
+            totalPrice *= 1.1;
+        } else {
+            setTax(0);
+        }
+
         setBasePrice(tempPrice);
         setPrice(totalPrice);
     }
@@ -166,12 +175,14 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
 
     return (
         <div className='Reservation'>
-            <h2>선택한 날짜</h2>
-            <ul>
-                {picked.map(element => {return <li>{element}</li>})}
-            </ul>
+            <section>
+                <h2>선택한 날짜</h2>
+                <ul>
+                    {picked.map(element => {return <li>{element}</li>})}
+                </ul>
+            </section>
 
-            <div className='HowMany'>
+            <section className='HowMany'>
                 <h2>인원수 선택 (최대 6인)</h2>
                 <div>
                     <p>인원</p>
@@ -191,7 +202,6 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
                     <span>{dog}</span>
                     <button onClick={() => setDog(dog + 1)}>+</button>
                 </div>
-                <br/>
                 {/*<div>*/}
                 {/*    <p>추가침구</p>*/}
                 {/*    <button onClick={() => {if (bedding > 0) setBedding(bedding - 1)}}>-</button>*/}
@@ -204,7 +214,7 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
                 {/*        <span>(5명 이상일 시 추가침구가 권장됩니다.)</span>*/}
                 {/*    </div>*/}
                 {/*}*/}
-            </div>
+            </section>
 
             {/*{*/}
             {/*    allWeekDay &&*/}
@@ -219,7 +229,7 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
             {/*    </div>*/}
             {/*}*/}
 
-            <div className='Barbecue'>
+            <section className='Barbecue'>
                 <h2>바베큐 선택</h2>
                 <div className='RadioBtn'>
                     <input type='radio' id='barbecueY' onClick={() => setBarbecue('Y')} checked={barbecue === 'Y'}/>
@@ -227,7 +237,7 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
                     <input type='radio' id='barbecueN' onClick={() => setBarbecue('N')} checked={barbecue === 'N'}/>
                     <label htmlFor='barbecueN'><span/>아니오</label>
                 </div>
-            </div>
+            </section>
 
             {/*<div className='Barbecue'>*/}
             {/*    <h2>대학생 평일 할인</h2>*/}
@@ -240,7 +250,7 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
             {/*    </div>*/}
             {/*</div>*/}
 
-            <div className='PriceOption'>
+            <section className='PriceOption'>
                 <h2>환불옵션 선택</h2>
                 <input type='radio' id='refundable' onClick={() => setPriceOption('refundable')} checked={priceOption === 'refundable'}/>
                 <label htmlFor='refundable'><span/><b>환불가능 옵션</b></label>
@@ -260,13 +270,23 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
                     </ul>
                 }
 
-                <br/>
                 <input type='radio' id='nonrefundable' onClick={() => setPriceOption('nonrefundable')} checked={priceOption === 'nonrefundable'}/>
                 <label htmlFor='nonrefundable'><span/><b>환불불가 옵션</b></label>
                 <p>10% 할인을 제공합니다. 예약을 취소하더라도 환불이 불가합니다.</p>
-            </div>
+            </section>
 
-            <div className='PriceTotal'>
+            <section>
+                <h2>현금영수증 신청</h2>
+                <p>부가세 10%를 별도 지불하셔야 합니다.</p>
+                <div className='RadioBtn'>
+                    <input type='radio' id='receiptY' onClick={() => setReceipt('Y')} checked={receipt === 'Y'}/>
+                    <label htmlFor='receiptY'><span/>예</label>
+                    <input type='radio' id='receiptN' onClick={() => setReceipt('N')} checked={receipt === 'N'}/>
+                    <label htmlFor='receiptN'><span/>아니오</label>
+                </div>
+            </section>
+
+            <section className='PriceTotal'>
                 <h2>총 이용요금</h2>
                 <h2 className='Price'>{price.toLocaleString()}원</h2>
                 <div className='PriceDetail'>
@@ -289,12 +309,16 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
                     }
                     {
                         discount > 0 &&
-                        <p><b>환불불가할인:</b> -{discount.toLocaleString()}원</p>
+                        <p><b>환불불가 할인:</b> -{discount.toLocaleString()}원</p>
+                    }
+                    {
+                        receipt === 'Y' &&
+                        <p><b>부가세:</b> {tax.toLocaleString()}원</p>
                     }
                 </div>
-            </div>
+            </section>
 
-            <div className='Deposit'>
+            <section className='Deposit'>
                 <h2>입금하기</h2>
                 <div className='BankAccount'>카카오 3333053810252 채민기</div>
                 <p>
@@ -311,7 +335,7 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
                            }}
                     />
                 </p>
-            </div>
+            </section>
 
             <button className='ReservationBtn' onClick={() => openModal(true)}>예약하기</button>
 

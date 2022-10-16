@@ -166,220 +166,220 @@ const OnOff = () => {
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowFullScreen></iframe>
 
-                        <h2>STAY</h2>
-                        <ul>
-                            <li>기준인원: 기준 4인, 최대 6인 + 반려견 2마리</li>
-                            <li>체크인 3시 / 체크아웃 11시</li>
-                            <li>객실정보: 침실1(퀸사이즈), 침실2(퀸사이즈), 거실, 큰주방, 세컨주방, 북스테이1, 북스테이2, 화장실(내부,외부), 마당, 루프탑</li>
-                        </ul>
+                        <section>
+                            <div className="DescTitle">STAY</div>
+                            <ul>
+                                <li>기준인원: 기준 4인, 최대 6인 + 반려견 2마리</li>
+                                <li>체크인 3시 / 체크아웃 11시</li>
+                                <li>객실정보: 침실1(퀸사이즈), 침실2(퀸사이즈), 거실, 큰주방, 세컨주방, 북스테이1, 북스테이2, 화장실(내부,외부), 마당, 루프탑</li>
+                            </ul>
+                        </section>
 
                         {/*<p className='Ptitle'>추가 안내사항</p>*/}
                         {/*<ul>*/}
                         {/*    <li>평일 (일~목) 예약시 침실2, 세컨주방, 북스테이2 사용이 제한되며, 전체사용 요청시 5만원 추가요금 발생됩니다.</li>*/}
                         {/*</ul>*/}
 
-                        <hr/>
+                        <section>
+                            <div className="DescTitle">ROOM</div>
 
-                        <h2>ROOM</h2>
-
-                        <p className='Ptitle'>BATHROOM</p>
-                        <ul>
-                            <li>어메니티 (샴푸/린스/바디워시/바디타올/치약)</li>
-                            <li>수건</li>
-                        </ul>
-
-                        <p className='Ptitle'>KITCHEN</p>
-                        <ul>
-                            <li>냉장고/인덕션/전자레인지/전기그릴</li>
-                            <li>식기/컵/냄비/프라이팬/수저/가위/칼/집게/와인잔/와인오프너</li>
-                            <li>드립백/전기포트</li>
-                        </ul>
-
-                        <p className='Ptitle'>SECOND KITCHEN</p>
-                        <ul>
-                            <li>냉장고</li>
-                            <li>식기/냄비/프라이팬/수저/가위/칼/집게/컵</li>
-                        </ul>
-
-                        <p className='Ptitle'>LIVINGROOM</p>
-                        <ul>
-                            <li>통유리창문</li>
-                            <li>WI-FI/에어컨/4인식탁/2인사이드테이블,소파베드</li>
-                            <li>시네마빔/노트북(넷플릭스)</li>
-                            <span>(*별도의 TV는 비치되어 있지 않습니다.)</span>
-                        </ul>
-
-                        <p className='Ptitle'>BEDROOM 1</p>
-                        <ul>
-                            <li>통유리창문</li>
-                            <li>퀸사이즈 침대/침구</li>
-                            <li>전신거울/빗/고데기/드라이기</li>
-                        </ul>
-
-                        <p className='Ptitle'>BEDROOM 2</p>
-                        <ul>
-                            <li>퀸사이즈 침대/침구/에어컨</li>
-                            <li>전신거울/빗/드라이기</li>
-                        </ul>
-
-                        <p className='Ptitle'>BOOK STAY 1</p>
-                        <ul>
-                            <li>1인 책상/의자</li>
-                            <li>서적</li>
-                        </ul>
-
-                        <p className='Ptitle'>BOOK STAY 2</p>
-                        <ul>
-                            <li>2인 테이블</li>
-                            <li>LP 턴테이블</li>
-                            <li>서적</li>
-                        </ul>
-
-                        <p className='Ptitle'>GARDEN & ROOFTOP</p>
-                        <ul>
-                            <li>4인 테이블 및 의자 / 야외조명</li>
-                            <li>바베큐존 (바베큐신청시 화로,토치,집게,숯 제공 / 이용요금 2만원)</li>
-                        </ul>
-
-                        <hr/>
-
-                        <h2>LOCATION</h2>
-
-                        <iframe className='Map'
-                            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d395.7307178455782!2d129.0677103!3d37.4879664!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3561becc4f8ba9e7%3A0x3056ae1168a133e3!2z6rCV7JuQ64-EIOuPme2VtOyLnCDsgrztmZTrj5kg66y066aJMeq4uCA5LTI!5e0!3m2!1sko!2skr!4v1629545600943!5m2!1sko!2skr"
-                            allowFullScreen="" loading="lazy"/>
-                        <a href='geo:37.4879664,129.0677103?q=동해시+무릉1길+9-2' target='_blank'>지도 앱에서 보기</a>
-
-                        <ul>
-                            <li>도로명 주소: 강원도 동해시 무릉1길 9-2</li>
-                            <li>주차: 무릉복지회관 측면 공용주차장</li>
-                        </ul>
-
-                        <button className='LocationBtn' onClick={() => toggleLocation()}>
-                            {!showLocation ? '대중교통 정보' : '대중교통 정보 닫기'}
-                        </button>
-
-                        {
-                            showLocation &&
+                            <p className='Ptitle'>BATHROOM</p>
                             <ul>
-                                <li>
-                                    동해역 (KTX)<br/>
-                                    -버스: 171 송정동주민센터 > 삼화동주민센터<br/>
-                                    (35분)<br/>
-                                    111,311, 132, 131 송정동주민센터 > 삼화시장<br/>
-                                    (37분)<br/>
-                                    -택시: 6.4km (11분)
-                                </li>
-                                <li>
-                                    동해시 종합버스터미널<br/>
-                                    -버스: 111, 311, 132 동해감리교회 > 삼화시장<br/>
-                                    (58분)<br/>
-                                    -택시: 8.9km (15분)
-                                </li>
+                                <li>어메니티<br/>(샴푸/린스/바디워시/바디타올/치약)</li>
+                                <li>수건</li>
                             </ul>
-                        }
 
-                        <button className='LocationBtn' onClick={() => toggleTour()}>
-                            {!showTour ? '주변 관광 정보' : '주변 관광 정보 닫기'}
-                        </button>
+                            <p className='Ptitle'>KITCHEN</p>
+                            <ul>
+                                <li>냉장고/인덕션/전자레인지/전기그릴</li>
+                                <li>식기/컵/냄비/프라이팬/수저/가위/칼/집게/와인잔/와인오프너</li>
+                                <li>드립백/전기포트</li>
+                            </ul>
 
-                        {
-                            showTour &&
+                            <p className='Ptitle'>SECOND KITCHEN</p>
+                            <ul>
+                                <li>냉장고</li>
+                                <li>식기/냄비/프라이팬/수저/가위/칼/집게/컵</li>
+                            </ul>
+
+                            <p className='Ptitle'>LIVINGROOM</p>
+                            <ul>
+                                <li>통유리창문</li>
+                                <li>WI-FI/에어컨/4인식탁/2인사이드테이블,소파베드</li>
+                                <li>시네마빔/노트북(넷플릭스)</li>
+                                <span>(*별도의 TV는 비치되어 있지 않습니다.)</span>
+                            </ul>
+
+                            <p className='Ptitle'>BEDROOM 1</p>
+                            <ul>
+                                <li>통유리창문</li>
+                                <li>퀸사이즈 침대/침구</li>
+                                <li>전신거울/빗/고데기/드라이기</li>
+                            </ul>
+
+                            <p className='Ptitle'>BEDROOM 2</p>
+                            <ul>
+                                <li>퀸사이즈 침대/침구/에어컨</li>
+                                <li>전신거울/빗/드라이기</li>
+                            </ul>
+
+                            <p className='Ptitle'>BOOK STAY 1</p>
+                            <ul>
+                                <li>1인 책상/의자</li>
+                                <li>서적</li>
+                            </ul>
+
+                            <p className='Ptitle'>BOOK STAY 2</p>
+                            <ul>
+                                <li>2인 테이블</li>
+                                <li>LP 턴테이블</li>
+                                <li>서적</li>
+                            </ul>
+
+                            <p className='Ptitle'>GARDEN & ROOFTOP</p>
+                            <ul>
+                                <li>4인 테이블 및 의자 / 야외조명</li>
+                                <li>바베큐존 (바베큐신청시 화로,토치,집게,숯 제공 / 이용요금 2만원)</li>
+                            </ul>
+                        </section>
+
+                        <section>
+                            <div className="DescTitle">LOCATION</div>
+
+                            <iframe className='Map'
+                                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d395.7307178455782!2d129.0677103!3d37.4879664!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3561becc4f8ba9e7%3A0x3056ae1168a133e3!2z6rCV7JuQ64-EIOuPme2VtOyLnCDsgrztmZTrj5kg66y066aJMeq4uCA5LTI!5e0!3m2!1sko!2skr!4v1629545600943!5m2!1sko!2skr"
+                                allowFullScreen="" loading="lazy"/>
+                            <a href='geo:37.4879664,129.0677103?q=동해시+무릉1길+9-2' target='_blank'>지도 앱에서 보기</a>
+
+                            <ul>
+                                <li>도로명 주소: 강원도 동해시 무릉1길 9-2</li>
+                                <li>주차: 무릉복지회관 측면 공용주차장</li>
+                            </ul>
+
+                            <button className='LocationBtn' onClick={() => toggleLocation()}>
+                                {!showLocation ? '대중교통 정보' : '대중교통 정보 닫기'}
+                            </button>
+
+                            {
+                                showLocation &&
                                 <ul>
                                     <li>
-                                        무릉별유천지: 4.8km 약14분<br/>
-                                        펜트하우스3 촬영지로 스카이 글라이더, 루지, 알파인코스터, 짚라인 등 이용할 수 있습니다.
+                                        동해역 (KTX)<br/>
+                                        -버스: 171 송정동주민센터 > 삼화동주민센터<br/>
+                                        (35분)<br/>
+                                        111,311, 132, 131 송정동주민센터 > 삼화시장<br/>
+                                        (37분)<br/>
+                                        -택시: 6.4km (11분)
                                     </li>
                                     <li>
-                                        무릉건강숲: 4.2km 약6분<br/>
-                                        2만 4천평 규모의 친환경 힐링센터로 각종 테마체험을 즐기실 수 있습니다.
-                                    </li>
-                                    <li>
-                                        무릉계곡 삼화사: 4.2km 약6분<br/>
-                                        템플스테이 체험 가능하며 입장료는 무료입니다 (템플스테이 인원 외 2,000원)
-                                    </li>
-                                    <li>
-                                        추암 촛대바위/해수욕장: 9.2km 약12분<br/>
-                                        백사장은 작으나 야경이 멋지고 횟집과 카페가 있습니다.
-                                    </li>
-                                    <li>
-                                        삼척쏠비치: 11km 약14분<br/>
-                                        추암해수욕장과 인접해있으며 워터파크가 있으며 산토리니테라스에서 이국적인 분위기를 느낄 수 있습니다.
-                                    </li>
-                                    <li>
-                                        한섬해수욕장: 9.1km 약15분<br/>
-                                        시내근처에 있는 해수욕장으로  산책로가 있고 바다뷰 터널 핫스팟이 있습니다.
-                                    </li>
-                                    <li>
-                                        망상해수욕장: 17km 23분<br/>
-                                        백사장이 넓은편이며 오토캠핑과 서핑을 즐기기에 적합합니다.
+                                        동해시 종합버스터미널<br/>
+                                        -버스: 111, 311, 132 동해감리교회 > 삼화시장<br/>
+                                        (58분)<br/>
+                                        -택시: 8.9km (15분)
                                     </li>
                                 </ul>
-                        }
+                            }
 
-                        <hr/>
+                            <button className='LocationBtn' onClick={() => toggleTour()}>
+                                {!showTour ? '주변 관광 정보' : '주변 관광 정보 닫기'}
+                            </button>
 
-                        <h2>PRICE</h2>
-                        <p>
-                            4인기준 1박: <b>주말 {global.config.onoff_weekend.toLocaleString()}원 / 평일 {global.config.onoff_weekday.toLocaleString()}원</b><br/>
-                            설날∙추석 등 공휴일에는 연휴요금 적용됩니다.
-                        </p>
-                        <ul>
-                            <li>4인 초과 시 1인당: 1박 15,000원<br/>(추가침구 제공)</li>
-                            {/*<li>추가침구: 개당 10,000원</li>*/}
-                            <li>바베큐 이용요금: 20,000원</li>
-                            <li>입금계좌: 카카오 3333053810252 채민기</li>
-                            <li><a onClick={() => toggleRefund()}>환불 규정 보기</a></li>
-                        </ul>
+                            {
+                                showTour &&
+                                    <ul>
+                                        <li>
+                                            무릉별유천지: 4.8km 약14분<br/>
+                                            펜트하우스3 촬영지로 스카이 글라이더, 루지, 알파인코스터, 짚라인 등 이용할 수 있습니다.
+                                        </li>
+                                        <li>
+                                            무릉건강숲: 4.2km 약6분<br/>
+                                            2만 4천평 규모의 친환경 힐링센터로 각종 테마체험을 즐기실 수 있습니다.
+                                        </li>
+                                        <li>
+                                            무릉계곡 삼화사: 4.2km 약6분<br/>
+                                            템플스테이 체험 가능하며 입장료는 무료입니다 (템플스테이 인원 외 2,000원)
+                                        </li>
+                                        <li>
+                                            추암 촛대바위/해수욕장: 9.2km 약12분<br/>
+                                            백사장은 작으나 야경이 멋지고 횟집과 카페가 있습니다.
+                                        </li>
+                                        <li>
+                                            삼척쏠비치: 11km 약14분<br/>
+                                            추암해수욕장과 인접해있으며 워터파크가 있으며 산토리니테라스에서 이국적인 분위기를 느낄 수 있습니다.
+                                        </li>
+                                        <li>
+                                            한섬해수욕장: 9.1km 약15분<br/>
+                                            시내근처에 있는 해수욕장으로  산책로가 있고 바다뷰 터널 핫스팟이 있습니다.
+                                        </li>
+                                        <li>
+                                            망상해수욕장: 17km 23분<br/>
+                                            백사장이 넓은편이며 오토캠핑과 서핑을 즐기기에 적합합니다.
+                                        </li>
+                                    </ul>
+                            }
+                        </section>
 
-                        {
-                            showRefund &&
+                        <section>
+                            <div className="DescTitle">PRICE</div>
+                            <p>
+                                4인기준 1박: <b>주말 {global.config.onoff_weekend.toLocaleString()}원 / 평일 {global.config.onoff_weekday.toLocaleString()}원</b><br/>
+                                설날∙추석 등 공휴일에는 연휴요금 적용됩니다.
+                            </p>
                             <ul>
-                                <p>체크인 10일 전까지: 총 결제금액의 100% 환불</p>
-                                <p>체크인 9일 전: 총 결제금액의 90% 환불</p>
-                                <p>체크인 8일 전: 총 결제금액의 80% 환불</p>
-                                <p>체크인 7일 전: 총 결제금액의 70% 환불</p>
-                                <p>체크인 6일 전: 총 결제금액의 60% 환불</p>
-                                <p>체크인 5일 전: 총 결제금액의 50% 환불</p>
-                                <p>체크인 4일 전: 총 결제금액의 40% 환불</p>
-                                <p>체크인 3일 전부터 환불불가</p>
+                                <li>4인 초과 시 1인당: 1박 15,000원<br/>(추가침구 제공)</li>
+                                {/*<li>추가침구: 개당 10,000원</li>*/}
+                                <li>바베큐 이용요금: 20,000원</li>
+                                <li>입금계좌: 카카오 3333053810252 채민기</li>
+                                <li><a onClick={() => toggleRefund()}>환불 규정 보기</a></li>
                             </ul>
-                        }
 
-                        {/*<hr/>*/}
+                            {
+                                showRefund &&
+                                <ul className='List Refund'>
+                                    <li>체크인 10일 전까지: 총 결제금액의 100% 환불</li>
+                                    <li>체크인 9일 전: 총 결제금액의 90% 환불</li>
+                                    <li>체크인 8일 전: 총 결제금액의 80% 환불</li>
+                                    <li>체크인 7일 전: 총 결제금액의 70% 환불</li>
+                                    <li>체크인 6일 전: 총 결제금액의 60% 환불</li>
+                                    <li>체크인 5일 전: 총 결제금액의 50% 환불</li>
+                                    <li>체크인 4일 전: 총 결제금액의 40% 환불</li>
+                                    <li>체크인 3일 전부터 환불불가</li>
+                                </ul>
+                            }
+                        </section>
 
                         {/*<h2>EVENT</h2>*/}
                         {/*<p>⭐️대학생 평일 할인⭐️</p>*/}
                         {/*<p>방학은 공기좋은 동해에서 보내자!<br/>대학생에게 평일 10% 할인을 제공합니다.</p>*/}
 
-                        <hr/>
+                        <section>
+                            <div className="DescTitle">RESERVATION</div>
+                            <p>
+                                체크인 날짜와 체크아웃 날짜를 선택해주세요.<br/>
+                                (체크인 3시 / 체크아웃 11시)
+                            </p>
+                            <Calendar
+                                className='Calendar'
+                                minDate={new Date()}
+                                calendarType='US'
+                                tileDisabled={({ date }) => {
+                                    if(reserved.find(x => x === moment(date).format("YYYY-MM-DD"))){
+                                        return true;
+                                    }
+                                }}
+                                selectRange={true}
+                                onChange={(value) => calcRange(value)}
+                            />
+                            <button className='ReservationBtn' onClick={() => moveToReservation()}>선택한 날짜로 예약하기</button>
+                        </section>
 
-                        <h2>RESERVATION</h2>
-                        <p>
-                            체크인 날짜와 체크아웃 날짜를 선택해주세요.<br/>
-                            (체크인 3시 / 체크아웃 11시)
-                        </p>
-                        <Calendar
-                            className='Calendar'
-                            minDate={new Date()}
-                            calendarType='US'
-                            tileDisabled={({ date }) => {
-                                if(reserved.find(x => x === moment(date).format("YYYY-MM-DD"))){
-                                    return true;
-                                }
-                            }}
-                            selectRange={true}
-                            onChange={(value) => calcRange(value)}
-                        />
-                        <button className='ReservationBtn' onClick={() => moveToReservation()}>선택한 날짜로 예약하기</button>
-
-                        <hr/>
-
-                        <h2>CONTACT</h2>
-                        <ul>
-                            <li>카카오톡 ID: skfk1600</li>
-                            <li>인스타그램 DM: on.offstay</li>
-                        </ul>
+                        <section>
+                            <div className="DescTitle">CONTACT</div>
+                            <ul>
+                                <li>카카오톡 ID: skfk1600</li>
+                                <li>인스타그램 DM: on.offstay</li>
+                            </ul>
+                        </section>
                     </>
                 }
                 {
