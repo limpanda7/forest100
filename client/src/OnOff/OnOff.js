@@ -321,9 +321,11 @@ const OnOff = () => {
 
                         <section>
                             <div className="DescTitle">PRICE</div>
+                            <p style={{color: '#760c0c'}}><b>★ 10/22~10/31 가을 예약 이벤트 ★</b></p>
                             <p>
-                                4인기준 1박: <b>주말 {global.config.onoff_weekend.toLocaleString()}원 / 평일 {global.config.onoff_weekday.toLocaleString()}원</b><br/>
-                                설날∙추석 등 공휴일에는 연휴요금 적용됩니다.
+                                4인기준 1박: <b>주말 <span className='Canceled'>300,000원</span> → {global.config.onoff_weekend.toLocaleString()}원<br/>
+                                    <div className='LeftMargin'/>평일 <span className='Canceled'>200,000원</span> → {global.config.onoff_weekday.toLocaleString()}원</b>
+                                <div className='SpecialPrice'>설날∙추석 등 공휴일에는 연휴요금 적용됩니다.</div>
                             </p>
                             <ul>
                                 <li>4인 초과 시 1인당: 1박 15,000원<br/>(추가침구 제공)</li>

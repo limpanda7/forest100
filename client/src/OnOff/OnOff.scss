@@ -80,4 +80,17 @@
     background: black;
     padding: 13px 23px;
   }
+
+  .Canceled {
+    text-decoration: line-through;
+  }
+
+  .LeftMargin {
+    display: inline-block;
+    width: 89px;
+  }
+
+  .SpecialPrice {
+    margin-top: 10px;
+  }
 }
