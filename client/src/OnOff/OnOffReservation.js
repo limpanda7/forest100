@@ -276,8 +276,8 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
             </section>
 
             <section>
-                <h2>현금영수증 신청</h2>
-                <p>부가세 10%를 별도 지불하셔야 합니다.</p>
+                <h2 style={{display: 'inline-block'}}>현금영수증 신청</h2>
+                <span> (부가세 10% 별도)</span>
                 <div className='RadioBtn'>
                     <input type='radio' id='receiptY' onClick={() => setReceipt('Y')} checked={receipt === 'Y'}/>
                     <label htmlFor='receiptY'><span/>예</label>

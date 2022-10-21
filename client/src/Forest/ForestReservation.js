@@ -242,8 +242,9 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, reservedName, res
             </section>
 
             <section>
-                <h2>현금영수증 신청</h2>
-                <p>부가세 10%를 별도 지불하셔야 합니다.<br/>온오프스테이 상호명으로 발급됩니다.</p>
+                <h2 style={{display: 'inline-block'}}>현금영수증 신청</h2>
+                <span> (부가세 10% 별도)</span>
+                <div style={{marginBottom: '10px'}}>온오프스테이 상호명으로 발급됩니다.</div>
                 <div className='RadioBtn'>
                     <input type='radio' id='receiptY' onClick={() => setReceipt('Y')} checked={receipt === 'Y'}/>
                     <label htmlFor='receiptY'><span/>예</label>
