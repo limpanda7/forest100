@@ -321,7 +321,11 @@ const OnOff = () => {
 
                         <section>
                             <div className="DescTitle">PRICE</div>
-                            <p style={{color: '#760c0c'}}><b>★ 10/22~10/31 가을 예약 이벤트 ★</b></p>
+                            <p style={{color: '#760c0c'}}>
+                                <b>★ 10/22~10/31 가을 예약 이벤트 ★</b><br/>
+                                (예약일 기준이며, 숙박일 기준이 아닙니다.)<br/>
+                                (기존 예약자의 취소 후 재예약은 해당되지 않습니다.)
+                            </p>
                             <p>
                                 4인기준 1박: <b>주말 <span className='Canceled'>300,000원</span> → {global.config.onoff_weekend.toLocaleString()}원<br/>
                                     <div className='LeftMargin'/>평일 <span className='Canceled'>200,000원</span> → {global.config.onoff_weekday.toLocaleString()}원</b>
