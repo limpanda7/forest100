@@ -11,6 +11,8 @@ import Layout from "../Layout/Layout";
 
 import img1 from '../images/OnOff/1.jpg';
 import img2 from '../images/OnOff/2.jpg';
+import img3 from '../images/OnOff/3.jpg';
+import img4 from '../images/OnOff/4.jpg';
 import img5 from '../images/OnOff/5.jpg';
 import img6 from '../images/OnOff/6.jpg';
 import img7 from '../images/OnOff/7.jpg';
@@ -22,6 +24,7 @@ import img12 from '../images/OnOff/12.jpg';
 import img13 from '../images/OnOff/13.jpg';
 import img14 from '../images/OnOff/14.jpg';
 import img15 from '../images/OnOff/15.jpg';
+import img16 from '../images/OnOff/16.jpg';
 
 const OnOff = () => {
 
@@ -141,22 +144,25 @@ const OnOff = () => {
                             휴식의 스위치를 ON🔺<br/>
                             일상의 스트레스는 OFF🔻
                         </div>
-
+                        
                         <div className='Slider'>
                             <Slider {...sliderSetting}>
                                 <div><img src={img1} alt={''}/></div>
                                 <div><img src={img2} alt={''}/></div>
-                                <div><img src={img9} alt={''}/></div>
-                                <div><img src={img10} alt={''}/></div>
+                                <div><img src={img3} alt={''}/></div>
+                                <div><img src={img4} alt={''}/></div>
                                 <div><img src={img5} alt={''}/></div>
-                                <div><img src={img11} alt={''}/></div>
                                 <div><img src={img6} alt={''}/></div>
                                 <div><img src={img7} alt={''}/></div>
                                 <div><img src={img8} alt={''}/></div>
-                                <div><img src={img14} alt={''}/></div>
-                                <div><img src={img15} alt={''}/></div>
+                                <div><img src={img9} alt={''}/></div>
+                                <div><img src={img10} alt={''}/></div>
+                                <div><img src={img11} alt={''}/></div>
                                 <div><img src={img12} alt={''}/></div>
                                 <div><img src={img13} alt={''}/></div>
+                                <div><img src={img14} alt={''}/></div>
+                                <div><img src={img15} alt={''}/></div>
+                                <div><img src={img16} alt={''}/></div>
                             </Slider>
                         </div>
 
@@ -191,21 +197,21 @@ const OnOff = () => {
 
                             <p className='Ptitle'>KITCHEN</p>
                             <ul>
-                                <li>냉장고/인덕션/전자레인지</li>
+                                <li>냉장고/인덕션 2구/전자레인지</li>
                                 <li>식기/컵/냄비/프라이팬/수저/가위/칼/집게/와인잔/와인오프너</li>
                                 <li>드립백/전기포트</li>
                             </ul>
 
                             <p className='Ptitle'>SECOND KITCHEN</p>
                             <ul>
-                                <li>냉장고</li>
+                                <li>토스트기</li>
                                 <li>식기/냄비/프라이팬/수저/가위/칼/집게/컵</li>
                             </ul>
 
                             <p className='Ptitle'>LIVINGROOM</p>
                             <ul>
                                 <li>통유리창문</li>
-                                <li>WI-FI/에어컨/4인식탁/2인사이드테이블,소파베드</li>
+                                <li>WI-FI/에어컨/4인식탁/2인사이드테이블</li>
                                 <li>시네마빔/노트북(넷플릭스)</li>
                                 <span>(*별도의 TV는 비치되어 있지 않습니다.)</span>
                             </ul>
@@ -221,12 +227,14 @@ const OnOff = () => {
                             <ul>
                                 <li>퀸사이즈 침대/침구/에어컨</li>
                                 <li>전신거울/빗/드라이기</li>
+                                <li>원형테이블/의자 2개</li>
                             </ul>
 
                             <p className='Ptitle'>BOOK STAY 1</p>
                             <ul>
                                 <li>1인 책상/의자</li>
                                 <li>서적</li>
+                                <li>유아용 매트</li>
                             </ul>
 
                             <p className='Ptitle'>BOOK STAY 2</p>
@@ -234,12 +242,14 @@ const OnOff = () => {
                                 <li>2인 테이블</li>
                                 <li>LP 턴테이블</li>
                                 <li>서적</li>
+                                <li>소파베드</li>
                             </ul>
 
                             <p className='Ptitle'>GARDEN & ROOFTOP</p>
                             <ul>
                                 <li>4인 테이블 및 의자 / 야외조명</li>
                                 <li>바베큐존 (바베큐신청시 화로,토치,집게,숯 제공 / 이용요금 2만원)</li>
+                                <li>외부 화장실(온수X)</li>
                             </ul>
                         </section>
 
