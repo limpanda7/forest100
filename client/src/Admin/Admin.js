@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import ReactModal from "react-modal";
 import './Admin.scss';
 import moment from "moment";
 import Calendar from "react-calendar";
@@ -16,6 +17,9 @@ const Admin = () => {
     const [onOffReserved, setOnOffReserved] = useState([]);
     const [onOffPicked, setOnOffPicked] = useState('');
     const [onOffAction, setOnOffAction] = useState('open');
+
+    const [target, setTarget] = useState('');
+    const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         getReserved();
@@ -40,16 +44,27 @@ const Admin = () => {
             });
     };
 
-    const updateDb = (target) => {
-        if (target === 'forest' && forestPicked === '') {
-            alert('날짜를 선택해주세요!');
-            return false;
-        }
-        if (target === 'onOff' && onOffPicked === '') {
+    const forestCheck = () => {
+        if (forestPicked === '') {
             alert('날짜를 선택해주세요!');
             return false;
         }
 
+        setShowModal(true);
+        setTarget('forest');
+    }
+
+    const onOffCheck = () => {
+        if (onOffPicked === '') {
+            alert('날짜를 선택해주세요!');
+            return false;
+        }
+
+        setShowModal(true);
+        setTarget('onOff');
+    }
+
+    const updateDb = () => {
         if (target === 'forest') {
             const params = {
                 picked: forestPicked,
@@ -59,6 +74,7 @@ const Admin = () => {
             axios.post('/api/updateDb', params)
                 .then(() => {
                     alert('적용되었습니다!');
+                    setShowModal(false);
                     getReserved();
                 })
         } else if (target === 'onOff') {
@@ -70,10 +86,25 @@ const Admin = () => {
             axios.post('/api/updateDb2', params)
                 .then(() => {
                     alert('적용되었습니다!');
+                    setShowModal(false);
                     getReserved();
                 })
         }
     }
+
+    const modalStyle = {
+        content: {
+            width: '80%',
+            maxWidth: '600px',
+            maxHeight: '80%',
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)',
+        },
+    };
 
     if (password === '5769') {
         return (
@@ -103,7 +134,7 @@ const Admin = () => {
                         <option value='open'>열어주세요</option>
                         <option value='close'>닫아주세요</option>
                     </select>
-                    <button className='GoBtn' onClick={() => updateDb('forest')}>GO!</button>
+                    <button className='GoBtn' onClick={() => forestCheck()}>GO!</button>
                 </div>
 
                 <br/>
@@ -134,8 +165,37 @@ const Admin = () => {
                         <option value='open'>열어주세요</option>
                         <option value='close'>닫아주세요</option>
                     </select>
-                    <button className='GoBtn' onClick={() => updateDb('onOff')}>GO!</button>
+                    <button className='GoBtn' onClick={() => onOffCheck()}>GO!</button>
                 </div>
+
+                <ReactModal
+                    isOpen={showModal}
+                    style={modalStyle}
+                >
+                    <div className='ModalTitle'>최종 확인</div>
+                    <ul className='ModalList'>
+                        {
+                            target === 'forest' &&
+                            <>
+                                <li>백년한옥별채</li>
+                                <li>{forestPicked}</li>
+                                <li>{forestAction === 'open' ? '열어주세요' : '닫아주세요'}</li>
+                            </>
+                        }
+                        {
+                            target === 'onOff' &&
+                            <>
+                                <li>온오프스테이</li>
+                                <li>{onOffPicked}</li>
+                                <li>{onOffAction === 'open' ? '열어주세요' : '닫아주세요'}</li>
+                            </>
+                        }
+                    </ul>
+                    <div className='BtnWrap'>
+                        <button className='ModalBtn' onClick={() => setShowModal(false)}>취소</button>
+                        <button className='ModalBtn' onClick={() => updateDb()}>적용</button>
+                    </div>
+                </ReactModal>
             </div>
         );
     }
