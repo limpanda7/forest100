@@ -73,9 +73,11 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
     const calcPrice = () => {
 
         // 연휴 (체크아웃 일)
-        const holidays = ['2022-12-25','2022-12-31','2023-01-01','2023-01-21','2023-01-22','2023-01-23','2023-01-24'];
+        const holidays = ['2022-12-25','2023-01-01','2023-01-21','2023-01-22','2023-01-23','2023-01-24'];
         // 평일을 주말로 처리하고 싶을 때 (체크아웃 일)
         const weekends = ['2022-12-26','2023-01-02','2023-03-01','2023-05-05'];
+        // 특수한 날짜만 처리하고 싶을 때 (체크아웃 일)
+        const specialDays = ['2022-12-31'];
         let tempPrice = 0;
 
         let dayArr = [];
@@ -84,6 +86,8 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
             const dayIdx = new Date(date).getDay();
             if (holidays.includes(date)) {
                 dayArr.push('holiday');
+            } else if (specialDays.includes(date)) {
+                dayArr.push('special');
             } else if (dayIdx === 0 || dayIdx === 6 || weekends.includes(date)) {
                 dayArr.push('weekend');
             // } else if (date.slice(5, 7) === '01' || date.slice(5, 7) === '02') {
@@ -96,6 +100,8 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
         for (let i = 0; i < dayArr.length - 1; i++) {
             if (dayArr[i + 1] === 'holiday') {
                 tempPrice += global.config.onoff_holiday;
+            } else if (dayArr[i + 1] === 'special') {
+                tempPrice += 320000;
             } else if (dayArr[i + 1] === 'weekday') {   // 일월화수목
                 if (studentEvent === 'Y') {
                     tempPrice += 180000;
