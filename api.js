@@ -18,7 +18,7 @@ connection.connect();
 
 // 텔레그램 봇
 const token = '1857829748:AAEQqFmUc4AWxad1-t1KRjQaXoXORjV91I4';
-const bot = new TelegramBot(token, {polling: true});
+const bot = new TelegramBot(token);
 
 /*
   백년한옥별채 API
