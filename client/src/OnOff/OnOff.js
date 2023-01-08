@@ -144,7 +144,7 @@ const OnOff = () => {
                             휴식의 스위치를 ON🔺<br/>
                             일상의 스트레스는 OFF🔻
                         </div>
-                        
+
                         <div className='Slider'>
                             <Slider {...sliderSetting}>
                                 <div><img src={img1} alt={''}/></div>
@@ -174,6 +174,7 @@ const OnOff = () => {
 
                         <section>
                             <div className="DescTitle">STAY</div>
+                            <p style={{color: '#760c0c'}}>★★ 현재 숙소 정비로 인해 3월부터 이용이 가능합니다 ★★</p>
                             <ul>
                                 <li>기준인원: 기준 4인, 최대 6인 + 반려견 2마리</li>
                                 <li>체크인 3시 / 체크아웃 11시</li>
@@ -379,9 +380,10 @@ const OnOff = () => {
                                 체크인 날짜와 체크아웃 날짜를 선택해주세요.<br/>
                                 (체크인 3시 / 체크아웃 11시)
                             </p>
+                            <p style={{color: '#760c0c'}}>★★ 현재 숙소 정비로 인해 3월부터 이용이 가능합니다 ★★</p>
                             <Calendar
                                 className='Calendar'
-                                minDate={new Date()}
+                                minDate={new Date(2023, 2, 1)}
                                 calendarType='US'
                                 tileDisabled={({ date }) => {
                                     if(reserved.find(x => x === moment(date).format("YYYY-MM-DD"))){
