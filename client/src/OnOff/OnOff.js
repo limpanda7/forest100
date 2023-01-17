@@ -383,7 +383,7 @@ const OnOff = () => {
                             <p style={{color: '#760c0c'}}>★★ 현재 숙소 정비로 인해 3월부터 이용이 가능합니다 ★★</p>
                             <Calendar
                                 className='Calendar'
-                                minDate={new Date(2023, 1, 27)}
+                                minDate={new Date(2023, 1, 25)}
                                 calendarType='US'
                                 tileDisabled={({ date }) => {
                                     if(reserved.find(x => x === moment(date).format("YYYY-MM-DD"))){
