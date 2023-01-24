@@ -19,7 +19,7 @@ router.get("/on-off", (req, res) => {
 router.get("/admin", (req, res) => {
     res.sendFile(path.join(__dirname, "client/build", "index.html"));
 });
-router.get("/rn", (req, res) => {
+router.get("/consulting", (req, res) => {
     res.sendFile(path.join(__dirname, "client/build", "index.html"));
 });
 

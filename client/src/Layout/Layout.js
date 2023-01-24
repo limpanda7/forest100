@@ -17,8 +17,8 @@ const Layout = ({ children, history, currentPage, goToHome }) => {
                     currentPage === 'Home' ?
                         <>
                             <Link className='BackWrap' to='/'>
-                                {'<'}
-                                <span className='Back' style={{display: scrollY < 100 ? 'block' : 'none'}}>숙소 목록</span>
+                                {'◀'}
+                                <span className='Back' style={{display: scrollY < 100 ? 'block' : 'none'}}>숙소목록</span>
                             </Link>
                             <div className='Path' style={{display: scrollY >= 100 ? 'block' : 'none'}}>
                                 {
@@ -33,7 +33,7 @@ const Layout = ({ children, history, currentPage, goToHome }) => {
                         </>
                         :
                         <div className='BackWrap' onClick={() => goToHome()}>
-                            {'<'}
+                            {'◀'}
                             <span className='Back' >뒤로가기</span>
                         </div>
                 }

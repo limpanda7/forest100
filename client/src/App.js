@@ -4,14 +4,16 @@ import Main from './Main/Main';
 import Forest from './Forest/Forest';
 import OnOff from './OnOff/OnOff';
 import Admin from "./Admin/Admin";
+import Consulting from "./Consulting/Consulting";
 
 const App = () => {
     return (
         <BrowserRouter>
             <Switch>
-                <Route exact path='/forest' component={Forest}/>
-                <Route exact path='/on-off' component={OnOff}/>
-                <Route exact path='/admin' component={Admin}/>
+                <Route exact path='/forest' component={Forest} />
+                <Route exact path='/on-off' component={OnOff} />
+                <Route exact path='/admin' component={Admin} />
+                <Route exact path='/consulting' component={Consulting} />
                 <Route path='/' component={Main}/>
             </Switch>
         </BrowserRouter>

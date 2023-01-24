@@ -14,6 +14,7 @@ a {
 section {
   border-bottom: 1px solid lightgray;
   padding: 20px 0;
+  word-break: keep-all;
 }
 
 .Title {
@@ -27,9 +28,7 @@ section {
   }
 }
 
-.Reservation {
-  overflow: hidden;
-
+.RadioBtn {
   input[type=radio] {
     display: none;
   }
@@ -69,6 +68,10 @@ section {
   input[type="radio"] + label span, input[type="radio"]:checked + label span {
     transition: background-color 0.24s linear;
   }
+}
+
+.Reservation {
+  overflow: hidden;
 
   h2 {
     font-weight: bold;

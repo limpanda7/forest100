@@ -1,0 +1,21 @@
+.Consulting {
+
+  .InputWrap {
+    display: flex;
+    margin-bottom: 20px;
+
+    span {
+      margin-right: 10px;
+    }
+
+    input {
+      background: none;
+      border: none;
+      border-bottom: 1px solid black;
+
+      &.AlignRight {
+        text-align: right;
+      }
+    }
+  }
+}
