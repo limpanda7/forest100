@@ -3,8 +3,7 @@ import axios from "axios";
 import ReactModal from 'react-modal';
 import './OnOff.scss';
 
-const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, reservedPhone}) => {
-
+const OnOffReservation = ({picked, reservedName, reservedPhone}) => {
     const [howMany, setHowMany] = useState(4);      // 반려견 표함 총 인원수
     const [person, setPerson] = useState(4);
     const [baby, setBaby] = useState(0);
@@ -208,18 +207,6 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
                     <span>{dog}</span>
                     <button onClick={() => setDog(dog + 1)}>+</button>
                 </div>
-                {/*<div>*/}
-                {/*    <p>추가침구</p>*/}
-                {/*    <button onClick={() => {if (bedding > 0) setBedding(bedding - 1)}}>-</button>*/}
-                {/*    <span>{bedding}</span>*/}
-                {/*    <button onClick={() => {if (bedding < 1) setBedding(bedding + 1)}}>+</button>*/}
-                {/*</div>*/}
-                {/*{*/}
-                {/*    (person + baby) >= 5 &&*/}
-                {/*    <div>*/}
-                {/*        <span>(5명 이상일 시 추가침구가 권장됩니다.)</span>*/}
-                {/*    </div>*/}
-                {/*}*/}
             </section>
 
             {/*{*/}
@@ -235,14 +222,20 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage, reservedName, rese
             {/*    </div>*/}
             {/*}*/}
 
-            <section className='Barbecue'>
-                <h2>바베큐 선택</h2>
-                <div className='RadioBtn'>
-                    <input type='radio' id='barbecueY' onClick={() => setBarbecue('Y')} checked={barbecue === 'Y'}/>
-                    <label htmlFor='barbecueY'><span/>예</label>
-                    <input type='radio' id='barbecueN' onClick={() => setBarbecue('N')} checked={barbecue === 'N'}/>
-                    <label htmlFor='barbecueN'><span/>아니오</label>
+            <section>
+                <div className='Barbecue'>
+                    <h2>바베큐 선택</h2>
+                    <div className='RadioBtn'>
+                        <input type='radio' id='barbecueY' onClick={() => setBarbecue('Y')} checked={barbecue === 'Y'}/>
+                        <label htmlFor='barbecueY'><span/>예</label>
+                        <input type='radio' id='barbecueN' onClick={() => setBarbecue('N')} checked={barbecue === 'N'}/>
+                        <label htmlFor='barbecueN'><span/>아니오</label>
+                    </div>
                 </div>
+                <ul>
+                    <li>숯.토치.그릴.부탄가스.그릴망.집게를 제공합니다.</li>
+                    <li>셀프이용 시설입니다.</li>
+                </ul>
             </section>
 
             {/*<div className='Barbecue'>*/}
