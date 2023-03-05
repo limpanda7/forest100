@@ -19,10 +19,10 @@ const OnOffReview = () => {
                     </button>
                 </a>
 
-                <a href='https://m.blog.naver.com/72682005/222974604817' target='_blank'>
+                <a href='https://www.instagram.com/stories/highlights/17918325605188925' target='_blank'>
                     <button>
                         더 많은 후기 CLICK<br/>
-                        <span>https://www.instagram.com/stories/highlights/17918325605188925/</span>
+                        <span>https://www.instagram.com/stories/highlights/17918325605188925</span>
                     </button>
                 </a>
             </div>

@@ -42,7 +42,7 @@ const OnOffIntro = () => {
         slidesToScroll: 1,
         arrows: false,
         autoplay: true,
-        autoplaySpeed: 3000,
+        autoplaySpeed: 2500,
     };
 
     return (
