@@ -34,6 +34,7 @@ const OnOffIntro = () => {
     }
 
     const sliderSetting = {
+        dots: true,
         fade: true,
         dotsClass: 'dots',
         infinite: true,
