@@ -16,7 +16,7 @@ const Main = () => {
             <Link to='/forest'>
                 <FontAwesomeIcon icon={faHome} size="3x" className={'Icon'}/>
                 <div className={'Button'}>
-                    <span>소녀시대가 방문한 숙소!</span>
+                    <span>소녀시대가 방문한 숙소</span>
                     <br/>
                     " 백년 한옥 별채 "</div>
             </Link>
@@ -29,6 +29,15 @@ const Main = () => {
                     " ON OFF 스테이 "
                 </div>
             </Link>
+
+            {/*<Link to='/boulogne'>*/}
+            {/*    <FontAwesomeIcon icon={faToggleOn} size="3x" className={'Icon'}/>*/}
+            {/*    <div className={'Button'}>*/}
+            {/*        <span>숲과 호수 사이 북스테이</span>*/}
+            {/*        <br/>*/}
+            {/*        " 블로뉴 "*/}
+            {/*    </div>*/}
+            {/*</Link>*/}
         </div>
     );
 }

@@ -1,6 +1,6 @@
 @import '../common';
 
-.OnOff {
+.Blon {
   width: 100%;
   max-width: 450px;
   margin: 0 auto;
@@ -13,7 +13,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: darkcyan;
+    background: black;
     z-index: 10;
     font-size: 18px;
 
@@ -55,8 +55,8 @@
       font-size: 18px;
 
       &.Active {
-        border-bottom: 3px solid darkcyan;
-        color: darkcyan;
+        border-bottom: 3px solid black;
+        color: black;
         font-weight: bold;
       }
     }
@@ -89,7 +89,7 @@
         width: 10px;
         height: 10px;
         border-radius: 10px;
-        border: 1px solid darkcyan;
+        border: 1px solid black;
         text-indent: -999em;
         background: white;
         padding: 0;
@@ -97,7 +97,7 @@
 
       .slick-active {
         & > button {
-          background: darkcyan;
+          background: black;
         }
       }
     }
@@ -185,44 +185,5 @@
 
   .Barbecue {
     padding-bottom: 10px;
-  }
-
-  .OnOffReview {
-    text-align: center;
-
-    .BlogReview {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-
-      button {
-        width: 100vw;
-        max-width: 400px;
-        cursor: pointer;
-        font-size: 16px;
-        border: 0;
-        border-radius: 8px;
-        background: darkcyan;
-        padding: 13px 23px;
-        color: yellow;
-        overflow: hidden;
-
-        span {
-          font-size: 11px;
-        }
-      }
-
-      a + a {
-        margin-top: 10px;
-      }
-    }
-
-    img {
-      border: 1px solid darkcyan;
-      width: 95%;
-      min-height: 200px;
-    }
   }
 }
