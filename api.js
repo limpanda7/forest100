@@ -176,14 +176,14 @@ router.get('/getReserved3', (req, res) => {
     });
 });
 router.post('/saveReservation3', (req, res) => {
-    const {picked, name, phone, person, baby, dog, autoBedding, barbecue, studentEvent, price, priceOption, receipt, revisit, wholeUse} = req.body;
+    const {picked, name, phone, person, baby, dog, autoBedding, barbecue, price, priceOption, receipt, revisit} = req.body;
 
     // 1. 예약내역 DB 추가
     let values = [];
     for (const element of picked) {
-        values.push([element, name, phone, person, baby, dog, autoBedding, barbecue, studentEvent, price, priceOption, receipt, revisit, wholeUse]);
+        values.push([element, name, phone, person, baby, dog, autoBedding, barbecue, price, priceOption, receipt, revisit]);
     }
-    connection.query('INSERT INTO blon_reservation (date, name, phone, person, baby, dog, bedding, barbecue, student_event, price, price_option, receipt, revisit, whole_use) VALUES ?', [values], (err, data) => {
+    connection.query('INSERT INTO blon_reservation (date, name, phone, person, baby, dog, bedding, barbecue, price, price_option, receipt, revisit) VALUES ?', [values], (err, data) => {
         res.send(data);
 
         // 2. 텔레그램 발송

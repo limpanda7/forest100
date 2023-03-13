@@ -55,15 +55,8 @@ const BlonCalendar = ({ getReserved, picked, setPicked, setCurrentPage, reserved
         <>
             <section className='Price'>
                 <div className="DescTitle">PRICE</div>
-                {/* 이벤트 문구 */}
-                {/*<p style={{color: '#760c0c'}}>*/}
-                {/*    <b>★ 10/22~10/31 가을 예약 이벤트 ★</b><br/>*/}
-                {/*    (예약일 기준이며, 숙박일 기준이 아닙니다.)<br/>*/}
-                {/*    (기존 예약자의 취소 후 재예약은 해당되지 않습니다.)*/}
-                {/*</p>*/}
                 <p>
-                    4인기준 1박: <b>주말 {global.config.onoff_weekend.toLocaleString()}원 / 평일 {global.config.onoff_weekday.toLocaleString()}원</b><br/>
-                    설날∙추석 등 공휴일에는 연휴요금 적용됩니다.
+                    4인기준 1박: <b>{global.config.blon_weekday.toLocaleString()}원</b>
                 </p>
                 <ul>
                     <li>4인 초과 시 1인당: 1박 15,000원<br/>(추가침구 제공)</li>
@@ -87,10 +80,6 @@ const BlonCalendar = ({ getReserved, picked, setPicked, setCurrentPage, reserved
                 }
             </section>
 
-            {/*<h2>EVENT</h2>*/}
-            {/*<p>⭐️대학생 평일 할인⭐️</p>*/}
-            {/*<p>방학은 공기좋은 동해에서 보내자!<br/>대학생에게 평일 10% 할인을 제공합니다.</p>*/}
-
             <section>
                 <div className="DescTitle">RESERVATION</div>
                 <p>
@@ -99,7 +88,6 @@ const BlonCalendar = ({ getReserved, picked, setPicked, setCurrentPage, reserved
                 </p>
                 <Calendar
                     className='Calendar'
-                    minDate={new Date(2023, 1, 25)}
                     calendarType='US'
                     tileDisabled={({ date }) => {
                         if(reserved.find(x => x === moment(date).format("YYYY-MM-DD"))){

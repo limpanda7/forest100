@@ -2,8 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import './Main.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHome } from '@fortawesome/free-solid-svg-icons'
-import { faToggleOn } from '@fortawesome/free-solid-svg-icons'
+import { faHome, faToggleOn, faTree } from '@fortawesome/free-solid-svg-icons'
 
 const Main = () => {
     return (
@@ -30,14 +29,14 @@ const Main = () => {
                 </div>
             </Link>
 
-            {/*<Link to='/boulogne'>*/}
-            {/*    <FontAwesomeIcon icon={faToggleOn} size="3x" className={'Icon'}/>*/}
-            {/*    <div className={'Button'}>*/}
-            {/*        <span>숲과 호수 사이 북스테이</span>*/}
-            {/*        <br/>*/}
-            {/*        " 블로뉴 "*/}
-            {/*    </div>*/}
-            {/*</Link>*/}
+            <Link to='/boulogne'>
+                <FontAwesomeIcon icon={faTree} size="3x" className={'Icon'}/>
+                <div className={'Button'}>
+                    <span>숲과 호수 사이 북스테이</span>
+                    <br/>
+                    " 블로뉴 "
+                </div>
+            </Link>
         </div>
     );
 }

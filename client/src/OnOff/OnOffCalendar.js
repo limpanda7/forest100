@@ -99,7 +99,6 @@ const OnOffCalendar = ({ getReserved, picked, setPicked, setCurrentPage, reserve
                 </p>
                 <Calendar
                     className='Calendar'
-                    minDate={new Date(2023, 1, 25)}
                     calendarType='US'
                     tileDisabled={({ date }) => {
                         if(reserved.find(x => x === moment(date).format("YYYY-MM-DD"))){
