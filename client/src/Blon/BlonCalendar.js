@@ -88,6 +88,7 @@ const BlonCalendar = ({ getReserved, picked, setPicked, setCurrentPage, reserved
                 </p>
                 <Calendar
                     className='Calendar'
+                    minDate={new Date()}
                     calendarType='US'
                     tileDisabled={({ date }) => {
                         if(reserved.find(x => x === moment(date).format("YYYY-MM-DD"))){

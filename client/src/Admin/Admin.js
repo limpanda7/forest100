@@ -8,6 +8,7 @@ import forest from "../Forest/Forest";
 
 const Admin = () => {
 
+    const [calendar, setCalendar] = useState('forest');
     const [password, setPassword] = useState('');
 
     const [forestReserved, setForestReserved] = useState([]);
@@ -18,7 +19,10 @@ const Admin = () => {
     const [onOffPicked, setOnOffPicked] = useState('');
     const [onOffAction, setOnOffAction] = useState('open');
 
-    const [target, setTarget] = useState('');
+    const [blonReserved, setBlonReserved] = useState([]);
+    const [blonPicked, setBlonPicked] = useState('');
+    const [blonAction, setBlonAction] = useState('open');
+
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
@@ -42,6 +46,14 @@ const Admin = () => {
                 }
                 setOnOffReserved(tempReserved);
             });
+        axios.get('/api/getReserved3')
+            .then((res) => {
+                let tempReserved = [];
+                for (const element of res.data) {
+                    tempReserved.push(moment(element.date).format('YYYY-MM-DD'));
+                }
+                setBlonReserved(tempReserved);
+            });
     };
 
     const forestCheck = () => {
@@ -49,9 +61,7 @@ const Admin = () => {
             alert('날짜를 선택해주세요!');
             return false;
         }
-
         setShowModal(true);
-        setTarget('forest');
     }
 
     const onOffCheck = () => {
@@ -59,13 +69,19 @@ const Admin = () => {
             alert('날짜를 선택해주세요!');
             return false;
         }
-
         setShowModal(true);
-        setTarget('onOff');
+    }
+
+    const blonCheck = () => {
+        if (blonPicked === '') {
+            alert('날짜를 선택해주세요!');
+            return false;
+        }
+        setShowModal(true);
     }
 
     const updateDb = () => {
-        if (target === 'forest') {
+        if (calendar === 'forest') {
             const params = {
                 picked: forestPicked,
                 action: forestAction
@@ -77,13 +93,25 @@ const Admin = () => {
                     setShowModal(false);
                     getReserved();
                 })
-        } else if (target === 'onOff') {
+        } else if (calendar === 'onOff') {
             const params = {
                 picked: onOffPicked,
                 action: onOffAction
             }
 
             axios.post('/api/updateDb2', params)
+                .then(() => {
+                    alert('적용되었습니다!');
+                    setShowModal(false);
+                    getReserved();
+                })
+        } else if (calendar === 'blon') {
+            const params = {
+                picked: blonPicked,
+                action: blonAction
+            }
+
+            axios.post('/api/updateDb3', params)
                 .then(() => {
                     alert('적용되었습니다!');
                     setShowModal(false);
@@ -109,64 +137,102 @@ const Admin = () => {
     if (password === '5769') {
         return (
             <div className='Admin'>
-                <h2>백년한옥별채</h2>
-                <Calendar
-                    className='Calendar'
-                    minDate={new Date()}
-                    calendarType='US'
-                    tileClassName={({ date }) => {
-                        if(forestReserved.find(x => x === moment(date).format("YYYY-MM-DD"))){
-                            return 'ReservedDay';
-                        }
-                    }}
-                    onChange={(value) => {
-                        const date = new Date(value);
-                        date.setDate(date.getDate() + 1);
-                        setForestPicked(date.toISOString().split("T")[0])
-                    }}
-                />
+                {
+                    calendar === 'forest' &&
+                    <>
+                        <h2>백년한옥별채</h2>
+                        <Calendar
+                            className='Calendar'
+                            minDate={new Date()}
+                            calendarType='US'
+                            tileClassName={({ date }) => {
+                                if(forestReserved.find(x => x === moment(date).format("YYYY-MM-DD"))){
+                                    return 'ReservedDay';
+                                }
+                            }}
+                            onChange={(value) => {
+                                const date = new Date(value);
+                                date.setDate(date.getDate() + 1);
+                                setForestPicked(date.toISOString().split("T")[0])
+                            }}
+                        />
 
-                <br/>
+                        <br/>
 
-                <div>
-                    선택한 날짜 <b>{forestPicked}</b>를
-                    <select onChange={(e) => setForestAction(e.target.value)}>
-                        <option value='open'>열어주세요</option>
-                        <option value='close'>닫아주세요</option>
-                    </select>
-                    <button className='GoBtn' onClick={() => forestCheck()}>GO!</button>
-                </div>
+                        <div>
+                            선택한 날짜 <b>{forestPicked}</b>를
+                            <select onChange={(e) => setForestAction(e.target.value)}>
+                                <option value='open'>열어주세요</option>
+                                <option value='close'>닫아주세요</option>
+                            </select>
+                            <button className='GoBtn' onClick={() => forestCheck()}>GO!</button>
+                        </div>
+                    </>
+                }
+                {
+                    calendar === 'onOff' &&
+                    <>
+                        <h2>온오프스테이</h2>
+                        <Calendar
+                            className='Calendar'
+                            minDate={new Date()}
+                            calendarType='US'
+                            tileClassName={({ date }) => {
+                                if(onOffReserved.find(x => x === moment(date).format("YYYY-MM-DD"))){
+                                    return 'ReservedDay';
+                                }
+                            }}
+                            onChange={(value) => {
+                                const date = new Date(value);
+                                date.setDate(date.getDate() + 1);
+                                setOnOffPicked(date.toISOString().split("T")[0])
+                            }}
+                        />
 
-                <br/>
-                <hr/>
+                        <br/>
 
-                <h2>온오프스테이</h2>
-                <Calendar
-                    className='Calendar'
-                    minDate={new Date()}
-                    calendarType='US'
-                    tileClassName={({ date }) => {
-                        if(onOffReserved.find(x => x === moment(date).format("YYYY-MM-DD"))){
-                            return 'ReservedDay';
-                        }
-                    }}
-                    onChange={(value) => {
-                        const date = new Date(value);
-                        date.setDate(date.getDate() + 1);
-                        setOnOffPicked(date.toISOString().split("T")[0])
-                    }}
-                />
+                        <div>
+                            선택한 날짜 <b>{onOffPicked}</b>를
+                            <select onChange={(e) => setOnOffAction(e.target.value)}>
+                                <option value='open'>열어주세요</option>
+                                <option value='close'>닫아주세요</option>
+                            </select>
+                            <button className='GoBtn' onClick={() => onOffCheck()}>GO!</button>
+                        </div>
+                    </>
+                }
+                {
+                    calendar === 'blon' &&
+                    <>
+                        <h2>블로뉴</h2>
+                        <Calendar
+                            className='Calendar'
+                            minDate={new Date()}
+                            calendarType='US'
+                            tileClassName={({ date }) => {
+                                if(blonReserved.find(x => x === moment(date).format("YYYY-MM-DD"))){
+                                    return 'ReservedDay';
+                                }
+                            }}
+                            onChange={(value) => {
+                                const date = new Date(value);
+                                date.setDate(date.getDate() + 1);
+                                setBlonPicked(date.toISOString().split("T")[0])
+                            }}
+                        />
 
-                <br/>
+                        <br/>
 
-                <div>
-                    선택한 날짜 <b>{onOffPicked}</b>를
-                    <select onChange={(e) => setOnOffAction(e.target.value)}>
-                        <option value='open'>열어주세요</option>
-                        <option value='close'>닫아주세요</option>
-                    </select>
-                    <button className='GoBtn' onClick={() => onOffCheck()}>GO!</button>
-                </div>
+                        <div>
+                            선택한 날짜 <b>{forestPicked}</b>를
+                            <select onChange={(e) => setBlonAction(e.target.value)}>
+                                <option value='open'>열어주세요</option>
+                                <option value='close'>닫아주세요</option>
+                            </select>
+                            <button className='GoBtn' onClick={() => blonCheck()}>GO!</button>
+                        </div>
+                    </>
+                }
 
                 <ReactModal
                     isOpen={showModal}
@@ -175,7 +241,7 @@ const Admin = () => {
                     <div className='ModalTitle'>최종 확인</div>
                     <ul className='ModalList'>
                         {
-                            target === 'forest' &&
+                            calendar === 'forest' &&
                             <>
                                 <li>백년한옥별채</li>
                                 <li>{forestPicked}</li>
@@ -183,11 +249,19 @@ const Admin = () => {
                             </>
                         }
                         {
-                            target === 'onOff' &&
+                            calendar === 'onOff' &&
                             <>
                                 <li>온오프스테이</li>
                                 <li>{onOffPicked}</li>
                                 <li>{onOffAction === 'open' ? '열어주세요' : '닫아주세요'}</li>
+                            </>
+                        }
+                        {
+                            calendar === 'blon' &&
+                            <>
+                                <li>블로뉴</li>
+                                <li>{blonPicked}</li>
+                                <li>{blonAction === 'open' ? '열어주세요' : '닫아주세요'}</li>
                             </>
                         }
                     </ul>
@@ -202,6 +276,13 @@ const Admin = () => {
 
     return (
         <div className='Admin'>
+            숙소를 선택해주세요<br/>
+            <select onChange={e => setCalendar(e.target.value)}>
+                <option value='forest'>백년한옥별채</option>
+                <option value='onOff'>온오프스테이</option>
+                <option value='blon'>블로뉴</option>
+            </select>
+            <br/><br/>
             비밀번호를 입력해주세요<br/>
             <input value={password} onChange={(e) => setPassword(e.target.value)}/>
         </div>
