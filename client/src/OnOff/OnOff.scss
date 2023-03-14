@@ -5,6 +5,11 @@
   max-width: 450px;
   margin: 0 auto;
 
+  .slick-track {
+    display: flex;
+    align-items: center;
+  }
+
   .Header {
     position: sticky;
     top: 0;
