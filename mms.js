@@ -1,4 +1,4 @@
-export const forestMMS = (picked, adult, baby, dog, bedding, guestRoom, barbecue, price) => {
+export const forestMMS = (picked, person, baby, dog, bedding, guestRoom, barbecue, price) => {
     return '안녕하세요 백년한옥별채 입니다 :)\n' +
         `입금하실 금액은 ${price.toLocaleString()}원 입니다.\n` +
         '3시간 내 입금 시 예약 확정됩니다.\n' +
@@ -6,7 +6,7 @@ export const forestMMS = (picked, adult, baby, dog, bedding, guestRoom, barbecue
         '\n' +
         '[예약정보]\n' +
         `기간: ${picked}\n` +
-        `인원 ${adult}명, 영유아 ${baby}명, 반려견 ${dog}마리\n` +
+        `인원 ${person}명, 영유아 ${baby}명\n` +
         `추가침구: ${bedding}개\n` +
         `사랑방 이용여부: ${guestRoom}\n` +
         `바베큐 이용여부: ${barbecue}\n` +
@@ -51,7 +51,7 @@ export const forestMMS = (picked, adult, baby, dog, bedding, guestRoom, barbecue
         '※ 문의는 카카오톡(eunbibi1001) 또는 DM(f_orest100)으로 부탁드립니다.\n';
 }
 
-export const onOffMMS = (picked, adult, baby, dog, barbecue, price) => {
+export const onOffMMS = (picked, person, baby, dog, barbecue, price) => {
     return '안녕하세요 온오프스테이 입니다 :)\n' +
         `입금하실 금액은 ${price.toLocaleString()}원 입니다.\n` +
         '3시간 내 입금 시 예약 확정됩니다.\n' +
@@ -59,7 +59,7 @@ export const onOffMMS = (picked, adult, baby, dog, barbecue, price) => {
         '\n' +
         '[예약정보]\n' +
         `기간: ${picked}\n` +
-        `인원 ${adult}명, 영유아 ${baby}명, 반려견 ${dog}마리\n` +
+        `인원 ${person}명, 영유아 ${baby}명, 반려견 ${dog}마리\n` +
         `바베큐 이용여부: ${barbecue}\n` +
         '\n' +
         '아래는 숙소 안내사항입니다.\n' +
@@ -72,15 +72,14 @@ export const onOffMMS = (picked, adult, baby, dog, barbecue, price) => {
         '-대문 비밀번호: 0192\n' +
         '(*대문 닫는 법: 열림 버튼을 누른 후 윙- 소리가 끝나면 살살 닫아 주세요.)\n' +
         '-와이파이(KT_GiGA_5F49) 암호: eega2dx182 \n' +
-        '\n' +
-        '*주차는 무릉복지회관 측면 공용주차장에 하시면 됩니다. \n' +
+        '-주차는 무릉복지회관 측면 공용주차장에 하시면 됩니다. \n' +
         '\n' +
         '[온오프스테이 이용수칙] \n' +
         '\n' +
         '1. 바베큐 이용요금 2만원입니다.\n' +
         '(숯.토치.그릴.부탄가스.그릴망.집게 제공하며 셀프이용)\n' +
         '\n' +
-        '2. 밤 10시 이후 정숙해주세요. 조용한 시골이라 주민분들이 일찍 주무십니다.\n' +
+        '2. 조용한 시골이라 밤 10시 이후 부터는 정숙 부탁드립니다.\n' +
         '\n' +
         '3. 반려견은 침실출입 불가합니다. 침구에 털이 묻지 않도록 주의해주세요. 기본적인 대소변 처리 부탁드립니다. \n' +
         '\n' +
@@ -94,7 +93,7 @@ export const onOffMMS = (picked, adult, baby, dog, barbecue, price) => {
         '\n' +
         '7.외출 or 퇴실시: 소등, 난방 off, 현관 문단속 부탁드립니다. \n' +
         '\n' +
-        '8.숙소의 모든 공간은 금연입니다. (담배꽁초 나오면 속상해요)\n' +
+        '8.숙소의 모든 공간은 금연입니다.\n' +
         '\n' +
         '[바베큐 이용수칙]\n' +
         '1. 화로는 바베큐 존에서만 사용해야 합니다. (잔디에 불꽃이 튀면 화재의 위험이 있습니다)\n' +
@@ -108,4 +107,54 @@ export const onOffMMS = (picked, adult, baby, dog, barbecue, price) => {
         '\n' +
         '※ 본 전화번호는 발신 전용입니다.\n' +
         '※ 문의는 카카오톡(skfk1600) 또는 DM(on.offstay)로 부탁드립니다.';
+}
+
+export const blonMMS = (picked, person, baby, dog, barbecue, price) => {
+    return '안녕하세요 숲과 호수사이 블로뉴숲 입니다. :)\n' +
+      `입금하실 금액은 ${price.toLocaleString()}원 입니다.\n` +
+      '3시간 내 입금 시 예약 확정됩니다.\n' +
+      '(입금계좌: 우체국 01414202194793 남은진)\n' +
+      '\n' +
+      '[예약정보]\n' +
+      `기간: ${picked}\n` +
+      `인원 ${person}명, 영유아 ${baby}명, 반려견 ${dog}마리\n` +
+      `바베큐 이용여부: ${barbecue}\n` +
+      '\n' +
+      '아래는 숙소 안내사항입니다.\n' +
+      '꼼꼼하게 읽어주시길 부탁드립니다!\n' +
+      ' \n' +
+      '✔️주소: 경기도 포천시 산정호수로322번길 38\n' +
+      '✔️체크인: 15시 / 체크아웃: 11시 \n' +
+      '✔️현관 비밀번호: 3739\n' +
+      '✔️와이파이(KT_GIGA_5GWAVE2_5E2D) 암호: egbbgkg382 \n' +
+      '✔️주차는 숙소 앞 마당에 하시면 됩니다.\n' +
+      '\n' +
+      '[블로뉴숲 이용수칙] \n' +
+      '\n' +
+      '1. 기준인원 4인 침구 2세트제공\n' +
+      '(4인 초과시 침구는 붙박이장에서 자유롭게 꺼내어 사용하시면 됩니다.)\n' +
+      '\n' +
+      '2. 바베큐 이용요금 2만원입니다.\n' +
+      '(숯.토치.그릴.부탄가스.그릴망.집게 제공하며 셀프이용)\n' +
+      '\n' +
+      '3. 조용한 시골이라 밤 10시 이후 부터는 정숙 부탁드립니다.\n' +
+      '\n' +
+      '4. 반려견은 침실출입이 불가합니다. 펫티켓을 준수하여 이용 부탁드립니다. \n' +
+      '\n' +
+      '5. 숙소 내의 물건을 소중히 다뤄주시고 청결한 사용을 부탁드립니다.\n' +
+      '*테이블이나 의자 위치 이동 시 제자리로 돌려놓아주세요.\n' +
+      '*물건 도난/파손시 배상금이 청구 될 수 있으며, 체크아웃은 대면으로 진행합니다. \n' +
+      '\n' +
+      '6. 음식물쓰레기는 모아서 봉투에 담아 묶어 마당에 놓으시고, 일반쓰레기와 분리수거도 각각 모아주시면 됩니다. \n' +
+      '\n' +
+      '7.외출 or 퇴실시: 소등, 난방 off, 현관 문단속 부탁드립니다. \n' +
+      '\n' +
+      '8.숙소의 모든 공간은 금연입니다.\n' +
+      '\n' +
+      '✔️큰 방 안쪽은 호스트가 이용하는 공간으로 문 여닫음 소리가 날 수 있는점 양해 부탁드립니다. (문이 열릴일은 없으니 걱정은 안하셔도 됩니다)\n' +
+      '✔️주방우측, 큰 방 우측 붙박이장은 개인물품이 있는공간으로 열지 말아주시길 부탁드립니다!\n' +
+      '\n' +
+      '\n' +
+      '※ 본 전화번호는 발신 전용입니다.\n' +
+      '※ 문의는 DM(boulogne_forest)로 부탁드립니다.';
 }

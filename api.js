@@ -168,7 +168,7 @@ router.post('/updateDb2', (req, res) => {
 })
 
 /*
-  블로뉴 API
+  블로뉴숲 API
  */
 router.get('/getReserved3', (req, res) => {
     connection.query('SELECT * FROM blon_reservation', (err, data) => {
@@ -188,7 +188,7 @@ router.post('/saveReservation3', (req, res) => {
 
         // 2. 텔레그램 발송
         bot.sendMessage('-986629130',
-            `블로뉴 신규 예약이 들어왔습니다.\n
+            `블로뉴숲 신규 예약이 들어왔습니다.\n
 기간: ${picked}\n
 이름: ${name}\n
 전화번호: ${phone}\n
@@ -201,6 +201,25 @@ ${receipt === 'Y' ? '현금영수증 신청합니다\n' : ''}
 ${revisit === 'Y' ? '재방문입니다\n' : ''}`
         );
     });
+
+    // 3. 안내문자 발송
+    axios.post('https://api-sms.cloud.toast.com/sms/v3.0/appKeys/KRoL3w8pZsaHJkVL/sender/mms',  {
+        "title": "블로뉴숲 안내문자",
+        "body": blonMMS(picked, person, baby, dog, barbecue, price),
+        "sendNo":"0264991922",
+        "recipientList":[{ "recipientNo": phone }]
+    }, {
+        headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+            'X-Secret-Key': 'MZ4nmv2P'
+        }
+    }).then((axiosRes) => {
+        if (axiosRes.data.header.resultMessage === 'SUCCESS') {
+            bot.sendMessage('-986629130', '문자 발송에 성공하였습니다.');
+        } else {
+            bot.sendMessage('-986629130', '문자 발송에 실패하였습니다.');
+        }
+    })
 })
 router.post('/updateDb3', (req, res) => {
     const {picked, action} = req.body;

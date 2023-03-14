@@ -34,7 +34,7 @@ const Main = () => {
                 <div className={'Button'}>
                     <span>숲과 호수 사이 북스테이</span>
                     <br/>
-                    " 블로뉴 "
+                    " 블로뉴숲 "
                 </div>
             </Link>
         </div>

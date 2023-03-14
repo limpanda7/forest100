@@ -48,7 +48,7 @@ const Blon = () => {
     return (
         <div className="Blon">
             <Helmet>
-                <title>::: 블로뉴 :::</title>
+                <title>::: 블로뉴숲 :::</title>
             </Helmet>
 
             <div className='Header'>
@@ -59,7 +59,7 @@ const Blon = () => {
                                 ◀
                             </Link>
                             <div className='Path'>
-                                블로뉴
+                                블로뉴숲
                             </div>
                         </>
                         :

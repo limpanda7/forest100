@@ -227,7 +227,7 @@ const Admin = () => {
                 {
                     calendar === 'blon' &&
                     <>
-                        <h2>블로뉴</h2>
+                        <h2>블로뉴숲</h2>
                         <Calendar
                             className='Calendar'
                             minDate={new Date()}
@@ -282,7 +282,7 @@ const Admin = () => {
                         {
                             calendar === 'blon' &&
                             <>
-                                <li>블로뉴</li>
+                                <li>블로뉴숲</li>
                                 <li>{blonPicked}</li>
                                 <li>{blonAction === 'open' ? '열어주세요' : '닫아주세요'}</li>
                             </>
@@ -303,7 +303,7 @@ const Admin = () => {
             <select onChange={e => setCalendar(e.target.value)}>
                 <option value='forest'>백년한옥별채</option>
                 <option value='onOff'>온오프스테이</option>
-                <option value='blon'>블로뉴</option>
+                <option value='blon'>블로뉴숲</option>
             </select>
             <br/><br/>
             비밀번호를 입력해주세요<br/>
