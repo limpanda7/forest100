@@ -29,14 +29,14 @@ const Main = () => {
                 </div>
             </Link>
 
-            {/*<Link to='/boulogne'>*/}
-            {/*    <FontAwesomeIcon icon={faTree} size="3x" className={'Icon'}/>*/}
-            {/*    <div className={'Button'}>*/}
-            {/*        <span>숲과 호수 사이 북스테이</span>*/}
-            {/*        <br/>*/}
-            {/*        " 블로뉴 "*/}
-            {/*    </div>*/}
-            {/*</Link>*/}
+            <Link to='/boulogne'>
+                <FontAwesomeIcon icon={faTree} size="3x" className={'Icon'}/>
+                <div className={'Button'}>
+                    <span>숲과 호수 사이 북스테이</span>
+                    <br/>
+                    " 블로뉴 "
+                </div>
+            </Link>
         </div>
     );
 }

@@ -56,6 +56,27 @@ const Admin = () => {
             });
     };
 
+    const login = () => {
+      if (password === '5769') {
+        if (calendar === 'forest' || calendar === 'onOff') {
+          return true;
+        }
+      }
+
+      if (password === '0125') {
+        if (calendar === 'blon') {
+          return true;
+        }
+      }
+
+      return false;
+    }
+
+    const logout = () => {
+      setPassword('');
+      setCalendar('forest');
+    }
+
     const forestCheck = () => {
         if (forestPicked === '') {
             alert('날짜를 선택해주세요!');
@@ -134,9 +155,11 @@ const Admin = () => {
         },
     };
 
-    if (password === '5769') {
+    if (login()) {
         return (
             <div className='Admin'>
+                <button onClick={logout}>뒤로</button>
+                <br/><br/>
                 {
                     calendar === 'forest' &&
                     <>

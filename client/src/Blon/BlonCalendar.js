@@ -61,7 +61,7 @@ const BlonCalendar = ({ getReserved, picked, setPicked, setCurrentPage, reserved
                 <ul>
                     <li>4인 초과 시 1인당: 1박 15,000원<br/>(추가침구 제공)</li>
                     <li>바베큐 이용요금: 20,000원</li>
-                    <li>입금계좌: 카카오 3333053810252 채민기</li>
+                    <li>입금계좌: 우체국 01414202194793 남은진</li>
                     <li><a onClick={() => toggleRefund()}>환불 규정 보기</a></li>
                 </ul>
 
