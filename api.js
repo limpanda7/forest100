@@ -168,6 +168,15 @@ router.post('/updateDb2', (req, res) => {
 })
 
 /*
+  온오프스테이 NEW API
+ */
+router.get('/reservation/on_off', (req, res) => {
+    connection.query('SELECT checkin_date, checkout_date FROM on_off where checkin_date > NOW() order by checkin_date', (err, data) => {
+        res.send(data);
+    });
+});
+
+/*
   블로뉴숲 API
  */
 router.get('/getReserved3', (req, res) => {
