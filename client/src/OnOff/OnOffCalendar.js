@@ -63,7 +63,7 @@ const OnOffCalendar = ({ getReserved, picked, setPicked, setCurrentPage, reserve
                 {/*</p>*/}
                 <p>
                     4인기준 1박: <b>주말 {global.config.onoff_weekend.toLocaleString()}원 / 평일 {global.config.onoff_weekday.toLocaleString()}원</b><br/>
-                    설날∙추석 등 공휴일에는 연휴요금 적용됩니다.
+                    성수기에는 요금이 변동됩니다. (사전 예약을 원하시면 문의 주세요)<br/>
                 </p>
                 <ul>
                     <li>4인 초과 시 1인당: 1박 15,000원<br/>(추가침구 제공)</li>
@@ -100,6 +100,7 @@ const OnOffCalendar = ({ getReserved, picked, setPicked, setCurrentPage, reserve
                 <Calendar
                     className='Calendar'
                     minDate={new Date()}
+                    maxDate={new Date('2023-06-30')}
                     calendarType='US'
                     tileDisabled={({ date }) => {
                         if(reserved.find(x => x === moment(date).format("YYYY-MM-DD"))){
