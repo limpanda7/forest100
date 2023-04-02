@@ -107,21 +107,22 @@ const OnOffIntro = () => {
                 <p className='Ptitle'>KITCHEN</p>
                 <ul>
                     <li>냉장고/인덕션 2구/전자레인지</li>
-                    <li>식기/컵/냄비/프라이팬/수저/가위/칼/집게/와인잔/와인오프너</li>
+                    <li>식기/컵/냄비/프라이팬/수저/가위/칼/집게</li>
+                    <li>와인잔/와인오프너</li>
                     <li>드립백/전기포트</li>
                 </ul>
 
                 <p className='Ptitle'>SECOND KITCHEN</p>
                 <ul>
-                    <li>토스트기</li>
-                    <li>식기/냄비/프라이팬/수저/가위/칼/집게/컵</li>
+                    <li>발뮤다 토스트기</li>
+                    <li>식기/컵/냄비/프라이팬/수저/가위/칼/집게</li>
                 </ul>
 
                 <p className='Ptitle'>LIVINGROOM</p>
                 <ul>
                     <li>통유리창문</li>
                     <li>WI-FI/에어컨/4인식탁/2인사이드테이블</li>
-                    <li>시네마빔/노트북(넷플릭스)</li>
+                    <li>브리츠 스피커/시네마빔/노트북(+넷플릭스)</li>
                     <span>(*별도의 TV는 비치되어 있지 않습니다.)</span>
                 </ul>
 
@@ -157,7 +158,7 @@ const OnOffIntro = () => {
                 <p className='Ptitle'>GARDEN & ROOFTOP</p>
                 <ul>
                     <li>4인 테이블 및 의자 / 야외조명</li>
-                    <li>바베큐존 (바베큐신청시 화로,토치,집게,숯 제공 / 이용요금 2만원)</li>
+                    <li>바베큐존 (바베큐 신청 시 화로,토치,집게,숯 제공 / 이용요금 2만원)</li>
                     <li>외부 화장실(온수X)</li>
                 </ul>
             </section>
