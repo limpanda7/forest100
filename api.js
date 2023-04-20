@@ -78,7 +78,7 @@ ${revisit === 'Y' ? '재방문입니다\n' : ''}`
     // 4. 어드민 DB 추가
     let adminValues = [];
     adminValues.push(['homepage', picked[0], picked[picked.length - 1], name, phone, person, baby, dog, bedding, guestRoom, barbecue, price, priceOption, revisit]);
-    connection.query('INSERT INTO forest (type, checkin_date, checkout_date, name, phone, person, baby, dog, bedding, guest_room, barbecue, price, price_option, revisit) VALUES ?', [adminValues], () => {});
+    connection.query('INSERT INTO forest_reservation_new (type, checkin_date, checkout_date, name, phone, person, baby, dog, bedding, guest_room, barbecue, price, price_option, revisit) VALUES ?', [adminValues], () => {});
 })
 router.post('/updateDb', (req, res) => {
     const {picked, action} = req.body;
@@ -98,7 +98,7 @@ router.post('/updateDb', (req, res) => {
   온오프스테이 API
  */
 router.get('/getReserved2', (req, res) => {
-    connection.query('SELECT * FROM onoff_reservation', (err, data) => {
+    connection.query('SELECT * FROM on_off_reservation', (err, data) => {
         res.send(data);
     });
 });
@@ -110,7 +110,7 @@ router.post('/saveReservation2', (req, res) => {
     for (const element of picked) {
         values.push([element, name, phone, person, baby, dog, autoBedding, barbecue, studentEvent, price, priceOption, receipt, revisit, wholeUse]);
     }
-    connection.query('INSERT INTO onoff_reservation (date, name, phone, person, baby, dog, bedding, barbecue, student_event, price, price_option, receipt, revisit, whole_use) VALUES ?', [values], (err, data) => {
+    connection.query('INSERT INTO on_off_reservation (date, name, phone, person, baby, dog, bedding, barbecue, student_event, price, price_option, receipt, revisit, whole_use) VALUES ?', [values], (err, data) => {
         res.send(data);
 
         // 2. 텔레그램 발송
@@ -151,17 +151,17 @@ ${revisit === 'Y' ? '재방문입니다\n' : ''}`
     // 4. 어드민 DB 추가
     let adminValues = [];
     adminValues.push(['homepage', picked[0], picked[picked.length - 1], name, phone, person, baby, dog, autoBedding, barbecue, studentEvent, price, priceOption, revisit, wholeUse]);
-    connection.query('INSERT INTO on_off (type, checkin_date, checkout_date, name, phone, person, baby, dog, bedding, barbecue, student_event, price, price_option, revisit, whole_use) VALUES ?', [adminValues], () => {});
+    connection.query('INSERT INTO on_off_reservation_new (type, checkin_date, checkout_date, name, phone, person, baby, dog, bedding, barbecue, student_event, price, price_option, revisit, whole_use) VALUES ?', [adminValues], () => {});
 })
 router.post('/updateDb2', (req, res) => {
     const {picked, action} = req.body;
     if (action === 'open') {
-        connection.query('DELETE FROM onoff_reservation WHERE date = ?', picked, (err, data) => {
+        connection.query('DELETE FROM on_off_reservation WHERE date = ?', picked, (err, data) => {
             res.send(data);
         });
     }
     if (action === 'close') {
-        connection.query('INSERT INTO onoff_reservation (date) VALUES (?)', picked, (err, data) => {
+        connection.query('INSERT INTO on_off_reservation (date) VALUES (?)', picked, (err, data) => {
             res.send(data);
         });
     }
@@ -171,7 +171,7 @@ router.post('/updateDb2', (req, res) => {
   온오프스테이 NEW API
  */
 router.get('/reservation/on_off', (req, res) => {
-    connection.query('SELECT checkin_date, checkout_date FROM on_off where checkout_date >= NOW() order by checkin_date', (err, data) => {
+    connection.query('SELECT checkin_date, checkout_date FROM on_off_reservation_new where checkout_date >= NOW() order by checkin_date', (err, data) => {
         res.send(data);
     });
 });
