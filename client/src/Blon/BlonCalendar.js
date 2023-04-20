@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import Calendar from "react-calendar";
 import moment from "moment";
+import {BLON_WEEKDAY} from "../constants";
 
 const BlonCalendar = ({ getReserved, picked, setPicked, setCurrentPage, reserved }) => {
     const [showRefund, setShowRefund] = useState(false);
@@ -56,7 +57,7 @@ const BlonCalendar = ({ getReserved, picked, setPicked, setCurrentPage, reserved
             <section className='Price'>
                 <div className="DescTitle">PRICE</div>
                 <p>
-                    4인기준 1박: <b>{global.config.blon_weekday.toLocaleString()}원</b>
+                    4인기준 1박: <b>{BLON_WEEKDAY.toLocaleString()}원</b>
                 </p>
                 <ul>
                     <li>4인 초과 시 1인당: 1박 15,000원<br/>(추가침구 제공)</li>

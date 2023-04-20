@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import Calendar from "react-calendar";
 import moment from "moment";
+import {ON_OFF_WEEKDAY, ON_OFF_WEEKEND} from "../constants";
 
 const OnOffCalendar = ({ getReserved, picked, setPicked, setCurrentPage, reserved }) => {
     const [showRefund, setShowRefund] = useState(false);
@@ -62,7 +63,7 @@ const OnOffCalendar = ({ getReserved, picked, setPicked, setCurrentPage, reserve
                 {/*    (기존 예약자의 취소 후 재예약은 해당되지 않습니다.)*/}
                 {/*</p>*/}
                 <p>
-                    4인기준 1박: <b>주말 {global.config.onoff_weekend.toLocaleString()}원 / 평일 {global.config.onoff_weekday.toLocaleString()}원</b><br/>
+                    4인기준 1박: <b>주말 {ON_OFF_WEEKEND.toLocaleString()}원 / 평일 {ON_OFF_WEEKDAY.toLocaleString()}원</b><br/>
                     성수기에는 요금이 변동됩니다. (사전 예약을 원하시면 문의 주세요)<br/>
                 </p>
                 <ul>

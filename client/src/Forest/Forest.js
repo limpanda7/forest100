@@ -32,6 +32,7 @@ import ssImg7 from "../images/Forest/ss7.png";
 import ssImg8 from "../images/Forest/ss8.png";
 import ssImg9 from "../images/Forest/ss9.png";
 import ssImg10 from "../images/Forest/ss10.png";
+import {FOREST_WEEKDAY, FOREST_WEEKEND} from "../constants";
 
 const Forest = ({ history }) => {
 
@@ -264,7 +265,7 @@ const Forest = ({ history }) => {
                         <section>
                             <h2>이용요금</h2>
                             <p>
-                                2인기준 1박: <b>주말 {global.config.forest_weekend.toLocaleString()}원 / 평일 {global.config.forest_weekday.toLocaleString()}원</b><br/>
+                                2인기준 1박: <b>주말 {FOREST_WEEKEND.toLocaleString()}원 / 평일 {FOREST_WEEKDAY.toLocaleString()}원</b><br/>
                                 설날∙추석 등 공휴일에는 연휴요금 적용됩니다.
                             </p>
                             <ul className='List'>

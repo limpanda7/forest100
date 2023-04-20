@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import axios from "axios";
 import ReactModal from 'react-modal';
 import './Blon.scss';
+import {BLON_HOLIDAY, BLON_WEEKDAY, BLON_WEEKEND} from "../constants";
 
 const BlonReservation = ({picked, reservedName, reservedPhone}) => {
     const [howMany, setHowMany] = useState(4);      // 반려견 표함 총 인원수
@@ -95,13 +96,13 @@ const BlonReservation = ({picked, reservedName, reservedPhone}) => {
 
         for (let i = 0; i < dayArr.length - 1; i++) {
             if (dayArr[i + 1] === 'holiday') {
-                tempPrice += global.config.blon_holiday;
+                tempPrice += BLON_HOLIDAY;
             } else if (dayArr[i + 1] === 'special') {
                 tempPrice += 320000;
             } else if (dayArr[i + 1] === 'weekday') {   // 일월화수목
-                tempPrice += global.config.blon_weekday;
+                tempPrice += BLON_WEEKDAY;
             } else if (dayArr[i + 1] === 'weekend') {    // 금토
-                tempPrice += global.config.blon_weekend;
+                tempPrice += BLON_WEEKEND;
             // } else if (dayArr[i + 1] === 'weekdayDiscount') {   // 1~3월 평일 할인
             //     if (studentEvent === 'Y') {
             //         tempPrice += 90000;

@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import axios from "axios";
 import './Forest.scss';
 import ReactModal from "react-modal";
+import {FOREST_HOLIDAY, FOREST_WEEKDAY, FOREST_WEEKEND} from "../constants";
 
 const ForestReservation = ({picked, setPicked, setCurrentPage, reservedName, reservedPhone}) => {
 
@@ -98,11 +99,11 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, reservedName, res
 
         for (let i = 0; i < dayArr.length - 1; i++) {
             if (dayArr[i + 1] === 'holiday') {
-                tempPrice += global.config.forest_holiday;
+                tempPrice += FOREST_HOLIDAY;
             } else if (dayArr[i + 1] === 'weekday') {   // 일월화수목
-                tempPrice += global.config.forest_weekday;
+                tempPrice += FOREST_WEEKDAY;
             } else if (dayArr[i + 1] === 'weekend') {    // 금토
-                tempPrice += global.config.forest_weekend;
+                tempPrice += FOREST_WEEKEND;
             }
         }
 
