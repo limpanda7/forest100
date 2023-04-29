@@ -2,6 +2,7 @@
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import mysql from "mysql";
 import ical from "node-ical";
 import schedule from 'node-schedule';
 import moment from "moment";
@@ -60,7 +61,9 @@ const job = schedule.scheduleJob('*/5 * * * *', () => {
             }
         });
 
-        connection.query('INSERT INTO on_off_ical (uid, start_dt, end_dt, status, phone_last_digits) VALUES ?', [values]);
+        connection.query('TRUNCATE TABLE on_off_ical', () => {
+          connection.query('INSERT INTO on_off_ical (uid, start_dt, end_dt, status, phone_last_digits) VALUES ?', [values]);
+        })
       }
     )
 })
