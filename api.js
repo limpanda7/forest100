@@ -175,6 +175,17 @@ router.get('/reservation/on_off', (req, res) => {
         res.send(data);
     });
 });
+router.post('/reservation/on_off', (req, res) => {
+    const {picked, name, phone, person, baby, dog, autoBedding, barbecue, studentEvent, price, priceOption, receipt, revisit, wholeUse} = req.body;
+    let values = [];
+    values.push(['homepage', picked[0], picked[picked.length - 1], name, phone, person, baby, dog, autoBedding, barbecue, studentEvent, price, priceOption, revisit, wholeUse]);
+    connection.query('INSERT INTO on_off_reservation_new (type, checkin_date, checkout_date, name, phone, person, baby, dog, bedding, barbecue, student_event, price, price_option, revisit, whole_use) VALUES ?', [values]);
+});
+router.get('/ical/on_off', (req, res) => {
+    connection.query('SELECT * from on_off_ical', (err, data) => {
+        res.send(data);
+    });
+});
 
 /*
   블로뉴숲 API
