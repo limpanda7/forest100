@@ -9,7 +9,6 @@ const BlonReservation = ({picked, reservedName, reservedPhone}) => {
     const [person, setPerson] = useState(4);
     const [baby, setBaby] = useState(0);
     const [dog, setDog] = useState(0);
-    const [bedding, setBedding] = useState(0);
     const [barbecue, setBarbecue] = useState('N');
     const [basePrice, setBasePrice] = useState(0);
     const [price, setPrice] = useState(0);
@@ -34,7 +33,7 @@ const BlonReservation = ({picked, reservedName, reservedPhone}) => {
 
     useEffect(() => {
         calcPrice();
-    }, [howMany, bedding, barbecue, receipt, priceOption])
+    }, [howMany, barbecue, receipt, priceOption])
 
     // 재방문 여부 확인
     const checkBeforeSave = () => {
@@ -48,11 +47,11 @@ const BlonReservation = ({picked, reservedName, reservedPhone}) => {
     }
 
     const saveReservation = () => {
-        let autoBedding = 0;
+        let bedding = 0;
         if (person + baby > 4) {
-            autoBedding = 1;
+            bedding = 1;
         }
-        axios.post('/api/saveReservation3', {picked, name, phone, person, baby, dog, autoBedding, barbecue, price, priceOption, receipt, revisit})
+        axios.post('/api/saveReservation3', {picked, name, phone, person, baby, dog, bedding, barbecue, price, priceOption, receipt, revisit})
             .then(() => {
                 alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${price.toLocaleString()}원입니다.`);
                 window.location.href = '/';
@@ -87,8 +86,6 @@ const BlonReservation = ({picked, reservedName, reservedPhone}) => {
                 dayArr.push('special');
             } else if (dayIdx === 0 || dayIdx === 6 || weekends.includes(date)) {
                 dayArr.push('weekend');
-            // } else if (date.slice(5, 7) === '01' || date.slice(5, 7) === '02') {
-            //     dayArr.push('weekdayDiscount');
             } else {
                 dayArr.push('weekday');
             }
@@ -103,24 +100,11 @@ const BlonReservation = ({picked, reservedName, reservedPhone}) => {
                 tempPrice += BLON_WEEKDAY;
             } else if (dayArr[i + 1] === 'weekend') {    // 금토
                 tempPrice += BLON_WEEKEND;
-            // } else if (dayArr[i + 1] === 'weekdayDiscount') {   // 1~3월 평일 할인
-            //     if (studentEvent === 'Y') {
-            //         tempPrice += 90000;
-            //     } else {
-            //         tempPrice += 100000;
-            //     }
             }
         }
 
         const days = picked.length - 1;
         let totalPrice = tempPrice + (15000 * (howMany - 4)) * days;
-        // let totalPrice = tempPrice + (12000 * (howMany - 4)) * days + (10000 * bedding);
-
-        // if (!dayArr.includes('holiday') && !dayArr.includes('weekend')) {
-        //     setAllWeekDay(true);
-        //     if (wholeUse === 'Y')
-        //         totalPrice += 50000;
-        // }
 
         if (barbecue === 'Y') {
             totalPrice += 20000;
@@ -203,23 +187,10 @@ const BlonReservation = ({picked, reservedName, reservedPhone}) => {
                 </div>
             </section>
 
-            {/*{*/}
-            {/*    allWeekDay &&*/}
-            {/*    <div className='Barbecue'>*/}
-            {/*        <h2>집 전체 사용</h2>*/}
-            {/*        <div className='RadioBtn'>*/}
-            {/*            <input type='radio' id='wholeUseY' onClick={() => setWholeUse('Y')} checked={wholeUse === 'Y'}/>*/}
-            {/*            <label htmlFor='wholeUseY'><span/>예</label>*/}
-            {/*            <input type='radio' id='wholeUseN' onClick={() => setWholeUse('N')} checked={wholeUse === 'N'}/>*/}
-            {/*            <label htmlFor='wholeUseN'><span/>아니오</label>*/}
-            {/*        </div>*/}
-            {/*    </div>*/}
-            {/*}*/}
-
             <section>
                 <div className='Barbecue'>
                     <h2>바베큐 선택</h2>
-                    <div className='RadioBtn'>
+                    <div>
                         <input type='radio' id='barbecueY' onClick={() => setBarbecue('Y')} checked={barbecue === 'Y'}/>
                         <label htmlFor='barbecueY'><span/>예</label>
                         <input type='radio' id='barbecueN' onClick={() => setBarbecue('N')} checked={barbecue === 'N'}/>
@@ -231,17 +202,6 @@ const BlonReservation = ({picked, reservedName, reservedPhone}) => {
                     <li>셀프이용 시설입니다.</li>
                 </ul>
             </section>
-
-            {/*<div className='Barbecue'>*/}
-            {/*    <h2>대학생 평일 할인</h2>*/}
-            {/*    <p>학생증을 인증하시는 대학생에게 평일 10% 할인을 제공합니다.</p>*/}
-            {/*    <div className='RadioBtn'>*/}
-            {/*        <input type='radio' id='studentY' onClick={() => setStudentEvent('Y')} checked={studentEvent === 'Y'}/>*/}
-            {/*        <label htmlFor='studentY'><span/>예</label>*/}
-            {/*        <input type='radio' id='studentN' onClick={() => setStudentEvent('N')} checked={studentEvent === 'N'}/>*/}
-            {/*        <label htmlFor='studentN'><span/>아니오</label>*/}
-            {/*    </div>*/}
-            {/*</div>*/}
 
             <section className='PriceOption'>
                 <h2>환불옵션 선택</h2>
@@ -271,7 +231,7 @@ const BlonReservation = ({picked, reservedName, reservedPhone}) => {
             <section>
                 <h2 style={{display: 'inline-block'}}>현금영수증 신청</h2>
                 <span> (부가세 10% 별도)</span>
-                <div className='RadioBtn'>
+                <div>
                     <input type='radio' id='receiptY' onClick={() => setReceipt('Y')} checked={receipt === 'Y'}/>
                     <label htmlFor='receiptY'><span/>예</label>
                     <input type='radio' id='receiptN' onClick={() => setReceipt('N')} checked={receipt === 'N'}/>
@@ -288,14 +248,6 @@ const BlonReservation = ({picked, reservedName, reservedPhone}) => {
                         howMany > 4 &&
                         <p><b>인원초과:</b> 15,000원 x {howMany - 4}명 x {picked.length - 1}박</p>
                     }
-                    {/*{*/}
-                    {/*    bedding > 0 &&*/}
-                    {/*    <p><b>추가침구:</b> 10,000원 x {bedding}개</p>*/}
-                    {/*}*/}
-                    {/*{*/}
-                    {/*    wholeUse === 'Y' &&*/}
-                    {/*    <p><b>집 전체 사용:</b> 50,000원</p>*/}
-                    {/*}*/}
                     {
                         barbecue === 'Y' &&
                         <p><b>바베큐:</b> 20,000원</p>

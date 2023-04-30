@@ -77,7 +77,7 @@ const Consulting = () => {
 
           <div className='InputWrap'>
             <span>인테리어 경험: </span>
-            <div className='RadioBtn'>
+            <div>
               <input type='radio' id='experienceY' name='experience' checked={experience} onClick={handleRadio}/>
               <label htmlFor='experienceY'><span/>예</label>
               <input type='radio' id='experienceN' name='experience' checked={!experience} onClick={handleRadio}/>

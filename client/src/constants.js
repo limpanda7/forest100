@@ -1,9 +1,9 @@
 export const FOREST_WEEKDAY = 200000;
 export const FOREST_WEEKEND = 250000;
 export const FOREST_HOLIDAY = 300000;
-export const ON_OFF_WEEKDAY = 180000;
-export const ON_OFF_WEEKEND = 200000;
-export const ON_OFF_HOLIDAY = 300000;
+export const ON_OFF_WEEKDAY = 250000;
+export const ON_OFF_WEEKEND = 300000;
+export const ON_OFF_HOLIDAY = 350000;
 export const BLON_WEEKDAY = 250000;
 export const BLON_WEEKEND = 250000;
 export const BLON_HOLIDAY = 250000;

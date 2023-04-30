@@ -209,7 +209,7 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, reservedName, res
 
             <section className='Barbecue'>
                 <h2>바베큐 선택</h2>
-                <div className='RadioBtn'>
+                <div>
                     <input type='radio' id='barbecueY' onClick={() => setBarbecue('Y')} checked={barbecue === 'Y'}/>
                     <label htmlFor='barbecueY'><span/>예</label>
                     <input type='radio' id='barbecueN' onClick={() => setBarbecue('N')} checked={barbecue === 'N'}/>
@@ -246,7 +246,7 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, reservedName, res
                 <h2 style={{display: 'inline-block'}}>현금영수증 신청</h2>
                 <span> (부가세 10% 별도)</span>
                 <div style={{marginBottom: '10px'}}>온오프스테이 상호명으로 발급됩니다.</div>
-                <div className='RadioBtn'>
+                <div>
                     <input type='radio' id='receiptY' onClick={() => setReceipt('Y')} checked={receipt === 'Y'}/>
                     <label htmlFor='receiptY'><span/>예</label>
                     <input type='radio' id='receiptN' onClick={() => setReceipt('N')} checked={receipt === 'N'}/>
