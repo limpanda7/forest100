@@ -42,28 +42,30 @@ const connection = mysql.createConnection({
 connection.connect();
 
 // 5분마다 ical 적재
-const job = schedule.scheduleJob('*/5 * * * *', () => {
-    ical.fromURL(
-      'https://www.airbnb.co.kr/calendar/ical/52828603.ics?s=f6ffa314abc34b142104f746fe97ee5b',
-      {},
-      (err, res) => {
-        let values = [];
+if (process.env.NODE_ENV === "production") {
+    const job = schedule.scheduleJob('*/5 * * * *', () => {
+        ical.fromURL(
+          'https://www.airbnb.co.kr/calendar/ical/52828603.ics?s=f6ffa314abc34b142104f746fe97ee5b',
+          {},
+          (err, res) => {
+              let values = [];
 
-        Object.keys(res).map(key => {
-            const {datetype, uid, start, end, summary, description} = res[key];
+              Object.keys(res).map(key => {
+                  const {datetype, uid, start, end, summary, description} = res[key];
 
-            if (datetype === 'date') {
-                const startDt = moment(start).format('YYYY-MM-DD');
-                const endDt = moment(end).format('YYYY-MM-DD');
-                const phoneLastDigits = !!description ? description.slice(description.length - 4, description.length) : null;
-                const status = summary.startsWith('Airbnb') ? 'Not available' : summary;
-                values.push([uid, startDt, endDt, status, phoneLastDigits])
-            }
-        });
+                  if (datetype === 'date') {
+                      const startDt = moment(start).format('YYYY-MM-DD');
+                      const endDt = moment(end).format('YYYY-MM-DD');
+                      const phoneLastDigits = !!description ? description.slice(description.length - 4, description.length) : null;
+                      const status = summary.startsWith('Airbnb') ? 'Not available' : summary;
+                      values.push([uid, startDt, endDt, status, phoneLastDigits])
+                  }
+              });
 
-        connection.query('TRUNCATE TABLE on_off_ical', () => {
-          connection.query('INSERT INTO on_off_ical (uid, start_dt, end_dt, status, phone_last_digits) VALUES ?', [values]);
-        })
-      }
-    )
-})
+              connection.query('TRUNCATE TABLE on_off_ical', () => {
+                  connection.query('INSERT INTO on_off_ical (uid, start_dt, end_dt, status, phone_last_digits) VALUES ?', [values]);
+              })
+          }
+        )
+    })
+}

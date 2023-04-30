@@ -21,6 +21,7 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, reservedName, res
     const [phone, setPhone] = useState('');
     const [showRefund, setShowRefund] = useState(false);
     const [receipt, setReceipt] = useState('N');
+    const [receiptNum, setReceiptNum] = useState('');
     const [tax, setTax] = useState(0);
     const [showRevisitModal, setShowRevisitModal] = useState(false);
     const [revisit, setRevisit] = useState('N');
@@ -58,7 +59,7 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, reservedName, res
             return false;
         }
 
-        axios.post('/api/saveReservation', {picked, name, phone, person, baby, dog, bedding, guestRoom, barbecue, price, priceOption, receipt, revisit})
+        axios.post('/api/saveReservation', {picked, name, phone, person, baby, dog, bedding, guestRoom, barbecue, price, priceOption, receipt, receiptNum, revisit})
             .then(() => {
                 alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${price.toLocaleString()}원입니다.`);
                 window.location.href = '/';
@@ -252,6 +253,17 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, reservedName, res
                     <input type='radio' id='receiptN' onClick={() => setReceipt('N')} checked={receipt === 'N'}/>
                     <label htmlFor='receiptN'><span/>아니오</label>
                 </div>
+                {
+                    receipt === 'Y' &&
+                    <p>
+                      <span>신청할 전화번호 or 사업자번호:</span>
+                      <input type='text' size='14' pattern='[0-9]*' value={receiptNum}
+                             onChange={(e) => {
+                                 if (e.target.validity.valid) setReceiptNum(e.target.value)
+                             }}
+                      />
+                    </p>
+                }
             </section>
 
             <section className='PriceTotal'>

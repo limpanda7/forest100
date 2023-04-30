@@ -29,14 +29,14 @@ router.get('/getReserved', (req, res) => {
     });
 });
 router.post('/saveReservation', (req, res) => {
-    const {picked, name, phone, person, baby, dog, bedding, guestRoom, barbecue, price, priceOption, receipt, revisit} = req.body;
+    const {picked, name, phone, person, baby, dog, bedding, guestRoom, barbecue, price, priceOption, receipt, receiptNum, revisit} = req.body;
 
     // 1. 예약내역 DB 추가
     let values = [];
     for (const element of picked) {
-        values.push([element, name, phone, person, baby, dog, bedding, guestRoom, barbecue, price, priceOption, receipt, revisit]);
+        values.push([element, name, phone, person, baby, dog, bedding, guestRoom, barbecue, price, priceOption, receipt, receiptNum, revisit]);
     }
-    connection.query('INSERT INTO forest_reservation (date, name, phone, person, baby, dog, bedding, guest_room, barbecue, price, price_option, receipt, revisit) VALUES ?', [values], (err, data) => {
+    connection.query('INSERT INTO forest_reservation (date, name, phone, person, baby, dog, bedding, guest_room, barbecue, price, price_option, receipt, receipt_num, revisit) VALUES ?', [values], (err, data) => {
         res.send(data);
 
         // 2. 텔레그램 발송
@@ -51,7 +51,7 @@ router.post('/saveReservation', (req, res) => {
 바베큐 이용여부: ${barbecue}\n
 이용금액: ${price.toLocaleString()}\n
 환불옵션: ${priceOption === 'refundable' ? '환불가능' : '환불불가'}\n
-${receipt === 'Y' ? '현금영수증 신청합니다\n' : ''}
+${receipt === 'Y' ? `현금영수증 신청합니다 (신청번호: ${receiptNum})\n` : ''}
 ${revisit === 'Y' ? '재방문입니다\n' : ''}`
         );
     });
@@ -77,8 +77,8 @@ ${revisit === 'Y' ? '재방문입니다\n' : ''}`
 
     // 4. 어드민 DB 추가
     let adminValues = [];
-    adminValues.push(['homepage', picked[0], picked[picked.length - 1], name, phone, person, baby, dog, bedding, guestRoom, barbecue, price, priceOption, revisit]);
-    connection.query('INSERT INTO forest_reservation_new (type, checkin_date, checkout_date, name, phone, person, baby, dog, bedding, guest_room, barbecue, price, price_option, revisit) VALUES ?', [adminValues], () => {});
+    adminValues.push(['homepage', picked[0], picked[picked.length - 1], name, phone, person, baby, dog, bedding, guestRoom, barbecue, price, priceOption, receipt, receiptNum, revisit]);
+    connection.query('INSERT INTO forest_reservation_new (type, checkin_date, checkout_date, name, phone, person, baby, dog, bedding, guest_room, barbecue, price, price_option, receipt, receipt_num, revisit) VALUES ?', [adminValues], () => {});
 })
 router.post('/updateDb', (req, res) => {
     const {picked, action} = req.body;
@@ -103,14 +103,14 @@ router.get('/getReserved2', (req, res) => {
     });
 });
 router.post('/saveReservation2', (req, res) => {
-    const {picked, name, phone, person, baby, dog, bedding, barbecue, price, priceOption, receipt, revisit} = req.body;
+    const {picked, name, phone, person, baby, dog, bedding, barbecue, price, priceOption, receipt, receiptNum, revisit} = req.body;
 
     // 1. 예약내역 DB 추가
     let values = [];
     for (const element of picked) {
-        values.push([element, name, phone, person, baby, dog, bedding, barbecue, price, priceOption, receipt, revisit]);
+        values.push([element, name, phone, person, baby, dog, bedding, barbecue, price, priceOption, receipt, receiptNum, revisit]);
     }
-    connection.query('INSERT INTO on_off_reservation (date, name, phone, person, baby, dog, bedding, barbecue, price, price_option, receipt, revisit) VALUES ?', [values], (err, data) => {
+    connection.query('INSERT INTO on_off_reservation (date, name, phone, person, baby, dog, bedding, barbecue, price, price_option, receipt, receipt_num, revisit) VALUES ?', [values], (err, data) => {
         res.send(data);
 
         // 2. 텔레그램 발송
@@ -124,7 +124,7 @@ router.post('/saveReservation2', (req, res) => {
 바베큐 이용여부: ${barbecue}\n
 이용금액: ${price.toLocaleString()}\n
 환불옵션: ${priceOption === 'refundable' ? '환불가능' : '환불불가'}\n
-${receipt === 'Y' ? '현금영수증 신청합니다\n' : ''}
+${receipt === 'Y' ? `현금영수증 신청합니다 (신청번호: ${receiptNum})\n` : ''}
 ${revisit === 'Y' ? '재방문입니다\n' : ''}`
         );
     });
@@ -150,8 +150,8 @@ ${revisit === 'Y' ? '재방문입니다\n' : ''}`
 
     // 4. 어드민 DB 추가
     let adminValues = [];
-    adminValues.push(['homepage', picked[0], picked[picked.length - 1], name, phone, person, baby, dog, bedding, barbecue, price, priceOption, receipt, revisit]);
-    connection.query('INSERT INTO on_off_reservation_new (type, checkin_date, checkout_date, name, phone, person, baby, dog, bedding, barbecue, price, price_option, receipt, revisit) VALUES ?', [adminValues], () => {});
+    adminValues.push(['homepage', picked[0], picked[picked.length - 1], name, phone, person, baby, dog, bedding, barbecue, price, priceOption, receipt, receiptNum, revisit]);
+    connection.query('INSERT INTO on_off_reservation_new (type, checkin_date, checkout_date, name, phone, person, baby, dog, bedding, barbecue, price, price_option, receipt, receipt_num, revisit) VALUES ?', [adminValues], () => {});
 })
 router.post('/updateDb2', (req, res) => {
     const {picked, action} = req.body;
@@ -176,10 +176,10 @@ router.get('/reservation/on_off', (req, res) => {
     });
 });
 router.post('/reservation/on_off', (req, res) => {
-    const {picked, name, phone, person, baby, dog, bedding, barbecue, price, priceOption, receipt, revisit} = req.body;
+    const {picked, name, phone, person, baby, dog, bedding, barbecue, price, priceOption, receipt, receiptNum, revisit} = req.body;
     let values = [];
-    values.push(['homepage', picked[0], picked[picked.length - 1], name, phone, person, baby, dog, bedding, barbecue, price, priceOption, receipt, revisit]);
-    connection.query('INSERT INTO on_off_reservation_new (type, checkin_date, checkout_date, name, phone, person, baby, dog, bedding, barbecue, price, price_option, revisit) VALUES ?', [values]);
+    values.push(['homepage', picked[0], picked[picked.length - 1], name, phone, person, baby, dog, bedding, barbecue, price, priceOption, receipt, receiptNum, revisit]);
+    connection.query('INSERT INTO on_off_reservation_new (type, checkin_date, checkout_date, name, phone, person, baby, dog, bedding, barbecue, price, price_option, receipt, receipt_num, revisit) VALUES ?', [values]);
 });
 router.get('/ical/on_off', (req, res) => {
     connection.query('SELECT * from on_off_ical', (err, data) => {
@@ -196,14 +196,14 @@ router.get('/getReserved3', (req, res) => {
     });
 });
 router.post('/saveReservation3', (req, res) => {
-    const {picked, name, phone, person, baby, dog, autoBedding, barbecue, price, priceOption, receipt, revisit} = req.body;
+    const {picked, name, phone, person, baby, dog, autoBedding, barbecue, price, priceOption, receipt, receiptNum, revisit} = req.body;
 
     // 1. 예약내역 DB 추가
     let values = [];
     for (const element of picked) {
-        values.push([element, name, phone, person, baby, dog, autoBedding, barbecue, price, priceOption, receipt, revisit]);
+        values.push([element, name, phone, person, baby, dog, autoBedding, barbecue, price, priceOption, receipt, receiptNum, revisit]);
     }
-    connection.query('INSERT INTO blon_reservation (date, name, phone, person, baby, dog, bedding, barbecue, price, price_option, receipt, revisit) VALUES ?', [values], (err, data) => {
+    connection.query('INSERT INTO blon_reservation (date, name, phone, person, baby, dog, bedding, barbecue, price, price_option, receipt, receipt_num, revisit) VALUES ?', [values], (err, data) => {
         res.send(data);
 
         // 2. 텔레그램 발송
@@ -217,7 +217,7 @@ router.post('/saveReservation3', (req, res) => {
 바베큐 이용여부: ${barbecue}\n
 이용금액: ${price.toLocaleString()}\n
 환불옵션: ${priceOption === 'refundable' ? '환불가능' : '환불불가'}\n
-${receipt === 'Y' ? '현금영수증 신청합니다\n' : ''}
+${receipt === 'Y' ? `현금영수증 신청합니다 (신청번호: ${receiptNum})\n` : ''}
 ${revisit === 'Y' ? '재방문입니다\n' : ''}`
         );
     });
