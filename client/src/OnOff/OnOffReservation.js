@@ -98,10 +98,10 @@ const OnOffReservation = ({picked, reservedName, reservedPhone}) => {
         for (let i = 0; i < dayArr.length - 1; i++) {
             if (dayArr[i + 1] === 'holiday') {
                 tempPrice += ON_OFF_HOLIDAY;
-            } else if (dayArr[i + 1] === 'weekday') {   // 일월화수목
-                tempPrice += ON_OFF_WEEKDAY;
-            } else if (dayArr[i + 1] === 'weekend') {    // 금토
+            } else if (dayArr[i + 1] === 'weekend') {   // 일월화수목
                 tempPrice += ON_OFF_WEEKEND;
+            } else if (dayArr[i + 1] === 'weekday') {    // 금토
+                tempPrice += ON_OFF_WEEKDAY;
             }
         }
 

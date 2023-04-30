@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import Calendar from "react-calendar";
 import moment from "moment";
-import {ON_OFF_WEEKDAY, ON_OFF_WEEKEND} from "../constants";
+import {ON_OFF_HOLIDAY, ON_OFF_WEEKDAY, ON_OFF_WEEKEND} from "../constants";
 
 const OnOffCalendar = ({ getReserved, picked, setPicked, setCurrentPage, reserved }) => {
     const [showRefund, setShowRefund] = useState(false);
@@ -53,15 +53,11 @@ const OnOffCalendar = ({ getReserved, picked, setPicked, setCurrentPage, reserve
         <>
             <section className='Price'>
                 <div className="DescTitle">PRICE</div>
-                {/* 이벤트 문구 */}
-                {/*<p style={{color: '#760c0c'}}>*/}
-                {/*    <b>★ 10/22~10/31 가을 예약 이벤트 ★</b><br/>*/}
-                {/*    (예약일 기준이며, 숙박일 기준이 아닙니다.)<br/>*/}
-                {/*    (기존 예약자의 취소 후 재예약은 해당되지 않습니다.)*/}
-                {/*</p>*/}
                 <p>
-                    4인기준 1박: <b>주말 {ON_OFF_WEEKEND.toLocaleString()}원 / 평일 {ON_OFF_WEEKDAY.toLocaleString()}원</b><br/>
-                    성수기에는 요금이 변동됩니다. (사전 예약을 원하시면 문의 주세요)<br/>
+                    비성수기: <b>주말 {ON_OFF_WEEKEND.toLocaleString()}원 / 평일 {ON_OFF_WEEKDAY.toLocaleString()}원</b><br/>
+                </p>
+                <p>
+                    성수기: <b>주말 {ON_OFF_HOLIDAY.toLocaleString()}원 / 평일 {ON_OFF_WEEKEND.toLocaleString()}원</b><br/>
                 </p>
                 <ul>
                     <li>4인 초과 시 1인당: 1박 15,000원<br/>(추가침구 제공)</li>
