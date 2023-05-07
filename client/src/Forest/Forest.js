@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet';
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 import moment from 'moment';
-import {withRouter} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 import './Forest.scss';
 import ForestReservation from "./ForestReservation";
 import Layout from "../Layout/Layout";
@@ -259,45 +259,52 @@ const Forest = ({ history }) => {
                             }
                         </section>
 
-                        <section>
-                            <h2>이용요금</h2>
-                            <p>
-                                2인기준 1박: <b>주말 {FOREST_WEEKEND.toLocaleString()}원 / 평일 {FOREST_WEEKDAY.toLocaleString()}원</b><br/>
-                                설날∙추석 등 공휴일에는 연휴요금 적용됩니다.
-                            </p>
-                            <ul className='List'>
-                                <li>2인 초과 시 1인당: 1박 12,000원</li>
-                                <li>추가침구: 개당 10,000원</li>
-                                <li>4인 초과 시 사랑방을 이용하실 수 있습니다.<br/>(1박 50,000원)</li>
-                                <li>바베큐 이용요금: 20,000원</li>
-                                <li>입금계좌: 카카오뱅크 3333058451192 남은비</li>
-                                <li><a onClick={() => toggleRefund()}>환불 규정 보기</a></li>
-                            </ul>
+                        {/*<section>*/}
+                        {/*    <h2>이용요금</h2>*/}
+                        {/*    <p>*/}
+                        {/*        2인기준 1박: <b>주말 {FOREST_WEEKEND.toLocaleString()}원 / 평일 {FOREST_WEEKDAY.toLocaleString()}원</b><br/>*/}
+                        {/*        설날∙추석 등 공휴일에는 연휴요금 적용됩니다.*/}
+                        {/*    </p>*/}
+                        {/*    <ul className='List'>*/}
+                        {/*        <li>2인 초과 시 1인당: 1박 12,000원</li>*/}
+                        {/*        <li>추가침구: 개당 10,000원</li>*/}
+                        {/*        <li>4인 초과 시 사랑방을 이용하실 수 있습니다.<br/>(1박 50,000원)</li>*/}
+                        {/*        <li>바베큐 이용요금: 20,000원</li>*/}
+                        {/*        <li>입금계좌: 카카오뱅크 3333058451192 남은비</li>*/}
+                        {/*        <li><a onClick={() => toggleRefund()}>환불 규정 보기</a></li>*/}
+                        {/*    </ul>*/}
 
-                            {
-                                showRefund &&
-                                <ul className='List Refund'>
-                                    <li>체크인 10일 전까지: 총 결제금액의 100% 환불</li>
-                                    <li>체크인 9일 전: 총 결제금액의 90% 환불</li>
-                                    <li>체크인 8일 전: 총 결제금액의 80% 환불</li>
-                                    <li>체크인 7일 전: 총 결제금액의 70% 환불</li>
-                                    <li>체크인 6일 전: 총 결제금액의 60% 환불</li>
-                                    <li>체크인 5일 전: 총 결제금액의 50% 환불</li>
-                                    <li>체크인 4일 전: 총 결제금액의 40% 환불</li>
-                                    <li>체크인 3일 전부터 환불불가</li>
-                                </ul>
-                            }
-                        </section>
+                        {/*    {*/}
+                        {/*        showRefund &&*/}
+                        {/*        <ul className='List Refund'>*/}
+                        {/*            <li>체크인 10일 전까지: 총 결제금액의 100% 환불</li>*/}
+                        {/*            <li>체크인 9일 전: 총 결제금액의 90% 환불</li>*/}
+                        {/*            <li>체크인 8일 전: 총 결제금액의 80% 환불</li>*/}
+                        {/*            <li>체크인 7일 전: 총 결제금액의 70% 환불</li>*/}
+                        {/*            <li>체크인 6일 전: 총 결제금액의 60% 환불</li>*/}
+                        {/*            <li>체크인 5일 전: 총 결제금액의 50% 환불</li>*/}
+                        {/*            <li>체크인 4일 전: 총 결제금액의 40% 환불</li>*/}
+                        {/*            <li>체크인 3일 전부터 환불불가</li>*/}
+                        {/*        </ul>*/}
+                        {/*    }*/}
+                        {/*</section>*/}
 
                         <section>
                             <h2>예약하기</h2>
                             <p>
-                                체크인 날짜와 체크아웃 날짜를 선택해주세요.<br/>
-                                (체크인 3시 / 체크아웃 11시)
+                                현지 호스트의 개인적인 사정으로 인해 기존 예약건들까지만
+                                숙박 가능하며, 금일 이후 재공지 이전까지 예약진행이 어려운 점 안내 드립니다😢<br/><br/>
+                                연계 숙소인 <a href='https://forest100.herokuapp.com/on-off'>온오프스테이</a>와 <a href='https://forest100.herokuapp.com/boulogne'>블로뉴숲</a>을
+                                이용해주시면 감사하겠습니다😇
                             </p>
+                            {/*<p>*/}
+                            {/*    체크인 날짜와 체크아웃 날짜를 선택해주세요.<br/>*/}
+                            {/*    (체크인 3시 / 체크아웃 11시)*/}
+                            {/*</p>*/}
                             <Calendar
                                 className='Calendar'
                                 minDate={new Date()}
+                                maxDate={new Date()}
                                 calendarType='US'
                                 tileDisabled={({ date }) => {
                                     if(reserved.find(x => x === moment(date).format("YYYY-MM-DD"))){
