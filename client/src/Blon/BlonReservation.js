@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import axios from "axios";
 import ReactModal from 'react-modal';
 import './Blon.scss';
-import {BLON_HOLIDAY, BLON_WEEKDAY, BLON_WEEKEND} from "../constants";
+import {BLON_PRICE} from "../constants";
 
 const BlonReservation = ({picked, reservedName, reservedPhone}) => {
     const [howMany, setHowMany] = useState(4);      // 반려견 표함 총 인원수
@@ -73,34 +73,59 @@ const BlonReservation = ({picked, reservedName, reservedPhone}) => {
         const holidays = ['2022-12-25','2023-01-01','2023-01-21','2023-01-22','2023-01-23','2023-01-24'];
         // 평일을 주말로 처리하고 싶을 때 (체크아웃 일)
         const weekends = ['2022-12-26','2023-01-02','2023-03-01','2023-05-05'];
-        // 특수한 날짜만 처리하고 싶을 때 (체크아웃 일)
-        const specialDays = ['2022-12-31'];
-        let tempPrice = 0;
+
+        const isSummer = (date) => {
+            return date.slice(5, 7) === '07' || date.slice(5, 7) === '08'
+        }
 
         let dayArr = [];
         for (const date of picked) {
+            let dayType;
 
             const dayIdx = new Date(date).getDay();
-            if (holidays.includes(date)) {
-                dayArr.push('holiday');
-            } else if (specialDays.includes(date)) {
-                dayArr.push('special');
-            } else if (dayIdx === 0 || dayIdx === 6 || weekends.includes(date)) {
-                dayArr.push('weekend');
+
+            if (isSummer(date)) {
+                if (holidays.includes(date)) {
+                    dayType = 'summerHoliday';
+                } else if (dayIdx === 0 || dayIdx === 6 || weekends.includes(date)) {
+                    dayType = 'summerWeekend';
+                } else {
+                    dayType = 'summerWeekday';
+                }
             } else {
-                dayArr.push('weekday');
+                if (holidays.includes(date)) {
+                    dayType = 'normalHoliday';
+                } else if (dayIdx === 0 || dayIdx === 6 || weekends.includes(date)) {
+                    dayType = 'normalWeekend';
+                } else {
+                    dayType = 'normalWeekday';
+                }
             }
+
+            dayArr.push(dayType);
         }
 
+        let tempPrice = 0;
         for (let i = 0; i < dayArr.length - 1; i++) {
-            if (dayArr[i + 1] === 'holiday') {
-                tempPrice += BLON_HOLIDAY;
-            } else if (dayArr[i + 1] === 'special') {
-                tempPrice += 320000;
-            } else if (dayArr[i + 1] === 'weekday') {   // 일월화수목
-                tempPrice += BLON_WEEKDAY;
-            } else if (dayArr[i + 1] === 'weekend') {    // 금토
-                tempPrice += BLON_WEEKEND;
+            switch (dayArr[i + 1]) {
+                case 'summerHoliday':
+                    tempPrice += BLON_PRICE.SUMMER.HOLIDAY;
+                    break;
+                case 'summerWeekend':
+                    tempPrice += BLON_PRICE.SUMMER.WEEKEND;
+                    break;
+                case 'summerWeekday':
+                    tempPrice += BLON_PRICE.SUMMER.WEEKDAY;
+                    break;
+                case 'normalHoliday':
+                    tempPrice += BLON_PRICE.NORMAL.HOLIDAY;
+                    break;
+                case 'normalWeekend':
+                    tempPrice += BLON_PRICE.NORMAL.WEEKEND;
+                    break;
+                case 'normalWeekday':
+                    tempPrice += BLON_PRICE.NORMAL.WEEKDAY;
+                    break;
             }
         }
 

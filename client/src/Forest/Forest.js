@@ -224,11 +224,14 @@ const Forest = ({ history }) => {
                         <section>
                             <h2>위치</h2>
 
+                            <ul>
+                                <li>도로명 주소: 강원도 동해시 구미실길 96-1</li>
+                                <li>주변에 주택이 많고 대부분 농사를 지으시는 분들입니다. 시골감성을 마음껏 누리세요!</li>
+                            </ul>
+
                             <iframe className='Map'
                                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3166.511124703915!2d129.1265640155865!3d37.472263137278524!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3561b9b40c1818d9%3A0xef52d1dc46730d66!2z6rCV7JuQ64-EIOuPme2VtOyLnCDrjIDqtazrj5kg6rWs66-47Iuk6ri4IDk2LTE!5e0!3m2!1sko!2skr!4v1621694052376!5m2!1sko!2skr"
                                     allowFullScreen="" loading="lazy"/>
-                            <a href='geo:37.4722631,129.126564?q=구미실길+96-1' target='_blank'>지도 앱에서 보기</a>
-                            <p>주변에 주택이 많고 대부분 농사를 지으시는 분들입니다. 시골감성을 마음껏 누리세요!</p>
 
                             <button className='LocationBtn' onClick={() => toggleLocation()}>
                                 {!showLocation ? '자세한 위치 정보' : '자세한 위치 정보 닫기'}
@@ -237,8 +240,6 @@ const Forest = ({ history }) => {
                             {
                                 showLocation &&
                                 <ul className='List Location'>
-                                    <li><b>도로명 주소</b><br/>
-                                        강원도 동해시 구미실길 96-1</li>
                                     <li>SK주유소를 끼고 오른쪽 아랫길로 내려와 담벼락을 끼고 쭉 오시면, 언덕길 지나 3거리에서 좌회전 하면 숙소가 보입니다.</li>
                                     <li>동해역(ktx, 무궁화) > 숙소<br/>
                                         - 버스 21-1 (22분) +도보8분<br/>
@@ -293,9 +294,9 @@ const Forest = ({ history }) => {
                             <h2>예약하기</h2>
                             <p>
                                 현지 호스트의 개인적인 사정으로 인해 기존 예약건들까지만
-                                숙박 가능하며, 금일 이후 재공지 이전까지 예약진행이 어려운 점 안내 드립니다😢<br/><br/>
-                                연계 숙소인 <a href='https://forest100.herokuapp.com/on-off'>온오프스테이</a>와 <a href='https://forest100.herokuapp.com/boulogne'>블로뉴숲</a>을
-                                이용해주시면 감사하겠습니다😇
+                                숙박 가능하며, 재공지 이전까지 예약진행이 어려운 점 안내 드립니다😢<br/><br/>
+                                연계 숙소인 <a href='https://forest100.herokuapp.com/on-off'>온오프스테이(동해)</a>와 <a href='https://forest100.herokuapp.com/boulogne'>블로뉴숲(포천)</a>을
+                                찾아주시면 감사하겠습니다😇
                             </p>
                             {/*<p>*/}
                             {/*    체크인 날짜와 체크아웃 날짜를 선택해주세요.<br/>*/}
@@ -315,7 +316,7 @@ const Forest = ({ history }) => {
                                 onChange={(value) => calcRange(value)}
                             />
 
-                            <button className='ReservationBtn' onClick={() => moveToReservation()}>선택한 날짜로 예약하기</button>
+                            {/*<button className='ReservationBtn' onClick={() => moveToReservation()}>선택한 날짜로 예약하기</button>*/}
                         </section>
 
                         <section>

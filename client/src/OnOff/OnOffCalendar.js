@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import Calendar from "react-calendar";
 import moment from "moment";
-import {ON_OFF_HOLIDAY, ON_OFF_WEEKDAY, ON_OFF_WEEKEND} from "../constants";
+import {ON_OFF_PRICE} from "../constants";
 
 const OnOffCalendar = ({ getReserved, picked, setPicked, setCurrentPage, reserved }) => {
     const [showRefund, setShowRefund] = useState(false);
@@ -51,14 +51,27 @@ const OnOffCalendar = ({ getReserved, picked, setPicked, setCurrentPage, reserve
 
     return (
         <>
-            <section className='Price'>
+            <section>
                 <div className="DescTitle">PRICE</div>
-                <p>
-                    비성수기: <b>주말 {ON_OFF_WEEKEND.toLocaleString()}원 / 평일 {ON_OFF_WEEKDAY.toLocaleString()}원</b><br/>
-                </p>
-                <p>
-                    성수기: <b>주말 {ON_OFF_HOLIDAY.toLocaleString()}원 / 평일 {ON_OFF_WEEKEND.toLocaleString()}원</b><br/>
-                </p>
+
+                <table className='PriceTable'>
+                    <tr>
+                        <th>구분</th>
+                        <th>평일</th>
+                        <th>주말</th>
+                    </tr>
+                    <tr>
+                        <td>성수기(7-8월)</td>
+                        <td>{ON_OFF_PRICE.SUMMER.WEEKDAY.toLocaleString()}</td>
+                        <td>{ON_OFF_PRICE.SUMMER.WEEKEND.toLocaleString()}</td>
+                    </tr>
+                    <tr>
+                        <td>비성수기</td>
+                        <td>{ON_OFF_PRICE.NORMAL.WEEKDAY.toLocaleString()}</td>
+                        <td>{ON_OFF_PRICE.NORMAL.WEEKEND.toLocaleString()}</td>
+                    </tr>
+                </table>
+
                 <ul>
                     <li>4인 초과 시 1인당: 1박 15,000원<br/>(추가침구 제공)</li>
                     <li>바베큐 이용요금: 20,000원</li>

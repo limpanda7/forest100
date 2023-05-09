@@ -1,9 +1,29 @@
 export const FOREST_WEEKDAY = 200000;
 export const FOREST_WEEKEND = 250000;
 export const FOREST_HOLIDAY = 300000;
-export const ON_OFF_WEEKDAY = 250000;
-export const ON_OFF_WEEKEND = 300000;
-export const ON_OFF_HOLIDAY = 350000;
-export const BLON_WEEKDAY = 250000;
-export const BLON_WEEKEND = 250000;
-export const BLON_HOLIDAY = 250000;
+
+export const ON_OFF_PRICE = {
+  NORMAL: {
+    WEEKDAY: 250000,
+    WEEKEND: 300000,
+    HOLIDAY: 350000,
+  },
+  SUMMER: {
+    WEEKDAY: 300000,
+    WEEKEND: 350000,
+    HOLIDAY: 350000,
+  }
+};
+
+export const BLON_PRICE = {
+  NORMAL: {
+    WEEKDAY: 190000,
+    WEEKEND: 250000,
+    HOLIDAY: 250000,
+  },
+  SUMMER: {
+    WEEKDAY: 300000,
+    WEEKEND: 300000,
+    HOLIDAY: 300000,
+  }
+};

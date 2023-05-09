@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import axios from "axios";
 import ReactModal from 'react-modal';
 import './OnOff.scss';
-import {ON_OFF_HOLIDAY, ON_OFF_WEEKDAY, ON_OFF_WEEKEND} from "../constants";
+import {ON_OFF_PRICE} from "../constants";
 
 const OnOffReservation = ({picked, reservedName, reservedPhone}) => {
     const [howMany, setHowMany] = useState(4);      // 반려견 표함 총 인원수
@@ -74,7 +74,7 @@ const OnOffReservation = ({picked, reservedName, reservedPhone}) => {
         // 평일을 주말로 처리하고 싶을 때 (체크아웃 일)
         const weekends = ['2022-12-26','2023-01-02','2023-03-01','2023-05-05'];
 
-        const isSummerHolidays = (date) => {
+        const isSummer = (date) => {
             return date.slice(5, 7) === '07' || date.slice(5, 7) === '08'
         }
 
@@ -84,12 +84,22 @@ const OnOffReservation = ({picked, reservedName, reservedPhone}) => {
 
             const dayIdx = new Date(date).getDay();
 
-            if (holidays.includes(date)) {
-                dayType = 'holiday';
-            } else if (dayIdx === 0 || dayIdx === 6 || weekends.includes(date)) {
-                dayType = isSummerHolidays(date) ? 'holiday' : 'weekend';
+            if (isSummer(date)) {
+                if (holidays.includes(date)) {
+                    dayType = 'summerHoliday';
+                } else if (dayIdx === 0 || dayIdx === 6 || weekends.includes(date)) {
+                    dayType = 'summerWeekend';
+                } else {
+                    dayType = 'summerWeekday';
+                }
             } else {
-                dayType = isSummerHolidays(date) ? 'weekend' : 'weekday';
+                if (holidays.includes(date)) {
+                    dayType = 'normalHoliday';
+                } else if (dayIdx === 0 || dayIdx === 6 || weekends.includes(date)) {
+                    dayType = 'normalWeekend';
+                } else {
+                    dayType = 'normalWeekday';
+                }
             }
 
             dayArr.push(dayType);
@@ -97,12 +107,25 @@ const OnOffReservation = ({picked, reservedName, reservedPhone}) => {
 
         let tempPrice = 0;
         for (let i = 0; i < dayArr.length - 1; i++) {
-            if (dayArr[i + 1] === 'holiday') {
-                tempPrice += ON_OFF_HOLIDAY;
-            } else if (dayArr[i + 1] === 'weekend') {   // 일월화수목
-                tempPrice += ON_OFF_WEEKEND;
-            } else if (dayArr[i + 1] === 'weekday') {    // 금토
-                tempPrice += ON_OFF_WEEKDAY;
+            switch (dayArr[i + 1]) {
+                case 'summerHoliday':
+                    tempPrice += ON_OFF_PRICE.SUMMER.HOLIDAY;
+                    break;
+                case 'summerWeekend':
+                    tempPrice += ON_OFF_PRICE.SUMMER.WEEKEND;
+                    break;
+                case 'summerWeekday':
+                    tempPrice += ON_OFF_PRICE.SUMMER.WEEKDAY;
+                    break;
+                case 'normalHoliday':
+                    tempPrice += ON_OFF_PRICE.NORMAL.HOLIDAY;
+                    break;
+                case 'normalWeekend':
+                    tempPrice += ON_OFF_PRICE.NORMAL.WEEKEND;
+                    break;
+                case 'normalWeekday':
+                    tempPrice += ON_OFF_PRICE.NORMAL.WEEKDAY;
+                    break;
             }
         }
 

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import Calendar from "react-calendar";
 import moment from "moment";
-import {BLON_WEEKDAY} from "../constants";
+import {BLON_PRICE} from "../constants";
 
 const BlonCalendar = ({ getReserved, picked, setPicked, setCurrentPage, reserved }) => {
     const [showRefund, setShowRefund] = useState(false);
@@ -51,11 +51,27 @@ const BlonCalendar = ({ getReserved, picked, setPicked, setCurrentPage, reserved
 
     return (
         <>
-            <section className='Price'>
+            <section>
                 <div className="DescTitle">PRICE</div>
-                <p>
-                    4인기준 1박: <b>{BLON_WEEKDAY.toLocaleString()}원</b>
-                </p>
+
+                <table className='PriceTable'>
+                    <tr>
+                        <th>구분</th>
+                        <th>평일</th>
+                        <th>주말</th>
+                    </tr>
+                    <tr>
+                        <td>성수기(7-8월)</td>
+                        <td>{BLON_PRICE.SUMMER.WEEKDAY.toLocaleString()}</td>
+                        <td>{BLON_PRICE.SUMMER.WEEKEND.toLocaleString()}</td>
+                    </tr>
+                    <tr>
+                        <td>비성수기</td>
+                        <td>{BLON_PRICE.NORMAL.WEEKDAY.toLocaleString()}</td>
+                        <td>{BLON_PRICE.NORMAL.WEEKEND.toLocaleString()}</td>
+                    </tr>
+                </table>
+
                 <ul>
                     <li>4인 초과 시 1인당: 1박 15,000원<br/>(추가침구 제공)</li>
                     <li>바베큐 이용요금: 20,000원</li>
