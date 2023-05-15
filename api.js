@@ -196,12 +196,12 @@ router.get('/getReserved3', (req, res) => {
     });
 });
 router.post('/saveReservation3', (req, res) => {
-    const {picked, name, phone, person, baby, dog, autoBedding, barbecue, price, priceOption, receipt, receiptNum, revisit} = req.body;
+    const {picked, name, phone, person, baby, dog, bedding, barbecue, price, priceOption, receipt, receiptNum, revisit} = req.body;
 
     // 1. 예약내역 DB 추가
     let values = [];
     for (const element of picked) {
-        values.push([element, name, phone, person, baby, dog, autoBedding, barbecue, price, priceOption, receipt, receiptNum, revisit]);
+        values.push([element, name, phone, person, baby, dog, bedding, barbecue, price, priceOption, receipt, receiptNum, revisit]);
     }
     connection.query('INSERT INTO blon_reservation (date, name, phone, person, baby, dog, bedding, barbecue, price, price_option, receipt, receipt_num, revisit) VALUES ?', [values], (err, data) => {
         res.send(data);
@@ -213,7 +213,7 @@ router.post('/saveReservation3', (req, res) => {
 이름: ${name}\n
 전화번호: ${phone}\n
 인원수: ${person}명, 영유아 ${baby}명, 반려견 ${dog}마리\n
-추가침구: ${autoBedding}개\n
+추가침구: ${bedding}개\n
 바베큐 이용여부: ${barbecue}\n
 이용금액: ${price.toLocaleString()}\n
 환불옵션: ${priceOption === 'refundable' ? '환불가능' : '환불불가'}\n
