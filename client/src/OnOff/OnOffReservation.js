@@ -48,10 +48,7 @@ const OnOffReservation = ({picked, reservedName, reservedPhone}) => {
     }
 
     const saveReservation = () => {
-        let bedding = 0;
-        if (person + baby > 4) {
-            bedding = 1;
-        }
+        const bedding = person > 4 ? 1 : 0;
         axios.post('/api/saveReservation2', {picked, name, phone, person, baby, dog, bedding, barbecue, price, priceOption, receipt, receiptNum, revisit})
             .then(() => {
                 alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${price.toLocaleString()}원입니다.`);
@@ -160,7 +157,7 @@ const OnOffReservation = ({picked, reservedName, reservedPhone}) => {
     }
 
     const openModal = () => {
-        if (name === '' || phone === '') {
+        if (name === '' || phone === '' || (receipt === 'Y' && receiptNum === '')) {
             alert('정보를 모두 입력해주세요.')
             return false;
         }

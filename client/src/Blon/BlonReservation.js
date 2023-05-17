@@ -38,6 +38,11 @@ const BlonReservation = ({picked, reservedName, reservedPhone}) => {
 
     // 재방문 여부 확인
     const checkBeforeSave = () => {
+        if (name === '' || phone === '' || (receipt === 'Y' && receiptNum === '')) {
+            alert('정보를 모두 입력해주세요.')
+            return false;
+        }
+
         if (reservedName.includes(name) && reservedPhone.includes(phone)) {
             setPrice(price * 0.7);
             setShowRevisitModal(true);
@@ -48,10 +53,7 @@ const BlonReservation = ({picked, reservedName, reservedPhone}) => {
     }
 
     const saveReservation = () => {
-        let bedding = 0;
-        if (person + baby > 4) {
-            bedding = 1;
-        }
+        const bedding = person > 4 ? 1 : 0;
         axios.post('/api/saveReservation3', {picked, name, phone, person, baby, dog, bedding, barbecue, price, priceOption, receipt, receiptNum, revisit})
             .then(() => {
                 alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${price.toLocaleString()}원입니다.`);
@@ -157,15 +159,6 @@ const BlonReservation = ({picked, reservedName, reservedPhone}) => {
     const toggleRefund = () => {
         if (showRefund) setShowRefund(false);
         else setShowRefund(true);
-    }
-
-    const openModal = () => {
-        if (name === '' || phone === '') {
-            alert('정보를 모두 입력해주세요.')
-            return false;
-        }
-
-        setShowModal(true);
     }
 
     const modalStyle = {
@@ -317,46 +310,22 @@ const BlonReservation = ({picked, reservedName, reservedPhone}) => {
                            }}
                     />
                 </p>
-                <button className='ReservationBtn' onClick={() => saveReservation()}>예약하기</button>
+                <button className='ReservationBtn' onClick={() => checkBeforeSave()}>예약하기</button>
             </section>
 
-            {/*<ReactModal*/}
-            {/*    isOpen={showModal}*/}
-            {/*    style={modalStyle}*/}
-            {/*>*/}
-            {/*    <div className='ModalTitle'>예약 전 주의사항</div>*/}
-            {/*    <ul className='ModalList'>*/}
-            {/*        <li>예약하신 인원 외 방문자 및 반려동물의 입실은 불가합니다.</li>*/}
-            {/*        <li>숙소의 모든 공간은 금연입니다.</li>*/}
-            {/*        <li>안전과 방범을 위해 앞마당에 CCTV가 설치되어 있습니다.</li>*/}
-            {/*        <li>주방에서 조리가 가능합니다  *고기나 생선구이, 튀김 등 냄새가 심한 요리를 금합니다. 간단한 요리, 밀키트 조리, 포장음식을 데워 드시기에 적합할 정도로 조리도구가 준비되어있습니다.</li>*/}
-            {/*        <li>침구 오염시 얼룩 제거 비용이 발생할 수 있으며, 제거 불가한 심한 얼룩이 생겼을 시 제품 구매 비용이 청구될수있습니다.</li>*/}
-            {/*        <li>모든 시설물·비품·소품의 이동을 삼가 주시기 바랍니다.</li>*/}
-            {/*        <li>실내외 모든 시설물 및 소품 및 비품의 훼손· 분실·파손 시  복구비용 및 영업손실 비용을 부담하셔야 합니다. 문제 발생 시 당황하시지 마시고 바로 연락 주시기 바랍니다.</li>*/}
-            {/*        <li>게스트의 부주의로 인해 일어난 안전사고, 귀중품 분실 및 파손은 호스트의 책임사항이 아닙니다.</li>*/}
-            {/*        <li>밤 10시 이후 정숙해주세요. 조용한 시골이라 주민분들이 일찍 주무십니다. </li>*/}
-            {/*        <li>지역 특성상 벌레와 곤충이 실내로 유입될 수 있습니다. 벌레 혹은 곤충에 예민하신 분들은 예약에 신중을 기해주세요. 이로 인한 환불은 불가합니다.</li>*/}
-            {/*    </ul>*/}
-            {/*    <div className='BtnWrap'>*/}
-            {/*        <button className='ModalBtn' onClick={() => setShowModal(false)}>거부</button>*/}
-            {/*        <button className='ModalBtn' onClick={() => checkBeforeSave()}>동의</button>*/}
-            {/*    </div>*/}
-            {/*</ReactModal>*/}
-            {/**/}
-            {/*<ReactModal*/}
-            {/*    isOpen={showRevisitModal}*/}
-            {/*    style={modalStyle}*/}
-            {/*>*/}
-            {/*    <div className='ModalTitle'>재방문 할인</div>*/}
-            {/*    <div className='ModalContent'>*/}
-            {/*        다시 한 번 찾아주셔서 감사합니다. 30% 할인을 제공드립니다.<br/>*/}
-            {/*        최종 금액은 {price.toLocaleString()}원 입니다.*/}
-            {/*    </div>*/}
-            {/*    <div className='BtnWrap'>*/}
-            {/*        <button className='ModalBtn Alone' onClick={() => saveReservation()}>예약하기</button>*/}
-            {/*    </div>*/}
-            {/*</ReactModal>*/}
-
+            <ReactModal
+              isOpen={showRevisitModal}
+              style={modalStyle}
+            >
+                <div className='ModalTitle'>재방문 할인</div>
+                <div className='ModalContent'>
+                    다시 한 번 찾아주셔서 감사합니다. 30% 할인을 제공드립니다.<br/>
+                    최종 금액은 {price.toLocaleString()}원 입니다.
+                </div>
+                <div className='BtnWrap'>
+                    <button className='ModalBtn Alone' onClick={() => saveReservation()}>예약하기</button>
+                </div>
+            </ReactModal>
         </div>
     );
 }

@@ -43,6 +43,11 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, reservedName, res
 
     // 재방문 여부 확인
     const checkBeforeSave = () => {
+        if (name === '' || phone === '' || (receipt === 'Y' && receiptNum === '')) {
+            alert('정보를 모두 입력해주세요.')
+            return false;
+        }
+
         if (reservedName.includes(name) && reservedPhone.includes(phone)) {
             setPrice(price * 0.7);
             setShowRevisitModal(true);
@@ -53,12 +58,6 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, reservedName, res
     }
 
     const saveReservation = () => {
-
-        if (name === '' || phone === '') {
-            alert('정보를 모두 입력해주세요.')
-            return false;
-        }
-
         axios.post('/api/saveReservation', {picked, name, phone, person, baby, dog, bedding, guestRoom, barbecue, price, priceOption, receipt, receiptNum, revisit})
             .then(() => {
                 alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${price.toLocaleString()}원입니다.`);
