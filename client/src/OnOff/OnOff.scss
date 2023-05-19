@@ -166,6 +166,14 @@
   .Calendar {
     width: 100%;
     margin-bottom: 20px;
+
+    & .checkout-only {
+      background-color: #fff8e3;
+    }
+
+    & .select-date {
+      background-color: aquamarine;
+    }
   }
 
   .PriceTable {
