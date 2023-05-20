@@ -17,8 +17,12 @@ const OnOffCalendar = ({
     const map = {};
 
     reserved.forEach(({ checkin_date, checkout_date }) => {
-      const checkinTimestamp = new Date(checkin_date).valueOf();
-      const checkoutTimestamp = new Date(checkout_date).valueOf();
+      const checkinTimestamp = new Date(
+        new Date(checkin_date).toISOString().slice(0, -1)
+      ).valueOf();
+      const checkoutTimestamp = new Date(
+        new Date(checkin_date).toISOString().slice(0, -1)
+      ).valueOf();
 
       map[checkinTimestamp] = {
         ...map[checkinTimestamp],
@@ -38,9 +42,14 @@ const OnOffCalendar = ({
 
     if (selected) {
       reserved.forEach(({ checkin_date, checkout_date }) => {
-        const checkinTimestamp = new Date(checkin_date).valueOf();
+        const checkinTimestamp = new Date(
+          new Date(checkin_date).toISOString().slice(0, -1)
+        ).valueOf();
         // const checkoutTimestamp = new Date(checkout_date).valueOf();
-        if (selected?.valueOf() < new Date(checkin_date).valueOf()) {
+        if (
+          selected?.valueOf() <
+          new Date(new Date(checkin_date)?.toISOString().slice(0, -1)).valueOf()
+        ) {
           if (!maxDate || maxDate > checkinTimestamp) {
             maxDate = checkinTimestamp;
           }
@@ -189,8 +198,12 @@ const OnOffCalendar = ({
           tileDisabled={({ date }) => {
             if (
               reserved.find(({ checkin_date, checkout_date }) => {
-                const checkinTimestamp = new Date(checkin_date).valueOf();
-                const checkoutTimestamp = new Date(checkout_date).valueOf();
+                const checkinTimestamp = new Date(
+                  new Date(checkin_date).toISOString()?.slice(0, -1)
+                ).valueOf();
+                const checkoutTimestamp = new Date(
+                  new Date(checkout_date).toISOString()?.slice(0, -1)
+                ).valueOf();
                 return (
                   (new Date(checkinTimestamp).valueOf() < date.valueOf() &&
                     new Date(checkoutTimestamp).valueOf() > date.valueOf()) ||
