@@ -21,7 +21,7 @@ const OnOffCalendar = ({
         new Date(checkin_date).toISOString().slice(0, -1)
       ).valueOf();
       const checkoutTimestamp = new Date(
-        new Date(checkin_date).toISOString().slice(0, -1)
+        new Date(checkout_date).toISOString().slice(0, -1)
       ).valueOf();
 
       map[checkinTimestamp] = {
