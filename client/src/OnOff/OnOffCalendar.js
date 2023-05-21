@@ -17,7 +17,6 @@ const OnOffCalendar = ({
     const map = {};
 
     reserved.forEach(({ checkin_date, checkout_date }) => {
-      console.log(checkin_date, checkout_date);
       const checkinTimestamp = new Date(checkin_date).valueOf();
       const checkoutTimestamp = new Date(checkout_date).valueOf();
 
@@ -29,15 +28,7 @@ const OnOffCalendar = ({
         ...map[checkoutTimestamp],
         checkOut: true,
       };
-
-      console.log(map[checkinTimestamp], map[checkoutTimestamp]);
     });
-
-    console.log(
-      Object.entries(map).map(([key, value]) => ({
-        [new Date(parseInt(key))]: value,
-      }))
-    );
     return map;
   }, [reserved]);
 
