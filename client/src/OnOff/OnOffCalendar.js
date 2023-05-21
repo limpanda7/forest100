@@ -17,6 +17,7 @@ const OnOffCalendar = ({
     const map = {};
 
     reserved.forEach(({ checkin_date, checkout_date }) => {
+      console.log(checkin_date, checkout_date);
       const checkinTimestamp = new Date(checkin_date).valueOf();
       const checkoutTimestamp = new Date(checkout_date).valueOf();
 
@@ -28,8 +29,15 @@ const OnOffCalendar = ({
         ...map[checkoutTimestamp],
         checkOut: true,
       };
+
+      console.log(map[checkinTimestamp], map[checkoutTimestamp]);
     });
 
+    console.log(
+      Object.entries(map).map(([key, value]) => ({
+        [new Date(parseInt(key))]: value,
+      }))
+    );
     return map;
   }, [reserved]);
 
@@ -189,8 +197,16 @@ const OnOffCalendar = ({
           tileDisabled={({ date }) => {
             if (
               reserved.find(({ checkin_date, checkout_date }) => {
-                const checkinTimestamp = checkin_date.valueOf();
-                const checkoutTimestamp = checkout_date.valueOf();
+                const checkinTimestamp = new Date(checkin_date).valueOf();
+                const checkoutTimestamp = new Date(checkout_date).valueOf();
+                if (
+                  (checkinTimestamp < date.valueOf() &&
+                    checkoutTimestamp > date.valueOf()) ||
+                  (checker[date.valueOf()]?.checkIn &&
+                    checker[date.valueOf()]?.checkOut)
+                ) {
+                  console.log(date);
+                }
                 return (
                   (checkinTimestamp.valueOf() < date.valueOf() &&
                     checkoutTimestamp.valueOf() > date.valueOf()) ||
