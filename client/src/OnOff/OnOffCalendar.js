@@ -199,14 +199,6 @@ const OnOffCalendar = ({
               reserved.find(({ checkin_date, checkout_date }) => {
                 const checkinTimestamp = new Date(checkin_date).valueOf();
                 const checkoutTimestamp = new Date(checkout_date).valueOf();
-                if (
-                  (checkinTimestamp < date.valueOf() &&
-                    checkoutTimestamp > date.valueOf()) ||
-                  (checker[date.valueOf()]?.checkIn &&
-                    checker[date.valueOf()]?.checkOut)
-                ) {
-                  console.log(date);
-                }
                 return (
                   (checkinTimestamp.valueOf() < date.valueOf() &&
                     checkoutTimestamp.valueOf() > date.valueOf()) ||
