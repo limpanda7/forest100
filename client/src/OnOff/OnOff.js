@@ -27,8 +27,12 @@ const OnOff = () => {
     let tempReservedPhone = [];
     for (const element of pageReserved.data) {
       tempReserved.push({
-        checkin_date: new Date(element.checkin_date.slice(0, -5)).toString(),
-        checkout_date: new Date(element.checkout_date.slice(0, -5)).toString(),
+        checkin_date: new Date(
+          new Date(element.checkin_date).toISOString().slice(0, -1)
+        ).toString(),
+        checkout_date: new Date(
+          new Date(element.checkout_date).toISOString().slice(0, -1)
+        ).toString(),
       });
 
       if (!tempReservedName.includes(element.name)) {
@@ -41,8 +45,12 @@ const OnOff = () => {
     }
     for (const element of airbnbReserved.data) {
       tempReserved.push({
-        checkin_date: new Date(element.start_dt).toString(),
-        checkout_date: new Date(element.end_dt).toString(),
+        checkin_date: new Date(
+          new Date(element.start_dt).toISOString().slice(0, -1)
+        ).toString(),
+        checkout_date: new Date(
+          new Date(element.end_dt).toISOString().slice(0, -1)
+        ).toString(),
       });
 
       if (!tempReservedName.includes(element.name)) {

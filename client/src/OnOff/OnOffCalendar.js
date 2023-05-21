@@ -11,18 +11,14 @@ const OnOffCalendar = ({
   reserved,
 }) => {
   const [showRefund, setShowRefund] = useState(false);
-  const [selected, setSelected] = useState();
+  const [selected, setSelected] = useState(null);
 
   const checker = useMemo(() => {
     const map = {};
 
     reserved.forEach(({ checkin_date, checkout_date }) => {
-      const checkinTimestamp = new Date(
-        new Date(checkin_date).toISOString().slice(0, -1)
-      ).valueOf();
-      const checkoutTimestamp = new Date(
-        new Date(checkout_date).toISOString().slice(0, -1)
-      ).valueOf();
+      const checkinTimestamp = new Date(checkin_date).valueOf();
+      const checkoutTimestamp = new Date(checkout_date).valueOf();
 
       map[checkinTimestamp] = {
         ...map[checkinTimestamp],
@@ -42,16 +38,11 @@ const OnOffCalendar = ({
 
     if (selected) {
       reserved.forEach(({ checkin_date, checkout_date }) => {
-        const checkinTimestamp = new Date(
-          new Date(checkin_date).toISOString().slice(0, -1)
-        ).valueOf();
-        // const checkoutTimestamp = new Date(checkout_date).valueOf();
-        if (
-          selected?.valueOf() <
-          new Date(new Date(checkin_date)?.toISOString().slice(0, -1)).valueOf()
-        ) {
-          if (!maxDate || maxDate > checkinTimestamp) {
-            maxDate = checkinTimestamp;
+        const checkinTimestamp = new Date(checkin_date).valueOf();
+        const checkoutTimestamp = new Date(checkout_date).valueOf();
+        if (selected?.valueOf() < checkinTimestamp.valueOf()) {
+          if (!maxDate || maxDate > checkinTimestamp.valueOf()) {
+            maxDate = checkinTimestamp.valueOf();
           }
         }
       });
@@ -198,15 +189,11 @@ const OnOffCalendar = ({
           tileDisabled={({ date }) => {
             if (
               reserved.find(({ checkin_date, checkout_date }) => {
-                const checkinTimestamp = new Date(
-                  new Date(checkin_date).toISOString()?.slice(0, -1)
-                ).valueOf();
-                const checkoutTimestamp = new Date(
-                  new Date(checkout_date).toISOString()?.slice(0, -1)
-                ).valueOf();
+                const checkinTimestamp = checkin_date.valueOf();
+                const checkoutTimestamp = checkout_date.valueOf();
                 return (
-                  (new Date(checkinTimestamp).valueOf() < date.valueOf() &&
-                    new Date(checkoutTimestamp).valueOf() > date.valueOf()) ||
+                  (checkinTimestamp.valueOf() < date.valueOf() &&
+                    checkoutTimestamp.valueOf() > date.valueOf()) ||
                   (checker[date.valueOf()]?.checkIn &&
                     checker[date.valueOf()]?.checkOut)
                 );
@@ -215,16 +202,17 @@ const OnOffCalendar = ({
               return true;
             }
             if (
-              (selected < date.valueOf() &&
+              selected &&
+              ((selected < date.valueOf() &&
                 checker[date.valueOf()]?.checkOut) ||
-              (selected > date.valueOf() && checker[date.valueOf()]?.checkIn)
+                (selected > date.valueOf() && checker[date.valueOf()]?.checkIn))
             ) {
               return true;
             } else if (!selected && checker[date.valueOf()]?.checkIn) {
               return true;
             }
           }}
-          selectRange={selected || picked.length}
+          selectRange={!!selected || !!picked.length}
           onClickDay={(value) => {
             if (!checker[value.valueOf()]?.checkIn) {
               setSelected(new Date(value));
