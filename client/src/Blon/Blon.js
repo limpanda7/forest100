@@ -17,28 +17,54 @@ const Blon = () => {
     const [reservedPhone, setReservedPhone] = useState([]);
     const [picked, setPicked] = useState([]);
 
-    const getReserved = () => {
-        axios.get('/api/getReserved3')
-            .then((res) => {
-                let tempReserved = [];
-                let tempReservedName = [];
-                let tempReservedPhone = [];
-                for (const element of res.data) {
-                    tempReserved.push(moment(element.date).format('YYYY-MM-DD'));
+  const getReserved = async () => {
+    const pageReserved = await axios.get("/api/reservation/blon");
+    const airbnbReserved = await axios.get("/api/ical/blon");
+    console.log(airbnbReserved)
 
-                    if (!tempReservedName.includes(element.name)) {
-                        tempReservedName.push(element.name);
-                    }
+    let tempReserved = [];
+    let tempReservedName = [];
+    let tempReservedPhone = [];
+    for (const element of pageReserved.data) {
+      tempReserved.push({
+        checkin_date: new Date(
+          new Date(element.checkin_date).toISOString().slice(0, -1)
+        ).toString(),
+        checkout_date: new Date(
+          new Date(element.checkout_date).toISOString().slice(0, -1)
+        ).toString(),
+      });
 
-                    if (!tempReservedPhone.includes(element.phone)) {
-                        tempReservedPhone.push(element.phone);
-                    }
-                }
-                setReserved(tempReserved);
-                setReservedName(tempReservedName);
-                setReservedPhone(tempReservedPhone);
-            });
+      if (!tempReservedName.includes(element.name)) {
+        tempReservedName.push(element.name);
+      }
+
+      if (!tempReservedPhone.includes(element.phone)) {
+        tempReservedPhone.push(element.phone);
+      }
     }
+    for (const element of airbnbReserved.data) {
+      tempReserved.push({
+        checkin_date: new Date(
+          new Date(element.start_dt).toISOString().slice(0, -1)
+        ).toString(),
+        checkout_date: new Date(
+          new Date(element.end_dt).toISOString().slice(0, -1)
+        ).toString(),
+      });
+
+      if (!tempReservedName.includes(element.name)) {
+        tempReservedName.push(element.name);
+      }
+
+      if (!tempReservedPhone.includes(element.phone)) {
+        tempReservedPhone.push(element.phone);
+      }
+    }
+    setReserved(tempReserved);
+    setReservedName(tempReservedName);
+    setReservedPhone(tempReservedPhone);
+  };
 
     const goToHome = () => {
         setCurrentPage('calendar');

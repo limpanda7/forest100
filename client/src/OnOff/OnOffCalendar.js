@@ -103,7 +103,7 @@ const OnOffCalendar = ({
 
   return (
     <>
-      <section className="Price">
+      <section>
         <div className="DescTitle">PRICE</div>
 
         <table className="PriceTable">
@@ -151,10 +151,6 @@ const OnOffCalendar = ({
         )}
       </section>
 
-      {/*<h2>EVENT</h2>*/}
-      {/*<p>⭐️대학생 평일 할인⭐️</p>*/}
-      {/*<p>방학은 공기좋은 동해에서 보내자!<br/>대학생에게 평일 10% 할인을 제공합니다.</p>*/}
-
       <section>
         <div className="DescTitle">RESERVATION</div>
         <p>
@@ -163,14 +159,20 @@ const OnOffCalendar = ({
           (체크인 3시 / 체크아웃 11시)
         </p>
 
-        <div>
-          <div>
-            <span>체크인 : {picked[0] || "-"}</span>
+        <div className='DateAndBtnWrap'>
+          <div className='PickedDate'>
+            <div className='DateWrap'>
+              <div className='DateTitle'>체크인</div>
+              <div className='DateContent'>{picked[0] || "-"}</div>
+            </div>
+            <div  className='DateWrap'>
+              <div className='DateTitle'>체크아웃</div>
+              <div className='DateContent'>{picked[picked.length - 1] || "-"}</div>
+            </div>
           </div>
-          <div>
-            <span>체크 아웃 : {picked[picked.length - 1] || "-"}</span>
-          </div>
+
           <button
+            className='DateResetBtn'
             onClick={() => {
               setPicked([]);
               setSelected(null);
@@ -179,6 +181,7 @@ const OnOffCalendar = ({
             초기화
           </button>
         </div>
+
 
         <Calendar
           className="Calendar"

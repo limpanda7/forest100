@@ -1,5 +1,10 @@
 import React from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
+
+// styles
+import './common.scss';
+
+// components
 import Main from './Main/Main';
 import Forest from './Forest/Forest';
 import OnOff from './OnOff/OnOff';

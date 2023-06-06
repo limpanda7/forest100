@@ -490,4 +490,60 @@ router.post("/updateDb3", (req, res) => {
   }
 });
 
+/*
+  블로뉴숲 NEW API
+ */
+router.get("/reservation/blon", (req, res) => {
+  connection.query(
+    "SELECT checkin_date, checkout_date FROM blon_reservation_new where checkout_date >= NOW() order by checkin_date",
+    (err, data) => {
+      res.send(data);
+    }
+  );
+});
+router.post("/reservation/blon", (req, res) => {
+  const {
+    picked,
+    name,
+    phone,
+    person,
+    baby,
+    dog,
+    bedding,
+    barbecue,
+    price,
+    priceOption,
+    receipt,
+    receiptNum,
+    revisit,
+  } = req.body;
+  let values = [];
+  values.push([
+    "homepage",
+    picked[0],
+    picked[picked.length - 1],
+    name,
+    phone,
+    person,
+    baby,
+    dog,
+    bedding,
+    barbecue,
+    price,
+    priceOption,
+    receipt,
+    receiptNum,
+    revisit,
+  ]);
+  connection.query(
+    "INSERT INTO blon_reservation_new (type, checkin_date, checkout_date, name, phone, person, baby, dog, bedding, barbecue, price, price_option, receipt, receipt_num, revisit) VALUES ?",
+    [values]
+  );
+});
+router.get("/ical/blon", (req, res) => {
+  connection.query("SELECT * from blon_ical", (err, data) => {
+    res.send(data);
+  });
+});
+
 export default router;

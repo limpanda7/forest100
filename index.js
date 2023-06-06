@@ -3,9 +3,8 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import mysql from "mysql";
-import ical from "node-ical";
 import schedule from 'node-schedule';
-import moment from "moment";
+import {updateIcal} from "./updateIcal.js";
 
 // 로컬 모듈
 import router from './router.js';
@@ -44,28 +43,7 @@ connection.connect();
 // 5분마다 ical 적재
 if (process.env.NODE_ENV === "production") {
     const job = schedule.scheduleJob('*/5 * * * *', () => {
-        ical.fromURL(
-          'https://www.airbnb.co.kr/calendar/ical/52828603.ics?s=f6ffa314abc34b142104f746fe97ee5b',
-          {},
-          (err, res) => {
-              let values = [];
-
-              Object.keys(res).map(key => {
-                  const {datetype, uid, start, end, summary, description} = res[key];
-
-                  if (datetype === 'date') {
-                      const startDt = moment(start).format('YYYY-MM-DD');
-                      const endDt = moment(end).format('YYYY-MM-DD');
-                      const phoneLastDigits = !!description ? description.slice(description.length - 4, description.length) : null;
-                      const status = summary.startsWith('Airbnb') ? 'Not available' : summary;
-                      values.push([uid, startDt, endDt, status, phoneLastDigits])
-                  }
-              });
-
-              connection.query('TRUNCATE TABLE on_off_ical', () => {
-                  connection.query('INSERT INTO on_off_ical (uid, start_dt, end_dt, status, phone_last_digits) VALUES ?', [values]);
-              })
-          }
-        )
+        updateIcal('https://www.airbnb.co.kr/calendar/ical/900541503229676786.ics?s=058f85815802df2b5e66641786201b89', 'on_off');
+        updateIcal('https://www.airbnb.co.kr/calendar/ical/43357745.ics?s=b2f3b0a34285a4574daf03fe3429f505', 'blon')
     })
 }

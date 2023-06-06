@@ -12,8 +12,8 @@ const connection = mysql.createConnection({
 })
 connection.connect();
 
-ical.fromURL(
-  'https://www.airbnb.co.kr/calendar/ical/52828603.ics?s=f6ffa314abc34b142104f746fe97ee5b',
+export const updateIcal = (url, target) => ical.fromURL(
+  url,
   {},
   (err, res) => {
     let values = [];
@@ -30,8 +30,8 @@ ical.fromURL(
       }
     });
 
-    connection.query('TRUNCATE TABLE on_off_ical', () => {
-      connection.query('INSERT INTO on_off_ical (uid, start_dt, end_dt, status, phone_last_digits) VALUES ?', [values]);
+    connection.query(`TRUNCATE TABLE ${target}_ical`, () => {
+      connection.query(`INSERT INTO ${target}_ical (uid, start_dt, end_dt, status, phone_last_digits) VALUES ?`, [values]);
     })
   }
 )
