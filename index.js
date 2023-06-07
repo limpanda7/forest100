@@ -40,7 +40,7 @@ const connection = mysql.createConnection({
 })
 connection.connect();
 
-// 5분마다 ical 적재
+// 1분마다 ical 적재
 if (process.env.NODE_ENV === "production") {
     const job = schedule.scheduleJob('* * * * *', () => {
         updateIcal('https://www.airbnb.co.kr/calendar/ical/900541503229676786.ics?s=058f85815802df2b5e66641786201b89', 'on_off');
