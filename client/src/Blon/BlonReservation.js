@@ -54,11 +54,17 @@ const BlonReservation = ({picked, reservedName, reservedPhone}) => {
 
     const saveReservation = () => {
         const bedding = person > 4 ? 1 : 0;
-        axios.post('/api/saveReservation3', {picked, name, phone, person, baby, dog, bedding, barbecue, price, priceOption, receipt, receiptNum, revisit})
-            .then(() => {
-                alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${price.toLocaleString()}원입니다.`);
-                window.location.href = '/';
-            })
+        try {
+            axios.post('/api/reservation/blon', {picked, name, phone, person, baby, dog, bedding, barbecue, price, priceOption, receipt, receiptNum, revisit})
+              .then(() => {
+                  alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${price.toLocaleString()}원입니다.`);
+                  window.location.href = '/';
+              })
+        } catch (e) {
+            alert('오류가 발생했습니다. 관리자에게 문의해주세요.');
+            console.log('error: /api/reservation/blon');
+            console.log({picked, name, phone, person, baby, dog, bedding, barbecue, price, priceOption, receipt, receiptNum, revisit});
+        }
     }
 
     const calcHowMany = () => {

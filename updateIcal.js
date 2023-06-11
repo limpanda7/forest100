@@ -12,26 +12,32 @@ const connection = mysql.createConnection({
 })
 connection.connect();
 
-export const updateIcal = (url, target) => ical.fromURL(
-  url,
-  {},
-  (err, res) => {
-    let values = [];
+export const updateIcal = (url, target) => {
+  try {
+    ical.fromURL(
+      url,
+      {},
+      (err, res) => {
+        let values = [];
 
-    Object.keys(res).map(key => {
-      const {datetype, uid, start, end, summary, description} = res[key];
+        Object.keys(res).map(key => {
+          const {datetype, uid, start, end, summary, description} = res[key];
 
-      if (datetype === 'date') {
-        const startDt = moment(start).format('YYYY-MM-DD');
-        const endDt = moment(end).format('YYYY-MM-DD');
-        const phoneLastDigits = !!description ? description.slice(description.length - 4, description.length) : null;
-        const status = summary.startsWith('Airbnb') ? 'Not available' : summary;
-        values.push([uid, startDt, endDt, status, phoneLastDigits])
+          if (datetype === 'date') {
+            const startDt = moment(start).format('YYYY-MM-DD');
+            const endDt = moment(end).format('YYYY-MM-DD');
+            const phoneLastDigits = !!description ? description.slice(description.length - 4, description.length) : null;
+            const status = summary.startsWith('Airbnb') ? 'Not available' : summary;
+            values.push([uid, startDt, endDt, status, phoneLastDigits])
+          }
+        });
+
+        connection.query(`TRUNCATE TABLE ${target}_ical`, () => {
+          connection.query(`INSERT INTO ${target}_ical (uid, start_dt, end_dt, status, phone_last_digits) VALUES ?`, [values]);
+        })
       }
-    });
-
-    connection.query(`TRUNCATE TABLE ${target}_ical`, () => {
-      connection.query(`INSERT INTO ${target}_ical (uid, start_dt, end_dt, status, phone_last_digits) VALUES ?`, [values]);
-    })
+    )
+  } catch (e) {
+    console.log(`error: updateIcal on ${target}`);
   }
-)
+}

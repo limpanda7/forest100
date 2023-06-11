@@ -19,7 +19,7 @@ const App = () => {
                 <Route exact path='/forest' component={Forest} />
                 <Route exact path='/on-off' component={OnOff} />
                 <Route exact path='/boulogne' component={Blon} />
-                <Route exact path='/admin' component={Admin} />
+                {/*<Route exact path='/admin' component={Admin} />*/}
                 <Route exact path='/consulting' component={Consulting} />
                 <Route path='/' component={Main}/>
             </Switch>
