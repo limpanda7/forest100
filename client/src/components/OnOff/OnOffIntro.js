@@ -1,3 +1,4 @@
+import {useEffect, useState} from "react";
 import Slider from "react-slick";
 import img1 from "../../images/OnOff/1.jpg";
 import img2 from "../../images/OnOff/2.jpg";
@@ -15,12 +16,18 @@ import img13 from "../../images/OnOff/13.jpg";
 import img14 from "../../images/OnOff/14.jpg";
 import img15 from "../../images/OnOff/15.jpg";
 import img16 from "../../images/OnOff/16.jpg";
-import {useState} from "react";
 
 const OnOffIntro = () => {
 
     const [showLocation, setShowLocation] = useState(false);
     const [showTour, setShowTour] = useState(false);
+
+    useEffect(() => {
+        new window.daum.roughmap.Lander({
+            "timestamp" : "1688303908865",
+            "key" : "2fdo7",
+        }).render();
+    }, []);
 
     const toggleLocation = () => {
         if (showLocation) setShowLocation(false);
@@ -164,9 +171,8 @@ const OnOffIntro = () => {
                     <li>주차: 무릉복지회관 측면 공용주차장</li>
                 </ul>
 
-                <iframe className='Map'
-                        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d395.7307178455782!2d129.0677103!3d37.4879664!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3561becc4f8ba9e7%3A0x3056ae1168a133e3!2z6rCV7JuQ64-EIOuPme2VtOyLnCDsgrztmZTrj5kg66y066aJMeq4uCA5LTI!5e0!3m2!1sko!2skr!4v1629545600943!5m2!1sko!2skr"
-                        allowFullScreen="" loading="lazy"/>
+                <div id="daumRoughmapContainer1688303908865"
+                     className="root_daum_roughmap root_daum_roughmap_landing daum-map"></div>
 
                 <button className='LocationBtn' onClick={toggleLocation}>
                     {!showLocation ? '대중교통 정보' : '대중교통 정보 닫기'}

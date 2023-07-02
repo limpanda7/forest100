@@ -1,3 +1,4 @@
+import {useEffect} from "react";
 import Slider from "react-slick";
 import img1 from "../../images/Blon/1.jpg";
 import img2 from "../../images/Blon/2.jpg";
@@ -14,9 +15,15 @@ import img12 from "../../images/Blon/12.jpg";
 import img13 from "../../images/Blon/13.jpg";
 import img14 from "../../images/Blon/14.jpg";
 import img15 from "../../images/Blon/15.jpg";
-import {useState} from "react";
 
 const BlonIntro = () => {
+
+    useEffect(() => {
+        new window.daum.roughmap.Lander({
+            "timestamp" : "1688304044735",
+            "key" : "2fdo8",
+        }).render();
+    }, []);
 
     const sliderSetting = {
         dots: true,
@@ -123,9 +130,8 @@ const BlonIntro = () => {
                     <li>지번 주소: 경기 포천시 영북면 산정리 519-12</li>
                 </ul>
 
-                <iframe className='Map'
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1570.5512413417696!2d127.30418055826058!3d38.06799435657604!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3562cd50e262e5bf%3A0xd7da8fd0c94de0b0!2z6rK96riw64-EIO2PrOyynOyLnCDsmIHrtoHrqbQg7IKw7KCV7Zi47IiY66GcMzIy67KI6ri4!5e0!3m2!1sko!2skr!4v1678717563704!5m2!1sko!2skr"
-                        allowFullScreen="" loading="lazy"/>
+                <div id="daumRoughmapContainer1688304044735"
+                     className="root_daum_roughmap root_daum_roughmap_landing daum-map"></div>
             </section>
 
             <section>

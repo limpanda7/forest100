@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Slider from "react-slick";
 import img1 from "../../images/Forest/1.jpg";
 import img2 from "../../images/Forest/2.jpg";
@@ -27,16 +27,17 @@ import img23 from "../../images/Forest/23.jpg";
 const ForestIntro = () => {
 
     const [showLocation, setShowLocation] = useState(false);
-    const [showTour, setShowTour] = useState(false);
+
+    useEffect(() => {
+        new window.daum.roughmap.Lander({
+            "timestamp" : "1688303532806",
+            "key" : "2fdo6",
+        }).render();
+    }, []);
 
     const toggleLocation = () => {
         if (showLocation) setShowLocation(false);
         else setShowLocation(true);
-    }
-
-    const toggleTour = () => {
-        if (showTour) setShowTour(false);
-        else setShowTour(true);
     }
 
     const sliderSetting = {
@@ -158,13 +159,11 @@ const ForestIntro = () => {
             <section>
                 <div className="DescTitle">Location</div>
                 <ul>
-                    <li>도로명 주소: 강원도 동해시 구미실길 96-1</li>
-                    <li>주변에 주택이 많고 대부분 농사를 지으시는 분들입니다. 시골감성을 마음껏 누리세요!</li>
+                    <li>주소: 강원도 동해시 구미실길 96-1</li>
                 </ul>
 
-                <iframe className='Map'
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3166.511124703915!2d129.1265640155865!3d37.472263137278524!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3561b9b40c1818d9%3A0xef52d1dc46730d66!2z6rCV7JuQ64-EIOuPme2VtOyLnCDrjIDqtazrj5kg6rWs66-47Iuk6ri4IDk2LTE!5e0!3m2!1sko!2skr!4v1621694052376!5m2!1sko!2skr"
-                        allowFullScreen="" loading="lazy"/>
+                <div id="daumRoughmapContainer1688303532806"
+                     className="root_daum_roughmap root_daum_roughmap_landing daum-map"></div>
 
                 <button className='LocationBtn' onClick={toggleLocation}>
                     {!showLocation ? '자세한 위치 정보' : '자세한 위치 정보 닫기'}
