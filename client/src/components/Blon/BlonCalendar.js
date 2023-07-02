@@ -172,7 +172,7 @@ const BlonCalendar = ({ getReserved, picked, setPicked, setCurrentPage, reserved
                 </div>
 
                 <Calendar
-                  className="Calendar"
+                  className="calendar"
                   calendarType="US"
                   minDate={selected ? new Date(selected) : new Date()}
                   maxDate={maxDate}

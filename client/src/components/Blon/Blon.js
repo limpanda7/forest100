@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import axios from "axios";
 import {Helmet} from "react-helmet";
 import 'react-calendar/dist/Calendar.css';
-import moment from 'moment';
 import './Blon.scss';
 import BlonReservation from "./BlonReservation";
 import BlonIntro from "./BlonIntro";
@@ -77,7 +76,7 @@ const Blon = () => {
                 <title>::: 블로뉴숲 :::</title>
             </Helmet>
 
-            <div className='Header'>
+            <div className='header'>
                 {
                     currentPage !== 'reservation' ?
                         <>
@@ -98,7 +97,7 @@ const Blon = () => {
 
             {
                 currentPage !== 'reservation' &&
-                <div className='Tabs'>
+                <div className='tabs'>
                     <div
                         className={cn('Tab', {Active: currentPage === 'intro'})}
                         onClick={() => setCurrentPage('intro')}

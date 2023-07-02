@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import axios from "axios";
 import ReactModal from 'react-modal';
-import './OnOff.scss';
 import {ON_OFF_PRICE} from "../../constants";
 
 const OnOffReservation = ({picked, reservedName, reservedPhone}) => {
@@ -186,7 +185,7 @@ const OnOffReservation = ({picked, reservedName, reservedPhone}) => {
     };
 
     return (
-        <div className='Reservation'>
+        <div className='reservation'>
             <section>
                 <h2>선택한 날짜</h2>
                 <ul>

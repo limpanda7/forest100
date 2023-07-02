@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { Helmet } from "react-helmet";
 import "react-calendar/dist/Calendar.css";
-import moment from "moment";
-import "./OnOff.scss";
 import OnOffReservation from "./OnOffReservation";
 import OnOffIntro from "./OnOffIntro";
 import OnOffCalendar from "./OnOffCalendar";
@@ -77,7 +75,7 @@ const OnOff = () => {
         <title>::: 온오프스테이 :::</title>
       </Helmet>
 
-      <div className="Header">
+      <div className="header">
         {currentPage !== "reservation" ? (
           <>
             <Link className="BackWrap" to="/">
@@ -93,7 +91,7 @@ const OnOff = () => {
       </div>
 
       {currentPage !== "reservation" && (
-        <div className="Tabs">
+        <div className="tabs">
           <div
             className={cn("Tab", { Active: currentPage === "intro" })}
             onClick={() => setCurrentPage("intro")}

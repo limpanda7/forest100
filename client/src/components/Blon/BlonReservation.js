@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import axios from "axios";
 import ReactModal from 'react-modal';
-import './Blon.scss';
 import {BLON_PRICE} from "../../constants";
 
 const BlonReservation = ({picked, reservedName, reservedPhone}) => {
@@ -182,7 +181,7 @@ const BlonReservation = ({picked, reservedName, reservedPhone}) => {
     };
 
     return (
-        <div className='Reservation'>
+        <div className='reservation'>
             <section>
                 <h2>선택한 날짜</h2>
                 <ul>

@@ -1,0 +1,61 @@
+.PriceTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+
+  th, td {
+    border: 1px solid black;
+    text-align: center;
+  }
+}
+
+.DateAndBtnWrap {
+  display: flex;
+  margin-bottom: 10px;
+
+  .PickedDate {
+    width: 240px;
+    border: 1px solid black;
+    border-radius: 8px;
+    display: flex;
+
+    .DateWrap {
+      width: 120px;
+      padding: 5px 10px;
+
+      &:first-child {
+        border-right: 1px solid black;
+      }
+
+      .DateTitle {
+        font-size: 14px;
+      }
+
+      .DateContent {
+        font-weight: bold;
+      }
+    }
+  }
+
+  .DateResetBtn {
+    display: inline-block;
+    background: white;
+    border: 1px solid black;
+    border-radius: 8px;
+    margin-left: 10px;
+    cursor: pointer;
+  }
+}
+
+.calendar {
+  width: 100% !important;
+  margin-bottom: 20px;
+
+  .checkout-only {
+    background-color: #fff8e3 !important;
+  }
+
+  .select-date {
+    background-color: aquamarine !important;
+  }
+}

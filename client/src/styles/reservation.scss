@@ -1,0 +1,88 @@
+.reservation {
+  overflow: hidden;
+
+  h2 {
+    font-weight: bold;
+    font-size: 24px;
+  }
+
+  .HowMany {
+    p {
+      display: inline-block;
+      width: 140px;
+      padding: 0 20px;
+      margin: 0;
+    }
+
+    span {
+      padding: 0 20px;
+    }
+
+    .Notice {
+      width: 90%;
+      padding-top: 10px;
+    }
+
+    .BeddingDesc {
+      padding: 5px 20px 0;
+      font-size: 15px;
+    }
+  }
+
+  .Barbecue {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 60px;
+    padding-bottom: 20px;
+
+    h2 {
+      margin-bottom: 0;
+    }
+  }
+
+  .PriceTotal {
+    overflow: hidden;
+
+    h2 {
+      float: left;
+      display: inline-block;
+    }
+
+    .Price {
+      float: right;
+      margin-right: 20px;
+    }
+
+    .PriceDetail {
+      float: right;
+      margin-right: 20px;
+      border: 1px solid lightgray;
+      border-radius: 8px;
+      padding: 0 10px;
+    }
+  }
+
+  .PriceOption {
+    p {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      word-break: keep-all;
+    }
+  }
+
+  .Deposit {
+    input {
+      margin-left: 10px;
+      height: 20px;
+    }
+
+    .BankAccount {
+      border: 1px solid black;
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+  }
+}

@@ -1,0 +1,30 @@
+.header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: darkcyan;
+  z-index: 10;
+  font-size: 18px;
+
+  .BackWrap {
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    display: flex;
+  }
+
+  .Back {
+    margin-left: 5px;
+  }
+
+  .Path {
+    color: white;
+  }
+}

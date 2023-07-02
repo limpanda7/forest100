@@ -1,0 +1,30 @@
+.ModalTitle {
+  text-align: center;
+  font-size: 25px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.ModalList {
+  padding-left: 10px;
+}
+
+.ModalContent {
+  margin: 10px 0;
+}
+
+.BtnWrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+
+  .ModalBtn {
+    width: 48%;
+    height: 30px;
+
+    &.Alone {
+      width: 100%;
+    }
+  }
+}

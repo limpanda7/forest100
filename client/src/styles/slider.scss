@@ -1,0 +1,39 @@
+.slick-track {
+  display: flex;
+  align-items: center;
+}
+
+.Slider {
+  margin-bottom: 50px;
+
+  .dots {
+    transform: translateX(-50%);
+    display: flex !important;
+    justify-content: center;
+    align-content: center;
+    position: absolute;
+    left: 50%;
+    padding: 0;
+
+    li {
+      margin: 0 3px;
+      list-style: none;
+    }
+
+    li > button {
+      width: 10px;
+      height: 10px;
+      border-radius: 10px;
+      border: 1px solid darkcyan;
+      text-indent: -999em;
+      background: white;
+      padding: 0;
+    }
+
+    .slick-active {
+      & > button {
+        background: darkcyan;
+      }
+    }
+  }
+}

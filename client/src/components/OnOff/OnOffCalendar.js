@@ -184,7 +184,7 @@ const OnOffCalendar = ({
 
 
         <Calendar
-          className="Calendar"
+          className="calendar"
           calendarType="US"
           minDate={selected ? new Date(selected) : new Date()}
           maxDate={maxDate}

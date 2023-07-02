@@ -14,7 +14,6 @@ import img12 from "../../images/Blon/12.jpg";
 import img13 from "../../images/Blon/13.jpg";
 import img14 from "../../images/Blon/14.jpg";
 import img15 from "../../images/Blon/15.jpg";
-import './Blon.scss';
 import {useState} from "react";
 
 const BlonIntro = () => {

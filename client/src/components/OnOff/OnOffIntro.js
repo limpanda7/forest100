@@ -15,7 +15,6 @@ import img13 from "../../images/OnOff/13.jpg";
 import img14 from "../../images/OnOff/14.jpg";
 import img15 from "../../images/OnOff/15.jpg";
 import img16 from "../../images/OnOff/16.jpg";
-import './OnOff.scss';
 import {useState} from "react";
 
 const OnOffIntro = () => {
@@ -48,12 +47,6 @@ const OnOffIntro = () => {
 
     return (
         <>
-            {/*<div className='Title'>*/}
-            {/*    <span>ON OFF 스테이</span><br/>*/}
-            {/*    휴식의 스위치를 ON🔺<br/>*/}
-            {/*    일상의 스트레스는 OFF🔻*/}
-            {/*</div>*/}
-
             <div className='Slider'>
                 <Slider {...sliderSetting}>
                     <div><img src={img1} alt={''}/></div>
