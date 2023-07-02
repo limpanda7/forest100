@@ -133,7 +133,7 @@ const OnOffCalendar = ({
           <li>바베큐 이용요금: 20,000원</li>
           <li>입금계좌: 카카오 3333053810252 채민기</li>
           <li>
-            <a onClick={() => toggleRefund()}>환불 규정 보기</a>
+            <a onClick={toggleRefund}>환불 규정 보기</a>
           </li>
         </ul>
 

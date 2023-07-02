@@ -168,7 +168,7 @@ const OnOffIntro = () => {
                         src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d395.7307178455782!2d129.0677103!3d37.4879664!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3561becc4f8ba9e7%3A0x3056ae1168a133e3!2z6rCV7JuQ64-EIOuPme2VtOyLnCDsgrztmZTrj5kg66y066aJMeq4uCA5LTI!5e0!3m2!1sko!2skr!4v1629545600943!5m2!1sko!2skr"
                         allowFullScreen="" loading="lazy"/>
 
-                <button className='LocationBtn' onClick={() => toggleLocation()}>
+                <button className='LocationBtn' onClick={toggleLocation}>
                     {!showLocation ? '대중교통 정보' : '대중교통 정보 닫기'}
                 </button>
 
@@ -192,7 +192,7 @@ const OnOffIntro = () => {
                     </ul>
                 }
 
-                <button className='LocationBtn' onClick={() => toggleTour()}>
+                <button className='LocationBtn' onClick={toggleTour}>
                     {!showTour ? '주변 관광 정보' : '주변 관광 정보 닫기'}
                 </button>
 

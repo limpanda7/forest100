@@ -44,6 +44,7 @@ connection.connect();
 if (process.env.NODE_ENV === "production") {
     const job = schedule.scheduleJob('* * * * *', () => {
         updateIcal('https://www.airbnb.co.kr/calendar/ical/900541503229676786.ics?s=058f85815802df2b5e66641786201b89', 'on_off');
-        updateIcal('https://www.airbnb.co.kr/calendar/ical/43357745.ics?s=b2f3b0a34285a4574daf03fe3429f505', 'blon')
+        updateIcal('https://www.airbnb.co.kr/calendar/ical/43357745.ics?s=b2f3b0a34285a4574daf03fe3429f505', 'blon');
+        updateIcal('https://www.airbnb.com/calendar/ical/901020553765823065.ics?s=0fdfc9df2914ecfe8d6f8606b53d8d61&locale=ko', 'forest');
     })
 }

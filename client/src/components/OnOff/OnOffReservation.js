@@ -235,7 +235,7 @@ const OnOffReservation = ({picked, reservedName, reservedPhone}) => {
                 <h2>환불옵션 선택</h2>
                 <input type='radio' id='refundable' onClick={() => setPriceOption('refundable')} checked={priceOption === 'refundable'}/>
                 <label htmlFor='refundable'><span/><b>환불가능 옵션</b></label>
-                <p>예약 취소 시 <a onClick={() => toggleRefund()}>환불 규정</a>에 따라서 환불이 진행됩니다.</p>
+                <p>예약 취소 시 <a onClick={toggleRefund}>환불 규정</a>에 따라서 환불이 진행됩니다.</p>
 
                 {
                     showRefund &&

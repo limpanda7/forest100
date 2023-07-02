@@ -19,7 +19,6 @@ const Blon = () => {
   const getReserved = async () => {
     const pageReserved = await axios.get("/api/reservation/blon");
     const airbnbReserved = await axios.get("/api/ical/blon");
-    console.log(airbnbReserved)
 
     let tempReserved = [];
     let tempReservedName = [];

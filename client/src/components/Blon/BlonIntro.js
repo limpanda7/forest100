@@ -18,19 +18,6 @@ import {useState} from "react";
 
 const BlonIntro = () => {
 
-    const [showLocation, setShowLocation] = useState(false);
-    const [showTour, setShowTour] = useState(false);
-
-    const toggleLocation = () => {
-        if (showLocation) setShowLocation(false);
-        else setShowLocation(true);
-    }
-
-    const toggleTour = () => {
-        if (showTour) setShowTour(false);
-        else setShowTour(true);
-    }
-
     const sliderSetting = {
         dots: true,
         fade: true,
@@ -139,75 +126,13 @@ const BlonIntro = () => {
                 <iframe className='Map'
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1570.5512413417696!2d127.30418055826058!3d38.06799435657604!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3562cd50e262e5bf%3A0xd7da8fd0c94de0b0!2z6rK96riw64-EIO2PrOyynOyLnCDsmIHrtoHrqbQg7IKw7KCV7Zi47IiY66GcMzIy67KI6ri4!5e0!3m2!1sko!2skr!4v1678717563704!5m2!1sko!2skr"
                         allowFullScreen="" loading="lazy"/>
-
-            {/*    <button className='LocationBtn' onClick={() => toggleLocation()}>*/}
-            {/*        {!showLocation ? '대중교통 정보' : '대중교통 정보 닫기'}*/}
-            {/*    </button>*/}
-
-            {/*    {*/}
-            {/*        showLocation &&*/}
-            {/*        <ul>*/}
-            {/*            <li>*/}
-            {/*                동해역 (KTX)<br/>*/}
-            {/*                -버스: 171 송정동주민센터 > 삼화동주민센터<br/>*/}
-            {/*                (35분)<br/>*/}
-            {/*                111,311, 132, 131 송정동주민센터 > 삼화시장<br/>*/}
-            {/*                (37분)<br/>*/}
-            {/*                -택시: 6.4km (11분)*/}
-            {/*            </li>*/}
-            {/*            <li>*/}
-            {/*                동해시 종합버스터미널<br/>*/}
-            {/*                -버스: 111, 311, 132 동해감리교회 > 삼화시장<br/>*/}
-            {/*                (58분)<br/>*/}
-            {/*                -택시: 8.9km (15분)*/}
-            {/*            </li>*/}
-            {/*        </ul>*/}
-            {/*    }*/}
-
-            {/*    <button className='LocationBtn' onClick={() => toggleTour()}>*/}
-            {/*        {!showTour ? '주변 관광 정보' : '주변 관광 정보 닫기'}*/}
-            {/*    </button>*/}
-
-            {/*    {*/}
-            {/*        showTour &&*/}
-            {/*        <ul>*/}
-            {/*            <li>*/}
-            {/*                무릉별유천지: 4.8km 약14분<br/>*/}
-            {/*                펜트하우스3 촬영지로 스카이 글라이더, 루지, 알파인코스터, 짚라인 등 이용할 수 있습니다.*/}
-            {/*            </li>*/}
-            {/*            <li>*/}
-            {/*                무릉건강숲: 4.2km 약6분<br/>*/}
-            {/*                2만 4천평 규모의 친환경 힐링센터로 각종 테마체험을 즐기실 수 있습니다.*/}
-            {/*            </li>*/}
-            {/*            <li>*/}
-            {/*                무릉계곡 삼화사: 4.2km 약6분<br/>*/}
-            {/*                템플스테이 체험 가능하며 입장료는 무료입니다 (템플스테이 인원 외 2,000원)*/}
-            {/*            </li>*/}
-            {/*            <li>*/}
-            {/*                추암 촛대바위/해수욕장: 9.2km 약12분<br/>*/}
-            {/*                백사장은 작으나 야경이 멋지고 횟집과 카페가 있습니다.*/}
-            {/*            </li>*/}
-            {/*            <li>*/}
-            {/*                삼척쏠비치: 11km 약14분<br/>*/}
-            {/*                추암해수욕장과 인접해있으며 워터파크가 있으며 산토리니테라스에서 이국적인 분위기를 느낄 수 있습니다.*/}
-            {/*            </li>*/}
-            {/*            <li>*/}
-            {/*                한섬해수욕장: 9.1km 약15분<br/>*/}
-            {/*                시내근처에 있는 해수욕장으로  산책로가 있고 바다뷰 터널 핫스팟이 있습니다.*/}
-            {/*            </li>*/}
-            {/*            <li>*/}
-            {/*                망상해수욕장: 17km 23분<br/>*/}
-            {/*                백사장이 넓은편이며 오토캠핑과 서핑을 즐기기에 적합합니다.*/}
-            {/*            </li>*/}
-            {/*        </ul>*/}
-            {/*    }*/}
             </section>
 
             <section>
-                <div className="DescTitle">CONTACT</div>
-                <ul>
-                    <li>인스타그램 DM: boulogne_forest</li>
-                </ul>
+                <div className="DescTitle">INSTAGRAM</div>
+                <a href='https://www.instagram.com/boulogne_forest/' target='_blank'>
+                    <p>@boulogne_forest</p>
+                </a>
             </section>
         </>
     );

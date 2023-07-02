@@ -1,6 +1,15 @@
-export const FOREST_WEEKDAY = 200000;
-export const FOREST_WEEKEND = 250000;
-export const FOREST_HOLIDAY = 300000;
+export const FOREST_PRICE = {
+  NORMAL: {
+    WEEKDAY: 250000,
+    WEEKEND: 300000,
+    HOLIDAY: 350000,
+  },
+  SUMMER: {
+    WEEKDAY: 300000,
+    WEEKEND: 350000,
+    HOLIDAY: 350000,
+  }
+};
 
 export const ON_OFF_PRICE = {
   NORMAL: {
