@@ -11,4 +11,18 @@
       }
     }
   }
+
+  .Slider {
+    .dots {
+      li > button {
+        border: 1px solid black;
+      }
+
+      .slick-active {
+        & > button {
+          background: black;
+        }
+      }
+    }
+  }
 }

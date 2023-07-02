@@ -102,7 +102,7 @@ const OnOffCalendar = ({
   };
 
   return (
-    <>
+    <div className='contents'>
       <section>
         <div className="DescTitle">PRICE</div>
 
@@ -259,7 +259,7 @@ const OnOffCalendar = ({
           선택한 날짜로 예약하기
         </button>
       </section>
-    </>
+    </div>
   );
 };
 

@@ -10,7 +10,7 @@ import n3 from '../../images/OnOff/n3.png';
 
 const OnOffReview = () => {
     return (
-        <div className='review'>
+        <div className='contents review'>
             <div className='BlogReview'>
                 <a href='https://m.blog.naver.com/72682005/222974604817' target='_blank'>
                     <button>

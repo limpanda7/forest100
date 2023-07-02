@@ -185,7 +185,7 @@ const OnOffReservation = ({picked, reservedName, reservedPhone}) => {
     };
 
     return (
-        <div className='reservation'>
+        <div className='contents reservation'>
             <section>
                 <h2>선택한 날짜</h2>
                 <ul>

@@ -7,7 +7,7 @@ import './styles/common.scss';
 import './styles/sections.scss';
 import './styles/buttons.scss';
 import './styles/calendar.scss';
-import './styles/header.scss';
+import './styles/layout.scss';
 import './styles/input-radio.scss';
 import './styles/modal.scss';
 import './styles/reservation.scss';

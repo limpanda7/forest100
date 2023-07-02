@@ -96,7 +96,7 @@ const BlonCalendar = ({ getReserved, picked, setPicked, setCurrentPage, reserved
     };
 
     return (
-        <>
+        <div className='contents'>
             <section>
                 <div className="DescTitle">PRICE</div>
 
@@ -247,7 +247,7 @@ const BlonCalendar = ({ getReserved, picked, setPicked, setCurrentPage, reserved
                     선택한 날짜로 예약하기
                 </button>
             </section>
-        </>
+        </div>
     );
 }
 

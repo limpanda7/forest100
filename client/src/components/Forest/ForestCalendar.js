@@ -95,7 +95,7 @@ const ForestCalendar = ({ getReserved, picked, setPicked, setCurrentPage, reserv
     };
 
     return (
-        <>
+        <div className='contents'>
             <section>
                 <div className="DescTitle">Price</div>
 
@@ -246,7 +246,7 @@ const ForestCalendar = ({ getReserved, picked, setPicked, setCurrentPage, reserv
                     선택한 날짜로 예약하기
                 </button>
             </section>
-        </>
+        </div>
     );
 }
 
