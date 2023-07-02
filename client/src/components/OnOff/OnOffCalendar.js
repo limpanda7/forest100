@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Calendar from "react-calendar";
 import moment from "moment";
-import { ON_OFF_PRICE } from "../constants";
+import { ON_OFF_PRICE } from "../../constants";
 
 const OnOffCalendar = ({
   getReserved,

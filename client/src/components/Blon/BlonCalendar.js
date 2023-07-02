@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo, useState} from "react";
 import Calendar from "react-calendar";
 import moment from "moment";
-import {BLON_PRICE} from "../constants";
+import {BLON_PRICE} from "../../constants";
 
 const BlonCalendar = ({ getReserved, picked, setPicked, setCurrentPage, reserved }) => {
     const [showRefund, setShowRefund] = useState(false);

@@ -1,12 +1,12 @@
-import a1 from '../images/OnOff/a1.png';
-import a2 from '../images/OnOff/a2.png';
-import a3 from '../images/OnOff/a3.png';
-import a4 from '../images/OnOff/a4.png';
-import a5 from '../images/OnOff/a5.png';
-import a6 from '../images/OnOff/a6.png';
-import n1 from '../images/OnOff/n1.png';
-import n2 from '../images/OnOff/n2.png';
-import n3 from '../images/OnOff/n3.png';
+import a1 from '../../images/OnOff/a1.png';
+import a2 from '../../images/OnOff/a2.png';
+import a3 from '../../images/OnOff/a3.png';
+import a4 from '../../images/OnOff/a4.png';
+import a5 from '../../images/OnOff/a5.png';
+import a6 from '../../images/OnOff/a6.png';
+import n1 from '../../images/OnOff/n1.png';
+import n2 from '../../images/OnOff/n2.png';
+import n3 from '../../images/OnOff/n3.png';
 
 const OnOffReview = () => {
     return (

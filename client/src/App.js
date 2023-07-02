@@ -2,24 +2,21 @@ import React from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 
 // styles
-import './common.scss';
+import './styles/common.scss';
+import './styles/normalize.scss';
 
 // components
-import Main from './Main/Main';
-import Forest from './Forest/Forest';
-import OnOff from './OnOff/OnOff';
-import Blon from "./Blon/Blon";
-import Admin from "./Admin/Admin";
-import Consulting from "./Consulting/Consulting";
+import Main from './components/Main/Main';
+import OnOff from './components/OnOff/OnOff';
+import Blon from "./components/Blon/Blon";
+import Consulting from "./components/Consulting/Consulting";
 
 const App = () => {
     return (
         <BrowserRouter>
             <Switch>
-                <Route exact path='/forest' component={Forest} />
                 <Route exact path='/on-off' component={OnOff} />
                 <Route exact path='/boulogne' component={Blon} />
-                {/*<Route exact path='/admin' component={Admin} />*/}
                 <Route exact path='/consulting' component={Consulting} />
                 <Route path='/' component={Main}/>
             </Switch>

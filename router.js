@@ -19,9 +19,6 @@ router.get("/on-off", (req, res) => {
 router.get("/boulogne", (req, res) => {
     res.sendFile(path.join(__dirname, "client/build", "index.html"));
 });
-router.get("/admin", (req, res) => {
-    res.sendFile(path.join(__dirname, "client/build", "index.html"));
-});
 router.get("/consulting", (req, res) => {
     res.sendFile(path.join(__dirname, "client/build", "index.html"));
 });

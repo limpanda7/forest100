@@ -1,28 +1,26 @@
 import React, {useState, useEffect} from 'react';
 import axios from "axios";
-import './Forest.scss';
-import ReactModal from "react-modal";
-import {FOREST_HOLIDAY, FOREST_WEEKDAY, FOREST_WEEKEND} from "../constants";
+import ReactModal from 'react-modal';
+import './Blon.scss';
+import {BLON_PRICE} from "../../constants";
 
-const ForestReservation = ({picked, setPicked, setCurrentPage, reservedName, reservedPhone}) => {
-
-    const [howMany, setHowMany] = useState(2);
-    const [person, setPerson] = useState(2);
+const BlonReservation = ({picked, reservedName, reservedPhone}) => {
+    const [howMany, setHowMany] = useState(4);      // 반려견 표함 총 인원수
+    const [person, setPerson] = useState(4);
     const [baby, setBaby] = useState(0);
     const [dog, setDog] = useState(0);
-    const [bedding, setBedding] = useState(0);
-    const [guestRoom, setGuestRoom] = useState('N');
     const [barbecue, setBarbecue] = useState('N');
     const [basePrice, setBasePrice] = useState(0);
     const [price, setPrice] = useState(0);
     const [priceOption, setPriceOption] = useState('refundable');
     const [discount, setDiscount] = useState(0);
-    const [name, setName] = useState('');
-    const [phone, setPhone] = useState('');
-    const [showRefund, setShowRefund] = useState(false);
     const [receipt, setReceipt] = useState('N');
     const [receiptNum, setReceiptNum] = useState('');
     const [tax, setTax] = useState(0);
+    const [name, setName] = useState('');
+    const [phone, setPhone] = useState('');
+    const [showRefund, setShowRefund] = useState(false);
+    const [showModal, setShowModal] = useState(false);
     const [showRevisitModal, setShowRevisitModal] = useState(false);
     const [revisit, setRevisit] = useState('N');
 
@@ -32,14 +30,11 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, reservedName, res
 
     useEffect(() => {
         calcHowMany();
-        if (person + baby <= 4) {
-            setGuestRoom('N');
-        }
     }, [person, baby, dog])
 
     useEffect(() => {
         calcPrice();
-    }, [howMany, bedding, guestRoom, barbecue, receipt, priceOption])
+    }, [howMany, barbecue, receipt, priceOption])
 
     // 재방문 여부 확인
     const checkBeforeSave = () => {
@@ -58,16 +53,23 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, reservedName, res
     }
 
     const saveReservation = () => {
-        axios.post('/api/saveReservation', {picked, name, phone, person, baby, dog, bedding, guestRoom, barbecue, price, priceOption, receipt, receiptNum, revisit})
-            .then(() => {
-                alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${price.toLocaleString()}원입니다.`);
-                window.location.href = '/';
-            })
+        const bedding = person > 4 ? 1 : 0;
+        try {
+            axios.post('/api/reservation/blon', {picked, name, phone, person, baby, dog, bedding, barbecue, price, priceOption, receipt, receiptNum, revisit})
+              .then(() => {
+                  alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${price.toLocaleString()}원입니다.`);
+                  window.location.href = '/';
+              })
+        } catch (e) {
+            alert('오류가 발생했습니다. 관리자에게 문의해주세요.');
+            console.log('error: /api/reservation/blon');
+            console.log({picked, name, phone, person, baby, dog, bedding, barbecue, price, priceOption, receipt, receiptNum, revisit});
+        }
     }
 
     const calcHowMany = () => {
-        if (person === 1 && dog=== 0) {
-            setHowMany(2);
+        if (person + dog < 4) {
+            setHowMany(4);
         } else {
             setHowMany(person + dog);
         }
@@ -76,44 +78,68 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, reservedName, res
     const calcPrice = () => {
 
         // 연휴 (체크아웃 일)
-        const holidays = ['2022-12-25','2022-12-31','2023-01-01','2023-01-21','2023-01-22','2023-01-23','2023-01-24'];
+        const holidays = ['2022-12-25','2023-01-01','2023-01-21','2023-01-22','2023-01-23','2023-01-24'];
         // 평일을 주말로 처리하고 싶을 때 (체크아웃 일)
         const weekends = ['2022-12-26','2023-01-02','2023-03-01','2023-05-05'];
-        let tempPrice = 0;
 
-        let dayArr = [];
-
-        for (const date of picked) {
-
-            const dayIdx = new Date(date).getDay();
-            if (holidays.includes(date)) {
-                dayArr.push('holiday');
-            } else if (dayIdx === 0 || dayIdx === 6 || weekends.includes(date)) {
-                dayArr.push('weekend');
-                // } else if (date.slice(5, 7) === '01' || date.slice(5, 7) === '02') {
-                //     dayArr.push('weekdayDiscount');
-            } else {
-                dayArr.push('weekday');
-            }
+        const isSummer = (date) => {
+            return date.slice(5, 7) === '07' || date.slice(5, 7) === '08'
         }
 
+        let dayArr = [];
+        for (const date of picked) {
+            let dayType;
+
+            const dayIdx = new Date(date).getDay();
+
+            if (isSummer(date)) {
+                if (holidays.includes(date)) {
+                    dayType = 'summerHoliday';
+                } else if (dayIdx === 0 || dayIdx === 6 || weekends.includes(date)) {
+                    dayType = 'summerWeekend';
+                } else {
+                    dayType = 'summerWeekday';
+                }
+            } else {
+                if (holidays.includes(date)) {
+                    dayType = 'normalHoliday';
+                } else if (dayIdx === 0 || dayIdx === 6 || weekends.includes(date)) {
+                    dayType = 'normalWeekend';
+                } else {
+                    dayType = 'normalWeekday';
+                }
+            }
+
+            dayArr.push(dayType);
+        }
+
+        let tempPrice = 0;
         for (let i = 0; i < dayArr.length - 1; i++) {
-            if (dayArr[i + 1] === 'holiday') {
-                tempPrice += FOREST_HOLIDAY;
-            } else if (dayArr[i + 1] === 'weekday') {   // 일월화수목
-                tempPrice += FOREST_WEEKDAY;
-            } else if (dayArr[i + 1] === 'weekend') {    // 금토
-                tempPrice += FOREST_WEEKEND;
+            switch (dayArr[i + 1]) {
+                case 'summerHoliday':
+                    tempPrice += BLON_PRICE.SUMMER.HOLIDAY;
+                    break;
+                case 'summerWeekend':
+                    tempPrice += BLON_PRICE.SUMMER.WEEKEND;
+                    break;
+                case 'summerWeekday':
+                    tempPrice += BLON_PRICE.SUMMER.WEEKDAY;
+                    break;
+                case 'normalHoliday':
+                    tempPrice += BLON_PRICE.NORMAL.HOLIDAY;
+                    break;
+                case 'normalWeekend':
+                    tempPrice += BLON_PRICE.NORMAL.WEEKEND;
+                    break;
+                case 'normalWeekday':
+                    tempPrice += BLON_PRICE.NORMAL.WEEKDAY;
+                    break;
             }
         }
 
         const days = picked.length - 1;
+        let totalPrice = tempPrice + (15000 * (howMany - 4)) * days;
 
-        let totalPrice = tempPrice + (12000 * (howMany - 2)) * days  + (10000 * bedding);
-
-        if (guestRoom === 'Y') {
-            totalPrice += 50000 * days;
-        }
         if (barbecue === 'Y') {
             totalPrice += 20000;
         }
@@ -165,56 +191,41 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, reservedName, res
             </section>
 
             <section className='HowMany'>
-                <h2>인원수 선택</h2>
+                <h2>인원수 선택 (최대 6인)</h2>
                 <div>
                     <p>인원</p>
                     <button onClick={() => {if (person > 1) setPerson(person - 1)}}>-</button>
                     <span>{person}</span>
-                    <button onClick={() => setPerson(person + 1)}>+</button>
+                    <button onClick={() => {if (person + baby < 6) setPerson(person + 1)}}>+</button>
                 </div>
                 <div>
                     <p>영유아(36개월 미만)</p>
                     <button onClick={() => {if (baby > 0) setBaby(baby - 1)}}>-</button>
                     <span>{baby}</span>
-                    <button onClick={() => setBaby(baby + 1)}>+</button>
+                    <button onClick={() => {if (person + baby < 6) setBaby(baby + 1)}}>+</button>
                 </div>
-                {/*<div>*/}
-                {/*    <p>반려견</p>*/}
-                {/*    <button onClick={() => {if (dog > 0) setDog(dog - 1)}}>-</button>*/}
-                {/*    <span>{dog}</span>*/}
-                {/*    <button onClick={() => setDog(dog + 1)}>+</button>*/}
-                {/*</div>*/}
-                <br/>
                 <div>
-                    <p>추가침구</p>
-                    <button onClick={() => {if (bedding > 0) setBedding(bedding - 1)}}>-</button>
-                    <span>{bedding}</span>
-                    <button onClick={() => setBedding(bedding + 1)}>+</button>
+                    <p>반려견</p>
+                    <button onClick={() => {if (dog > 0) setDog(dog - 1)}}>-</button>
+                    <span>{dog}</span>
+                    <button onClick={() => setDog(dog + 1)}>+</button>
                 </div>
-                <div className='BeddingDesc'>(더블침대 2개가 준비되어 있으니<br/> 인원수를 고려하여 침구를 적절히 추가해주세요)</div>
             </section>
 
-            {
-                person + baby > 4 &&
+            <section>
+                <div className='Barbecue'>
+                    <h2>바베큐 선택</h2>
                     <div>
-                        <p>사랑방 이용 (1박 50,000원)</p>
-                        <div>
-                            <input type='radio' id='guestRoomY' onClick={() => setGuestRoom('Y')} checked={guestRoom === 'Y'}/>
-                            <label htmlFor='guestRoomY'><span/>예</label>
-                            <input type='radio' id='guestRoomN' onClick={() => setGuestRoom('N')} checked={guestRoom === 'N'}/>
-                            <label htmlFor='guestRoomN'><span/>아니오</label>
-                        </div>
+                        <input type='radio' id='barbecueY' onClick={() => setBarbecue('Y')} checked={barbecue === 'Y'}/>
+                        <label htmlFor='barbecueY'><span/>예</label>
+                        <input type='radio' id='barbecueN' onClick={() => setBarbecue('N')} checked={barbecue === 'N'}/>
+                        <label htmlFor='barbecueN'><span/>아니오</label>
                     </div>
-            }
-
-            <section className='Barbecue'>
-                <h2>바베큐 선택</h2>
-                <div>
-                    <input type='radio' id='barbecueY' onClick={() => setBarbecue('Y')} checked={barbecue === 'Y'}/>
-                    <label htmlFor='barbecueY'><span/>예</label>
-                    <input type='radio' id='barbecueN' onClick={() => setBarbecue('N')} checked={barbecue === 'N'}/>
-                    <label htmlFor='barbecueN'><span/>아니오</label>
                 </div>
+                <ul>
+                    <li>숯.토치.그릴.부탄가스.그릴망.집게를 제공합니다.</li>
+                    <li>셀프이용 시설입니다.</li>
+                </ul>
             </section>
 
             <section className='PriceOption'>
@@ -245,7 +256,6 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, reservedName, res
             <section>
                 <h2 style={{display: 'inline-block'}}>현금영수증 신청</h2>
                 <span> (부가세 10% 별도)</span>
-                <div style={{marginBottom: '10px'}}>온오프스테이 상호명으로 발급됩니다.</div>
                 <div>
                     <input type='radio' id='receiptY' onClick={() => setReceipt('Y')} checked={receipt === 'Y'}/>
                     <label htmlFor='receiptY'><span/>예</label>
@@ -255,12 +265,12 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, reservedName, res
                 {
                     receipt === 'Y' &&
                     <p>
-                      <span>신청할 전화번호 or 사업자번호:</span>
-                      <input type='text' size='14' pattern='[0-9]*' value={receiptNum}
+                        <span>신청할 전화번호 or 사업자번호:</span>
+                        <input type='text' size='14' pattern='[0-9]*' value={receiptNum}
                              onChange={(e) => {
                                  if (e.target.validity.valid) setReceiptNum(e.target.value)
                              }}
-                      />
+                        />
                     </p>
                 }
             </section>
@@ -271,16 +281,8 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, reservedName, res
                 <div className='PriceDetail'>
                     <p><b>숙박요금:</b> {basePrice.toLocaleString()}원 (총 {picked.length - 1}박)</p>
                     {
-                        howMany > 2 &&
-                        <p><b>인원초과:</b> 12,000원 x {howMany - 2}명 x {picked.length - 1}박</p>
-                    }
-                    {
-                        bedding > 0 &&
-                        <p><b>추가침구:</b> 10,000원 x {bedding}개</p>
-                    }
-                    {
-                        guestRoom === 'Y' &&
-                        <p><b>사랑방:</b> 50,000원 x {picked.length - 1}박</p>
+                        howMany > 4 &&
+                        <p><b>인원초과:</b> 15,000원 x {howMany - 4}명 x {picked.length - 1}박</p>
                     }
                     {
                         barbecue === 'Y' &&
@@ -299,7 +301,7 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, reservedName, res
 
             <section className='Deposit'>
                 <h2>입금하기</h2>
-                <div className='BankAccount'>카카오뱅크 3333058451192 남은비</div>
+                <div className='BankAccount'>우체국 01414202194793 남은진</div>
                 <p>
                     위 계좌로 <b>{price.toLocaleString()}원</b>을 입금해주세요.<br/>
                     3시간 내에 입금 해 주셔야 예약이 확정됩니다.
@@ -314,14 +316,12 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, reservedName, res
                            }}
                     />
                 </p>
+                <button className='ReservationBtn' onClick={() => checkBeforeSave()}>예약하기</button>
             </section>
 
-            <button className='ReservationBtn' onClick={() => checkBeforeSave()}>예약완료</button>
-
-
             <ReactModal
-                isOpen={showRevisitModal}
-                style={modalStyle}
+              isOpen={showRevisitModal}
+              style={modalStyle}
             >
                 <div className='ModalTitle'>재방문 할인</div>
                 <div className='ModalContent'>
@@ -336,4 +336,4 @@ const ForestReservation = ({picked, setPicked, setCurrentPage, reservedName, res
     );
 }
 
-export default ForestReservation;
+export default BlonReservation;
