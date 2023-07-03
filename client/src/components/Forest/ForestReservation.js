@@ -197,6 +197,13 @@ const ForestReservation = ({picked, reservedName, reservedPhone}) => {
                     <span>{dog}</span>
                     <button onClick={() => setDog(1)}>+</button>
                 </div>
+                <br/>
+                <div>
+                    <p>추가침구</p>
+                    <button onClick={() => {if (bedding > 0) setBedding(bedding - 1)}}>-</button>
+                    <span>{bedding}</span>
+                    <button onClick={() => setBedding(bedding + 1)}>+</button>
+                </div>
             </section>
 
             {
@@ -261,8 +268,12 @@ const ForestReservation = ({picked, reservedName, reservedPhone}) => {
                         <p><b>인원초과:</b> 20,000원 x {howMany - 2}명 x {picked.length - 1}박</p>
                     }
                     {
-                      guestRoom === 'Y' &&
-                      <p><b>사랑방:</b> 50,000원 x {picked.length - 1}박</p>
+                        bedding > 0 &&
+                        <p><b>추가침구:</b> 10,000원 x {bedding}개</p>
+                    }
+                    {
+                        guestRoom === 'Y' &&
+                        <p><b>사랑방:</b> 50,000원 x {picked.length - 1}박</p>
                     }
                     {
                         barbecue === 'Y' &&
