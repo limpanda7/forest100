@@ -75,7 +75,7 @@ router.post("/reservation/forest", (req, res) => {
     priceOption,
   ]);
   connection.query(
-    "INSERT INTO blon_reservation_new (type, checkin_date, checkout_date, name, phone, person, baby, dog, bedding, guest_room, barbecue, price, price_option) VALUES ?",
+    "INSERT INTO forest_reservation_new (type, checkin_date, checkout_date, name, phone, person, baby, dog, bedding, guest_room, barbecue, price, price_option) VALUES ?",
     [values],
     (err, data) => {
       res.send(data);
@@ -83,7 +83,7 @@ router.post("/reservation/forest", (req, res) => {
       // 2. 텔레그램 발송
       bot.sendMessage(
         "-679453093",
-        `블로뉴숲 신규 예약이 들어왔습니다.\n
+        `포레스트 신규 예약이 들어왔습니다.\n
 기간: ${picked}\n
 이름: ${name}\n
 전화번호: ${phone}\n
