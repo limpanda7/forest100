@@ -25,7 +25,7 @@ const App = () => {
     return (
         <BrowserRouter>
             <Switch>
-                <Route exact path='/qa' component={Forest} />
+                <Route exact path='/forest' component={Forest} />
                 <Route exact path='/on-off' component={OnOff} />
                 <Route exact path='/boulogne' component={Blon} />
                 <Route path='/' component={Main}/>

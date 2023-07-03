@@ -10,7 +10,7 @@ const __dirname = path.dirname(__filename);
 router.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "client/build", "index.html"));
 });
-router.get("/qa", (req, res) => {
+router.get("/forest", (req, res) => {
     res.sendFile(path.join(__dirname, "client/build", "index.html"));
 });
 router.get("/on-off", (req, res) => {
