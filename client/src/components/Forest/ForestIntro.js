@@ -125,7 +125,7 @@ const ForestIntro = () => {
                         <li>생수 1L, 웰컴 과일</li>
                     </ul>
 
-                    <p className='Ptitle'>Bedroom1</p>
+                    <p className='Ptitle'>Bedroom 1</p>
                     <ul>
                         <li>퀸사이즈 침대/침구</li>
                         <li>테이블/의자</li>
@@ -133,7 +133,7 @@ const ForestIntro = () => {
                         <li>행거</li>
                     </ul>
 
-                    <p className='Ptitle'>Bedroom2</p>
+                    <p className='Ptitle'>Bedroom 2</p>
                     <ul>
                         <li>더블 사이즈 침대/침구</li>
                         <li>화장대/의자</li>

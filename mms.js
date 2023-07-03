@@ -2,7 +2,7 @@ export const forestMMS = (picked, person, baby, dog, bedding, guestRoom, barbecu
     return '안녕하세요 포레스트 입니다 :)\n' +
         `입금하실 금액은 ${price.toLocaleString()}원 입니다.\n` +
         '3시간 내 입금 시 예약 확정됩니다.\n' +
-        '(입금계좌: 기업은행 01043993375 이신혜)\n' +
+        '(입금계좌: 카카오 3333126702790 이신혜)\n' +
         '\n' +
         '[예약정보]\n' +
         `기간: ${picked}\n` +

@@ -98,7 +98,7 @@ const BlonCalendar = ({ getReserved, picked, setPicked, setCurrentPage, reserved
     return (
         <div className='contents'>
             <section>
-                <div className="DescTitle">PRICE</div>
+                <div className="DescTitle">Price</div>
 
                 <table className='PriceTable'>
                     <tr>
@@ -141,7 +141,7 @@ const BlonCalendar = ({ getReserved, picked, setPicked, setCurrentPage, reserved
             </section>
 
             <section>
-                <div className="DescTitle">RESERVATION</div>
+                <div className="DescTitle">Reservation</div>
                 <p>
                     체크인 날짜와 체크아웃 날짜를 선택해주세요.
                     <br />

@@ -97,15 +97,15 @@ const OnOffIntro = () => {
                 {/*</ul>*/}
 
                 <section>
-                    <div className="DescTitle">ROOMS</div>
+                    <div className="DescTitle">Rooms</div>
 
-                    <p className='Ptitle'>BATHROOM</p>
+                    <p className='Ptitle'>Bathroom</p>
                     <ul>
                         <li>어메니티<br/>(샴푸/린스/바디워시/바디타올/치약)</li>
                         <li>수건</li>
                     </ul>
 
-                    <p className='Ptitle'>KITCHEN</p>
+                    <p className='Ptitle'>Kitchen</p>
                     <ul>
                         <li>냉장고/인덕션 2구/전자레인지</li>
                         <li>식기/컵/냄비/프라이팬/수저/가위/칼/집게</li>
@@ -113,13 +113,13 @@ const OnOffIntro = () => {
                         <li>드립백/전기포트</li>
                     </ul>
 
-                    <p className='Ptitle'>SECOND KITCHEN</p>
+                    <p className='Ptitle'>Second Kitchen</p>
                     <ul>
                         <li>발뮤다 토스트기</li>
                         <li>식기/컵/냄비/프라이팬/수저/가위/칼/집게</li>
                     </ul>
 
-                    <p className='Ptitle'>LIVINGROOM</p>
+                    <p className='Ptitle'>Living Room</p>
                     <ul>
                         <li>통유리창문</li>
                         <li>WI-FI/에어컨/4인식탁/2인사이드테이블</li>
@@ -127,28 +127,28 @@ const OnOffIntro = () => {
                         <span>(*별도의 TV는 비치되어 있지 않습니다.)</span>
                     </ul>
 
-                    <p className='Ptitle'>BEDROOM 1</p>
+                    <p className='Ptitle'>Bedroom 1</p>
                     <ul>
                         <li>통유리창문</li>
                         <li>퀸사이즈 침대/침구</li>
                         <li>전신거울/빗/고데기/드라이기</li>
                     </ul>
 
-                    <p className='Ptitle'>BEDROOM 2</p>
+                    <p className='Ptitle'>Bedroom 2</p>
                     <ul>
                         <li>퀸사이즈 침대/침구/에어컨</li>
                         <li>전신거울/빗/드라이기</li>
                         <li>원형테이블/의자 2개</li>
                     </ul>
 
-                    <p className='Ptitle'>BOOK STAY 1</p>
+                    <p className='Ptitle'>Book Stay 1</p>
                     <ul>
                         <li>1인 책상/의자</li>
                         <li>서적</li>
                         <li>유아용 매트</li>
                     </ul>
 
-                    <p className='Ptitle'>BOOK STAY 2</p>
+                    <p className='Ptitle'>Book Stay 2</p>
                     <ul>
                         <li>2인 테이블</li>
                         <li>LP 턴테이블</li>
@@ -156,7 +156,7 @@ const OnOffIntro = () => {
                         <li>소파베드</li>
                     </ul>
 
-                    <p className='Ptitle'>GARDEN & ROOFTOP</p>
+                    <p className='Ptitle'>Garden & Rooftop</p>
                     <ul>
                         <li>4인 테이블 및 의자 / 야외조명</li>
                         <li>바베큐존 (바베큐 신청 시 화로,토치,집게,숯 제공 / 이용요금 2만원)</li>
@@ -165,7 +165,7 @@ const OnOffIntro = () => {
                 </section>
 
                 <section>
-                    <div className="DescTitle">LOCATION</div>
+                    <div className="DescTitle">Location</div>
 
                     <ul>
                         <li>도로명 주소: 강원도 동해시 무릉1길 9-2</li>
@@ -239,7 +239,7 @@ const OnOffIntro = () => {
                 </section>
 
                 <section>
-                    <div className="DescTitle">CONTACT</div>
+                    <div className="DescTitle">Contact</div>
                     <ul>
                         <li>카카오톡 ID: skfk1600</li>
                         <li>인스타그램 DM: on.offstay</li>

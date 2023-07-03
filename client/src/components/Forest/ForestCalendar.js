@@ -120,7 +120,7 @@ const ForestCalendar = ({ getReserved, picked, setPicked, setCurrentPage, reserv
                 <ul>
                     <li>2인 초과 시 1인당: 1박 20,000원</li>
                     <li>바베큐 이용요금: 20,000원</li>
-                    <li>입금계좌: 기업은행 01043993375 이신혜</li>
+                    <li>입금계좌: 카카오 3333126702790 이신혜</li>
                     <li><a onClick={toggleRefund}>환불 규정 보기</a></li>
                 </ul>
 
@@ -140,7 +140,7 @@ const ForestCalendar = ({ getReserved, picked, setPicked, setCurrentPage, reserv
             </section>
 
             <section>
-                <div className="DescTitle">RESERVATION</div>
+                <div className="DescTitle">Reservation</div>
                 <p>
                     체크인 날짜와 체크아웃 날짜를 선택해주세요.
                     <br />

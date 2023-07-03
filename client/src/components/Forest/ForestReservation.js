@@ -277,7 +277,7 @@ const ForestReservation = ({picked, reservedName, reservedPhone}) => {
 
             <section className='Deposit'>
                 <h2>입금하기</h2>
-                <div className='BankAccount'>기업은행 01043993375 이신혜</div>
+                <div className='BankAccount'>카카오 3333126702790 이신혜</div>
                 <p>
                     위 계좌로 <b>{price.toLocaleString()}원</b>을 입금해주세요.<br/>
                     3시간 내에 입금 해 주셔야 예약이 확정됩니다.

@@ -152,7 +152,7 @@ const OnOffCalendar = ({
       </section>
 
       <section>
-        <div className="DescTitle">RESERVATION</div>
+        <div className="DescTitle">Reservation</div>
         <p>
           체크인 날짜와 체크아웃 날짜를 선택해주세요.
           <br />
