@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import { Helmet } from "react-helmet";
 import "react-calendar/dist/Calendar.css";
@@ -15,6 +15,11 @@ const OnOff = () => {
   const [reservedName, setReservedName] = useState([]);
   const [reservedPhone, setReservedPhone] = useState([]);
   const [picked, setPicked] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    getReserved();
+  }, []);
 
   const getReserved = async () => {
     const pageReserved = await axios.get("/api/reservation/on_off");
@@ -62,6 +67,7 @@ const OnOff = () => {
     setReserved(tempReserved);
     setReservedName(tempReservedName);
     setReservedPhone(tempReservedPhone);
+    setIsLoading(false);
   };
 
   const goToHome = () => {
@@ -119,7 +125,7 @@ const OnOff = () => {
           picked={picked}
           setPicked={setPicked}
           setCurrentPage={setCurrentPage}
-          getReserved={getReserved}
+          isLoading={isLoading}
           reserved={reserved}
         />
       )}
@@ -128,7 +134,6 @@ const OnOff = () => {
           picked={picked}
           setPicked={setPicked}
           setCurrentPage={setCurrentPage}
-          getReserved={getReserved}
           reservedName={reservedName}
           reservedPhone={reservedPhone}
         />

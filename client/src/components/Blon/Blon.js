@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import {Helmet} from "react-helmet";
 import 'react-calendar/dist/Calendar.css';
@@ -15,54 +15,60 @@ const Blon = () => {
     const [reservedName, setReservedName] = useState([]);
     const [reservedPhone, setReservedPhone] = useState([]);
     const [picked, setPicked] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
-  const getReserved = async () => {
-    const pageReserved = await axios.get("/api/reservation/blon");
-    const airbnbReserved = await axios.get("/api/ical/blon");
+    useEffect(() => {
+      getReserved();
+    }, []);
 
-    let tempReserved = [];
-    let tempReservedName = [];
-    let tempReservedPhone = [];
-    for (const element of pageReserved.data) {
-      tempReserved.push({
-        checkin_date: new Date(
-          new Date(element.checkin_date).toISOString().slice(0, -1)
-        ).toString(),
-        checkout_date: new Date(
-          new Date(element.checkout_date).toISOString().slice(0, -1)
-        ).toString(),
-      });
+    const getReserved = async () => {
+      const pageReserved = await axios.get("/api/reservation/blon");
+      const airbnbReserved = await axios.get("/api/ical/blon");
 
-      if (!tempReservedName.includes(element.name)) {
-        tempReservedName.push(element.name);
+      let tempReserved = [];
+      let tempReservedName = [];
+      let tempReservedPhone = [];
+      for (const element of pageReserved.data) {
+        tempReserved.push({
+          checkin_date: new Date(
+            new Date(element.checkin_date).toISOString().slice(0, -1)
+          ).toString(),
+          checkout_date: new Date(
+            new Date(element.checkout_date).toISOString().slice(0, -1)
+          ).toString(),
+        });
+
+        if (!tempReservedName.includes(element.name)) {
+          tempReservedName.push(element.name);
+        }
+
+        if (!tempReservedPhone.includes(element.phone)) {
+          tempReservedPhone.push(element.phone);
+        }
       }
+      for (const element of airbnbReserved.data) {
+        tempReserved.push({
+          checkin_date: new Date(
+            new Date(element.start_dt).toISOString().slice(0, -1)
+          ).toString(),
+          checkout_date: new Date(
+            new Date(element.end_dt).toISOString().slice(0, -1)
+          ).toString(),
+        });
 
-      if (!tempReservedPhone.includes(element.phone)) {
-        tempReservedPhone.push(element.phone);
-      }
-    }
-    for (const element of airbnbReserved.data) {
-      tempReserved.push({
-        checkin_date: new Date(
-          new Date(element.start_dt).toISOString().slice(0, -1)
-        ).toString(),
-        checkout_date: new Date(
-          new Date(element.end_dt).toISOString().slice(0, -1)
-        ).toString(),
-      });
+        if (!tempReservedName.includes(element.name)) {
+          tempReservedName.push(element.name);
+        }
 
-      if (!tempReservedName.includes(element.name)) {
-        tempReservedName.push(element.name);
+        if (!tempReservedPhone.includes(element.phone)) {
+          tempReservedPhone.push(element.phone);
+        }
       }
-
-      if (!tempReservedPhone.includes(element.phone)) {
-        tempReservedPhone.push(element.phone);
-      }
-    }
-    setReserved(tempReserved);
-    setReservedName(tempReservedName);
-    setReservedPhone(tempReservedPhone);
-  };
+      setReserved(tempReserved);
+      setReservedName(tempReservedName);
+      setReservedPhone(tempReservedPhone);
+      setIsLoading(false);
+    };
 
     const goToHome = () => {
         setCurrentPage('calendar');
@@ -122,7 +128,7 @@ const Blon = () => {
                     picked={picked}
                     setPicked={setPicked}
                     setCurrentPage={setCurrentPage}
-                    getReserved={getReserved}
+                    isLoading={isLoading}
                     reserved={reserved}
                 />
             }
@@ -132,7 +138,6 @@ const Blon = () => {
                     picked={picked}
                     setPicked={setPicked}
                     setCurrentPage={setCurrentPage}
-                    getReserved={getReserved}
                     reservedName={reservedName}
                     reservedPhone={reservedPhone}
                 />
