@@ -95,7 +95,7 @@ const ForestIntro = () => {
                     <div className="DescTitle">Stay</div>
                     <ul>
                         <li>
-                            기준인원: 기준 4인, 최대 6인 + 반려동물 1마리<br/>
+                            기준인원: 기준 2인, 최대 6인 + 반려동물 1마리<br/>
                             (최대 6인인 경우 사랑방 예약 부탁드립니다)
                         </li>
                         <li>
