@@ -18,6 +18,8 @@ const ForestReservation = ({picked, reservedName, reservedPhone}) => {
     const [phone, setPhone] = useState('');
     const [showRefund, setShowRefund] = useState(false);
 
+    let isRequested = false;
+
     useEffect(() => {
         calcPrice();
     }, [])
@@ -44,13 +46,17 @@ const ForestReservation = ({picked, reservedName, reservedPhone}) => {
     }
 
     const saveReservation = () => {
+        if (isRequested) return;
+
         try {
+            isRequested = true;
             axios.post('/api/reservation/forest', {picked, name, phone, person, baby, dog, bedding, guestRoom, barbecue, price, priceOption})
               .then(() => {
                   alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${price.toLocaleString()}원입니다.`);
                   window.location.href = '/';
               })
         } catch (e) {
+            isRequested = false;
             alert('오류가 발생했습니다. 관리자에게 문의해주세요.');
             console.log('error: /api/reservation/forest');
             console.log({picked, name, phone, person, baby, dog, bedding, guestRoom, barbecue, price, priceOption});
