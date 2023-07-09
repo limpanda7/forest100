@@ -2,7 +2,6 @@
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import mysql from "mysql";
 import schedule from 'node-schedule';
 import {updateIcal} from "./updateIcal.js";
 
@@ -29,16 +28,6 @@ app.use('/api', api);
 const port = process.env.PORT || 12321;
 app.listen(port);
 console.log(`server running at http ${port}`);
-
-// 데이터베이스 연결
-const connection = mysql.createConnection({
-    host: 'bmlx3df4ma7r1yh4.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
-    user: 'u8chske93qphbtar',
-    password: 'u74cik86q65ig2m6',
-    database: 'g4qbaxkdt4mtekys',
-    timezone: 'utc'
-})
-connection.connect();
 
 // 1분마다 ical 적재
 if (process.env.NODE_ENV === "production") {

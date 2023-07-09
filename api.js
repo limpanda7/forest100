@@ -3,21 +3,22 @@ import mysql from "mysql";
 import TelegramBot from "node-telegram-bot-api";
 import axios from "axios";
 import { forestMMS, onOffMMS, blonMMS } from "./mms.js";
+import 'dotenv/config';
 
 const router = express.Router();
 
 // 데이터베이스 연결
 const connection = mysql.createConnection({
-  host: "bmlx3df4ma7r1yh4.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
-  user: "u8chske93qphbtar",
-  password: "u74cik86q65ig2m6",
-  database: "g4qbaxkdt4mtekys",
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
   timezone: "utc",
 });
 connection.connect();
 
 // 텔레그램 봇
-const token = "1857829748:AAEQqFmUc4AWxad1-t1KRjQaXoXORjV91I4";
+const token = process.env.TELEGRAM_TOKEN;
 const bot = new TelegramBot(token);
 
 /*
@@ -82,7 +83,7 @@ router.post("/reservation/forest", (req, res) => {
 
       // 2. 텔레그램 발송
       bot.sendMessage(
-        "-679453093",
+        process.env.TELEGRAM_CHAT_ID_FOREST,
         `포레스트 신규 예약이 들어왔습니다.\n
 기간: ${picked}\n
 이름: ${name}\n
@@ -104,21 +105,21 @@ router.post("/reservation/forest", (req, res) => {
       {
         title: "포레스트 안내문자",
         body: forestMMS(picked, person, baby, dog, bedding, guestRoom, barbecue, price),
-        sendNo: "0264991922",
+        sendNo: process.env.MMS_SEND_NO,
         recipientList: [{ recipientNo: phone }],
       },
       {
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
-          "X-Secret-Key": "MZ4nmv2P",
+          "X-Secret-Key": process.env.MMS_SECRET_KEY,
         },
       }
     )
     .then((axiosRes) => {
       if (axiosRes.data.header.resultMessage === "SUCCESS") {
-        bot.sendMessage("-679453093", "문자 발송에 성공하였습니다.");
+        bot.sendMessage(process.env.TELEGRAM_CHAT_ID_FOREST, "문자 발송에 성공하였습니다.");
       } else {
-        bot.sendMessage("-679453093", "문자 발송에 실패하였습니다.");
+        bot.sendMessage(process.env.TELEGRAM_CHAT_ID_FOREST, "문자 발송에 실패하였습니다.");
       }
     });
 });
@@ -156,7 +157,7 @@ router.post("/reservation/on_off", (req, res) => {
 
       // 2. 텔레그램 발송
       bot.sendMessage(
-        "-558393640",
+        process.env.TELEGRAM_CHAT_ID_ON_OFF,
         `온오프스테이 신규 예약이 들어왔습니다.\n
 기간: ${picked}\n
 이름: ${name}\n
@@ -179,21 +180,21 @@ ${revisit === "Y" ? "재방문입니다\n" : ""}`
       {
         title: "온오프스테이 안내문자",
         body: onOffMMS(picked, person, baby, dog, barbecue, price),
-        sendNo: "0264991922",
+        sendNo: process.env.MMS_SEND_NO,
         recipientList: [{ recipientNo: phone }],
       },
       {
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
-          "X-Secret-Key": "MZ4nmv2P",
+          "X-Secret-Key": process.env.MMS_SECRET_KEY,
         },
       }
     )
     .then((axiosRes) => {
       if (axiosRes.data.header.resultMessage === "SUCCESS") {
-        bot.sendMessage("-558393640", "문자 발송에 성공하였습니다.");
+        bot.sendMessage(process.env.TELEGRAM_CHAT_ID_ON_OFF, "문자 발송에 성공하였습니다.");
       } else {
-        bot.sendMessage("-558393640", "문자 발송에 실패하였습니다.");
+        bot.sendMessage(process.env.TELEGRAM_CHAT_ID_ON_OFF, "문자 발송에 실패하였습니다.");
       }
     });
 });
@@ -245,7 +246,7 @@ router.post("/reservation/blon", (req, res) => {
 
       // 2. 텔레그램 발송
       bot.sendMessage(
-        "-986629130",
+        process.env.TELEGRAM_CHAT_ID_BLON,
         `블로뉴숲 신규 예약이 들어왔습니다.\n
 기간: ${picked}\n
 이름: ${name}\n
@@ -268,21 +269,21 @@ ${revisit === "Y" ? "재방문입니다\n" : ""}`
       {
         title: "블로뉴숲 안내문자",
         body: blonMMS(picked, person, baby, dog, barbecue, price),
-        sendNo: "0264991922",
+        sendNo: process.env.MMS_SEND_NO,
         recipientList: [{ recipientNo: phone }],
       },
       {
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
-          "X-Secret-Key": "MZ4nmv2P",
+          "X-Secret-Key": process.env.MMS_SECRET_KEY,
         },
       }
     )
     .then((axiosRes) => {
       if (axiosRes.data.header.resultMessage === "SUCCESS") {
-        bot.sendMessage("-986629130", "문자 발송에 성공하였습니다.");
+        bot.sendMessage(process.env.TELEGRAM_CHAT_ID_BLON, "문자 발송에 성공하였습니다.");
       } else {
-        bot.sendMessage("-986629130", "문자 발송에 실패하였습니다.");
+        bot.sendMessage(process.env.TELEGRAM_CHAT_ID_BLON, "문자 발송에 실패하였습니다.");
       }
     });
 });

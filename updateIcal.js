@@ -1,13 +1,14 @@
 import ical from "node-ical";
 import moment from "moment";
 import mysql from "mysql";
+import 'dotenv/config';
 
 // 데이터베이스 연결
 const connection = mysql.createConnection({
-  host: 'bmlx3df4ma7r1yh4.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
-  user: 'u8chske93qphbtar',
-  password: 'u74cik86q65ig2m6',
-  database: 'g4qbaxkdt4mtekys',
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
   timezone: 'utc'
 })
 connection.connect();
