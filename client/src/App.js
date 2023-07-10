@@ -14,12 +14,14 @@ import './styles/reservation.scss';
 import './styles/review.scss';
 import './styles/slider.scss';
 import './styles/tabs.scss';
+import './styles/table.scss';
 
 // components
 import Main from './components/Main/Main';
 import Forest from './components/Forest/Forest';
 import OnOff from './components/OnOff/OnOff';
 import Blon from "./components/Blon/Blon";
+import Admin from "./components/Admin/Admin";
 
 const App = () => {
     return (
@@ -28,6 +30,7 @@ const App = () => {
                 <Route exact path='/forest' component={Forest} />
                 <Route exact path='/on-off' component={OnOff} />
                 <Route exact path='/boulogne' component={Blon} />
+                <Route exact path='/admin' component={Admin} />
                 <Route path='/' component={Main}/>
             </Switch>
         </BrowserRouter>

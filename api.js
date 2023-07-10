@@ -33,11 +33,30 @@ router.get("/reservation/:target", (req, res) => {
     }
   );
 });
+router.get("/fullReservation/:target", (req, res) => {
+  const {target} = req.params;
+  connection.query(
+    `SELECT * FROM ${target}_reservation_new where checkout_date >= NOW() order by checkin_date`,
+    (err, data) => {
+      res.send(data);
+    }
+  );
+});
 router.get("/ical/:target", (req, res) => {
   const {target} = req.params;
   connection.query(`SELECT * from ${target}_ical`, (err, data) => {
     res.send(data);
   });
+});
+router.delete("/reservation/:target/:id", (req, res) => {
+  const {target, id} = req.params;
+  connection.query(
+    `DELETE FROM ${target}_reservation_new WHERE id = ?`,
+    id,
+    (err, data) => {
+      res.send(data);
+    }
+  );
 });
 
 /*
