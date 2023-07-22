@@ -16,6 +16,7 @@ import img13 from "../../images/OnOff/13.jpg";
 import img14 from "../../images/OnOff/14.jpg";
 import img15 from "../../images/OnOff/15.jpg";
 import img16 from "../../images/OnOff/16.jpg";
+import img17 from "../../images/OnOff/17.jpg";
 
 const OnOffIntro = () => {
 
@@ -72,6 +73,7 @@ const OnOffIntro = () => {
                     <div><img src={img14} alt={''}/></div>
                     <div><img src={img15} alt={''}/></div>
                     <div><img src={img16} alt={''}/></div>
+                    <div><img src={img17} alt={''}/></div>
                 </Slider>
             </div>
 
@@ -168,8 +170,9 @@ const OnOffIntro = () => {
                     <div className="DescTitle">Location</div>
 
                     <ul>
-                        <li>도로명 주소: 강원도 동해시 무릉1길 9-2</li>
+                        <li>주소: 강원도 동해시 무릉1길 9-2</li>
                         <li>주차: 무릉복지회관 측면 공용주차장</li>
+                        <li>숙소 앞에 전기차 충전소가 있습니다(DC콤보).</li>
                     </ul>
 
                     <div id="daumRoughmapContainer1688303908865"

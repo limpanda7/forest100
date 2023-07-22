@@ -12,10 +12,10 @@ const OnOffReview = () => {
     return (
         <div className='contents review'>
             <div className='BlogReview'>
-                <a href='https://m.blog.naver.com/72682005/222974604817' target='_blank'>
+                <a href='https://m.blog.naver.com/monglebooth/222666626272' target='_blank'>
                     <button>
                         BEST 블로그 찐후기 CLICK<br/>
-                        <span>https://m.blog.naver.com/72682005/222974604817</span>
+                        <span>https://m.blog.naver.com/monglebooth/222666626272</span>
                     </button>
                 </a>
 
