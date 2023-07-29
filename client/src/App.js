@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 
 // styles
 import './styles/normalize.scss';
@@ -25,15 +25,13 @@ import Admin from "./components/Admin/Admin";
 
 const App = () => {
     return (
-        <BrowserRouter>
-            <Switch>
-                <Route exact path='/forest' component={Forest} />
-                <Route exact path='/on-off' component={OnOff} />
-                <Route exact path='/boulogne' component={Blon} />
-                <Route exact path='/admin' component={Admin} />
-                <Route path='/' component={Main}/>
-            </Switch>
-        </BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Main />} />
+          <Route path='forest' element={<Forest />} />
+          <Route path='on-off' element={<OnOff />} />
+          <Route path='boulogne' element={<Blon />} />
+          <Route path='admin' element={<Admin />} />
+        </Routes>
     );
 }
 
