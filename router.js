@@ -7,20 +7,14 @@ const router = express.Router();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-router.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "client/build", "index.html"));
-});
-router.get("/forest", (req, res) => {
-    res.sendFile(path.join(__dirname, "client/build", "index.html"));
-});
-router.get("/on-off", (req, res) => {
-    res.sendFile(path.join(__dirname, "client/build", "index.html"));
-});
-router.get("/boulogne", (req, res) => {
-    res.sendFile(path.join(__dirname, "client/build", "index.html"));
-});
-router.get("/admin", (req, res) => {
-    res.sendFile(path.join(__dirname, "client/build", "index.html"));
+const apiRegex = /^\/api/;
+
+router.use((req, res, next) => {
+    if (apiRegex.test(req.path)) {
+        next();
+    } else {
+        res.sendFile(path.join(__dirname, "client/build", "index.html"));
+    }
 });
 
 export default router;
