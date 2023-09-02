@@ -27,7 +27,7 @@ const App = () => {
     return (
         <Routes>
           <Route path='/' element={<Main />} />
-          <Route path='forest' element={<Forest />} />
+          {/*<Route path='forest' element={<Forest />} />*/}
           <Route path='on-off' element={<OnOff />} />
           <Route path='boulogne' element={<Blon />} />
           <Route path='admin' element={<Admin />} />
