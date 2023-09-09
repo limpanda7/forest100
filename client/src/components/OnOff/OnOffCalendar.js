@@ -187,7 +187,7 @@ const OnOffCalendar = ({
               className="calendar"
               calendarType="US"
               minDate={selected ? new Date(selected) : new Date()}
-              maxDate={maxDate}
+              maxDate={new Date('2023-10-31')}
               tileDisabled={({ date }) => {
                 if (
                   reserved.find(({ checkin_date, checkout_date }) => {
