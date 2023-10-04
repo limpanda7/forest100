@@ -28,7 +28,7 @@ export const BLON_PRICE = {
   NORMAL: {
     WEEKDAY: 190000,
     WEEKEND: 250000,
-    HOLIDAY: 250000,
+    HOLIDAY: 300000,
   },
   SUMMER: {
     WEEKDAY: 300000,

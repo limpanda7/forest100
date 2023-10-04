@@ -149,6 +149,7 @@ const OnOffCalendar = ({
       <section>
         <div className="DescTitle">Reservation</div>
         <p>
+          <b>온오프스테이는 10월까지 운영합니다.</b><br/>
           체크인 날짜와 체크아웃 날짜를 선택해주세요.
           <br />
           (체크인 3시 / 체크아웃 11시)
