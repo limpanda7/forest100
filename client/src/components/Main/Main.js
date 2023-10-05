@@ -23,7 +23,7 @@ const Main = () => {
             <Link to='/on-off'>
                 <FontAwesomeIcon icon={faToggleOn} size="3x" className={'Icon'}/>
                 <div className={'Button'}>
-                    <span>동해 최고의 감성 숙소</span>
+                    <span>휴식의 스위치를 켜는 곳 (동해)</span>
                     <br/>
                     " ON OFF 스테이 "
                 </div>
@@ -32,7 +32,7 @@ const Main = () => {
             <Link to='/boulogne'>
                 <FontAwesomeIcon icon={faTree} size="3x" className={'Icon'}/>
                 <div className={'Button'}>
-                    <span>숲과 호수 사이 북스테이</span>
+                    <span>숲과 호수 사이 북스테이 (포천)</span>
                     <br/>
                     " 블로뉴숲 "
                 </div>
