@@ -18,21 +18,17 @@ import './styles/table.scss';
 
 // components
 import Main from './components/Main/Main';
-import Forest from './components/Forest/Forest';
-import OnOff from './components/OnOff/OnOff';
 import Blon from "./components/Blon/Blon";
 import Admin from "./components/Admin/Admin";
 
 const App = () => {
-    return (
-        <Routes>
-          <Route path='/' element={<Main />} />
-          {/*<Route path='forest' element={<Forest />} />*/}
-          <Route path='on-off' element={<OnOff />} />
-          <Route path='boulogne' element={<Blon />} />
-          <Route path='admin' element={<Admin />} />
-        </Routes>
-    );
+  return (
+    <Routes>
+      <Route path='/' element={<Main/>}/>
+      <Route path='boulogne' element={<Blon/>}/>
+      <Route path='admin' element={<Admin/>}/>
+    </Routes>
+  );
 }
 
 export default App;

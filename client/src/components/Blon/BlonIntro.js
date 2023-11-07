@@ -15,6 +15,7 @@ import img12 from "../../images/Blon/12.jpg";
 import img13 from "../../images/Blon/13.jpg";
 import img14 from "../../images/Blon/14.jpg";
 import img15 from "../../images/Blon/15.jpg";
+import {BLON_PRICE} from "../../constants";
 
 const BlonIntro = () => {
 
@@ -119,7 +120,7 @@ const BlonIntro = () => {
                     <p className='Ptitle'>Garden & Terrace</p>
                     <ul>
                         <li>6인 테이블 및 의자 / 야외조명</li>
-                        <li>바베큐존 (바베큐신청시 화로,토치,집게,숯 제공 / 이용요금 2만원)</li>
+                        <li>바베큐존 (바베큐신청시 화로,토치,집게,숯 제공 / 이용요금 {BLON_PRICE.BARBECUE.toLocaleString()}원)</li>
                     </ul>
                 </section>
 

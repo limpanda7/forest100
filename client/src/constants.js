@@ -1,38 +1,24 @@
-export const FOREST_PRICE = {
-  NORMAL: {
-    WEEKDAY: 250000,
-    WEEKEND: 300000,
-    HOLIDAY: 350000,
-  },
-  SUMMER: {
-    WEEKDAY: 300000,
-    WEEKEND: 350000,
-    HOLIDAY: 350000,
-  }
-};
-
-export const ON_OFF_PRICE = {
-  NORMAL: {
-    WEEKDAY: 200000,
-    WEEKEND: 250000,
-    HOLIDAY: 300000,
-  },
-  SUMMER: {
-    WEEKDAY: 300000,
-    WEEKEND: 350000,
-    HOLIDAY: 350000,
-  }
-};
-
 export const BLON_PRICE = {
   NORMAL: {
-    WEEKDAY: 190000,
-    WEEKEND: 250000,
+    WEEKDAY: 150000,
+    FRIDAY: 200000,
+    SATURDAY: 250000,
     HOLIDAY: 300000,
   },
   SUMMER: {
     WEEKDAY: 300000,
-    WEEKEND: 300000,
+    FRIDAY: 300000,
+    SATURDAY: 300000,
     HOLIDAY: 300000,
-  }
+  },
+  OVER_FOUR: 15000,
+  DOG: 20000,
+  BARBECUE: 20000,
 };
+
+export const HOLIDAYS = [
+  '2023-12-24',
+  '2023-12-25',
+  '2023-12-31',
+  '2024-01-01',
+];

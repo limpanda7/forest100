@@ -97,25 +97,28 @@ const BlonCalendar = ({ isLoading, picked, setPicked, setCurrentPage, reserved }
 
                 <table className='PriceTable'>
                     <tr>
-                        <th>구분</th>
-                        <th>평일</th>
-                        <th>주말</th>
+                        <th>체크인</th>
+                        <th>요금</th>
                     </tr>
                     <tr>
-                        <td>성수기(7-8월)</td>
-                        <td>{BLON_PRICE.SUMMER.WEEKDAY.toLocaleString()}</td>
-                        <td>{BLON_PRICE.SUMMER.WEEKEND.toLocaleString()}</td>
-                    </tr>
-                    <tr>
-                        <td>비성수기</td>
+                        <td>일요일~목요일</td>
                         <td>{BLON_PRICE.NORMAL.WEEKDAY.toLocaleString()}</td>
-                        <td>{BLON_PRICE.NORMAL.WEEKEND.toLocaleString()}</td>
+                    </tr>
+                    <tr>
+                        <td>금요일</td>
+                        <td>{BLON_PRICE.NORMAL.FRIDAY.toLocaleString()}</td>
+                    </tr>
+                    <tr>
+                        <td>토요일</td>
+                        <td>{BLON_PRICE.NORMAL.SATURDAY.toLocaleString()}</td>
                     </tr>
                 </table>
 
                 <ul>
-                    <li>4인 초과 시 1인당: 1박 15,000원<br/>(추가침구 제공)</li>
-                    <li>바베큐 이용요금: 20,000원</li>
+                    <li>4인 초과 시 1인당: 1박 {BLON_PRICE.OVER_FOUR.toLocaleString()}원<br/>(추가침구 제공)</li>
+                    <li>36개월 미만의 영유아는 무료입니다.</li>
+                    <li>반려견 1마리당: 1박 {BLON_PRICE.DOG.toLocaleString()}원</li>
+                    <li>바베큐 이용요금: {BLON_PRICE.BARBECUE.toLocaleString()}원</li>
                     <li>입금계좌: 우체국 01414202194793 남은진</li>
                     <li><a onClick={toggleRefund}>환불 규정 보기</a></li>
                 </ul>

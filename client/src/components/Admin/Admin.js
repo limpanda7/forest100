@@ -14,14 +14,6 @@ const Admin = () => {
 
   useEffect(() => {
     switch (password) {
-      case '1234':
-        setTarget('forest');
-        setTargetKo('포레스트');
-        break;
-      case '0192':
-        setTarget('on_off');
-        setTargetKo('온오프스테이');
-        break;
       case '0125':
         setTarget('blon');
         setTargetKo('블로뉴숲')
