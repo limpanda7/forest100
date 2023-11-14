@@ -87,7 +87,8 @@ const BlonReservation = ({picked, reservedName, reservedPhone}) => {
     }
 
     const days = picked.length - 1;
-    let totalPrice = tempPrice + (BLON_PRICE.OVER_FOUR * (person - 4) + BLON_PRICE.DOG * dog) * days;
+    const personCnt = person >= 4 ? person : 4;
+    let totalPrice = tempPrice + (BLON_PRICE.OVER_FOUR * (personCnt - 4) + BLON_PRICE.DOG * dog) * days;
 
     if (barbecue === 'Y') {
       totalPrice += BLON_PRICE.BARBECUE;
@@ -124,31 +125,21 @@ const BlonReservation = ({picked, reservedName, reservedPhone}) => {
         <h2>인원수 선택 (최대 6인)</h2>
         <div>
           <p>인원</p>
-          <button onClick={() => {
-            if (person > 1) setPerson(person - 1)
-          }}>-</button>
+          <button onClick={() => {if (person > 1) setPerson(person - 1)}}>-</button>
           <span>{person}</span>
-          <button onClick={() => {
-            if (person < 6) setPerson(person + 1)
-          }}>+</button>
+          <button onClick={() => {if (person < 6) setPerson(person + 1)}}>+</button>
         </div>
         <div>
           <p>영유아(36개월 미만)</p>
-          <button onClick={() => {
-            if (baby > 1) setBaby(baby - 1)
-          }}>-</button>
+          <button onClick={() => {if (baby > 0) setBaby(baby - 1)}}>-</button>
           <span>{baby}</span>
           <button onClick={() => setBaby(baby + 1)}>+</button>
         </div>
         <div>
           <p>반려견</p>
-          <button onClick={() => {
-            if (dog > 1) setDog(dog - 1)
-          }}>-</button>
+          <button onClick={() => {if (dog > 0) setDog(dog - 1)}}>-</button>
           <span>{dog}</span>
-          <button onClick={() => {
-            if (dog < 2) setDog(dog + 1)
-          }}>+</button>
+          <button onClick={() => {if (dog < 2) setDog(dog + 1)}}>+</button>
         </div>
       </section>
 
@@ -173,7 +164,7 @@ const BlonReservation = ({picked, reservedName, reservedPhone}) => {
         <input type='radio' id='refundable' onClick={() => setPriceOption('refundable')}
                checked={priceOption === 'refundable'}/>
         <label htmlFor='refundable'><span/><b>환불가능 옵션</b></label>
-        <p>예약 취소 시 <a onClick={toggleRefund}>환불 규정</a>에 따라서 환불이 진행됩니다.</p>
+        <p>예약 취소 시 <span className='anchor' onClick={toggleRefund}>환불 규정</span>에 따라서 환불이 진행됩니다.</p>
 
         {
           showRefund &&

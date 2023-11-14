@@ -3,6 +3,7 @@ import {Route, Routes} from 'react-router-dom';
 
 // styles
 import './styles/normalize.scss';
+import './styles/reset.scss';
 import './styles/common.scss';
 import './styles/sections.scss';
 import './styles/buttons.scss';

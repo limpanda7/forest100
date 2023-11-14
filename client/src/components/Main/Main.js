@@ -12,23 +12,28 @@ const Main = () => {
         찾아오신 곳을 선택하세요.
       </div>
 
-      <Link to='/boulogne'>
-        <FontAwesomeIcon icon={faTree} size="3x" className={'Icon'}/>
-        <div className={'Button'}>
-          <span>숲과 호수 사이 북스테이</span>
-          <br/>
-          블로뉴숲
-        </div>
-      </Link>
+      <div className='menu-item'>
+        <Link to='/boulogne'>
+          <FontAwesomeIcon icon={faTree} size="3x" className={'Icon'}/>
+          <div className='menu-text'>
+            <span>숲과 호수 사이 북스테이</span>
+            <br/>
+            블로뉴숲 (포천)
+          </div>
+        </Link>
+      </div>
 
-      <Link to='/'>
+      <div
+        className='menu-item'
+        onClick={() => alert('신개념 공간대여 서비스가 준비중입니다. 서울 성북구에서 만나요!')}
+      >
         <FontAwesomeIcon icon={faToggleOn} size="3x" className={'Icon'}/>
-        <div className={'Button'}>
+        <div className='menu-text'>
           <span>휴식의 스위치를 켜는 곳</span>
           <br/>
-          ON OFF 스파 (준비중)
+          ON OFF 공간대여 (서울-준비중)
         </div>
-      </Link>
+      </div>
     </div>
   );
 }
