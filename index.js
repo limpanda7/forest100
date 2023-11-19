@@ -25,7 +25,7 @@ app.use('/', router);
 app.use('/api', api);
 
 // 기본 포트를 app 객체에 설정
-const port = process.env.PORT || 12321;
+const port = process.env.PORT || 5000;
 app.listen(port);
 console.log(`server running at http ${port}`);
 
