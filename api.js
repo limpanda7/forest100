@@ -125,7 +125,7 @@ ${revisit === "Y" ? "재방문입니다\n" : ""}`
   // 3. 안내문자 발송
   axios
     .post(
-      "https://api-sms.cloud.toast.com/sms/v3.0/appKeys/KRoL3w8pZsaHJkVL/sender/mms",
+      "https://api-sms.cloud.toast.com/sms/v3.0/appKeys/akvisMpAkj1Ar0Pl/sender/mms",
       {
         title: "블로뉴숲 안내문자",
         body: blonMMS(picked, person, baby, dog, barbecue, price),
