@@ -20,6 +20,10 @@ const Forest = () => {
     getReserved();
   }, []);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPage]);
+
   const getReserved = async () => {
     const pageReserved = await axios.get("/api/reservation/forest");
     const airbnbReserved = await axios.get("/api/ical/forest");
