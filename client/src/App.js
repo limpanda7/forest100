@@ -19,6 +19,7 @@ import './styles/table.scss';
 
 // components
 import Main from './components/Main/Main';
+import Forest from './components/Forest/Forest';
 import Blon from "./components/Blon/Blon";
 import Admin from "./components/Admin/Admin";
 
@@ -26,6 +27,7 @@ const App = () => {
   return (
     <Routes>
       <Route path='/' element={<Main/>}/>
+      <Route path='forest' element={<Forest />} />
       <Route path='boulogne' element={<Blon/>}/>
       <Route path='admin' element={<Admin/>}/>
     </Routes>

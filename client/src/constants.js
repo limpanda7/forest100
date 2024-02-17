@@ -1,3 +1,19 @@
+export const FOREST_PRICE = {
+  NORMAL: {
+    WEEKDAY: 280000,
+    WEEKEND: 350000,
+    HOLIDAY: 350000,
+  },
+  SUMMER: {
+    WEEKDAY: 330000,
+    WEEKEND: 380000,
+    HOLIDAY: 380000,
+  },
+  OVER_TWO: 15000,
+  DOG: 20000,
+  BARBECUE: 20000,
+};
+
 export const BLON_PRICE = {
   NORMAL: {
     WEEKDAY: 150000,

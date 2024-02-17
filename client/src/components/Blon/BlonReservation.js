@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import {BLON_PRICE} from "../../constants";
-import {isFriday, isHoliday, isSaturday, isSummer, isWeekday} from "../../utils/date";
+import {isFriday, isHoliday, isSaturday, isWeekday} from "../../utils/date";
 
-const BlonReservation = ({picked, reservedName, reservedPhone}) => {
+const BlonReservation = ({picked}) => {
   const [person, setPerson] = useState(4);
   const [baby, setBaby] = useState(0);
   const [dog, setDog] = useState(0);
@@ -125,21 +125,36 @@ const BlonReservation = ({picked, reservedName, reservedPhone}) => {
         <h2>인원수 선택 (최대 6인)</h2>
         <div>
           <p>인원</p>
-          <button onClick={() => {if (person > 1) setPerson(person - 1)}}>-</button>
+          <button onClick={() => {
+            if (person > 1) setPerson(person - 1)
+          }}>-
+          </button>
           <span>{person}</span>
-          <button onClick={() => {if (person < 6) setPerson(person + 1)}}>+</button>
+          <button onClick={() => {
+            if (person < 6) setPerson(person + 1)
+          }}>+
+          </button>
         </div>
         <div>
           <p>영유아(36개월 미만)</p>
-          <button onClick={() => {if (baby > 0) setBaby(baby - 1)}}>-</button>
+          <button onClick={() => {
+            if (baby > 0) setBaby(baby - 1)
+          }}>-
+          </button>
           <span>{baby}</span>
           <button onClick={() => setBaby(baby + 1)}>+</button>
         </div>
         <div>
           <p>반려견</p>
-          <button onClick={() => {if (dog > 0) setDog(dog - 1)}}>-</button>
+          <button onClick={() => {
+            if (dog > 0) setDog(dog - 1)
+          }}>-
+          </button>
           <span>{dog}</span>
-          <button onClick={() => {if (dog < 2) setDog(dog + 1)}}>+</button>
+          <button onClick={() => {
+            if (dog < 2) setDog(dog + 1)
+          }}>+
+          </button>
         </div>
       </section>
 

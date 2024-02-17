@@ -65,7 +65,7 @@ const BlonIntro = () => {
                 <section>
                     <div className="DescTitle">Stay</div>
                     <ul>
-                        <li>기준인원: 기준 4인, 최대 6인 + 반려견 2마리</li>
+                        <li>기준인원 4인, 최대 6인 + 반려견 2마리</li>
                         <li>체크인 3시 / 체크아웃 11시</li>
                         <li>객실정보: 침실1(퀸사이즈), 침실2(퀸사이즈), 거실, 주방, 화장실, 마당, 테라스</li>
                     </ul>
