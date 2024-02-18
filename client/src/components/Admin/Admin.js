@@ -3,6 +3,7 @@ import axios from "axios";
 import moment from "moment";
 import './Admin.scss';
 import ReactModal from "react-modal";
+import {useNavigate} from "react-router-dom";
 
 const Admin = () => {
   const [password, setPassword] = useState('');
@@ -11,9 +12,14 @@ const Admin = () => {
   const [reserved, setReserved] = useState([]);
   const [isDeleteModal, setIsDeleteModal] = useState(false);
   const [id, setId] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     switch (password) {
+      case '1234':
+        setTarget('forest');
+        setTargetKo('포레스트');
+        break;
       case '0125':
         setTarget('blon');
         setTargetKo('블로뉴숲')
@@ -40,6 +46,16 @@ const Admin = () => {
     getFullReservation();
   }
 
+  const goBack = () => {
+    if (target) {
+      setPassword('');
+      setTarget(null);
+      setTargetKo(null);
+    } else {
+      navigate('/');
+    }
+  }
+
   const modalStyle = {
     content: {
       width: '80%',
@@ -56,9 +72,14 @@ const Admin = () => {
 
   return (
     <div className='Admin'>
+      <button onClick={goBack}>
+        뒤로
+      </button>
+      <br/>
+      <br/>
       <h2>관리자 페이지 {targetKo && `- ${targetKo}`}</h2>
       {
-        !['1234', '0192', '0125'].includes(password) ?
+        !['1234', '0125'].includes(password) ?
           <input
             placeholder='비밀번호'
             value={password}

@@ -185,10 +185,8 @@ const ForestCalendar = ({isLoading, picked, setPicked, setCurrentPage, reserved}
                     const checkinTimestamp = new Date(checkin_date).valueOf();
                     const checkoutTimestamp = new Date(checkout_date).valueOf();
                     return (
-                      (checkinTimestamp.valueOf() < date.valueOf() &&
-                        checkoutTimestamp.valueOf() > date.valueOf()) ||
-                      (checker[date.valueOf()]?.checkIn &&
-                        checker[date.valueOf()]?.checkOut)
+                      checkinTimestamp <= date.valueOf() &&
+                      checkoutTimestamp >= date.valueOf()
                     );
                   })
                 ) {
@@ -196,10 +194,11 @@ const ForestCalendar = ({isLoading, picked, setPicked, setCurrentPage, reserved}
                 }
                 if (
                   selected &&
-                  ((selected < date.valueOf() &&
-                      checker[date.valueOf()]?.checkOut) ||
-                    (selected > date.valueOf() && checker[date.valueOf()]?.checkIn))
+                  checker[selected]?.checkIn &&
+                  date.valueOf() > selected
                 ) {
+                  return true;
+                } else if (selected && checker[selected]?.checkOut && date.valueOf() < selected) {
                   return true;
                 } else if (!selected && checker[date.valueOf()]?.checkIn) {
                   return true;
@@ -238,12 +237,6 @@ const ForestCalendar = ({isLoading, picked, setPicked, setCurrentPage, reserved}
                 ) {
                   return "select-date";
                 }
-                if (
-                  !selected &&
-                  !checker[date.valueOf()]?.checkOut &&
-                  checker[date.valueOf()]?.checkIn
-                )
-                  return "checkout-only";
               }}
             />
         }
