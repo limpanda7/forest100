@@ -14,7 +14,7 @@ const Main = () => {
 
       <div className='menu-item'>
         <Link to='/forest'>
-          <FontAwesomeIcon icon={faLeaf} size="3x" cl가assName={'Icon'}/>
+          <FontAwesomeIcon icon={faLeaf} size="3x" className={'Icon'}/>
           <div className='menu-text'>
             <span>소녀시대가 방문한 숙소</span>
             <br/>
