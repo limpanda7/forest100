@@ -35,7 +35,7 @@ const Main = () => {
       </div>
 
       <div className='menu-item'>
-        <Link to='/'>
+        <Link to='https://www.airbnb.co.kr/rooms/1025333167977475414' target='_blank'>
           <FontAwesomeIcon icon={faHome} size="3x" className={'Icon'}/>
           <div className='menu-text'>
             <span>제트스파를 누릴 수 있는</span>
