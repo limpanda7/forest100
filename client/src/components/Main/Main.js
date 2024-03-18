@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import './Main.scss';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faHome, faTree} from '@fortawesome/free-solid-svg-icons'
+import {faHome, faLeaf, faTree} from '@fortawesome/free-solid-svg-icons'
 
 const Main = () => {
   return (
@@ -14,11 +14,11 @@ const Main = () => {
 
       <div className='menu-item'>
         <Link to='/forest'>
-          <FontAwesomeIcon icon={faHome} size="3x" className={'Icon'}/>
+          <FontAwesomeIcon icon={faLeaf} size="3x" className={'Icon'}/>
           <div className='menu-text'>
             <span>소녀시대가 방문한 숙소</span>
             <br/>
-            " 백년한옥별채 "
+            백년한옥별채 (동해)
           </div>
         </Link>
       </div>
@@ -30,6 +30,17 @@ const Main = () => {
             <span>숲과 호수 사이 북스테이</span>
             <br/>
             블로뉴숲 (포천)
+          </div>
+        </Link>
+      </div>
+
+      <div className='menu-item'>
+        <Link to='https://www.airbnb.co.kr/rooms/1025333167977475414' target='_blank'>
+          <FontAwesomeIcon icon={faHome} size="3x" className={'Icon'}/>
+          <div className='menu-text'>
+            <span>제트스파를 누릴 수 있는</span>
+            <br/>
+            봉구 스테이 (서울)
           </div>
         </Link>
       </div>
