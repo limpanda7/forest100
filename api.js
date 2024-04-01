@@ -241,7 +241,7 @@ router.post("/reservation/blon", (req, res) => {
     priceOption,
   ]);
   connection.query(
-    "INSERT INTO blon_reservation_new (checkin_date, checkout_date, name, phone, person, baby, dog, bedding, barbecue, price, price_option, receipt, receipt_num, revisit) VALUES ?",
+    "INSERT INTO blon_reservation_new (checkin_date, checkout_date, name, phone, person, baby, dog, bedding, barbecue, price, price_option) VALUES ?",
     [values],
     (err, data) => {
       res.send(data);
