@@ -12,8 +12,6 @@ const Forest = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState('intro');
   const [reserved, setReserved] = useState([]);
-  const [reservedName, setReservedName] = useState([]);
-  const [reservedPhone, setReservedPhone] = useState([]);
   const [picked, setPicked] = useState([]);
 
   useEffect(() => {
@@ -29,8 +27,6 @@ const Forest = () => {
     const airbnbReserved = await axios.get("/api/ical/forest");
 
     let tempReserved = [];
-    let tempReservedName = [];
-    let tempReservedPhone = [];
     for (const element of pageReserved.data) {
       tempReserved.push({
         checkin_date: new Date(
@@ -40,14 +36,6 @@ const Forest = () => {
           new Date(element.checkout_date).toISOString().slice(0, -1)
         ).toString(),
       });
-
-      if (!tempReservedName.includes(element.name)) {
-        tempReservedName.push(element.name);
-      }
-
-      if (!tempReservedPhone.includes(element.phone)) {
-        tempReservedPhone.push(element.phone);
-      }
     }
     for (const element of airbnbReserved.data) {
       tempReserved.push({
@@ -58,18 +46,8 @@ const Forest = () => {
           new Date(element.end_dt).toISOString().slice(0, -1)
         ).toString(),
       });
-
-      if (!tempReservedName.includes(element.name)) {
-        tempReservedName.push(element.name);
-      }
-
-      if (!tempReservedPhone.includes(element.phone)) {
-        tempReservedPhone.push(element.phone);
-      }
     }
     setReserved(tempReserved);
-    setReservedName(tempReservedName);
-    setReservedPhone(tempReservedPhone);
     setIsLoading(false);
   };
 
@@ -141,8 +119,6 @@ const Forest = () => {
           picked={picked}
           setPicked={setPicked}
           setCurrentPage={setCurrentPage}
-          reservedName={reservedName}
-          reservedPhone={reservedPhone}
         />
       }
     </div>

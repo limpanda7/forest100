@@ -2,7 +2,7 @@ import express from "express";
 import mysql from "mysql";
 import TelegramBot from "node-telegram-bot-api";
 import axios from "axios";
-import {blonMMS, forestMMS} from "./mms.js";
+import {forestMMS, onOffMMS, blonMMS} from "./mms.js";
 import 'dotenv/config';
 
 const router = express.Router();
@@ -79,7 +79,6 @@ router.post("/reservation/forest", (req, res) => {
   // 1. 예약내역 DB 추가
   let values = [];
   values.push([
-    "homepage",
     picked[0],
     picked[picked.length - 1],
     name,
@@ -93,7 +92,7 @@ router.post("/reservation/forest", (req, res) => {
     priceOption,
   ]);
   connection.query(
-    "INSERT INTO forest_reservation_new (type, checkin_date, checkout_date, name, phone, person, baby, dog, bedding, barbecue, price, price_option) VALUES ?",
+    "INSERT INTO forest_reservation_new (checkin_date, checkout_date, name, phone, person, baby, dog, bedding, barbecue, price, price_option) VALUES ?",
     [values],
     (err, data) => {
       res.send(data);
@@ -101,7 +100,7 @@ router.post("/reservation/forest", (req, res) => {
       // 2. 텔레그램 발송
       bot.sendMessage(
         process.env.TELEGRAM_CHAT_ID_FOREST,
-        `포레스트 신규 예약이 들어왔습니다.\n
+        `백년한옥별채 신규 예약이 들어왔습니다.\n
 기간: ${picked}\n
 이름: ${name}\n
 전화번호: ${phone}\n
@@ -117,7 +116,7 @@ router.post("/reservation/forest", (req, res) => {
   // 3. 안내문자 발송
   axios
     .post(
-      "https://api-sms.cloud.toast.com/sms/v3.0/appKeys/akvisMpAkj1Ar0Pl/sender/mms",
+      `https://api-sms.cloud.toast.com/sms/v3.0/appKeys/${process.env.MMS_APP_KEY}/sender/mms`,
       {
         title: "백년한옥별채 안내문자",
         body: forestMMS(picked, person, baby, dog, barbecue, price),
@@ -141,6 +140,75 @@ router.post("/reservation/forest", (req, res) => {
 });
 
 /*
+  온오프스테이 API
+ */
+router.post("/reservation/on_off", (req, res) => {
+  const {picked, name, phone, person, baby, dog, bedding, barbecue, price, priceOption} = req.body;
+
+  // 1. 예약내역 DB 추가
+  let values = [];
+  values.push([
+    picked[0],
+    picked[picked.length - 1],
+    name,
+    phone,
+    person,
+    baby,
+    dog,
+    bedding,
+    barbecue,
+    price,
+    priceOption,
+  ]);
+  connection.query(
+    "INSERT INTO on_off_reservation_new (checkin_date, checkout_date, name, phone, person, baby, dog, bedding, barbecue, price, price_option) VALUES ?",
+    [values],
+    (err, data) => {
+      res.send(data);
+
+      // 2. 텔레그램 발송
+      bot.sendMessage(
+        process.env.TELEGRAM_CHAT_ID_ON_OFF,
+        `온오프스테이 신규 예약이 들어왔습니다.\n
+기간: ${picked}\n
+이름: ${name}\n
+전화번호: ${phone}\n
+인원수: ${person}명, 영유아 ${baby}명, 반려견 ${dog}마리\n
+추가침구: ${bedding}개\n
+바베큐 이용여부: ${barbecue}\n
+이용금액: ${price.toLocaleString()}\n
+환불옵션: ${priceOption === "refundable" ? "환불가능" : "환불불가"}\n`
+      );
+    }
+  );
+
+  // 3. 안내문자 발송
+  axios
+    .post(
+      `https://api-sms.cloud.toast.com/sms/v3.0/appKeys/${process.env.MMS_APP_KEY}/sender/mms`,
+      {
+        title: "온오프스테이 안내문자",
+        body: onOffMMS(picked, person, baby, dog, barbecue, price),
+        sendNo: process.env.MMS_SEND_NO,
+        recipientList: [{ recipientNo: phone }],
+      },
+      {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "X-Secret-Key": process.env.MMS_SECRET_KEY,
+        },
+      }
+    )
+    .then((axiosRes) => {
+      if (axiosRes.data.header.resultMessage === "SUCCESS") {
+        bot.sendMessage(process.env.TELEGRAM_CHAT_ID_ON_OFF, "문자 발송에 성공하였습니다.");
+      } else {
+        bot.sendMessage(process.env.TELEGRAM_CHAT_ID_ON_OFF, "문자 발송에 실패하였습니다.");
+      }
+    });
+});
+
+/*
   블로뉴숲 API
  */
 router.post("/reservation/blon", (req, res) => {
@@ -155,15 +223,11 @@ router.post("/reservation/blon", (req, res) => {
     barbecue,
     price,
     priceOption,
-    receipt,
-    receiptNum,
-    revisit,
   } = req.body;
 
   // 1. 예약내역 DB 추가
   let values = [];
   values.push([
-    "homepage",
     picked[0],
     picked[picked.length - 1],
     name,
@@ -175,12 +239,9 @@ router.post("/reservation/blon", (req, res) => {
     barbecue,
     price,
     priceOption,
-    receipt,
-    receiptNum,
-    revisit,
   ]);
   connection.query(
-    "INSERT INTO blon_reservation_new (type, checkin_date, checkout_date, name, phone, person, baby, dog, bedding, barbecue, price, price_option, receipt, receipt_num, revisit) VALUES ?",
+    "INSERT INTO blon_reservation_new (checkin_date, checkout_date, name, phone, person, baby, dog, bedding, barbecue, price, price_option, receipt, receipt_num, revisit) VALUES ?",
     [values],
     (err, data) => {
       res.send(data);
@@ -196,9 +257,7 @@ router.post("/reservation/blon", (req, res) => {
 추가침구: ${bedding}개\n
 바베큐 이용여부: ${barbecue}\n
 이용금액: ${price.toLocaleString()}\n
-환불옵션: ${priceOption === "refundable" ? "환불가능" : "환불불가"}\n
-${receipt === "Y" ? `현금영수증 신청합니다 (신청번호: ${receiptNum})\n` : ""}
-${revisit === "Y" ? "재방문입니다\n" : ""}`
+환불옵션: ${priceOption === "refundable" ? "환불가능" : "환불불가"}\n`
       );
     }
   );
@@ -206,7 +265,7 @@ ${revisit === "Y" ? "재방문입니다\n" : ""}`
   // 3. 안내문자 발송
   axios
     .post(
-      "https://api-sms.cloud.toast.com/sms/v3.0/appKeys/akvisMpAkj1Ar0Pl/sender/mms",
+      `https://api-sms.cloud.toast.com/sms/v3.0/appKeys/${process.env.MMS_APP_KEY}/sender/mms`,
       {
         title: "블로뉴숲 안내문자",
         body: blonMMS(picked, person, baby, dog, barbecue, price),

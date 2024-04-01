@@ -1,8 +1,14 @@
-import React, {useState} from "react";
+import React, { useMemo, useState } from "react";
 import Calendar from "../Calendar/Calendar";
-import {FOREST_PRICE} from "../../constants";
+import { ON_OFF_PRICE } from "../../constants";
 
-const ForestCalendar = ({isLoading, picked, setPicked, setCurrentPage, reserved}) => {
+const OnOffCalendar = ({
+  isLoading,
+  picked,
+  setPicked,
+  setCurrentPage,
+  reserved,
+}) => {
   const [showRefund, setShowRefund] = useState(false);
 
   const moveToReservation = () => {
@@ -20,44 +26,45 @@ const ForestCalendar = ({isLoading, picked, setPicked, setCurrentPage, reserved}
   const toggleRefund = () => {
     if (showRefund) setShowRefund(false);
     else setShowRefund(true);
-  }
+  };
 
   return (
     <div className='contents'>
       <section>
-        <div className="DescTitle">Price</div>
+        <div className="DescTitle">PRICE</div>
 
-        <table className='PriceTable'>
+        <table className="PriceTable">
           <tr>
             <th>구분</th>
             <th>평일</th>
             <th>주말</th>
           </tr>
           <tr>
-            <td>일반</td>
-            <td>{FOREST_PRICE.NORMAL.WEEKDAY.toLocaleString()}</td>
-            <td>{FOREST_PRICE.NORMAL.WEEKEND.toLocaleString()}</td>
+            <td>성수기(7-8월)</td>
+            <td>{ON_OFF_PRICE.SUMMER.WEEKDAY.toLocaleString()}</td>
+            <td>{ON_OFF_PRICE.SUMMER.WEEKEND.toLocaleString()}</td>
           </tr>
           <tr>
-            <td>성수기</td>
-            <td>{FOREST_PRICE.SUMMER.WEEKDAY.toLocaleString()}</td>
-            <td>{FOREST_PRICE.SUMMER.WEEKEND.toLocaleString()}</td>
+            <td>비성수기</td>
+            <td>{ON_OFF_PRICE.NORMAL.WEEKDAY.toLocaleString()}</td>
+            <td>{ON_OFF_PRICE.NORMAL.WEEKEND.toLocaleString()}</td>
           </tr>
         </table>
 
         <ul>
-          <li>2인 초과 시 1인당: 1박 {FOREST_PRICE.OVER_TWO.toLocaleString()}원<br/>(추가침구 제공)</li>
-          <li>36개월 미만의 영유아는 무료입니다.</li>
-          <li>반려견 1마리당: 1박 {FOREST_PRICE.DOG.toLocaleString()}원</li>
-          <li>바베큐 이용요금: {FOREST_PRICE.BARBECUE.toLocaleString()}원</li>
-          <li>입금계좌: 카카오 3333058451192 남은비</li>
+          <li>
+            4인 초과 시 1인당: 1박 {ON_OFF_PRICE.OVER_TWO.toLocaleString()}원
+            <br/>
+            (추가침구 제공)
+          </li>
+          <li>바베큐 이용요금: 20,000원</li>
+          <li>입금계좌: 카카오 3333053810252 채민기</li>
           <li><span className='anchor' onClick={toggleRefund}>환불 규정 보기</span></li>
         </ul>
 
-        {
-          showRefund &&
-          <ul className='List Refund'>
-            <li>체크인 10일 전까지: 총 결제금액의 100% 환불</li>
+        {showRefund && (
+          <ul className="List Refund">
+          <li>체크인 10일 전까지: 총 결제금액의 100% 환불</li>
             <li>체크인 9일 전: 총 결제금액의 90% 환불</li>
             <li>체크인 8일 전: 총 결제금액의 80% 환불</li>
             <li>체크인 7일 전: 총 결제금액의 70% 환불</li>
@@ -66,7 +73,7 @@ const ForestCalendar = ({isLoading, picked, setPicked, setCurrentPage, reserved}
             <li>체크인 4일 전: 총 결제금액의 40% 환불</li>
             <li>체크인 3일 전부터 환불불가</li>
           </ul>
-        }
+        )}
       </section>
 
       <section>
@@ -97,6 +104,6 @@ const ForestCalendar = ({isLoading, picked, setPicked, setCurrentPage, reserved}
       </section>
     </div>
   );
-}
+};
 
-export default ForestCalendar;
+export default OnOffCalendar;

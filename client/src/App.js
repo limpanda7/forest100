@@ -1,5 +1,5 @@
 import React from 'react';
-import {Route, Routes} from 'react-router-dom';
+import {Navigate, Route, Routes} from 'react-router-dom';
 
 // styles
 import './styles/normalize.scss';
@@ -20,6 +20,7 @@ import './styles/table.scss';
 // components
 import Main from './components/Main/Main';
 import Forest from './components/Forest/Forest';
+import OnOff from "./components/OnOff/OnOff";
 import Blon from "./components/Blon/Blon";
 import Admin from "./components/Admin/Admin";
 
@@ -28,8 +29,10 @@ const App = () => {
     <Routes>
       <Route path='/' element={<Main/>}/>
       <Route path='forest' element={<Forest />} />
+      <Route path='on-off' element={<OnOff />} />
       <Route path='boulogne' element={<Blon/>}/>
       <Route path='admin' element={<Admin/>}/>
+      <Route path='*' element={<Navigate to="/" />} />
     </Routes>
   );
 }

@@ -12,8 +12,6 @@ import cn from 'classnames';
 const Blon = () => {
   const [currentPage, setCurrentPage] = useState('intro');
   const [reserved, setReserved] = useState([]);
-  const [reservedName, setReservedName] = useState([]);
-  const [reservedPhone, setReservedPhone] = useState([]);
   const [picked, setPicked] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -30,8 +28,6 @@ const Blon = () => {
     const airbnbReserved = await axios.get("/api/ical/blon");
 
     let tempReserved = [];
-    let tempReservedName = [];
-    let tempReservedPhone = [];
     for (const element of pageReserved.data) {
       tempReserved.push({
         checkin_date: new Date(
@@ -41,14 +37,6 @@ const Blon = () => {
           new Date(element.checkout_date).toISOString().slice(0, -1)
         ).toString(),
       });
-
-      if (!tempReservedName.includes(element.name)) {
-        tempReservedName.push(element.name);
-      }
-
-      if (!tempReservedPhone.includes(element.phone)) {
-        tempReservedPhone.push(element.phone);
-      }
     }
     for (const element of airbnbReserved.data) {
       tempReserved.push({
@@ -59,18 +47,8 @@ const Blon = () => {
           new Date(element.end_dt).toISOString().slice(0, -1)
         ).toString(),
       });
-
-      if (!tempReservedName.includes(element.name)) {
-        tempReservedName.push(element.name);
-      }
-
-      if (!tempReservedPhone.includes(element.phone)) {
-        tempReservedPhone.push(element.phone);
-      }
     }
     setReserved(tempReserved);
-    setReservedName(tempReservedName);
-    setReservedPhone(tempReservedPhone);
     setIsLoading(false);
   };
 
@@ -142,8 +120,6 @@ const Blon = () => {
           picked={picked}
           setPicked={setPicked}
           setCurrentPage={setCurrentPage}
-          reservedName={reservedName}
-          reservedPhone={reservedPhone}
         />
       }
     </div>

@@ -1,5 +1,5 @@
 import React, {useMemo, useState} from "react";
-import Calendar from "react-calendar";
+import Calendar from "../Calendar/Calendar";
 import {BLON_PRICE} from "../../constants";
 
 const BlonCalendar = ({isLoading, picked, setPicked, setCurrentPage, reserved}) => {
@@ -146,29 +146,6 @@ const BlonCalendar = ({isLoading, picked, setPicked, setCurrentPage, reserved}) 
           (체크인 3시 / 체크아웃 11시)
         </p>
 
-        <div className='DateAndBtnWrap'>
-          <div className='PickedDate'>
-            <div className='DateWrap'>
-              <div className='DateTitle'>체크인</div>
-              <div className='DateContent'>{picked[0] || "-"}</div>
-            </div>
-            <div className='DateWrap'>
-              <div className='DateTitle'>체크아웃</div>
-              <div className='DateContent'>{picked[picked.length - 1] || "-"}</div>
-            </div>
-          </div>
-
-          <button
-            className='DateResetBtn'
-            onClick={() => {
-              setPicked([]);
-              setSelected(null);
-            }}
-          >
-            초기화
-          </button>
-        </div>
-
         {
           isLoading ?
             <div className='calendar'>
@@ -176,76 +153,10 @@ const BlonCalendar = ({isLoading, picked, setPicked, setCurrentPage, reserved}) 
             </div>
             :
             <Calendar
-              className="calendar"
-              calendarType="US"
-              minDate={selected ? new Date(selected) : new Date()}
-              maxDate={maxDate}
-              tileDisabled={({date}) => {
-                if (
-                  reserved.find(({checkin_date, checkout_date}) => {
-                    const checkinTimestamp = new Date(checkin_date).valueOf();
-                    const checkoutTimestamp = new Date(checkout_date).valueOf();
-                    return (
-                      (checkinTimestamp.valueOf() < date.valueOf() &&
-                        checkoutTimestamp.valueOf() > date.valueOf()) ||
-                      (checker[date.valueOf()]?.checkIn &&
-                        checker[date.valueOf()]?.checkOut)
-                    );
-                  })
-                ) {
-                  return true;
-                }
-                if (
-                  selected &&
-                  ((selected < date.valueOf() &&
-                      checker[date.valueOf()]?.checkOut) ||
-                    (selected > date.valueOf() && checker[date.valueOf()]?.checkIn))
-                ) {
-                  return true;
-                } else if (!selected && checker[date.valueOf()]?.checkIn) {
-                  return true;
-                }
-              }}
-              selectRange={!!selected || !!picked.length}
-              onClickDay={(value) => {
-                if (!checker[value.valueOf()]?.checkIn) {
-                  setSelected(new Date(value));
-                }
-                if (picked.length) {
-                  setPicked([]);
-                }
-              }}
-              onChange={(value) => {
-                calcRange(value);
-              }}
-              value={
-                picked.length
-                  ? [new Date(picked[0]), new Date(picked[picked.length - 1])]
-                  : null
-              }
-              tileClassName={({date}) => {
-                let start = null;
-                let end = null;
-                if (picked.length) {
-                  start = new Date(new Date(picked[0])?.toISOString().slice(0, -1));
-                  end = new Date(
-                    new Date(picked[picked.length - 1])?.toISOString().slice(0, -1)
-                  );
-                }
-
-                if (
-                  start?.valueOf() === date.valueOf() ||
-                  end?.valueOf() === date.valueOf()
-                ) {
-                  return "select-date";
-                }
-                if (
-                  !selected &&
-                  !checker[date.valueOf()]?.checkOut &&
-                  checker[date.valueOf()]?.checkIn
-                )
-                  return "checkout-only";
-              }}
+              isContinuous={true}
+              picked={picked}
+              setPicked={setPicked}
+              reserved={reserved}
             />
         }
         <button className="ReservationBtn" onClick={() => moveToReservation()}>

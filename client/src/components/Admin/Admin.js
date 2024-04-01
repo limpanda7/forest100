@@ -18,7 +18,11 @@ const Admin = () => {
     switch (password) {
       case '1234':
         setTarget('forest');
-        setTargetKo('포레스트');
+        setTargetKo('백년한옥별채');
+        break;
+      case '0192':
+        setTarget('on_off');
+        setTargetKo('온오프스테이')
         break;
       case '0125':
         setTarget('blon');
@@ -79,7 +83,7 @@ const Admin = () => {
       <br/>
       <h2>관리자 페이지 {targetKo && `- ${targetKo}`}</h2>
       {
-        !['1234', '0125'].includes(password) ?
+        !['1234', '0192', '0125'].includes(password) ?
           <input
             placeholder='비밀번호'
             value={password}

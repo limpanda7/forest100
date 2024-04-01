@@ -53,16 +53,6 @@ const ForestIntro = () => {
     <>
       <div className='Slider'>
         <Slider {...sliderSetting}>
-          <div><span>(출처: JTBC)</span><img src={ssImg1} alt={''}/></div>
-          <div><span>(출처: JTBC)</span><img src={ssImg2} alt={''}/></div>
-          <div><span>(출처: JTBC)</span><img src={ssImg3} alt={''}/></div>
-          <div><span>(출처: JTBC)</span><img src={ssImg4} alt={''}/></div>
-          <div><span>(출처: JTBC)</span><img src={ssImg5} alt={''}/></div>
-          <div><span>(출처: JTBC)</span><img src={ssImg6} alt={''}/></div>
-          <div><span>(출처: JTBC)</span><img src={ssImg7} alt={''}/></div>
-          <div><span>(출처: JTBC)</span><img src={ssImg9} alt={''}/></div>
-          <div><span>(출처: JTBC)</span><img src={ssImg10} alt={''}/></div>
-          <div><span>(출처: JTBC)</span><img src={ssImg8} alt={''}/></div>
           <div><img src={img7} alt={''}/></div>
           <div><img src={img5} alt={''}/></div>
           <div><img src={img1} alt={''}/></div>
@@ -72,6 +62,21 @@ const ForestIntro = () => {
           <div><img src={img6} alt={''}/></div>
           <div><img src={img11} alt={''}/></div>
           <div><img src={img12} alt={''}/></div>
+        </Slider>
+      </div>
+
+      <div className='Slider'>
+        <Slider {...sliderSetting}>
+          <div><img src={ssImg1} alt={''}/></div>
+          <div><img src={ssImg2} alt={''}/></div>
+          <div><img src={ssImg3} alt={''}/></div>
+          <div><img src={ssImg4} alt={''}/></div>
+          <div><img src={ssImg5} alt={''}/></div>
+          <div><img src={ssImg6} alt={''}/></div>
+          <div><img src={ssImg7} alt={''}/></div>
+          <div><img src={ssImg9} alt={''}/></div>
+          <div><img src={ssImg10} alt={''}/></div>
+          <div><img src={ssImg8} alt={''}/></div>
         </Slider>
       </div>
 
