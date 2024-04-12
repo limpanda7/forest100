@@ -23,18 +23,29 @@ export const updateIcal = (url, target) => {
 
         Object.keys(res).map(key => {
           const {datetype, uid, start, end, summary, description} = res[key];
+          let reservationId = null;
 
           if (datetype === 'date') {
+            if (!!description) {
+              const regex = /Reservation URL: https:\/\/www\.airbnb\.com\/hosting\/reservations\/details\/(\w+)/;
+              const match = description.match(regex);
+
+              if (match && match.length > 1) {
+                reservationId = match[1];
+              }
+            }
+
             const startDt = moment(start).format('YYYY-MM-DD');
             const endDt = moment(end).format('YYYY-MM-DD');
             const phoneLastDigits = !!description ? description.slice(description.length - 4, description.length) : null;
             const status = summary.startsWith('Airbnb') ? 'Not available' : summary;
-            values.push([uid, startDt, endDt, status, phoneLastDigits])
+
+            values.push([uid, startDt, endDt, status, reservationId, phoneLastDigits])
           }
         });
 
         connection.query(`TRUNCATE TABLE ${target}_ical`, () => {
-          connection.query(`INSERT INTO ${target}_ical (uid, start_dt, end_dt, status, phone_last_digits) VALUES ?`, [values]);
+          connection.query(`INSERT INTO ${target}_ical (uid, start_dt, end_dt, status, reservation_id, phone_last_digits) VALUES ?`, [values]);
         })
       }
     )

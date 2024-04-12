@@ -24,11 +24,11 @@ const Blon = () => {
   }, [currentPage]);
 
   const getReserved = async () => {
-    const pageReserved = await axios.get("/api/reservation/blon");
-    const airbnbReserved = await axios.get("/api/ical/blon");
+    const {data: homepageReserved} = await axios.get("/api/reservation/blon");
+    const {data: airbnbReserved} = await axios.get("/api/ical/blon");
 
     let tempReserved = [];
-    for (const element of pageReserved.data) {
+    for (const element of homepageReserved) {
       tempReserved.push({
         checkin_date: new Date(
           new Date(element.checkin_date).toISOString().slice(0, -1)
@@ -38,7 +38,7 @@ const Blon = () => {
         ).toString(),
       });
     }
-    for (const element of airbnbReserved.data) {
+    for (const element of airbnbReserved) {
       tempReserved.push({
         checkin_date: new Date(
           new Date(element.start_dt).toISOString().slice(0, -1)
