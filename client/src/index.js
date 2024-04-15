@@ -3,7 +3,9 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from "react-router-dom";
+import ReactModal from "react-modal";
 
+ReactModal.setAppElement('#root');
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
