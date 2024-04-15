@@ -202,6 +202,7 @@ const Calendar = ({isContinuous, picked, setPicked, reserved}) => {
       <ReactCalendar
         className="calendar"
         calendarType="US"
+        formatDay={(localeDay, date) => date.getDate()}
         minDate={selected ? new Date(selected) : new Date()}
         maxDate={maxDate}
         tileDisabled={tileDisabled()}
