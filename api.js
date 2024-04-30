@@ -27,16 +27,16 @@ const bot = new TelegramBot(token);
 router.get("/reservation/:target", (req, res) => {
   const {target} = req.params;
   connection.query(
-    `SELECT checkin_date, checkout_date FROM ${target}_reservation_new where checkout_date >= NOW() order by checkin_date`,
+    `SELECT checkin_date, checkout_date FROM ${target}_reservation where checkout_date >= NOW() order by checkin_date`,
     (err, data) => {
       res.send(data);
     }
   );
 });
-router.get("/fullReservation/:target", (req, res) => {
+router.get("/full-reservation/:target", (req, res) => {
   const {target} = req.params;
   connection.query(
-    `SELECT * FROM ${target}_reservation_new where checkout_date >= NOW() order by checkin_date`,
+    `SELECT * FROM ${target}_reservation where checkout_date >= NOW() order by checkin_date`,
     (err, data) => {
       res.send(data);
     }
@@ -51,7 +51,7 @@ router.get("/ical/:target", (req, res) => {
 router.delete("/reservation/:target/:id", (req, res) => {
   const {target, id} = req.params;
   connection.query(
-    `DELETE FROM ${target}_reservation_new WHERE id = ?`,
+    `DELETE FROM ${target}_reservation WHERE id = ?`,
     id,
     (err, data) => {
       res.send(data);
@@ -92,7 +92,7 @@ router.post("/reservation/forest", (req, res) => {
     priceOption,
   ]);
   connection.query(
-    "INSERT INTO forest_reservation_new (checkin_date, checkout_date, name, phone, person, baby, dog, bedding, barbecue, price, price_option) VALUES ?",
+    "INSERT INTO forest_reservation (checkin_date, checkout_date, name, phone, person, baby, dog, bedding, barbecue, price, price_option) VALUES ?",
     [values],
     (err, data) => {
       res.send(data);
@@ -161,7 +161,7 @@ router.post("/reservation/on_off", (req, res) => {
     priceOption,
   ]);
   connection.query(
-    "INSERT INTO on_off_reservation_new (checkin_date, checkout_date, name, phone, person, baby, dog, bedding, barbecue, price, price_option) VALUES ?",
+    "INSERT INTO on_off_reservation (checkin_date, checkout_date, name, phone, person, baby, dog, bedding, barbecue, price, price_option) VALUES ?",
     [values],
     (err, data) => {
       res.send(data);
@@ -241,7 +241,7 @@ router.post("/reservation/blon", (req, res) => {
     priceOption,
   ]);
   connection.query(
-    "INSERT INTO blon_reservation_new (checkin_date, checkout_date, name, phone, person, baby, dog, bedding, barbecue, price, price_option) VALUES ?",
+    "INSERT INTO blon_reservation (checkin_date, checkout_date, name, phone, person, baby, dog, bedding, barbecue, price, price_option) VALUES ?",
     [values],
     (err, data) => {
       res.send(data);

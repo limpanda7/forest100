@@ -42,7 +42,7 @@ const Admin = () => {
   }, [target]);
 
   const init = async() => {
-    const {data: homepageReserved} = await axios.get(`/api/fullReservation/${target}`);
+    const {data: homepageReserved} = await axios.get(`/api/full-reservation/${target}`);
     const {data: airbnbReserved} = await axios.get(`/api/ical/${target}`);
     let tempReserved = [];
     for (const element of homepageReserved) {
