@@ -31,7 +31,7 @@ const ForestCalendar = ({isLoading, picked, setPicked, setCurrentPage, reserved}
           <tr>
             <th>구분</th>
             <th>평일</th>
-            <th>주말</th>
+            <th>주말 및 공휴일</th>
           </tr>
           <tr>
             <td>일반</td>

@@ -25,7 +25,7 @@ export const ON_OFF_PRICE = {
     WEEKEND: 300000,
     HOLIDAY: 300000,
   },
-  OVER_TWO: 20000,
+  OVER_FOUR: 20000,
   DOG: 30000,
   BARBECUE: 20000,
 };

@@ -37,7 +37,7 @@ const OnOffCalendar = ({
           <tr>
             <th>구분</th>
             <th>평일</th>
-            <th>주말</th>
+            <th>주말 및 공휴일</th>
           </tr>
           <tr>
             <td>성수기(7-8월)</td>
@@ -53,7 +53,7 @@ const OnOffCalendar = ({
 
         <ul>
           <li>
-            4인 초과 시 1인당: 1박 {ON_OFF_PRICE.OVER_TWO.toLocaleString()}원
+            4인 초과 시 1인당: 1박 {ON_OFF_PRICE.OVER_FOUR.toLocaleString()}원
             <br/>
             (추가침구 제공)
           </li>

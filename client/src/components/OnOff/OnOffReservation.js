@@ -5,7 +5,7 @@ import {FOREST_PRICE, ON_OFF_PRICE} from "../../constants";
 import {isHoliday, isSummer, isWeekday} from "../../utils/date";
 
 const OnOffReservation = ({picked, reservedName, reservedPhone}) => {
-  const [person, setPerson] = useState(2);
+  const [person, setPerson] = useState(4);
   const [baby, setBaby] = useState(0);
   const [dog, setDog] = useState(0);
   const [barbecue, setBarbecue] = useState('N');
@@ -85,8 +85,8 @@ const OnOffReservation = ({picked, reservedName, reservedPhone}) => {
     }
 
     const days = picked.length - 1;
-    const personCnt = person >= 2 ? person : 2;
-    let totalPrice = tempPrice + (ON_OFF_PRICE.OVER_TWO * (personCnt - 2) + ON_OFF_PRICE.DOG * dog) * days;
+    const personCnt = person >= 4 ? person : 4;
+    let totalPrice = tempPrice + (ON_OFF_PRICE.OVER_FOUR * (personCnt - 4) + ON_OFF_PRICE.DOG * dog) * days;
 
     if (barbecue === 'Y') {
       totalPrice += ON_OFF_PRICE.BARBECUE;
@@ -152,7 +152,7 @@ const OnOffReservation = ({picked, reservedName, reservedPhone}) => {
           </button>
           <span>{person}</span>
           <button onClick={() => {
-            if (person + baby < 6) setPerson(person + 1)
+            if (person < 6) setPerson(person + 1)
           }}>+
           </button>
         </div>
@@ -231,8 +231,8 @@ const OnOffReservation = ({picked, reservedName, reservedPhone}) => {
         <div className='PriceDetail'>
           <p><b>숙박요금:</b> {basePrice.toLocaleString()}원 (총 {picked.length - 1}박)</p>
           {
-            person > 2 &&
-            <p><b>인원초과:</b> {ON_OFF_PRICE.OVER_TWO.toLocaleString()}원 x {person - 2}명 x {picked.length - 1}박</p>
+            person > 4 &&
+            <p><b>인원초과:</b> {ON_OFF_PRICE.OVER_FOUR.toLocaleString()}원 x {person - 4}명 x {picked.length - 1}박</p>
           }
           {
             dog > 0 &&

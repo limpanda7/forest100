@@ -65,7 +65,6 @@ const OnOffIntro = () => {
                     <div><img src={img6} alt={''}/></div>
                     <div><img src={img7} alt={''}/></div>
                     <div><img src={img8} alt={''}/></div>
-                    <div><img src={img9} alt={''}/></div>
                     <div><img src={img10} alt={''}/></div>
                     <div><img src={img11} alt={''}/></div>
                     <div><img src={img12} alt={''}/></div>
@@ -76,12 +75,6 @@ const OnOffIntro = () => {
                     <div><img src={img17} alt={''}/></div>
                 </Slider>
             </div>
-
-            <iframe className='Video'
-                    src="https://www.youtube.com/embed/UIgIAsuUrHw"
-                    title="YouTube video player" frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen></iframe>
 
             <div className='contents'>
                 <section>
@@ -103,8 +96,8 @@ const OnOffIntro = () => {
 
                     <p className='Ptitle'>Bathroom</p>
                     <ul>
-                        <li>어메니티<br/>(샴푸/린스/바디워시/바디타올/치약)</li>
-                        <li>수건</li>
+                        <li>어메니티 (샴푸/린스/바디워시/치약)</li>
+                        <li>수건 (1인 2개/1박당)</li>
                     </ul>
 
                     <p className='Ptitle'>Kitchen</p>
@@ -112,13 +105,12 @@ const OnOffIntro = () => {
                         <li>냉장고/인덕션 2구/전자레인지</li>
                         <li>식기/컵/냄비/프라이팬/수저/가위/칼/집게</li>
                         <li>와인잔/와인오프너</li>
-                        <li>드립백/전기포트</li>
+                        <li>전기포트</li>
                     </ul>
 
                     <p className='Ptitle'>Second Kitchen</p>
                     <ul>
                         <li>발뮤다 토스트기</li>
-                        <li>식기/컵/냄비/프라이팬/수저/가위/칼/집게</li>
                     </ul>
 
                     <p className='Ptitle'>Living Room</p>
@@ -132,14 +124,14 @@ const OnOffIntro = () => {
                     <p className='Ptitle'>Bedroom 1</p>
                     <ul>
                         <li>통유리창문</li>
-                        <li>퀸사이즈 침대/침구</li>
-                        <li>전신거울/빗/고데기/드라이기</li>
+                        <li>퀸사이즈 매트리스/침구</li>
+                        <li>거울/드라이기</li>
                     </ul>
 
                     <p className='Ptitle'>Bedroom 2</p>
                     <ul>
-                        <li>퀸사이즈 침대/침구/에어컨</li>
-                        <li>전신거울/빗/드라이기</li>
+                        <li>퀸사이즈 매트리스/침구/에어컨</li>
+                        <li>전신거울/드라이기</li>
                         <li>원형테이블/의자 2개</li>
                     </ul>
 
@@ -153,9 +145,7 @@ const OnOffIntro = () => {
                     <p className='Ptitle'>Book Stay 2</p>
                     <ul>
                         <li>2인 테이블</li>
-                        <li>LP 턴테이블</li>
                         <li>서적</li>
-                        <li>소파베드</li>
                     </ul>
 
                     <p className='Ptitle'>Garden & Rooftop</p>
