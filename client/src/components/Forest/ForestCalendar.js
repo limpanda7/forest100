@@ -51,22 +51,18 @@ const ForestCalendar = ({isLoading, picked, setPicked, setCurrentPage, reserved}
           <li>반려견 1마리당: 1박 {FOREST_PRICE.DOG.toLocaleString()}원</li>
           <li>바베큐 이용요금: {FOREST_PRICE.BARBECUE.toLocaleString()}원</li>
           <li>입금계좌: 카카오 3333058451192 남은비</li>
-          <li><span className='anchor' onClick={toggleRefund}>환불 규정 보기</span></li>
+          <li>
+            <span className='anchor' onClick={toggleRefund}>환불 규정 보기</span>
+            {
+              showRefund &&
+              <ul className='List'>
+                <li>체크인까지 30일 이상 전액 환불 가능</li>
+                <li>체크인까지 7~30일이 남은 시점에 예약을 취소하면, 숙박비 50%환불</li>
+                <li>체크인까지 7일이 채 남지 않은 시점에 예약을 취소하면, 환불 불가</li>
+              </ul>
+            }
+          </li>
         </ul>
-
-        {
-          showRefund &&
-          <ul className='List Refund'>
-            <li>체크인 10일 전까지: 총 결제금액의 100% 환불</li>
-            <li>체크인 9일 전: 총 결제금액의 90% 환불</li>
-            <li>체크인 8일 전: 총 결제금액의 80% 환불</li>
-            <li>체크인 7일 전: 총 결제금액의 70% 환불</li>
-            <li>체크인 6일 전: 총 결제금액의 60% 환불</li>
-            <li>체크인 5일 전: 총 결제금액의 50% 환불</li>
-            <li>체크인 4일 전: 총 결제금액의 40% 환불</li>
-            <li>체크인 3일 전부터 환불불가</li>
-          </ul>
-        }
       </section>
 
       <section>

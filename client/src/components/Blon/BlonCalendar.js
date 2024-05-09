@@ -122,17 +122,18 @@ const BlonCalendar = ({isLoading, picked, setPicked, setCurrentPage, reserved}) 
           <li>반려견 1마리당: 1박 {BLON_PRICE.DOG.toLocaleString()}원</li>
           <li>바베큐 이용요금: {BLON_PRICE.BARBECUE.toLocaleString()}원</li>
           <li>입금계좌: 우체국 01414202194793 남은진</li>
-          <li><span className='anchor' onClick={toggleRefund}>환불 규정 보기</span></li>
+          <li>
+            <span className='anchor' onClick={toggleRefund}>환불 규정 보기</span>
+            {
+              showRefund &&
+              <ul className='List'>
+                <li>체크인까지 30일 이상 전액 환불 가능</li>
+                <li>체크인까지 7~30일이 남은 시점에 예약을 취소하면, 숙박비 50%환불</li>
+                <li>체크인까지 7일이 채 남지 않은 시점에 예약을 취소하면, 환불 불가</li>
+              </ul>
+            }
+          </li>
         </ul>
-
-        {
-          showRefund &&
-          <ul className='List Refund'>
-            <li>체크인까지 30일 이상 전액 환불 가능</li>
-            <li>체크인까지 7~30일이 남은 시점에 예약을 취소하면, 숙박비 50%환불</li>
-            <li>체크인까지 7일이 채 남지 않은 시점에 예약을 취소하면, 환불 불가</li>
-          </ul>
-        }
       </section>
 
       <section>
