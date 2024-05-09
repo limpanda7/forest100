@@ -97,19 +97,21 @@ const BlonCalendar = ({isLoading, picked, setPicked, setCurrentPage, reserved}) 
 
         <table className='PriceTable'>
           <tr>
-            <th>체크인</th>
-            <th>요금</th>
+            <th>구분</th>
+            <th>일~목</th>
+            <th>금</th>
+            <th>토</th>
           </tr>
           <tr>
-            <td>일요일~목요일</td>
+            <td>성수기(7/20-8/20)</td>
+            <td>{BLON_PRICE.SUMMER.WEEKDAY.toLocaleString()}</td>
+            <td>{BLON_PRICE.SUMMER.FRIDAY.toLocaleString()}</td>
+            <td>{BLON_PRICE.SUMMER.SATURDAY.toLocaleString()}</td>
+          </tr>
+          <tr>
+            <td>비성수기</td>
             <td>{BLON_PRICE.NORMAL.WEEKDAY.toLocaleString()}</td>
-          </tr>
-          <tr>
-            <td>금요일</td>
             <td>{BLON_PRICE.NORMAL.FRIDAY.toLocaleString()}</td>
-          </tr>
-          <tr>
-            <td>토요일</td>
             <td>{BLON_PRICE.NORMAL.SATURDAY.toLocaleString()}</td>
           </tr>
         </table>

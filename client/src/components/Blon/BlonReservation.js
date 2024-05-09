@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import {BLON_PRICE} from "../../constants";
-import {isFriday, isHoliday, isSaturday, isWeekday} from "../../utils/date";
+import {isFriday, isHoliday, isSaturday, isSummerBlon, isWeekday} from "../../utils/date";
 
 const BlonReservation = ({picked}) => {
   const [person, setPerson] = useState(4);
@@ -72,8 +72,7 @@ const BlonReservation = ({picked}) => {
     for (let i = 0; i < picked.length - 1; i++) {
       const date = picked[i];
 
-      // const prices = isSummer(date) ? BLON_PRICE.SUMMER : BLON_PRICE.NORMAL;
-      const prices = BLON_PRICE.NORMAL;
+      const prices = isSummerBlon(date) ? BLON_PRICE.SUMMER : BLON_PRICE.NORMAL;
 
       if (isHoliday(date)) {
         tempPrice += prices.HOLIDAY;
