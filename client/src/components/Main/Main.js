@@ -15,7 +15,7 @@ const Main = () => {
               <div className='menu-text'>
                 백년한옥별채
                 <br/>
-                <span>동해</span>
+                <span>DONGHAE</span>
               </div>
             </Link>
           </td>
@@ -25,7 +25,7 @@ const Main = () => {
               <div className='menu-text'>
                 블로뉴숲
                 <br/>
-                <span>포천</span>
+                <span>POCHEON</span>
               </div>
             </Link>
           </td>
@@ -37,7 +37,7 @@ const Main = () => {
               <div className='menu-text'>
                 온오프스테이
                 <br/>
-                <span>동해</span>
+                <span>DONGHAE</span>
               </div>
             </Link>
           </td>
@@ -47,7 +47,7 @@ const Main = () => {
               <div className='menu-text'>
                 온오프스페이스
                 <br/>
-                <span>서울</span>
+                <span>SEOUL</span>
               </div>
             </Link>
           </td>

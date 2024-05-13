@@ -24,19 +24,19 @@ const ForestCalendar = ({isLoading, picked, setPicked, setCurrentPage, reserved}
 
         <table className='PriceTable'>
           <tr>
-            <th>구분</th>
-            <th>평일</th>
-            <th>주말 및 공휴일</th>
+            <th width='100'>구분</th>
+            <th width='100'>평일</th>
+            <th width='100'>주말, 공휴일</th>
           </tr>
           <tr>
-            <td>일반</td>
-            <td>{FOREST_PRICE.NORMAL.WEEKDAY.toLocaleString()}</td>
-            <td>{FOREST_PRICE.NORMAL.WEEKEND.toLocaleString()}</td>
-          </tr>
-          <tr>
-            <td>성수기</td>
+            <td>성수기(7-8월)</td>
             <td>{FOREST_PRICE.SUMMER.WEEKDAY.toLocaleString()}</td>
             <td>{FOREST_PRICE.SUMMER.WEEKEND.toLocaleString()}</td>
+          </tr>
+          <tr>
+            <td>비성수기</td>
+            <td>{FOREST_PRICE.NORMAL.WEEKDAY.toLocaleString()}</td>
+            <td>{FOREST_PRICE.NORMAL.WEEKEND.toLocaleString()}</td>
           </tr>
         </table>
 

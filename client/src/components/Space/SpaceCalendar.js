@@ -83,8 +83,8 @@ const SpaceCalendar = ({
 
         <table className="PriceTable">
           <tr>
-            <th>월~목</th>
-            <th>금~일 및 공휴일</th>
+            <th width='1'>월~목</th>
+            <th width='1'>금~일 및 공휴일</th>
           </tr>
           <tr>
             <td>{SPACE_PRICE.WEEKDAY.toLocaleString()}원/시간</td>

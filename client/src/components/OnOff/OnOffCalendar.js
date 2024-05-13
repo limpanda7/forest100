@@ -30,9 +30,9 @@ const OnOffCalendar = ({
 
         <table className="PriceTable">
           <tr>
-            <th>구분</th>
-            <th>평일</th>
-            <th>주말 및 공휴일</th>
+            <th width='100'>구분</th>
+            <th width='100'>평일</th>
+            <th width='100'>주말, 공휴일</th>
           </tr>
           <tr>
             <td>성수기(7-8월)</td>
