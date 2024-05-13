@@ -2,7 +2,7 @@ import express from "express";
 import mysql from "mysql";
 import TelegramBot from "node-telegram-bot-api";
 import axios from "axios";
-import {forestMMS, onOffMMS, blonMMS} from "./mms.js";
+import {forestMMS, onOffMMS, blonMMS, spaceMMS} from "./mms.js";
 import 'dotenv/config';
 
 const router = express.Router();
@@ -26,8 +26,16 @@ const bot = new TelegramBot(token);
  */
 router.get("/reservation/:target", (req, res) => {
   const {target} = req.params;
+
+  let query;
+  if (target === 'space') {
+    query = 'SELECT date, checkin_time, checkout_time FROM space_reservation where date >= NOW() order by date';
+  } else {
+    query = `SELECT checkin_date, checkout_date FROM ${target}_reservation where checkout_date >= NOW() order by checkin_date`;
+  }
+
   connection.query(
-    `SELECT checkin_date, checkout_date FROM ${target}_reservation where checkout_date >= NOW() order by checkin_date`,
+    query,
     (err, data) => {
       res.send(data);
     }
@@ -284,6 +292,79 @@ router.post("/reservation/blon", (req, res) => {
         bot.sendMessage(process.env.TELEGRAM_CHAT_ID_BLON, "문자 발송에 성공하였습니다.");
       } else {
         bot.sendMessage(process.env.TELEGRAM_CHAT_ID_BLON, "문자 발송에 실패하였습니다.");
+      }
+    });
+});
+
+/*
+  온오프스페이스 API
+ */
+router.post("/reservation/space", (req, res) => {
+  const {
+    date,
+    time,
+    name,
+    phone,
+    person,
+    price,
+    priceOption,
+  } = req.body;
+
+  // 1. 예약내역 DB 추가
+  let values = [];
+  values.push([
+    date,
+    time[0],
+    time[time.length - 1] + 1,
+    name,
+    phone,
+    person,
+    price,
+    priceOption,
+  ]);
+  connection.query(
+    "INSERT INTO space_reservation (date, checkin_time, checkout_time, name, phone, person, price, price_option) VALUES ?",
+    [values],
+    (err, data) => {
+      res.send(data);
+
+      // 2. 텔레그램 발송
+      bot.sendMessage(
+        process.env.TELEGRAM_CHAT_ID_ON_OFF,
+        `온오프스페이스 신규 예약이 들어왔습니다.\n
+날짜: ${date}\n
+시간: ${time[0]}:00 ~ ${time[time.length - 1] + 1}:00\n
+이름: ${name}\n
+전화번호: ${phone}\n
+인원수: ${person}명\n
+이용금액: ${price.toLocaleString()}\n
+환불옵션: ${priceOption === "refundable" ? "환불가능" : "환불불가"}`
+      );
+    }
+  );
+
+  // 3. 안내문자 발송
+  axios
+    .post(
+      `https://api-sms.cloud.toast.com/sms/v3.0/appKeys/${process.env.MMS_APP_KEY}/sender/mms`,
+      {
+        title: "온오프스페이스 안내문자",
+        body: spaceMMS(date, time, person, price),
+        sendNo: process.env.MMS_SEND_NO,
+        recipientList: [{ recipientNo: phone }],
+      },
+      {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "X-Secret-Key": process.env.MMS_SECRET_KEY,
+        },
+      }
+    )
+    .then((axiosRes) => {
+      if (axiosRes.data.header.resultMessage === "SUCCESS") {
+        bot.sendMessage(process.env.TELEGRAM_CHAT_ID_ON_OFF, "문자 발송에 성공하였습니다.");
+      } else {
+        bot.sendMessage(process.env.TELEGRAM_CHAT_ID_ON_OFF, "문자 발송에 실패하였습니다.");
       }
     });
 });

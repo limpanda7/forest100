@@ -16,18 +16,24 @@
     color: darkcyan;
   }
 
-  .menu-item {
-    cursor: pointer;
-    text-align: center;
-    margin-bottom: 20px;
+  table {
+    td {
+      border: none;
+      width: 140px;
+      height: 140px;
+      cursor: pointer;
+      text-align: center;
+      margin-bottom: 20px;
 
-    .menu-text {
-      text-decoration: none;
-      color: black;
-      font-weight: bold;
+      .menu-text {
+        margin-top: 10px;
+        text-decoration: none;
+        color: black;
+        font-weight: bold;
 
-      span {
-        font-size: 12px;
+        span {
+          font-size: 12px;
+        }
       }
     }
   }

@@ -59,3 +59,29 @@
     background-color: aquamarine !important;
   }
 }
+
+.column {
+  flex: 1;
+  margin: 0 20px;
+}
+
+.time-slots {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.time-slot {
+  margin-bottom: 10px;
+}
+
+h2 {
+  margin-bottom: 10px;
+}
+
+.time-slot input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+.time-slot label {
+  cursor: pointer;
+}

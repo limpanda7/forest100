@@ -17,11 +17,6 @@ const ForestCalendar = ({isLoading, picked, setPicked, setCurrentPage, reserved}
     }
   };
 
-  const toggleRefund = () => {
-    if (showRefund) setShowRefund(false);
-    else setShowRefund(true);
-  }
-
   return (
     <div className='contents'>
       <section>
@@ -52,7 +47,7 @@ const ForestCalendar = ({isLoading, picked, setPicked, setCurrentPage, reserved}
           <li>바베큐 이용요금: {FOREST_PRICE.BARBECUE.toLocaleString()}원</li>
           <li>입금계좌: 카카오 3333058451192 남은비</li>
           <li>
-            <span className='anchor' onClick={toggleRefund}>환불 규정 보기</span>
+            <span className='anchor' onClick={() => setShowRefund(!showRefund)}>환불 규정 보기</span>
             {
               showRefund &&
               <ul className='List'>
@@ -87,7 +82,7 @@ const ForestCalendar = ({isLoading, picked, setPicked, setCurrentPage, reserved}
             />
         }
 
-        <button className="ReservationBtn" onClick={() => moveToReservation()}>
+        <button className="large-btn reservation-btn" onClick={moveToReservation}>
           선택한 날짜로 예약하기
         </button>
       </section>

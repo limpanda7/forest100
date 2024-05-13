@@ -21,7 +21,6 @@ import ssImg9 from "../../images/Forest/ss9.png";
 import ssImg10 from "../../images/Forest/ss10.png";
 
 const ForestIntro = () => {
-
   const [showLocation, setShowLocation] = useState(false);
 
   useEffect(() => {
@@ -161,7 +160,7 @@ const ForestIntro = () => {
           <div id="daumRoughmapContainer1688303532806"
                className="root_daum_roughmap root_daum_roughmap_landing daum-map"></div>
 
-          <button className='LocationBtn' onClick={toggleLocation}>
+          <button className='large-btn location-btn' onClick={toggleLocation}>
             {!showLocation ? '자세한 위치 정보' : '자세한 위치 정보 닫기'}
           </button>
 
@@ -194,11 +193,12 @@ const ForestIntro = () => {
           <div className="DescTitle">Contact</div>
 
 
-          <li>카카오톡: eunbibi1001</li>
+          <li>카카오톡 ID: eunbibi1001</li>
           <li>인스타그램:&nbsp;
             <a href='https://www.instagram.com/hanok.100/' target='_blank' className='anchor'>
               @hanok.100
-            </a></li>
+            </a>
+          </li>
         </section>
       </div>
     </>

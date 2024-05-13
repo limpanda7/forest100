@@ -23,7 +23,11 @@ const BlonReservation = ({picked}) => {
   }, [person, dog, barbecue, priceOption])
 
   const saveReservation = () => {
-    if (isRequested || name === '' || phone === '') {
+    if (isRequested) {
+      return;
+    }
+
+    if (name === '' || phone === '') {
       alert('정보를 모두 입력해주세요.')
       return;
     }
@@ -49,7 +53,7 @@ const BlonReservation = ({picked}) => {
         })
     } catch (e) {
       isRequested = false;
-      alert('오류가 발생했습니다. 관리자에게 문의해주세요.');
+      alert('오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
       console.log('error: /api/reservation/blon');
       console.log({
         picked,
@@ -104,13 +108,8 @@ const BlonReservation = ({picked}) => {
     setPrice(totalPrice);
   }
 
-  const toggleRefund = () => {
-    if (showRefund) setShowRefund(false);
-    else setShowRefund(true);
-  }
-
   return (
-    <div className='contents reservation'>
+    <div className='contents reservation-page'>
       <section>
         <h2>선택한 날짜</h2>
         <ul>
@@ -178,7 +177,7 @@ const BlonReservation = ({picked}) => {
         <input type='radio' id='refundable' onClick={() => setPriceOption('refundable')}
                checked={priceOption === 'refundable'}/>
         <label htmlFor='refundable'><span/><b>환불가능 옵션</b></label>
-        <p>예약 취소 시 <span className='anchor' onClick={toggleRefund}>환불 규정</span>에 따라서 환불이 진행됩니다.</p>
+        <p>예약 취소 시 <span className='anchor' onClick={() => setShowRefund(!showRefund)}>환불 규정</span>에 따라서 환불이 진행됩니다.</p>
 
         {
           showRefund &&
@@ -236,7 +235,7 @@ const BlonReservation = ({picked}) => {
                  }}
           />
         </p>
-        <button className='ReservationBtn' onClick={saveReservation}>
+        <button className='large-btn reservation-btn' onClick={saveReservation}>
           예약하기
         </button>
       </section>

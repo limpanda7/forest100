@@ -1,0 +1,23 @@
+.Space {
+  .time-slot input[type="checkbox"] {
+    display: none; /* Hide the checkbox */
+  }
+
+  .time-slot label {
+    display: block;
+    width: 100%; /* Make the label span the full width of the container */
+    cursor: pointer; /* Make the label clickable */
+    text-align: center;
+    border: 1px solid #ccc; /* Add a border */
+    transition: background-color 0.3s ease; /* Add a transition effect */
+  }
+
+  .time-slot label:hover {
+    background-color: #eee; /* Change the background color on hover */
+  }
+
+  .time-slot input[type="checkbox"]:checked + label {
+    background-color: #006edc; /* Change the background color when checked */
+    color: #fff; /* Change the text color to white */
+  }
+}

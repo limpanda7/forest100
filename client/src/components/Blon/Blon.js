@@ -1,19 +1,20 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
-import {Helmet} from "react-helmet";
 import 'react-calendar/dist/Calendar.css';
 import './Blon.scss';
 import BlonReservation from "./BlonReservation";
 import BlonIntro from "./BlonIntro";
 import BlonCalendar from "./BlonCalendar";
-import {Link} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import cn from 'classnames';
+import Header from "../Header/Header";
 
 const Blon = () => {
   const [currentPage, setCurrentPage] = useState('intro');
   const [reserved, setReserved] = useState([]);
   const [picked, setPicked] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getReserved();
@@ -52,35 +53,21 @@ const Blon = () => {
     setIsLoading(false);
   };
 
-  const goToHome = () => {
-    setCurrentPage('calendar');
-    setPicked([]);
+  const handleGoBack = () => {
+    if (currentPage === 'reservation') {
+      setCurrentPage('calendar');
+      setPicked([]);
+    } else {
+      navigate('/');
+    }
   }
 
   return (
     <div className="Blon">
-      <Helmet>
-        <title>::: 블로뉴숲 :::</title>
-      </Helmet>
-
-      <div className='header'>
-        {
-          currentPage !== 'reservation' ?
-            <>
-              <Link className='BackWrap' to='/'>
-                ◀
-              </Link>
-              <div className='Path'>
-                블로뉴숲
-              </div>
-            </>
-            :
-            <div className='BackWrap' onClick={() => goToHome()}>
-              ◀
-              <span className='Back'>뒤로가기</span>
-            </div>
-        }
-      </div>
+      <Header
+        title='블로뉴숲'
+        handleGoBack={handleGoBack}
+      />
 
       {
         currentPage !== 'reservation' &&

@@ -1,13 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import {useEffect, useState} from "react";
+import {SPACE_PRICE} from "../../constants";
+import {isHoliday, isWeekday} from "../../utils/date";
 import axios from "axios";
-import {FOREST_PRICE} from "../../constants";
-import {isFriday, isHoliday, isSummer, isWeekday} from "../../utils/date";
 
-const ForestReservation = ({picked}) => {
+const SpaceReservation = ({ date, time }) => {
   const [person, setPerson] = useState(2);
-  const [baby, setBaby] = useState(0);
-  const [dog, setDog] = useState(0);
-  const [barbecue, setBarbecue] = useState('N');
+  // const [dog, setDog] = useState(0);
   const [basePrice, setBasePrice] = useState(0);
   const [price, setPrice] = useState(0);
   const [priceOption, setPriceOption] = useState('refundable');
@@ -20,7 +18,7 @@ const ForestReservation = ({picked}) => {
 
   useEffect(() => {
     calcPrice();
-  }, [person, dog, barbecue, priceOption])
+  }, [person, priceOption]);
 
   const saveReservation = () => {
     if (isRequested) {
@@ -32,20 +30,16 @@ const ForestReservation = ({picked}) => {
       return;
     }
 
-    const bedding = person > 4 ? 1 : 0;
     try {
       isRequested = true;
-      axios.post('/api/reservation/forest', {
-        picked,
+      axios.post('/api/reservation/space', {
+        date,
+        time,
         name,
         phone,
         person,
-        baby,
-        dog,
-        bedding,
-        barbecue,
         price,
-        priceOption
+        priceOption,
       })
         .then(() => {
           alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${price.toLocaleString()}원입니다.`);
@@ -54,35 +48,31 @@ const ForestReservation = ({picked}) => {
     } catch (e) {
       isRequested = false;
       alert('오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
-      console.log('error: /api/reservation/forest');
-      console.log({picked, name, phone, person, baby, dog, bedding, barbecue, price, priceOption});
+      console.log('error: /api/reservation/space');
+      console.log({
+        date,
+        time,
+        name,
+        phone,
+        person,
+        price,
+        priceOption,
+      });
     }
   }
 
   const calcPrice = () => {
-
     let tempPrice = 0;
-    for (let i = 0; i < picked.length - 1; i++) {
-      const date = picked[i];
-
-      const prices = isSummer(date) ? FOREST_PRICE.SUMMER : FOREST_PRICE.NORMAL;
-
-      if (isHoliday(date)) {
-        tempPrice += prices.HOLIDAY;
-      } else if (isWeekday(date)) {
-        tempPrice += prices.WEEKDAY;
+    for (let i = 0; i < time.length; i++) {
+      if (isHoliday(date) || !isWeekday(date)) {
+        tempPrice += SPACE_PRICE.WEEKEND;
       } else {
-        tempPrice += prices.WEEKEND;
+        tempPrice += SPACE_PRICE.WEEKDAY;
       }
     }
 
-    const days = picked.length - 1;
     const personCnt = person >= 2 ? person : 2;
-    let totalPrice = tempPrice + (FOREST_PRICE.OVER_TWO * (personCnt - 2) + FOREST_PRICE.DOG * dog) * days;
-
-    if (barbecue === 'Y') {
-      totalPrice += FOREST_PRICE.BARBECUE;
-    }
+    let totalPrice = tempPrice + (SPACE_PRICE.OVER_TWO * (personCnt - 2)) * time.length;
 
     if (priceOption === 'nonrefundable') {
       setDiscount(totalPrice * 0.1);
@@ -92,22 +82,25 @@ const ForestReservation = ({picked}) => {
     }
 
     setBasePrice(tempPrice);
-    setPrice(totalPrice);
+    setPrice(totalPrice)
   }
 
   return (
     <div className='contents reservation-page'>
       <section>
-        <h2>선택한 날짜</h2>
+        <h2>선택한 시간</h2>
         <ul>
-          {picked.map(element => {
-            return <li>{element}</li>
-          })}
+          <li>{date}</li>
+          <ul>
+            {time.map(hour => {
+              return <li>{hour < 10 ? `0${hour}` : hour}:00 - {hour < 9 ? `0${hour + 1}` : hour + 1}:00</li>
+            })}
+          </ul>
         </ul>
       </section>
 
       <section className='HowMany'>
-        <h2>인원수 선택 (최대 6인)</h2>
+        <h2>인원수 선택 (최대 8인)</h2>
         <div>
           <p>인원</p>
           <button onClick={() => {
@@ -116,46 +109,22 @@ const ForestReservation = ({picked}) => {
           </button>
           <span>{person}</span>
           <button onClick={() => {
-            if (person + baby < 6) setPerson(person + 1)
+            if (person < 8) setPerson(person + 1)
           }}>+
           </button>
         </div>
-        <div>
-          <p>영유아(36개월 미만)</p>
-          <button onClick={() => {
-            if (baby > 0) setBaby(baby - 1)
-          }}>-
-          </button>
-          <span>{baby}</span>
-          <button onClick={
-            () => setBaby(baby + 1)
-          }>+
-          </button>
-        </div>
-        <div>
-          <p>반려견</p>
-          <button onClick={() => {
-            if (dog > 0) setDog(dog - 1)
-          }}>-
-          </button>
-          <span>{dog}</span>
-          <button onClick={() => {
-            if (dog < 2) setDog(dog + 1)
-          }}>+
-          </button>
-        </div>
-      </section>
-
-      <section>
-        <div className='Barbecue'>
-          <h2>바베큐 선택</h2>
-          <div>
-            <input type='radio' id='barbecueY' onClick={() => setBarbecue('Y')} checked={barbecue === 'Y'}/>
-            <label htmlFor='barbecueY'><span/>예</label>
-            <input type='radio' id='barbecueN' onClick={() => setBarbecue('N')} checked={barbecue === 'N'}/>
-            <label htmlFor='barbecueN'><span/>아니오</label>
-          </div>
-        </div>
+        {/*<div>*/}
+        {/*  <p>반려견</p>*/}
+        {/*  <button onClick={() => {*/}
+        {/*    if (dog > 0) setDog(dog - 1)*/}
+        {/*  }}>-*/}
+        {/*  </button>*/}
+        {/*  <span>{dog}</span>*/}
+        {/*  <button onClick={() => {*/}
+        {/*    if (dog < 2) setDog(dog + 1)*/}
+        {/*  }}>+*/}
+        {/*  </button>*/}
+        {/*</div>*/}
       </section>
 
       <section className='PriceOption'>
@@ -163,14 +132,22 @@ const ForestReservation = ({picked}) => {
         <input type='radio' id='refundable' onClick={() => setPriceOption('refundable')}
                checked={priceOption === 'refundable'}/>
         <label htmlFor='refundable'><span/><b>환불가능 옵션</b></label>
-        <p>예약 취소 시 <span className='anchor' onClick={() => setShowRefund(!showRefund)}>환불 규정</span>에 따라서 환불이 진행됩니다.</p>
+        <p>
+          예약 취소 시 <span className='anchor' onClick={() => setShowRefund(!showRefund)}>
+            환불 규정
+          </span>에 따라서 환불이 진행됩니다.
+        </p>
 
         {
           showRefund &&
           <ul className='List'>
-            <li>체크인까지 30일 이상 전액 환불 가능</li>
-            <li>체크인까지 7~30일이 남은 시점에 예약을 취소하면, 숙박비 50%환불</li>
-            <li>체크인까지 7일이 채 남지 않은 시점에 예약을 취소하면, 환불 불가</li>
+            <li>입실 8일 전까지: 총 결제금액의 100% 환불</li>
+            <li>입실 7일 전: 총 결제금액의 50% 환불</li>
+            <li>입실 6일 전: 총 결제금액의 40% 환불</li>
+            <li>입실 5일 전: 총 결제금액의 30% 환불</li>
+            <li>입실 4일 전: 총 결제금액의 20% 환불</li>
+            <li>입실 3일 전: 총 결제금액의 10% 환불</li>
+            <li>입실 2일 전부터 환불불가</li>
           </ul>
         }
 
@@ -184,19 +161,15 @@ const ForestReservation = ({picked}) => {
         <h2>총 이용요금</h2>
         <h2 className='Price'>{price.toLocaleString()}원</h2>
         <div className='PriceDetail'>
-          <p><b>숙박요금:</b> {basePrice.toLocaleString()}원 (총 {picked.length - 1}박)</p>
+          <p><b>기본요금:</b> {basePrice.toLocaleString()}원 (총 {time.length}시간)</p>
           {
             person > 2 &&
-            <p><b>인원초과:</b> {FOREST_PRICE.OVER_TWO.toLocaleString()}원 x {person - 2}명 x {picked.length - 1}박</p>
+            <p><b>인원초과:</b> {SPACE_PRICE.OVER_TWO.toLocaleString()}원 x {person - 2}명 x {time.length}시간</p>
           }
-          {
-            dog > 0 &&
-            <p><b>반려견:</b> {FOREST_PRICE.DOG.toLocaleString()}원 x {dog}마리 x {picked.length - 1}박</p>
-          }
-          {
-            barbecue === 'Y' &&
-            <p><b>바베큐:</b> {FOREST_PRICE.BARBECUE.toLocaleString()}원</p>
-          }
+          {/*{*/}
+          {/*  dog > 0 &&*/}
+          {/*  <p><b>반려견:</b> {ON_OFF_PRICE.DOG.toLocaleString()}원 x {dog}마리</p>*/}
+          {/*}*/}
           {
             discount > 0 &&
             <p><b>환불불가 할인:</b> -{discount.toLocaleString()}원</p>
@@ -229,4 +202,4 @@ const ForestReservation = ({picked}) => {
   );
 }
 
-export default ForestReservation;
+export default SpaceReservation;

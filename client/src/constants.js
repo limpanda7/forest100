@@ -48,6 +48,13 @@ export const BLON_PRICE = {
   BARBECUE: 20000,
 };
 
+export const SPACE_PRICE = {
+  WEEKDAY: 5000,
+  WEEKEND: 7000,
+  OVER_TWO: 5000,
+  // DOG: 15000,
+}
+
 export const HOLIDAYS = [
   '2024-03-01',
   '2024-04-10',

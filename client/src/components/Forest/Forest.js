@@ -1,18 +1,19 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
-import {Helmet} from "react-helmet";
 import 'react-calendar/dist/Calendar.css';
 import ForestReservation from "./ForestReservation";
 import ForestIntro from "./ForestIntro";
 import ForestCalendar from "./ForestCalendar";
-import {Link} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import cn from 'classnames';
+import Header from "../Header/Header";
 
 const Forest = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState('intro');
   const [reserved, setReserved] = useState([]);
   const [picked, setPicked] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getReserved();
@@ -51,35 +52,21 @@ const Forest = () => {
     setIsLoading(false);
   };
 
-  const goToHome = () => {
-    setCurrentPage('calendar');
-    setPicked([]);
+  const handleGoBack = () => {
+    if (currentPage === 'reservation') {
+      setCurrentPage('calendar');
+      setPicked([]);
+    } else {
+      navigate('/');
+    }
   }
 
   return (
     <div className="Forest">
-      <Helmet>
-        <title>::: 백년한옥별채 :::</title>
-      </Helmet>
-
-      <div className='header'>
-        {
-          currentPage !== 'reservation' ?
-            <>
-              <Link className='BackWrap' to='/'>
-                ◀
-              </Link>
-              <div className='Path'>
-                백년한옥별채
-              </div>
-            </>
-            :
-            <div className='BackWrap' onClick={() => goToHome()}>
-              ◀
-              <span className='Back'>뒤로가기</span>
-            </div>
-        }
-      </div>
+      <Header
+        title='백년한옥별채'
+        handleGoBack={handleGoBack}
+      />
 
       {
         currentPage !== 'reservation' &&

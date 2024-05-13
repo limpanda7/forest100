@@ -23,15 +23,10 @@ const OnOffCalendar = ({
     }
   };
 
-  const toggleRefund = () => {
-    if (showRefund) setShowRefund(false);
-    else setShowRefund(true);
-  };
-
   return (
     <div className='contents'>
       <section>
-        <div className="DescTitle">PRICE</div>
+        <div className="DescTitle">Price</div>
 
         <table className="PriceTable">
           <tr>
@@ -60,7 +55,7 @@ const OnOffCalendar = ({
           <li>바베큐 이용요금: 20,000원</li>
           <li>입금계좌: 카카오 3333053810252 채민기</li>
           <li>
-            <span className='anchor' onClick={toggleRefund}>환불 규정 보기</span>
+            <span className='anchor' onClick={() => setShowRefund(!showRefund)}>환불 규정 보기</span>
             {
               showRefund &&
               <ul className='List'>
@@ -95,7 +90,7 @@ const OnOffCalendar = ({
             />
         }
 
-        <button className="ReservationBtn" onClick={() => moveToReservation()}>
+        <button className="large-btn reservation-btn" onClick={moveToReservation}>
           선택한 날짜로 예약하기
         </button>
       </section>

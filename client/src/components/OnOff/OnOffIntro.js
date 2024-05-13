@@ -19,7 +19,6 @@ import img16 from "../../images/OnOff/16.jpg";
 import img17 from "../../images/OnOff/17.jpg";
 
 const OnOffIntro = () => {
-
     const [showLocation, setShowLocation] = useState(false);
     const [showTour, setShowTour] = useState(false);
 
@@ -168,7 +167,7 @@ const OnOffIntro = () => {
                     <div id="daumRoughmapContainer1688303908865"
                          className="root_daum_roughmap root_daum_roughmap_landing daum-map"></div>
 
-                    <button className='LocationBtn' onClick={toggleLocation}>
+                    <button className='large-btn location-btn' onClick={toggleLocation}>
                         {!showLocation ? '대중교통 정보' : '대중교통 정보 닫기'}
                     </button>
 
@@ -192,7 +191,7 @@ const OnOffIntro = () => {
                         </ul>
                     }
 
-                    <button className='LocationBtn' onClick={toggleTour}>
+                    <button className='large-btn location-btn' onClick={toggleTour}>
                         {!showTour ? '주변 관광 정보' : '주변 관광 정보 닫기'}
                     </button>
 
@@ -235,7 +234,11 @@ const OnOffIntro = () => {
                     <div className="DescTitle">Contact</div>
                     <ul>
                         <li>카카오톡 ID: skfk1600</li>
-                        <li>인스타그램 DM: on.offstay</li>
+                        <li>인스타그램:&nbsp;
+                            <a href='https://www.instagram.com/on.offstay/' target='_blank' className='anchor'>
+                                @on.offstay
+                            </a>
+                        </li>
                     </ul>
                 </section>
             </div>

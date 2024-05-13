@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import axios from "axios";
 import ReactModal from 'react-modal';
-import {FOREST_PRICE, ON_OFF_PRICE} from "../../constants";
+import {ON_OFF_PRICE} from "../../constants";
 import {isHoliday, isSummer, isWeekday} from "../../utils/date";
 
 const OnOffReservation = ({picked, reservedName, reservedPhone}) => {
@@ -50,7 +50,7 @@ const OnOffReservation = ({picked, reservedName, reservedPhone}) => {
         })
     } catch (e) {
       isRequested = false;
-      alert('오류가 발생했습니다. 관리자에게 문의해주세요.');
+      alert('오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
       console.log('error: /api/reservation/on_off');
       console.log({
         picked,
@@ -103,11 +103,6 @@ const OnOffReservation = ({picked, reservedName, reservedPhone}) => {
     setPrice(totalPrice);
   }
 
-  const toggleRefund = () => {
-    if (showRefund) setShowRefund(false);
-    else setShowRefund(true);
-  }
-
   const openModal = () => {
     if (name === '' || phone === '') {
       alert('정보를 모두 입력해주세요.')
@@ -132,7 +127,7 @@ const OnOffReservation = ({picked, reservedName, reservedPhone}) => {
   };
 
   return (
-    <div className='contents reservation'>
+    <div className='contents reservation-page'>
       <section>
         <h2>선택한 날짜</h2>
         <ul>
@@ -203,7 +198,9 @@ const OnOffReservation = ({picked, reservedName, reservedPhone}) => {
         <input type='radio' id='refundable' onClick={() => setPriceOption('refundable')}
                checked={priceOption === 'refundable'}/>
         <label htmlFor='refundable'><span/><b>환불가능 옵션</b></label>
-        <p>예약 취소 시 <span className='anchor' onClick={toggleRefund}>환불 규정</span>에 따라서 환불이 진행됩니다.</p>
+        <p>예약 취소 시 <span className='anchor' onClick={() => setShowRefund(!showRefund)}>
+          환불 규정</span>에 따라서 환불이 진행됩니다.
+        </p>
 
         {
           showRefund &&
@@ -261,7 +258,7 @@ const OnOffReservation = ({picked, reservedName, reservedPhone}) => {
                  }}
           />
         </p>
-        <button className='ReservationBtn' onClick={() => openModal(true)}>예약하기</button>
+        <button className='large-btn reservation-btn' onClick={() => openModal(true)}>예약하기</button>
       </section>
 
       <ReactModal

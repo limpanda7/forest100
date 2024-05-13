@@ -8,7 +8,7 @@ export const forestMMS = (picked, person, baby, dog, barbecue, price) => {
     '\n' +
     '[예약정보]\n' +
     `기간: ${picked}\n` +
-    `인원 ${person}명, 영유아 ${baby}명, 반려견 ${dog}마리\n` +
+    `인원: ${person}명, 영유아 ${baby}명, 반려견 ${dog}마리\n` +
     `바베큐 이용여부: ${barbecue}\n` +
     '\n' +
     '아래는 숙소 안내사항입니다.\n' +
@@ -59,7 +59,7 @@ export const onOffMMS = (picked, person, baby, dog, barbecue, price) => {
     '\n' +
     '[예약정보]\n' +
     `기간: ${picked}\n` +
-    `인원 ${person}명, 영유아 ${baby}명, 반려견 ${dog}마리\n` +
+    `인원: ${person}명, 영유아 ${baby}명, 반려견 ${dog}마리\n` +
     `바베큐 이용여부: ${barbecue}\n` +
     '\n' +
     '아래는 숙소 안내사항입니다.\n' +
@@ -103,11 +103,11 @@ export const onOffMMS = (picked, person, baby, dog, barbecue, price) => {
     ' 3. 기기를 끌 때는 전원버튼을 두 번 누릅니다. 화면이 꺼지고 1분 후에 기기가 완전히 꺼집니다.\n' +
     '\n' +
     '※ 본 전화번호는 발신 전용입니다.\n' +
-    '※ 문의는 카카오톡(skfk1600) 또는 DM(on.offstay)로 부탁드립니다.';
+    '※ 문의는 카카오톡(skfk1600) 또는 DM(on.offstay)으로 부탁드립니다.';
 }
 
 export const blonMMS = (picked, person, baby, dog, barbecue, price) => {
-  return '안녕하세요 숲과 호수사이 블로뉴숲 입니다. :)\n' +
+  return '안녕하세요 숲과 호수사이 블로뉴숲 입니다 :)\n' +
     '예약해주셔서 감사합니다. 문의사항은 언제든 편하게 연락주세요 :D\n' +
     '\n' +
     '-주소: 경기도 포천시 산정호수로322번길 38\n' +
@@ -156,6 +156,23 @@ export const blonMMS = (picked, person, baby, dog, barbecue, price) => {
     '\n' +
     '[예약정보]\n' +
     `기간: ${picked}\n` +
-    `인원 ${person}명, 영유아 ${baby}명, 반려견 ${dog}마리\n` +
-    `바베큐 이용여부: ${barbecue}\n`;
+    `인원: ${person}명, 영유아 ${baby}명, 반려견 ${dog}마리\n` +
+    `바베큐 이용여부: ${barbecue}`;
+}
+
+export const spaceMMS = (date, time, person, price) => {
+  return '안녕하세요 온오프스페이스 입니다 :)\n' +
+    '예약해주셔서 감사합니다. 문의사항은 언제든 편하게 연락주세요 :D\n' +
+    '\n' +
+    `입금하실 금액은 ${price.toLocaleString()}원 입니다.\n` +
+    '3시간 내 입금 시 예약 확정됩니다.\n' +
+    '(입금계좌: 카카오 3333058451192 남은비)\n' +
+    '\n' +
+    '[예약정보]\n' +
+    `날짜: ${date}\n` +
+    `시간: ${time[0]}:00 ~ ${time[time.length - 1] + 1}:00\n` +
+    `인원: ${person}명\n` +
+    '\n' +
+    '※ 본 전화번호는 발신 전용입니다.\n' +
+    '※ 문의는 카카오톡(eunbibi1001) 또는 DM(onoff_space_)으로 부탁드립니다.';
 }
