@@ -94,6 +94,7 @@ const Admin = () => {
       setPassword('');
       setTarget(null);
       setTargetKo(null);
+      setReserved([]);
     } else {
       navigate('/');
     }
