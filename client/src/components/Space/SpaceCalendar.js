@@ -135,7 +135,7 @@ const SpaceCalendar = ({
               </div>
             </div>
 
-            <button className='large-btn' onClick={moveToReservation}>
+            <button className='large-btn reservation-btn' onClick={moveToReservation}>
               선택한 시간으로 예약하기
             </button>
           </>
