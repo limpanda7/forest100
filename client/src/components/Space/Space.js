@@ -24,8 +24,6 @@ const Space = () => {
     setReserved(data);
   };
 
-  console.log(reserved)
-
   const handleGoBack = () => {
     if (currentPage === 'reservation') {
       setCurrentPage("calendar");
@@ -68,6 +66,7 @@ const Space = () => {
           time={time}
           setTime={setTime}
           setCurrentPage={setCurrentPage}
+          reserved={reserved}
         />
       )}
       {currentPage === 'reservation' && (

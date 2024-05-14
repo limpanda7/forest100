@@ -1,15 +1,16 @@
-import ReactCalendar from "react-calendar";
-import moment from "moment";
-import {SPACE_PRICE} from "../../constants";
-import {useState} from "react";
+import ReactCalendar from 'react-calendar';
+import moment from 'moment';
+import { SPACE_PRICE } from '../../constants';
+import { useState } from 'react';
 
 const SpaceCalendar = ({
-  date,
-  setDate,
-  time,
-  setTime,
-  setCurrentPage,
-}) => {
+                         date,
+                         setDate,
+                         time,
+                         setTime,
+                         setCurrentPage,
+                         reserved,
+                       }) => {
   const [showRefund, setShowRefund] = useState(false);
 
   const handleTimeChange = (hour) => {
@@ -40,19 +41,40 @@ const SpaceCalendar = ({
   };
 
   const handleDateChange = (value) => {
-    setDate(moment(value).format("YYYY-MM-DD"));
+    setDate(moment(value).format('YYYY-MM-DD'));
     setTime([]);
+  };
+
+  // Function to check if a time slot is blocked
+  const isTimeSlotBlocked = (date, hour) => {
+    if (!reserved || !date) return false;
+
+    const formattedDate = moment(date).format('YYYY-MM-DD');
+    const reservationOnDate = reserved.filter((reservation) => {
+      return moment(reservation.date).format('YYYY-MM-DD') === formattedDate;
+    });
+
+    if (!reservationOnDate) return false;
+
+    return reservationOnDate.find(reservation => {
+      const startTime = parseInt(reservation.checkin_time);
+      const endTime = parseInt(reservation.checkout_time);
+
+      return hour >= startTime && hour < endTime;
+    })
   };
 
   const renderTimeSlots = (startHour, endHour) => {
     const timeSlots = [];
     for (let hour = startHour; hour <= endHour; hour++) {
+      const isBlocked = isTimeSlotBlocked(date, hour);
       timeSlots.push(
-        <div key={hour} className="time-slot">
+        <div key={hour} className='time-slot'>
           <input
             id={`time-${hour}`}
-            type="checkbox"
-            checked={time.includes(hour)}
+            type='checkbox'
+            checked={time.includes(hour) && !isBlocked}
+            disabled={isBlocked}
             onChange={() => handleTimeChange(hour)}
           />
           <label htmlFor={`time-${hour}`}>
@@ -66,22 +88,22 @@ const SpaceCalendar = ({
 
   const moveToReservation = () => {
     if (time.length === 0) {
-      alert("예약 시간을 선택해주세요!");
+      alert('예약 시간을 선택해주세요!');
       return false;
     } else if (time.length === 1) {
       alert('최소 2시간 부터 예약 가능합니다.');
     } else {
-      setCurrentPage("reservation");
+      setCurrentPage('reservation');
       window.scrollTo(0, 0);
     }
   };
 
   return (
-    <div className="SpaceCalendar contents">
+    <div className='SpaceCalendar contents'>
       <section>
         <div className='DescTitle'>Price</div>
 
-        <table className="PriceTable">
+        <table className='PriceTable'>
           <tr>
             <th width='1'>월~목</th>
             <th width='1'>금~일 및 공휴일</th>
@@ -98,7 +120,7 @@ const SpaceCalendar = ({
           <li>입금계좌: 카카오 3333058451192 남은비</li>
           <li><span className='anchor' onClick={() => setShowRefund(!showRefund)}>환불 규정 보기</span></li>
           {showRefund && (
-            <ul className="List Refund">
+            <ul className='List Refund'>
               <li>입실 8일 전까지: 총 결제금액의 100% 환불</li>
               <li>입실 7일 전: 총 결제금액의 50% 환불</li>
               <li>입실 6일 전: 총 결제금액의 40% 환불</li>
@@ -115,8 +137,8 @@ const SpaceCalendar = ({
       <section>
         <div className='DescTitle'>Reservation</div>
         <ReactCalendar
-          className="calendar"
-          calendarType="US"
+          className='calendar'
+          calendarType='US'
           formatDay={(localeDay, date) => date.getDate()}
           minDate={new Date()}
           onClickDay={(value) => handleDateChange(value)} // Updated onClickDay handler
@@ -124,12 +146,12 @@ const SpaceCalendar = ({
 
         {date && (
           <>
-            <div className="time-slots">
-              <div className="column">
+            <div className='time-slots'>
+              <div className='column'>
                 <h2>오전</h2>
                 {renderTimeSlots(0, 11)}
               </div>
-              <div className="column">
+              <div className='column'>
                 <h2>오후</h2>
                 {renderTimeSlots(12, 23)}
               </div>

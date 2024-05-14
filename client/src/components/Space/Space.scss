@@ -16,4 +16,10 @@
     background-color: #006edc; /* Change the background color when checked */
     color: #fff; /* Change the text color to white */
   }
+
+  .time-slot input[disabled] + label {
+    /* Style for label of disabled checkbox */
+    cursor: not-allowed;
+    color: #ccc; /* Optional */
+  }
 }
