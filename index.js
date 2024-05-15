@@ -32,8 +32,8 @@ console.log(`server running at http ${port}`);
 // 1분마다 ical 적재
 if (process.env.NODE_ENV === "production") {
     const job = schedule.scheduleJob('* * * * *', () => {
-        // updateIcal('https://www.airbnb.co.kr/calendar/ical/45390781.ics?s=0445b573c993602570eb6ba077995e5c', 'forest');
-        // updateIcal('https://www.airbnb.co.kr/calendar/ical/52828603.ics?s=f6ffa314abc34b142104f746fe97ee5b', 'on_off');
+        updateIcal('https://www.airbnb.co.kr/calendar/ical/45390781.ics?s=0445b573c993602570eb6ba077995e5c', 'forest');
+        updateIcal('https://www.airbnb.co.kr/calendar/ical/52828603.ics?s=f6ffa314abc34b142104f746fe97ee5b', 'on_off');
         updateIcal('https://www.airbnb.co.kr/calendar/ical/43357745.ics?s=b2f3b0a34285a4574daf03fe3429f505', 'blon');
     })
 }

@@ -26,7 +26,8 @@ const OnOff = () => {
 
   const getReserved = async () => {
     const {data: homepageReserved} = await axios.get("/api/reservation/on_off");
-    const {data: airbnbReserved} = await axios.get("/api/ical/on_off");
+    // const {data: airbnbReserved} = await axios.get("/api/ical/on_off");
+    const airbnbReserved = [];
 
     let tempReserved = [];
     for (const element of homepageReserved) {
