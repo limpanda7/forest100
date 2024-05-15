@@ -25,8 +25,7 @@ const Forest = () => {
 
   const getReserved = async () => {
     const {data: homepageReserved} = await axios.get("/api/reservation/forest");
-    // const {data: airbnbReserved} = await axios.get("/api/ical/forest");
-    const airbnbReserved = [];
+    const {data: airbnbReserved} = await axios.get("/api/ical/forest");
 
     let tempReserved = [];
     for (const element of homepageReserved) {
