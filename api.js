@@ -330,7 +330,7 @@ router.post("/reservation/space", (req, res) => {
 
       // 2. 텔레그램 발송
       bot.sendMessage(
-        process.env.TELEGRAM_CHAT_ID_ON_OFF,
+        process.env.TELEGRAM_CHAT_ID_SPACE,
         `온오프스페이스 신규 예약이 들어왔습니다.\n
 날짜: ${date}\n
 시간: ${time[0]}:00 ~ ${time[time.length - 1] + 1}:00\n
@@ -362,9 +362,9 @@ router.post("/reservation/space", (req, res) => {
     )
     .then((axiosRes) => {
       if (axiosRes.data.header.resultMessage === "SUCCESS") {
-        bot.sendMessage(process.env.TELEGRAM_CHAT_ID_ON_OFF, "문자 발송에 성공하였습니다.");
+        bot.sendMessage(process.env.TELEGRAM_CHAT_ID_SPACE, "문자 발송에 성공하였습니다.");
       } else {
-        bot.sendMessage(process.env.TELEGRAM_CHAT_ID_ON_OFF, "문자 발송에 실패하였습니다.");
+        bot.sendMessage(process.env.TELEGRAM_CHAT_ID_SPACE, "문자 발송에 실패하였습니다.");
       }
     });
 });
