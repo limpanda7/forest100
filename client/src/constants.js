@@ -51,7 +51,7 @@ export const BLON_PRICE = {
 export const SPACE_PRICE = {
   WEEKDAY: 4000,
   WEEKEND: 6000,
-  OVER_TWO: 5000,
+  OVER_TWO: 3000,
   // DOG: 15000,
 }
 
