@@ -90,8 +90,6 @@ const SpaceCalendar = ({
     if (time.length === 0) {
       alert('예약 시간을 선택해주세요!');
       return false;
-    } else if (time.length === 1) {
-      alert('최소 2시간 부터 예약 가능합니다.');
     } else {
       setCurrentPage('reservation');
       window.scrollTo(0, 0);
@@ -115,7 +113,6 @@ const SpaceCalendar = ({
         </table>
 
         <ul>
-          <li>최소 2시간 부터 예약 가능합니다.</li>
           <li>2인 초과 시 1인당: {SPACE_PRICE.OVER_TWO.toLocaleString()}원/시간</li>
           <li>입금계좌: 카카오 3333058451192 남은비</li>
           <li><span className='anchor' onClick={() => setShowRefund(!showRefund)}>환불 규정 보기</span></li>
