@@ -320,9 +320,9 @@ router.post("/reservation/space", (req, res) => {
     name,
     phone,
     person,
+    purpose,
     price,
     priceOption,
-    purpose,
   ]);
   connection.query(
     "INSERT INTO space_reservation (date, checkin_time, checkout_time, name, phone, person, purpose, price, price_option) VALUES ?",
