@@ -352,7 +352,7 @@ router.post("/reservation/space", (req, res) => {
       `https://api-sms.cloud.toast.com/sms/v3.0/appKeys/${process.env.MMS_APP_KEY}/sender/mms`,
       {
         title: "온오프스페이스 안내문자",
-        body: spaceMMS(date, time, person, price),
+        body: spaceMMS(date, time, person, purpose, price),
         sendNo: process.env.MMS_SEND_NO,
         recipientList: [{ recipientNo: phone }],
       },

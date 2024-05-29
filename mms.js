@@ -159,7 +159,7 @@ export const blonMMS = (picked, person, baby, dog, barbecue, price) => {
     `바베큐 이용여부: ${barbecue}`;
 }
 
-export const spaceMMS = (date, time, person, price) => {
+export const spaceMMS = (date, time, person, purpose, price) => {
   return '안녕하세요 온오프스페이스 입니다 :)\n' +
     '예약해주셔서 감사합니다. 문의사항은 언제든 편하게 연락주세요 :D\n' +
     '\n' +
@@ -171,6 +171,7 @@ export const spaceMMS = (date, time, person, price) => {
     `날짜: ${date}\n` +
     `시간: ${time[0]}:00 ~ ${time[time.length - 1] + 1}:00\n` +
     `인원: ${person}명\n` +
+    `사용목적: ${purpose}\n` +
     '\n' +
     '※ 본 전화번호는 발신 전용입니다.\n' +
     '※ 문의는 카카오톡(eunbibi1001) 또는 DM(onoff_space_)으로 부탁드립니다.';
