@@ -13,6 +13,8 @@ const SpaceReservation = ({ date, time }) => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [showRefund, setShowRefund] = useState(false);
+  const [purpose, setPurpose] = useState('모임');
+  const [customPurpose, setCustomPurpose] = useState('');
 
   let isRequested = false;
 
@@ -30,6 +32,8 @@ const SpaceReservation = ({ date, time }) => {
       return;
     }
 
+    const reservationPurpose = purpose === '기타' ? customPurpose : purpose;
+
     try {
       isRequested = true;
       axios.post('/api/reservation/space', {
@@ -40,6 +44,7 @@ const SpaceReservation = ({ date, time }) => {
         person,
         price,
         priceOption,
+        purpose: reservationPurpose,
       })
         .then(() => {
           alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${price.toLocaleString()}원입니다.`);
@@ -57,6 +62,7 @@ const SpaceReservation = ({ date, time }) => {
         person,
         price,
         priceOption,
+        purpose: reservationPurpose,
       });
     }
   }
@@ -125,6 +131,21 @@ const SpaceReservation = ({ date, time }) => {
         {/*  }}>+*/}
         {/*  </button>*/}
         {/*</div>*/}
+      </section>
+
+      <section className='Purpose'>
+        <h2>사용 목적</h2>
+        <select onChange={(e) => setPurpose(e.target.value)} value={purpose}>
+          <option value='모임'>모임</option>
+          <option value='일일클래스'>일일클래스</option>
+          <option value='이벤트'>이벤트</option>
+          <option value='기타'>기타</option>
+        </select>
+        &nbsp;&nbsp;
+        {purpose === '기타' && (
+          <input type='text' placeholder='직접 입력' value={customPurpose}
+                 onChange={(e) => setCustomPurpose(e.target.value)}/>
+        )}
       </section>
 
       <section className='PriceOption'>

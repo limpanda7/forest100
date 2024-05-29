@@ -308,6 +308,7 @@ router.post("/reservation/space", (req, res) => {
     person,
     price,
     priceOption,
+    purpose,
   } = req.body;
 
   // 1. 예약내역 DB 추가
@@ -321,9 +322,10 @@ router.post("/reservation/space", (req, res) => {
     person,
     price,
     priceOption,
+    purpose,
   ]);
   connection.query(
-    "INSERT INTO space_reservation (date, checkin_time, checkout_time, name, phone, person, price, price_option) VALUES ?",
+    "INSERT INTO space_reservation (date, checkin_time, checkout_time, name, phone, person, purpose, price, price_option) VALUES ?",
     [values],
     (err, data) => {
       res.send(data);
@@ -337,6 +339,7 @@ router.post("/reservation/space", (req, res) => {
 이름: ${name}\n
 전화번호: ${phone}\n
 인원수: ${person}명\n
+사용목적: ${purpose}\n
 이용금액: ${price.toLocaleString()}\n
 환불옵션: ${priceOption === "refundable" ? "환불가능" : "환불불가"}`
       );
