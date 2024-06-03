@@ -75,7 +75,7 @@ const ForestCalendar = ({isLoading, picked, setPicked, setCurrentPage, reserved}
             </div>
             :
             <Calendar
-              isContinuous={false}
+              isContinuous={true}
               picked={picked}
               setPicked={setPicked}
               reserved={reserved}
