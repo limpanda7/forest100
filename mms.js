@@ -4,7 +4,7 @@ export const forestMMS = (picked, person, baby, dog, barbecue, price) => {
     '\n' +
     `입금하실 금액은 ${price.toLocaleString()}원 입니다.\n` +
     '3시간 내 입금 시 예약 확정됩니다.\n' +
-    '(입금계좌: 카카오 3333058451192 남은비)\n' +
+    '(입금계좌: 카카오 79420205681 남은비)\n' +
     '\n' +
     '[예약정보]\n' +
     `기간: ${picked}\n` +

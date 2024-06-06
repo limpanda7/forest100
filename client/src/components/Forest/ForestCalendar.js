@@ -45,7 +45,7 @@ const ForestCalendar = ({isLoading, picked, setPicked, setCurrentPage, reserved}
           <li>36개월 미만의 영유아는 무료입니다.</li>
           <li>반려견 1마리당: 1박 {FOREST_PRICE.DOG.toLocaleString()}원</li>
           <li>바베큐 이용요금: {FOREST_PRICE.BARBECUE.toLocaleString()}원</li>
-          <li>입금계좌: 카카오 3333058451192 남은비</li>
+          <li>입금계좌: 카카오 79420205681 남은비</li>
           <li>
             <span className='anchor' onClick={() => setShowRefund(!showRefund)}>환불 규정 보기</span>
             {
