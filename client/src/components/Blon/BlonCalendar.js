@@ -152,7 +152,7 @@ const BlonCalendar = ({isLoading, picked, setPicked, setCurrentPage, reserved}) 
               reserved={reserved}
             />
         }
-        <button className="large-btn reservation-btn" onClick={moveToReservation}>
+        <button className="large-btn" onClick={moveToReservation}>
           선택한 날짜로 예약하기
         </button>
       </section>

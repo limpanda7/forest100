@@ -19,6 +19,10 @@ const Space = () => {
     getReserved();
   }, []);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPage]);
+
   const getReserved = async () => {
     const {data} = await axios.get("/api/reservation/space");
     setReserved(data);

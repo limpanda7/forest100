@@ -221,7 +221,7 @@ const ForestReservation = ({picked}) => {
                  }}
           />
         </p>
-        <button className='large-btn reservation-btn' onClick={saveReservation}>
+        <button className='large-btn' onClick={saveReservation}>
           예약하기
         </button>
       </section>

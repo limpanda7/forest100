@@ -13,8 +13,7 @@ const SpaceReservation = ({ date, time }) => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [showRefund, setShowRefund] = useState(false);
-  const [purpose, setPurpose] = useState('모임');
-  const [customPurpose, setCustomPurpose] = useState('');
+  const [purpose, setPurpose] = useState('');
 
   let isRequested = false;
 
@@ -27,12 +26,10 @@ const SpaceReservation = ({ date, time }) => {
       return;
     }
 
-    if (name === '' || phone === '') {
+    if (purpose === '' || name === '' || phone === '') {
       alert('정보를 모두 입력해주세요.')
       return;
     }
-
-    const reservationPurpose = purpose === '기타' ? customPurpose : purpose;
 
     try {
       isRequested = true;
@@ -44,7 +41,7 @@ const SpaceReservation = ({ date, time }) => {
         person,
         price,
         priceOption,
-        purpose: reservationPurpose,
+        purpose,
       })
         .then(() => {
           alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${price.toLocaleString()}원입니다.`);
@@ -62,7 +59,7 @@ const SpaceReservation = ({ date, time }) => {
         person,
         price,
         priceOption,
-        purpose: reservationPurpose,
+        purpose,
       });
     }
   }
@@ -135,17 +132,8 @@ const SpaceReservation = ({ date, time }) => {
 
       <section className='Purpose'>
         <h2>사용 목적</h2>
-        <select onChange={(e) => setPurpose(e.target.value)} value={purpose}>
-          <option value='모임'>모임</option>
-          <option value='일일클래스'>일일클래스</option>
-          <option value='이벤트'>이벤트</option>
-          <option value='기타'>기타</option>
-        </select>
-        &nbsp;&nbsp;
-        {purpose === '기타' && (
-          <input type='text' placeholder='직접 입력' value={customPurpose}
-                 onChange={(e) => setCustomPurpose(e.target.value)}/>
-        )}
+        <input type='text' placeholder='사용 목적을 간단히 적어주세요 (예: 보드게임)' value={purpose} style={{width: '320px'}}
+               onChange={(e) => setPurpose(e.target.value)}/>
       </section>
 
       <section className='PriceOption'>
@@ -215,7 +203,7 @@ const SpaceReservation = ({ date, time }) => {
                  }}
           />
         </p>
-        <button className='large-btn reservation-btn' onClick={saveReservation}>
+        <button className='large-btn' onClick={saveReservation}>
           예약하기
         </button>
       </section>

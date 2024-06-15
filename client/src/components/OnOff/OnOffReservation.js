@@ -258,7 +258,7 @@ const OnOffReservation = ({picked, reservedName, reservedPhone}) => {
                  }}
           />
         </p>
-        <button className='large-btn reservation-btn' onClick={() => openModal(true)}>예약하기</button>
+        <button className='large-btn' onClick={() => openModal(true)}>예약하기</button>
       </section>
 
       <ReactModal
