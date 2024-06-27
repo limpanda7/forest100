@@ -13,7 +13,7 @@ const connection = mysql.createConnection({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
-  timezone: "utc",
+  timezone: "Asia/Seoul",
 });
 connection.connect();
 
@@ -29,7 +29,7 @@ router.get("/reservation/:target", (req, res) => {
 
   let query;
   if (target === 'space') {
-    query = 'SELECT date, checkin_time, checkout_time FROM space_reservation where date >= NOW() order by date';
+    query = 'SELECT date, checkin_time, checkout_time FROM space_reservation where date >= CURDATE() order by date';
   } else {
     query = `SELECT checkin_date, checkout_date FROM ${target}_reservation where checkout_date >= NOW() order by checkin_date`;
   }
