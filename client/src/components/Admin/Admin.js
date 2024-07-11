@@ -4,9 +4,12 @@ import moment from "moment";
 import './Admin.scss';
 import ReactModal from "react-modal";
 import {useNavigate} from "react-router-dom";
+import cn from "classnames";
+import Header from "../Header/Header";
 
 const Admin = () => {
   const [password, setPassword] = useState('');
+  const [isLogin, setIsLogin] = useState(false);
   const [target, setTarget] = useState(null);
   const [targetKo, setTargetKo] = useState(null);
   const [reserved, setReserved] = useState([]);
@@ -18,17 +21,20 @@ const Admin = () => {
 
   useEffect(() => {
     switch (password) {
-      case '1234':
+      case process.env.REACT_APP_FOREST_PASSWORD:
         setTarget('forest');
         setTargetKo('백년한옥별채');
+        setIsLogin(true);
         break;
-      case '0192':
+      case process.env.REACT_APP_ON_OFF_PASSWORD:
         setTarget('on_off');
-        setTargetKo('온오프스테이')
+        setTargetKo('온오프스테이');
+        setIsLogin(true);
         break;
-      case '0125':
+      case process.env.REACT_APP_BLON_PASSWORD:
         setTarget('blon');
-        setTargetKo('블로뉴숲')
+        setTargetKo('블로뉴숲');
+        setIsLogin(true);
         break;
       default:
         break;
@@ -89,9 +95,10 @@ const Admin = () => {
     init();
   }
 
-  const goBack = () => {
+  const handleGoBack = () => {
     if (target) {
       setPassword('');
+      setIsLogin(false);
       setTarget(null);
       setTargetKo(null);
       setReserved([]);
@@ -131,15 +138,15 @@ const Admin = () => {
   };
 
   return (
-    <div className='Admin'>
-      <button onClick={goBack}>
-        뒤로
-      </button>
-      <br/>
-      <br/>
-      <h2>관리자 페이지 {targetKo && `- ${targetKo}`}</h2>
+    <>
+      <Header
+        title={targetKo ? '관리자 페이지 - ' + targetKo : '관리자 페이지'}
+        handleGoBack={handleGoBack}
+      />
+
+      <div className='Admin'>
       {
-        !['1234', '0192', '0125'].includes(password) ?
+        !isLogin ?
           <input
             placeholder='비밀번호'
             value={password}
@@ -149,8 +156,9 @@ const Admin = () => {
           <table>
             <tr>
               <th style={{width: '60px'}}>체크인</th>
-              <th  style={{width: '60px'}}>체크아웃</th>
-              <th>이름 or 끝번호</th>
+              <th style={{width: '60px'}}>체크아웃</th>
+              <th style={{width: '40px'}}>구분</th>
+              <th>이름/끝번호</th>
               <td></td>
               <td></td>
             </tr>
@@ -160,7 +168,10 @@ const Admin = () => {
                   <tr key={i}>
                     <td>{moment(row.checkin_date).format('MM-DD')}</td>
                     <td>{moment(row.checkout_date).format('MM-DD')}</td>
-                    <td>{row.name || row.phone_last_digits || '(막아둔 날짜)'}</td>
+                    <td className={cn(row.name ? 'homepage-cell' : 'airbnb-cell')}>
+                      {row.name ? '홈' : '에'}
+                    </td>
+                    <td>{row.name || row.phone_last_digits || '(막아둔날짜)'}</td>
                     <td>
                       {
                         (row.name || row.phone_last_digits) &&
@@ -188,6 +199,7 @@ const Admin = () => {
             }
           </table>
       }
+      </div>
 
       <ReactModal
         isOpen={isInfoModal}
@@ -228,7 +240,7 @@ const Admin = () => {
           <button className='ModalBtn' onClick={() => deleteReserved()}>삭제</button>
         </div>
       </ReactModal>
-    </div>
+    </>
   );
 }
 

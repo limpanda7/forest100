@@ -1,10 +1,12 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import './Main.scss';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faToggleOn, faLeaf, faTree, faPalette} from '@fortawesome/free-solid-svg-icons'
 
 const Main = () => {
+  const navigate = useNavigate();
+
   return (
     <div className={'Main'}>
       <table>
@@ -53,6 +55,10 @@ const Main = () => {
           </td>
         </tr>
       </table>
+
+      <div className='admin-btn' onClick={() => navigate('/admin')}>
+        FOREST 100
+      </div>
     </div>
   );
 }
