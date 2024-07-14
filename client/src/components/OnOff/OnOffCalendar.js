@@ -83,7 +83,7 @@ const OnOffCalendar = ({
             </div>
             :
             <Calendar
-              isContinuous={false}
+              isContinuous={true}
               picked={picked}
               setPicked={setPicked}
               reserved={reserved}
