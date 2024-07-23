@@ -23,6 +23,7 @@ import OnOff from "./components/OnOff/OnOff";
 import Blon from "./components/Blon/Blon";
 import Admin from "./components/Admin/Admin";
 import Space from "./components/Space/Space";
+import Test from "./components/Test/Test";
 
 const vh = window.innerHeight * 0.01;
 document.documentElement.style.setProperty('--vh', `${vh}px`);
@@ -36,6 +37,7 @@ const App = () => {
       <Route path='on-off' element={<OnOff />} />
       <Route path='on-off-space' element={<Space />} />
       <Route path='admin' element={<Admin/>}/>
+      <Route path='test' element={<Test/>}/>
       <Route path='*' element={<Navigate to="/" />} />
     </Routes>
   );
