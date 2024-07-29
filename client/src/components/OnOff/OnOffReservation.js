@@ -249,9 +249,9 @@ const OnOffReservation = ({picked, reservedName, reservedPhone}) => {
           3시간 내에 입금 해 주셔야 예약이 확정됩니다.
         </p>
         <p>
-          <span>입금하실 분 성함:</span>
+          <span className='input-label'>입금하실 분 성함:</span>
           <input type='text' size='6' onChange={(e) => setName(e.target.value)}/><br/>
-          <span>전화번호:</span>
+          <span className='input-label'>전화번호:</span>
           <input type='text' size='14' pattern='[0-9]*' value={phone} maxLength={11}
                  onChange={(e) => {
                    if (e.target.validity.valid) setPhone(e.target.value)
