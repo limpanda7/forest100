@@ -108,15 +108,23 @@ router.post("/reservation/forest", (req, res) => {
       // 2. 텔레그램 발송
       bot.sendMessage(
         process.env.TELEGRAM_CHAT_ID_FOREST,
-        `백년한옥별채 신규 예약이 들어왔습니다.\n
-기간: ${picked}\n
-이름: ${name}\n
-전화번호: ${phone}\n
-인원수: ${person}명, 영유아 ${baby}명, 반려견 ${dog}마리\n
-추가침구: ${bedding}개\n
-바베큐 이용여부: ${barbecue}\n
-이용금액: ${price.toLocaleString()}\n
-환불옵션: ${priceOption === "refundable" ? "환불가능" : "환불불가"}`
+        `백년한옥별채 신규 예약이 들어왔습니다.\n` +
+        `\n` +
+        `기간: ${picked}\n` +
+        `\n` +
+        `이름: ${name}\n` +
+        `\n` +
+        `전화번호: ${phone}\n` +
+        `\n` +
+        `인원수: ${person}명, 영유아 ${baby}명, 반려견 ${dog}마리\n` +
+        `\n` +
+        `추가침구: ${bedding}개\n` +
+        `\n` +
+        `바베큐 이용여부: ${barbecue}\n` +
+        `\n` +
+        `이용금액: ${price.toLocaleString()}\n` +
+        `\n` +
+        `환불옵션: ${priceOption === "refundable" ? "환불가능" : "환불불가"}`
       );
     }
   );
@@ -129,7 +137,7 @@ router.post("/reservation/forest", (req, res) => {
         title: "백년한옥별채 안내문자",
         body: forestMMS(picked, person, baby, dog, barbecue, price),
         sendNo: process.env.MMS_SEND_NO,
-        recipientList: [{ recipientNo: phone }],
+        recipientList: [{recipientNo: phone}],
       },
       {
         headers: {
@@ -177,15 +185,23 @@ router.post("/reservation/on_off", (req, res) => {
       // 2. 텔레그램 발송
       bot.sendMessage(
         process.env.TELEGRAM_CHAT_ID_ON_OFF,
-        `온오프스테이 신규 예약이 들어왔습니다.\n
-기간: ${picked}\n
-이름: ${name}\n
-전화번호: ${phone}\n
-인원수: ${person}명, 영유아 ${baby}명, 반려견 ${dog}마리\n
-추가침구: ${bedding}개\n
-바베큐 이용여부: ${barbecue}\n
-이용금액: ${price.toLocaleString()}\n
-환불옵션: ${priceOption === "refundable" ? "환불가능" : "환불불가"}\n`
+        `온오프스테이 신규 예약이 들어왔습니다.\n` +
+        `\n` +
+        `기간: ${picked}\n` +
+        `\n` +
+        `이름: ${name}\n` +
+        `\n` +
+        `전화번호: ${phone}\n` +
+        `\n` +
+        `인원수: ${person}명, 영유아 ${baby}명, 반려견 ${dog}마리\n` +
+        `\n` +
+        `추가침구: ${bedding}개\n` +
+        `\n` +
+        `바베큐 이용여부: ${barbecue}\n` +
+        `\n` +
+        `이용금액: ${price.toLocaleString()}\n` +
+        `\n` +
+        `환불옵션: ${priceOption === "refundable" ? "환불가능" : "환불불가"}`
       );
     }
   );
@@ -198,7 +214,8 @@ router.post("/reservation/on_off", (req, res) => {
         title: "온오프스테이 안내문자",
         body: onOffMMS(picked, person, baby, dog, barbecue, price),
         sendNo: process.env.MMS_SEND_NO,
-        recipientList: [{ recipientNo: phone }],
+        attachFileIdList: [189971052],
+        recipientList: [{recipientNo: phone}],
       },
       {
         headers: {
@@ -257,15 +274,23 @@ router.post("/reservation/blon", (req, res) => {
       // 2. 텔레그램 발송
       bot.sendMessage(
         process.env.TELEGRAM_CHAT_ID_BLON,
-        `블로뉴숲 신규 예약이 들어왔습니다.\n
-기간: ${picked}\n
-이름: ${name}\n
-전화번호: ${phone}\n
-인원수: ${person}명, 영유아 ${baby}명, 반려견 ${dog}마리\n
-추가침구: ${bedding}개\n
-바베큐 이용여부: ${barbecue}\n
-이용금액: ${price.toLocaleString()}\n
-환불옵션: ${priceOption === "refundable" ? "환불가능" : "환불불가"}\n`
+        `블로뉴숲 신규 예약이 들어왔습니다.\n` +
+        `\n` +
+        `기간: ${picked}\n` +
+        `\n` +
+        `이름: ${name}\n` +
+        `\n` +
+        `전화번호: ${phone}\n` +
+        `\n` +
+        `인원수: ${person}명, 영유아 ${baby}명, 반려견 ${dog}마리\n` +
+        `\n` +
+        `추가침구: ${bedding}개\n` +
+        `\n` +
+        `바베큐 이용여부: ${barbecue}\n` +
+        `\n` +
+        `이용금액: ${price.toLocaleString()}\n` +
+        `\n` +
+        `환불옵션: ${priceOption === "refundable" ? "환불가능" : "환불불가"}\n`
       );
     }
   );
@@ -278,7 +303,7 @@ router.post("/reservation/blon", (req, res) => {
         title: "블로뉴숲 안내문자",
         body: blonMMS(picked, person, baby, dog, barbecue, price),
         sendNo: process.env.MMS_SEND_NO,
-        recipientList: [{ recipientNo: phone }],
+        recipientList: [{recipientNo: phone}],
       },
       {
         headers: {
@@ -333,15 +358,23 @@ router.post("/reservation/space", (req, res) => {
       // 2. 텔레그램 발송
       bot.sendMessage(
         process.env.TELEGRAM_CHAT_ID_SPACE,
-        `온오프스페이스 신규 예약이 들어왔습니다.\n
-날짜: ${date}\n
-시간: ${time[0]}:00 ~ ${time[time.length - 1] + 1}:00\n
-이름: ${name}\n
-전화번호: ${phone}\n
-인원수: ${person}명\n
-사용목적: ${purpose}\n
-이용금액: ${price.toLocaleString()}\n
-환불옵션: ${priceOption === "refundable" ? "환불가능" : "환불불가"}`
+        `온오프스페이스 신규 예약이 들어왔습니다.\n` +
+        `\n` +
+        `날짜: ${date}\n` +
+        `\n` +
+        `시간: ${time[0]}:00 ~ ${time[time.length - 1] + 1}:00\n` +
+        `\n` +
+        `이름: ${name}\n` +
+        `\n` +
+        `전화번호: ${phone}\n` +
+        `\n` +
+        `인원수: ${person}명\n` +
+        `\n` +
+        `사용목적: ${purpose}\n` +
+        `\n` +
+        `이용금액: ${price.toLocaleString()}\n` +
+        `\n` +
+        `환불옵션: ${priceOption === "refundable" ? "환불가능" : "환불불가"}`
       );
     }
   );
@@ -354,7 +387,7 @@ router.post("/reservation/space", (req, res) => {
         title: "온오프스페이스 안내문자",
         body: spaceMMS(date, time, person, purpose, price),
         sendNo: process.env.MMS_SEND_NO,
-        recipientList: [{ recipientNo: phone }],
+        recipientList: [{recipientNo: phone}],
       },
       {
         headers: {
