@@ -172,3 +172,22 @@ export const spaceMMS = (date, time, person, purpose, price) => {
     '※ 본 전화번호는 발신 전용입니다.\n' +
     '※ 문의는 카카오톡(eunbibi1001) 또는 DM(onoff_space_)으로 부탁드립니다.';
 }
+
+export const appleMMS = (name, phone, fiveKg, tenKg, price, receiverName, receiverPhone, address) => {
+  return '백년한옥사과를 예약해주셔서 감사합니다. 문의사항은 언제든 편하게 연락주세요 :D\n' +
+    '\n' +
+    `입금하실 금액은 ${price.toLocaleString()}원 입니다.\n` +
+    '(입금계좌: 카카오 3333058451192 남은비)\n' +
+    '\n' +
+    '[구매정보]\n' +
+    `5 kg: ${fiveKg}박스\n` +
+    `10 kg: ${tenKg}박스\n` +
+    '\n' +
+    '[배송정보]\n' +
+    `받으실 분 성함: ${receiverName}\n` +
+    `받으실 분 전화번호: ${receiverPhone}\n` +
+    `받으실 분 주소: ${address}\n` +
+    '\n' +
+    '※ 본 전화번호는 발신 전용입니다.\n' +
+    '※ 문의는 010-3024-1517로 부탁드립니다.';
+}

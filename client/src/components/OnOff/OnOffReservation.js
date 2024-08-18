@@ -29,41 +29,43 @@ const OnOffReservation = ({picked, reservedName, reservedPhone}) => {
       return;
     }
 
-    const bedding = person > 4 ? 1 : 0;
-    try {
-      isRequested = true;
-      axios.post('/api/reservation/on_off', {
-        picked,
-        name,
-        phone,
-        person,
-        baby,
-        dog,
-        bedding,
-        barbecue,
-        price,
-        priceOption,
-      })
-        .then(() => {
-          alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${price.toLocaleString()}원입니다.`);
-          window.location.href = '/';
+    if (window.confirm(`성함: ${name}, 전화번호: ${phone}가 맞습니까?`)) {
+      const bedding = person > 4 ? 1 : 0;
+      try {
+        isRequested = true;
+        axios.post('/api/reservation/on_off', {
+          picked,
+          name,
+          phone,
+          person,
+          baby,
+          dog,
+          bedding,
+          barbecue,
+          price,
+          priceOption,
         })
-    } catch (e) {
-      isRequested = false;
-      alert('오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
-      console.log('error: /api/reservation/on_off');
-      console.log({
-        picked,
-        name,
-        phone,
-        person,
-        baby,
-        dog,
-        bedding,
-        barbecue,
-        price,
-        priceOption,
-      });
+          .then(() => {
+            alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${price.toLocaleString()}원입니다.`);
+            window.location.href = '/';
+          })
+      } catch (e) {
+        isRequested = false;
+        alert('오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+        console.log('error: /api/reservation/on_off');
+        console.log({
+          picked,
+          name,
+          phone,
+          person,
+          baby,
+          dog,
+          bedding,
+          barbecue,
+          price,
+          priceOption,
+        });
+      }
     }
   }
 

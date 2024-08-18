@@ -56,6 +56,12 @@ const Main = () => {
         </tr>
       </table>
 
+      <Link to='/apple'>
+        <button className="apple-btn">
+          🍎EVENT🍎<br/>백년한옥사과 예약하기
+        </button>
+      </Link>
+
       <div className='admin-btn' onClick={() => navigate('/admin')}>
         FOREST 100
       </div>

@@ -4,7 +4,7 @@ import 'react-calendar/dist/Calendar.css';
 import ForestReservation from "./ForestReservation";
 import ForestIntro from "./ForestIntro";
 import ForestCalendar from "./ForestCalendar";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import cn from 'classnames';
 import Header from "../Header/Header";
 
@@ -107,6 +107,15 @@ const Forest = () => {
           setPicked={setPicked}
           setCurrentPage={setCurrentPage}
         />
+      }
+
+      {
+        currentPage !== 'reservation' &&
+        <Link to='/apple'>
+          <div className="apple-icon">
+            🍎
+          </div>
+        </Link>
       }
     </div>
   );

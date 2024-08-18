@@ -5,7 +5,7 @@ import './Blon.scss';
 import BlonReservation from "./BlonReservation";
 import BlonIntro from "./BlonIntro";
 import BlonCalendar from "./BlonCalendar";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import cn from 'classnames';
 import Header from "../Header/Header";
 
@@ -108,6 +108,15 @@ const Blon = () => {
           setPicked={setPicked}
           setCurrentPage={setCurrentPage}
         />
+      }
+
+      {
+        currentPage !== 'reservation' &&
+        <Link to='/apple'>
+          <div className="apple-icon">
+            🍎
+          </div>
+        </Link>
       }
     </div>
   );

@@ -1,5 +1,5 @@
-import {useNavigate} from "react-router-dom";
-import {useEffect, useState} from "react";
+import {Link, useNavigate} from "react-router-dom";
+import React, {useEffect, useState} from "react";
 import cn from "classnames";
 import SpaceIntro from "./SpaceIntro";
 import SpaceCalendar from "./SpaceCalendar";
@@ -79,6 +79,15 @@ const Space = () => {
           time={time}
         />
       )}
+
+      {
+        currentPage !== 'reservation' &&
+        <Link to='/apple'>
+          <div className="apple-icon">
+            🍎
+          </div>
+        </Link>
+      }
     </div>
   );
 }

@@ -23,3 +23,16 @@ ul {
   padding-left: 20px;
 }
 
+.apple-icon {
+  position: sticky;
+  bottom: 20px;
+  margin-left: auto;
+  margin-right: 10px;
+  width: fit-content;
+  font-size: 50px;
+  z-index: 999;
+  background-color: white;
+  border-radius: 50%;
+  padding: 0 5px 10px 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}

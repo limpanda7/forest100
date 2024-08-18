@@ -4,7 +4,7 @@ import "react-calendar/dist/Calendar.css";
 import OnOffReservation from "./OnOffReservation";
 import OnOffIntro from "./OnOffIntro";
 import OnOffCalendar from "./OnOffCalendar";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import cn from "classnames";
 import OnOffReview from "./OnOffReview";
 import Header from "../Header/Header";
@@ -104,6 +104,15 @@ const OnOff = () => {
         />
       )}
       {currentPage === "review" && <OnOffReview />}
+
+      {
+        currentPage !== 'reservation' &&
+        <Link to='/apple'>
+          <div className="apple-icon">
+            🍎
+          </div>
+        </Link>
+      }
     </div>
   );
 };
