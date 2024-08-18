@@ -22,6 +22,10 @@ const Apple = () => {
   let isRequested = false;
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     calcPrice();
   }, [fiveKg, tenKg]);
 
