@@ -140,8 +140,16 @@ const Apple = () => {
 
             <div>
               <span className='input-label'>받으실 분 전화번호:</span>
-              <input type='text' value={receiverPhone} size='14'
-                     onChange={(e) => setReceiverPhone(e.target.value)}/>
+              <input
+                type='text'
+                value={receiverPhone}
+                size='14'
+                pattern='[0-9]*'
+                maxLength={11}
+                onChange={(e) => {
+                  if (e.target.validity.valid) setReceiverPhone(e.target.value)
+                }}
+              />
             </div>
 
             <div>
