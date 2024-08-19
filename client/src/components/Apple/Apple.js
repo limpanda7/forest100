@@ -147,7 +147,7 @@ const Apple = () => {
 
         <section className='Deposit'>
           <h2>🍎입금하기</h2>
-          <div className='BankAccount'>카카오 3333058451192 남은비</div>
+          <div className='BankAccount'>카카오 79420205681 남은비</div>
           <p>
             위 계좌로 <b>{price.toLocaleString()}원</b>을 입금해주세요.<br/>
           </p>

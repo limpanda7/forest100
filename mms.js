@@ -177,7 +177,7 @@ export const appleMMS = (name, phone, fiveKg, tenKg, price, receiverName, receiv
   return '백년한옥사과를 예약해주셔서 감사합니다. 문의사항은 언제든 편하게 연락주세요 :D\n' +
     '\n' +
     `입금하실 금액은 ${price.toLocaleString()}원 입니다.\n` +
-    '(입금계좌: 카카오 3333058451192 남은비)\n' +
+    '(입금계좌: 카카오 79420205681 남은비)\n' +
     '\n' +
     '[구매정보]\n' +
     `5 kg: ${fiveKg}박스\n` +
