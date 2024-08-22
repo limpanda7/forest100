@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Navigate, Route, Routes} from 'react-router-dom';
+import {Navigate, Route, Routes, useLocation} from 'react-router-dom';
 
 // styles
 import './styles/normalize.scss';
@@ -24,11 +24,19 @@ import Blon from "./components/Blon/Blon";
 import Admin from "./components/Admin/Admin";
 import Space from "./components/Space/Space";
 import Apple from "./components/Apple/Apple";
+import ReactGA from "react-ga4";
 
 const vh = window.innerHeight * 0.01;
 document.documentElement.style.setProperty('--vh', `${vh}px`);
 
 const App = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    // 페이지가 변경될 때마다 트래킹
+    ReactGA.send({ hitType: "pageview", page: location.pathname + location.search });
+  }, [location]);
+
   return (
     <Routes>
       <Route path='/' element={<Main/>}/>

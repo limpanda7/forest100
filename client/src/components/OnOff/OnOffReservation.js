@@ -3,6 +3,7 @@ import axios from "axios";
 import ReactModal from 'react-modal';
 import {ON_OFF_PRICE} from "../../constants";
 import {isHoliday, isSummer, isWeekday} from "../../utils/date";
+import ReactGA from "react-ga4";
 
 const OnOffReservation = ({picked, reservedName, reservedPhone}) => {
   const [person, setPerson] = useState(4);
@@ -46,6 +47,12 @@ const OnOffReservation = ({picked, reservedName, reservedPhone}) => {
           priceOption,
         })
           .then(() => {
+            ReactGA.event({
+              action: 'Reservation',
+              label: 'OnOff',
+              value: price,
+            });
+
             alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${price.toLocaleString()}원입니다.`);
             window.location.href = '/';
           })

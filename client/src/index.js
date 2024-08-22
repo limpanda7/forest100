@@ -4,6 +4,10 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from "react-router-dom";
 import ReactModal from "react-modal";
+import ReactGA from 'react-ga4';
+
+ReactGA.initialize("G-YN8XDEP980");
+ReactGA.send("pageview");
 
 ReactModal.setAppElement('#root');
 ReactDOM.render(

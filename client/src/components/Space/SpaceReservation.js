@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import {SPACE_PRICE} from "../../constants";
 import {isHoliday, isWeekday} from "../../utils/date";
 import axios from "axios";
+import ReactGA from "react-ga4";
 
 const SpaceReservation = ({ date, time }) => {
   const [person, setPerson] = useState(2);
@@ -44,6 +45,12 @@ const SpaceReservation = ({ date, time }) => {
         purpose,
       })
         .then(() => {
+          ReactGA.event({
+            action: 'Reservation',
+            label: 'Space',
+            value: price,
+          });
+
           alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${price.toLocaleString()}원입니다.`);
           window.location.href = '/';
         })

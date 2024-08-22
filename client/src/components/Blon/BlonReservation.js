@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import {BLON_PRICE} from "../../constants";
 import {isFriday, isHoliday, isSaturday, isSummerBlon, isWeekday} from "../../utils/date";
+import ReactGA from "react-ga4";
 
 const BlonReservation = ({picked}) => {
   const [person, setPerson] = useState(4);
@@ -49,6 +50,12 @@ const BlonReservation = ({picked}) => {
           priceOption,
         })
           .then(() => {
+            ReactGA.event({
+              action: 'Reservation',
+              label: 'Blon',
+              value: price,
+            });
+
             alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${price.toLocaleString()}원입니다.`);
             window.location.href = '/';
           })

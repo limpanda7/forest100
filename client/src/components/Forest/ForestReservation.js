@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import axios from "axios";
 import {FOREST_PRICE} from "../../constants";
 import {isFriday, isHoliday, isSummer, isWeekday} from "../../utils/date";
+import ReactGA from "react-ga4";
 
 const ForestReservation = ({picked}) => {
   const [person, setPerson] = useState(2);
@@ -49,6 +50,12 @@ const ForestReservation = ({picked}) => {
           priceOption
         })
           .then(() => {
+            ReactGA.event({
+              action: 'Reservation',
+              label: 'Forest',
+              value: price,
+            });
+
             alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${price.toLocaleString()}원입니다.`);
             window.location.href = '/';
           })

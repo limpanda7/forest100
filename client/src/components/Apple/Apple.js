@@ -4,6 +4,7 @@ import './Apple.scss';
 import AppleImg from '../../images/Apple.jpg';
 import axios from "axios";
 import {Helmet} from "react-helmet";
+import ReactGA from "react-ga4";
 
 const fiveKgPrice = 54000;
 const tenKgPrice = 88000;
@@ -72,6 +73,12 @@ const Apple = () => {
           address,
         })
           .then(() => {
+            ReactGA.event({
+              action: 'Reservation',
+              label: 'Apple',
+              value: price,
+            });
+
             alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${price.toLocaleString()}원입니다.`);
             window.location.href = '/';
           })
