@@ -5,6 +5,7 @@ import AppleImg from '../../images/Apple.jpg';
 import axios from "axios";
 import {Helmet} from "react-helmet";
 import ReactGA from "react-ga4";
+import Header from "../Header/Header";
 
 const fiveKgPrice = 54000;
 const tenKgPrice = 88000;
@@ -92,14 +93,15 @@ const Apple = () => {
   }
 
   return (
-    <>
-      <Helmet>
-        <title>::: 백년한옥사과 :::</title>
-      </Helmet>
+    <div className='Apple'>
+      <Header
+        title='백년한옥사과'
+        handleGoBack={() => navigate('/')}
+      />
 
       <div className='reservation-page'>
         <img src={AppleImg} alt="AppleImg" />
-        <div className='Apple contents'>
+        <div className='contents'>
           <section className='HowMany'>
             <h2>🍎수량</h2>
             <div>
@@ -204,7 +206,7 @@ const Apple = () => {
           </section>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
