@@ -3,7 +3,6 @@ import {useNavigate} from "react-router-dom";
 import './Apple.scss';
 import AppleImg from '../../images/Apple.jpg';
 import axios from "axios";
-import {Helmet} from "react-helmet";
 import ReactGA from "react-ga4";
 import Header from "../Header/Header";
 
@@ -75,7 +74,7 @@ const Apple = () => {
         })
           .then(() => {
             ReactGA.event({
-              action: 'Reservation',
+              event_name: 'purchase',
               label: 'Apple',
               value: price,
             });

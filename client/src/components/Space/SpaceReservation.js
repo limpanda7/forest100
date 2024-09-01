@@ -46,7 +46,7 @@ const SpaceReservation = ({ date, time }) => {
       })
         .then(() => {
           ReactGA.event({
-            action: 'Reservation',
+            event_name: 'purchase',
             label: 'Space',
             value: price,
           });

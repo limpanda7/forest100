@@ -48,7 +48,7 @@ const OnOffReservation = ({picked, reservedName, reservedPhone}) => {
         })
           .then(() => {
             ReactGA.event({
-              action: 'Reservation',
+              event_name: 'purchase',
               label: 'OnOff',
               value: price,
             });

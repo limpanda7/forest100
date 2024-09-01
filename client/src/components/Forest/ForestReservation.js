@@ -51,7 +51,7 @@ const ForestReservation = ({picked}) => {
         })
           .then(() => {
             ReactGA.event({
-              action: 'Reservation',
+              event_name: 'purchase',
               label: 'Forest',
               value: price,
             });
