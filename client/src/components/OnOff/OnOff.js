@@ -104,15 +104,6 @@ const OnOff = () => {
         />
       )}
       {currentPage === "review" && <OnOffReview />}
-
-      {
-        currentPage !== 'reservation' &&
-        <Link to='/apple'>
-          <div className="apple-icon">
-            🍎
-          </div>
-        </Link>
-      }
     </div>
   );
 };

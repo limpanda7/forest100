@@ -109,15 +109,6 @@ const Blon = () => {
           setCurrentPage={setCurrentPage}
         />
       }
-
-      {
-        currentPage !== 'reservation' &&
-        <Link to='/apple'>
-          <div className="apple-icon">
-            🍎
-          </div>
-        </Link>
-      }
     </div>
   );
 }
