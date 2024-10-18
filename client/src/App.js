@@ -18,6 +18,7 @@ import './styles/table.scss';
 
 // components
 import Main from './components/Main/Main';
+import MainV2 from "./components/MainV2/MainV2";
 import Forest from './components/Forest/Forest';
 import OnOff from "./components/OnOff/OnOff";
 import Blon from "./components/Blon/Blon";
@@ -39,6 +40,7 @@ const App = () => {
   return (
     <Routes>
       <Route path='/' element={<Main/>}/>
+      <Route path='/v2' element={<MainV2/>}/>
       <Route path='forest' element={<Forest />} />
       <Route path='boulogne' element={<Blon/>}/>
       <Route path='on-off' element={<OnOff />} />
