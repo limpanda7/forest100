@@ -7,10 +7,17 @@
 
   .brand-logo {
     @include flex-column-center;
+    background-image: url("../../images/wood.jpg");
     height: 100vh;
+
+    img {
+      width: 200px;
+    }
 
     p {
       text-align: center;
+      color: #fdf5e6;
+      font-size: 24px;
     }
   }
 

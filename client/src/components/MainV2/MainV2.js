@@ -9,6 +9,7 @@ import SpaceImg from '../../images/Space/1.jpg';
 import DangDangImg from '../../images/dangdang.jpg';
 import SunghoonImg from '../../images/sunghoon.jpg';
 import FarmImg from '../../images/farm.jpg';
+import LogoImg from '../../images/logo.png';
 import Layout from "../Layout/Layout";
 
 const MainV2 = () => {
@@ -26,7 +27,7 @@ const MainV2 = () => {
     <Layout>
       <div className='MainV2'>
         <section className='brand-logo'>
-          <h1>나믄자리</h1>
+          <img src={LogoImg} alt='logo' />
           <p>당신을 위해 남은 자리에서<br/>좋은 일이 생길거에요</p>
           <button className='project-intro-btn' onClick={() => navigate('/project-intro')}>
             프로젝트 소개

@@ -1,16 +1,16 @@
 .Layout {
   /* Position and sizing of burger button */
   .bm-burger-button {
-    position: absolute;
-    width: 30px;
-    height: 20px;
-    left: 30px;
-    top: 22px;
+    position: fixed;
+    width: 36px;
+    height: 30px;
+    left: 36px;
+    top: 36px;
   }
 
   /* Color/shape of burger icon bars */
   .bm-burger-bars {
-    background: #333;
+    background: #fdf5e6;
     height: 10% !important;
   }
 
@@ -66,11 +66,6 @@
     margin-bottom: 10px;
     font-size: 1.1em;
     transition: color 0.3s ease-in-out;
-  }
-
-  .bm-item:hover {
-    color: #007bff; /* 클릭 가능한 메뉴에 파란색 강조 효과 */
-    text-decoration: underline;
   }
 
   /* Styling of overlay */
