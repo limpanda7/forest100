@@ -28,7 +28,7 @@ const MainV2 = () => {
       <div className='MainV2'>
         <section className='brand-logo'>
           <img src={LogoImg} alt='logo' />
-          <p>당신을 위해 남은 자리에서<br/>좋은 일이 생길거에요</p>
+          <p>남아있는 것에서<br/>가치있는 것으로 바뀌는 순간</p>
           <button className='project-intro-btn' onClick={() => navigate('/project-intro')}>
             프로젝트 소개
           </button>
