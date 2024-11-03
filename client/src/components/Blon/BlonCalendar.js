@@ -142,7 +142,9 @@ const BlonCalendar = ({isLoading, picked, setPicked, setCurrentPage, reserved}) 
         {
           isLoading ?
             <div className='calendar'>
-              달력 로딩 중...
+              <div className='loading'>
+                <div className='spinner'/>
+              </div>
             </div>
             :
             <Calendar
