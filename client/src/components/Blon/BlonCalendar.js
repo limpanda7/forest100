@@ -139,21 +139,29 @@ const BlonCalendar = ({isLoading, picked, setPicked, setCurrentPage, reserved}) 
           (체크인 3시 / 체크아웃 11시)
         </p>
 
-        {
-          isLoading ?
-            <div className='calendar'>
-              <div className='loading'>
-                <div className='spinner'/>
-              </div>
-            </div>
-            :
-            <Calendar
-              isContinuous={true}
-              picked={picked}
-              setPicked={setPicked}
-              reserved={reserved}
-            />
-        }
+        <p>
+          현재 예약시스템 점검중입니다.<br/>
+          아래 연락처를 통해 예약 도와드리겠습니다<br/>
+          <a href='https://www.instagram.com/boulogne_forest/' target='_blank' className='anchor'>
+            <p>@boulogne_forest</p>
+          </a>
+        </p>
+
+        {/*{*/}
+        {/*  isLoading ?*/}
+        {/*    <div className='calendar'>*/}
+        {/*      <div className='loading'>*/}
+        {/*        <div className='spinner'/>*/}
+        {/*      </div>*/}
+        {/*    </div>*/}
+        {/*    :*/}
+        {/*    <Calendar*/}
+        {/*      isContinuous={true}*/}
+        {/*      picked={picked}*/}
+        {/*      setPicked={setPicked}*/}
+        {/*      reserved={reserved}*/}
+        {/*    />*/}
+        {/*}*/}
         <button className="large-btn" onClick={moveToReservation}>
           선택한 날짜로 예약하기
         </button>
