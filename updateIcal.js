@@ -19,6 +19,16 @@ export const updateIcal = (url, target) => {
       url,
       {},
       (err, res) => {
+        if (err) {
+          console.error(`Failed to fetch iCal data: ${err}`);
+          return;
+        }
+
+        if (!res) {
+          console.error("Error: iCal response is undefined or null.");
+          return;
+        }
+
         let values = [];
 
         Object.keys(res).map(key => {
