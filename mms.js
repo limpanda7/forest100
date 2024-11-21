@@ -157,17 +157,25 @@ export const blonMMS = (picked, person, baby, dog, barbecue, price) => {
 
 export const spaceMMS = (date, time, person, purpose, price) => {
   return '안녕하세요 온오프스페이스 입니다 :)\n' +
-    '예약해주셔서 감사합니다. 문의사항은 언제든 편하게 연락주세요 :D\n' +
-    '\n' +
-    `입금하실 금액은 ${price.toLocaleString()}원 입니다.\n` +
-    '3시간 내 입금 시 예약 확정됩니다.\n' +
-    '(입금계좌: 카카오 3333058451192 남은비)\n' +
+    '예약해주셔서 감사합니다. 출입도어락은 840314* 입니다.\n' +
     '\n' +
     '[예약정보]\n' +
     `날짜: ${date}\n` +
     `시간: ${time[0]}:00 ~ ${time[time.length - 1] + 1}:00\n` +
     `인원: ${person}명\n` +
     `사용목적: ${purpose}\n` +
+    '\n' +
+    '* 와이파이\n' +
+    'SK_WiFiGIGAF888_5G\n' +
+    'SK_WiFiGIGAF888_2.4G\n' +
+    '암호: CQP10@1713\n' +
+    '\n' +
+    '* 노트북 비번: 스페이스\n' +
+    '\n' +
+    '※ 아래 내용은 네이버페이 or 스페이스클라우드 예약의 경우 해당되지 않습니다.\n'+
+    `입금하실 금액은 ${price.toLocaleString()}원 입니다.\n` +
+    '3시간 내 입금 시 예약 확정됩니다.\n' +
+    '(입금계좌: 카카오 3333058451192 남은비)\n' +
     '\n' +
     '※ 본 전화번호는 발신 전용입니다.\n' +
     '※ 문의는 카카오톡(eunbibi1001) 또는 DM(onoff_space_)으로 부탁드립니다.';
