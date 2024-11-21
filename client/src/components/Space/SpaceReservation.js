@@ -110,7 +110,7 @@ const SpaceReservation = ({ date, time }) => {
       </section>
 
       <section className='HowMany'>
-        <h2>인원수 선택 (최대 8인)</h2>
+        <h2>인원수 선택 (최대 4인)</h2>
         <div>
           <p>인원</p>
           <button onClick={() => {
@@ -119,7 +119,7 @@ const SpaceReservation = ({ date, time }) => {
           </button>
           <span>{person}</span>
           <button onClick={() => {
-            if (person < 8) setPerson(person + 1)
+            if (person < 4) setPerson(person + 1)
           }}>+
           </button>
         </div>
