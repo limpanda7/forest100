@@ -157,18 +157,13 @@ export const blonMMS = (picked, person, baby, dog, barbecue, price) => {
 
 export const spaceMMS = (date, time, person, purpose, price) => {
   return '안녕하세요 온오프스페이스 입니다 :)\n' +
-    '예약해주셔서 감사합니다. 출입도어락은 840314* 입니다.\n' +
+    '예약해주셔서 감사합니다.\n' +
     '\n' +
     '[예약정보]\n' +
     `날짜: ${date}\n` +
     `시간: ${time[0]}:00 ~ ${time[time.length - 1] + 1}:00\n` +
     `인원: ${person}명\n` +
     `사용목적: ${purpose}\n` +
-    '\n' +
-    '* 와이파이\n' +
-    'SK_WiFiGIGAF888_5G\n' +
-    'SK_WiFiGIGAF888_2.4G\n' +
-    '암호: CQP10@1713\n' +
     '\n' +
     '* 노트북 비번: 스페이스\n' +
     '\n' +
