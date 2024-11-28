@@ -68,32 +68,21 @@ const ForestCalendar = ({isLoading, picked, setPicked, setCurrentPage, reserved}
           (체크인 3시 / 체크아웃 11시)
         </p>
 
-        <p>
-          현재 예약시스템 점검중입니다.<br/>
-          아래 연락처를 통해 예약 도와드리겠습니다<br/>
-          <li>카카오톡 ID: eunbibi1001</li>
-          <li>인스타그램:&nbsp;
-            <a href='https://www.instagram.com/hanok.100/' target='_blank' className='anchor'>
-              @hanok.100
-            </a>
-          </li>
-        </p>
-
-        {/*{*/}
-        {/*  isLoading ?*/}
-        {/*    <div className='calendar'>*/}
-        {/*      <div className='loading'>*/}
-        {/*        <div className='spinner' />*/}
-        {/*      </div>*/}
-        {/*    </div>*/}
-        {/*    :*/}
-        {/*    <Calendar*/}
-        {/*      isContinuous={true}*/}
-        {/*      picked={picked}*/}
-        {/*      setPicked={setPicked}*/}
-        {/*      reserved={reserved}*/}
-        {/*    />*/}
-        {/*}*/}
+        {
+          isLoading ?
+            <div className='calendar'>
+              <div className='loading'>
+                <div className='spinner' />
+              </div>
+            </div>
+            :
+            <Calendar
+              isContinuous={true}
+              picked={picked}
+              setPicked={setPicked}
+              reserved={reserved}
+            />
+        }
 
         <button className="large-btn" onClick={moveToReservation}>
           선택한 날짜로 예약하기
