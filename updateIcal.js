@@ -31,7 +31,7 @@ export const updateIcal = (url, target) => {
 
         let values = [];
 
-        Object.keys(res).map(key => {
+        Object.keys(res).forEach(key => {
           const {datetype, uid, start, end, summary, description} = res[key];
           let reservationId = null;
 
@@ -50,16 +50,37 @@ export const updateIcal = (url, target) => {
             const phoneLastDigits = !!description ? description.slice(description.length - 4, description.length) : null;
             const status = summary.startsWith('Airbnb') ? 'Not available' : summary;
 
-            values.push([uid, startDt, endDt, status, reservationId, phoneLastDigits])
+            values.push([uid, startDt, endDt, status, reservationId, phoneLastDigits]);
           }
         });
 
-        connection.query(`TRUNCATE TABLE ${target}_ical`, () => {
-          connection.query(`INSERT INTO ${target}_ical (uid, start_dt, end_dt, status, reservation_id, phone_last_digits) VALUES ?`, [values]);
+
+        if (values.length === 0) {
+          console.log(`No data to insert for target: ${target}_ical`);
+          return;
+        }
+
+        connection.query(`TRUNCATE TABLE ${target}_ical`, (truncateErr) => {
+          if (truncateErr) {
+            console.error(`Failed to truncate table: ${truncateErr}`);
+            return;
+          }
+
+          connection.query(
+            `INSERT INTO ${target}_ical (uid, start_dt, end_dt, status, reservation_id, phone_last_digits) VALUES ?`,
+            [values],
+            (insertErr) => {
+              if (insertErr) {
+                console.error(`Failed to insert data into ${target}_ical: ${insertErr}`);
+              } else {
+                console.log(`Successfully updated ${target}_ical with ${values.length} records.`);
+              }
+            }
+          );
         })
       }
     )
   } catch (e) {
-    console.log(`error: updateIcal on ${target}`);
+    console.error(`Error: updateIcal on ${target}: ${e.message}`);
   }
 }
