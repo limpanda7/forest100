@@ -116,7 +116,7 @@ const BlonCalendar = ({isLoading, picked, setPicked, setCurrentPage, reserved}) 
           <li>36개월 미만의 영유아는 무료입니다.</li>
           <li>반려견 1마리당: 1박 {BLON_PRICE.DOG.toLocaleString()}원</li>
           <li>바베큐 이용요금: {BLON_PRICE.BARBECUE.toLocaleString()}원</li>
-          <li>입금계좌: 우체국 01414202194793 남은진</li>
+          <li>입금계좌: 카카오 79420661213 남은진</li>
           <li>
             <span className='anchor' onClick={() => setShowRefund(!showRefund)}>환불 규정 보기</span>
             {
