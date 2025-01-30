@@ -18,14 +18,11 @@ connection.connect();
 const token = process.env.TELEGRAM_TOKEN;
 const bot = new TelegramBot(token);
 
-export const updateIcal = (url, target) => {
+let errorCount = 0;
+let alertSent = false;
+const MAX_ERROR_COUNT = 3;
 
-  let chatId = null;
-  if (target === 'forest') {
-    chatId = process.env.TELEGRAM_CHAT_ID_FOREST;
-  } else if (target === 'blon') {
-    chatId = process.env.TELEGRAM_CHAT_ID_BLON;
-  }
+export const updateIcal = (url, target) => {
 
   try {
     ical.fromURL(
@@ -33,14 +30,16 @@ export const updateIcal = (url, target) => {
       {},
       (err, res) => {
         if (err) {
-          console.error(`Failed to fetch iCal data: ${err}`);
-          bot.sendMessage(chatId, `iCal 데이터 가져오기 실패: ${err.message}`);
+          console.error(`Failed to fetch iCal data for ${target}: ${err.message}`);
+          errorCount += 1;
+          checkAndSendAlert();
           return;
         }
 
         if (!res) {
-          console.error("Error: iCal response is undefined or null.");
-          bot.sendMessage(chatId, `iCal 응답이 비어있습니다. 대상: ${target}`);
+          console.error(`iCal response is empty for ${target}`);
+          errorCount += 1;
+          checkAndSendAlert();
           return;
         }
 
@@ -71,15 +70,17 @@ export const updateIcal = (url, target) => {
 
 
         if (values.length === 0) {
-          console.log(`No data to insert for target: ${target}_ical`);
-          bot.sendMessage(chatId, `iCal 데이터가 비어 있습니다 대상: ${target}`);
+          console.log(`No data to insert for ${target}_ical`);
+          errorCount += 1;
+          checkAndSendAlert();
           return;
         }
 
         connection.query(`TRUNCATE TABLE ${target}_ical`, (truncateErr) => {
           if (truncateErr) {
-            console.error(`Failed to truncate table: ${truncateErr}`);
-            bot.sendMessage(chatId, `테이블 정리 실패: ${truncateErr.message}`);
+            console.error(`Failed to truncate table ${target}_ical: ${truncateErr.message}`);
+            errorCount += 1;
+            checkAndSendAlert();
             return;
           }
 
@@ -88,17 +89,29 @@ export const updateIcal = (url, target) => {
             [values],
             (insertErr) => {
               if (insertErr) {
-                console.error(`Failed to insert data into ${target}_ical: ${insertErr}`);
-                bot.sendMessage(chatId, `데이터 삽입 실패: ${insertErr.message}`);
+                console.error(`Failed to insert data into ${target}_ical: ${insertErr.message}`);
+                errorCount += 1;
+                checkAndSendAlert();
               } else {
-                console.log(`Successfully updated ${target}_ical with ${values.length} records.`);
+                errorCount = 0;
+                alertSent = false;
               }
             }
           );
-        })
+        });
       }
-    )
+    );
   } catch (e) {
-    console.error(`Error: updateIcal on ${target}: ${e.message}`);
+    console.error(`Error in updateIcal for ${target}: ${e.message}`);
+    errorCount += 1;
+    checkAndSendAlert();
   }
-}
+};
+
+// 특정 횟수 이상 오류 발생 시 통합 알림 전송
+const checkAndSendAlert = () => {
+  if (errorCount >= MAX_ERROR_COUNT && !alertSent) {
+    bot.sendMessage(process.env.TELEGRAM_CHAT_ID_FOREST, `⚠️서버 상태를 확인하세요`);
+    alertSent = true; // 한 번만 알림을 보내도록 설정
+  }
+};
