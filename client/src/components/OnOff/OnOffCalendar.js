@@ -19,8 +19,8 @@ const OnOffCalendar = ({
     }
 
     const timer = setTimeout(() => {
+      setIsLoading(false);
       if (reserved.length === 0) {
-        setIsLoading(false);
         setShowError(true);
       }
     }, 5000); // 5초 기다림
