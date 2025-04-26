@@ -1,47 +1,24 @@
-import React, {useMemo, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import Calendar from "../Calendar/Calendar";
 import {BLON_PRICE} from "../../constants";
 
-const BlonCalendar = ({isLoading, picked, setPicked, setCurrentPage, reserved}) => {
+const BlonCalendar = ({isLoading, setIsLoading, picked, setPicked, setCurrentPage, reserved}) => {
   const [showRefund, setShowRefund] = useState(false);
-  const [selected, setSelected] = useState(null);
+  const [showError, setShowError] = useState(false);
 
-  const checker = useMemo(() => {
-    const map = {};
-
-    reserved.forEach(({checkin_date, checkout_date}) => {
-      const checkinTimestamp = new Date(checkin_date).valueOf();
-      const checkoutTimestamp = new Date(checkout_date).valueOf();
-
-      map[checkinTimestamp] = {
-        ...map[checkinTimestamp],
-        checkIn: true,
-      };
-      map[checkoutTimestamp] = {
-        ...map[checkoutTimestamp],
-        checkOut: true,
-      };
-    });
-    return map;
-  }, [reserved]);
-
-  const maxDate = useMemo(() => {
-    let maxDate;
-
-    if (selected) {
-      reserved.forEach(({checkin_date, checkout_date}) => {
-        const checkinTimestamp = new Date(checkin_date).valueOf();
-        const checkoutTimestamp = new Date(checkout_date).valueOf();
-        if (selected?.valueOf() < checkinTimestamp.valueOf()) {
-          if (!maxDate || maxDate > checkinTimestamp.valueOf()) {
-            maxDate = checkinTimestamp.valueOf();
-          }
-        }
-      });
+  useEffect(() => {
+    if (!isLoading) {
+      setIsLoading(true);
     }
-
-    return new Date(maxDate);
-  }, [reserved, selected]);
+    
+    const timer = setTimeout(() => {
+      if (reserved.length === 0) {
+        setIsLoading(false);
+        setShowError(true);
+      }
+    }, 5000); // 5초 기다림
+    return () => clearTimeout(timer); // cleanup
+  }, [reserved]);
 
   const moveToReservation = () => {
     if (picked.length === 0) {
@@ -52,36 +29,6 @@ const BlonCalendar = ({isLoading, picked, setPicked, setCurrentPage, reserved}) 
     } else {
       setCurrentPage("reservation");
       window.scrollTo(0, 0);
-    }
-  };
-
-  const calcRange = (value) => {
-    if (selected) {
-      let tempArr = [];
-
-      // 모든 날짜 계산
-      let startDate = new Date(value[0]);
-      let endDate = new Date(value[1]);
-      startDate.setDate(startDate.getDate() + 1);
-      endDate.setDate(endDate.getDate() + 1);
-      while (startDate <= endDate) {
-        tempArr.push(startDate.toISOString().split("T")[0]);
-        startDate.setDate(startDate.getDate() + 1);
-      }
-
-      // 마감된 날짜와 겹치는지 여부
-      for (const element of tempArr) {
-        if (reserved.includes(element)) {
-          alert(
-            "예약할 수 없는 날짜가 포함되어 있습니다. 날짜를 다시 선택해주세요."
-          );
-          setPicked([]);
-          return false;
-        }
-      }
-
-      setPicked(tempArr);
-      setSelected(null);
     }
   };
 
@@ -133,30 +80,43 @@ const BlonCalendar = ({isLoading, picked, setPicked, setCurrentPage, reserved}) 
 
       <section>
         <div className="DescTitle">Reservation</div>
-        <p>
-          체크인 날짜와 체크아웃 날짜를 선택해주세요.
-          <br/>
-          (체크인 3시 / 체크아웃 11시)
-        </p>
 
         {
-          isLoading ?
+          isLoading ? (
             <div className='calendar'>
               <div className='loading'>
                 <div className='spinner'/>
               </div>
             </div>
-            :
-            <Calendar
-              isContinuous={true}
-              picked={picked}
-              setPicked={setPicked}
-              reserved={reserved}
-            />
+          ) : showError ? (
+            <div className="calendar">
+              <p style={{ textAlign: "center", marginTop: "20px" }}>
+                예약 내역을 불러오지 못했습니다.<br/>
+                DM으로 문의해주세요.
+                <a href='https://www.instagram.com/boulogne_forest/' target='_blank' className='anchor'>
+                  <p>@boulogne_forest</p>
+                </a>
+              </p>
+            </div>
+          ) : (
+            <>
+              <p>
+                체크인 날짜와 체크아웃 날짜를 선택해주세요.
+                <br/>
+                (체크인 3시 / 체크아웃 11시)
+              </p>
+              <Calendar
+                isContinuous={true}
+                picked={picked}
+                setPicked={setPicked}
+                reserved={reserved}
+              />
+              <button className="large-btn" onClick={moveToReservation}>
+                선택한 날짜로 예약하기
+              </button>
+            </>
+          )
         }
-        <button className="large-btn" onClick={moveToReservation}>
-          선택한 날짜로 예약하기
-        </button>
       </section>
     </div>
   );

@@ -98,6 +98,7 @@ const Blon = () => {
           setPicked={setPicked}
           setCurrentPage={setCurrentPage}
           isLoading={isLoading}
+          setIsLoading={setIsLoading}
           reserved={reserved}
         />
       }

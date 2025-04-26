@@ -1,10 +1,25 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Calendar from "../Calendar/Calendar";
 import {FOREST_PRICE} from "../../constants";
 
-const ForestCalendar = ({isLoading, picked, setPicked, setCurrentPage, reserved}) => {
+const ForestCalendar = ({isLoading, setIsLoading, picked, setPicked, setCurrentPage, reserved}) => {
   const [showRefund, setShowRefund] = useState(false);
+  const [showError, setShowError] = useState(false);
 
+  useEffect(() => {
+    if (!isLoading) {
+      setIsLoading(true);
+    }
+
+    const timer = setTimeout(() => {
+      if (reserved.length === 0) {
+        setIsLoading(false);
+        setShowError(true);
+      }
+    }, 5000); // 5초 기다림
+    return () => clearTimeout(timer); // cleanup
+  }, [reserved]);
+  
   const moveToReservation = () => {
     if (picked.length === 0) {
       alert("예약 날짜를 선택해주세요!");
@@ -62,31 +77,46 @@ const ForestCalendar = ({isLoading, picked, setPicked, setCurrentPage, reserved}
 
       <section>
         <div className="DescTitle">Reservation</div>
-        <p>
-          체크인 날짜와 체크아웃 날짜를 선택해주세요.
-          <br/>
-          (체크인 3시 / 체크아웃 11시)
-        </p>
 
         {
-          isLoading ?
+          isLoading ? (
             <div className='calendar'>
               <div className='loading'>
                 <div className='spinner' />
               </div>
             </div>
-            :
-            <Calendar
-              isContinuous={true}
-              picked={picked}
-              setPicked={setPicked}
-              reserved={reserved}
-            />
+          ): showError ? (
+            <div className="calendar">
+              <p style={{ textAlign: "center", marginTop: "20px" }}>
+                예약 내역을 불러오지 못했습니다.<br/>
+                DM으로 문의해주세요.
+                <li>카카오톡 ID: skfk1600</li>
+                <li>인스타그램:&nbsp;
+                  <a href='https://www.instagram.com/on.offstay/' target='_blank' className='anchor'>
+                    @on.offstay
+                  </a>
+                </li>
+              </p>
+            </div>
+          ) : (
+            <>
+              <p>
+                체크인 날짜와 체크아웃 날짜를 선택해주세요.
+                <br/>
+                (체크인 3시 / 체크아웃 11시)
+              </p>
+              <Calendar
+                isContinuous={true}
+                picked={picked}
+                setPicked={setPicked}
+                reserved={reserved}
+              />
+              <button className="large-btn" onClick={moveToReservation}>
+                선택한 날짜로 예약하기
+              </button>
+            </>
+          )
         }
-
-        <button className="large-btn" onClick={moveToReservation}>
-          선택한 날짜로 예약하기
-        </button>
       </section>
     </div>
   );

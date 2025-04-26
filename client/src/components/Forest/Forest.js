@@ -97,6 +97,7 @@ const Forest = () => {
           setPicked={setPicked}
           setCurrentPage={setCurrentPage}
           isLoading={isLoading}
+          setIsLoading={setIsLoading}
           reserved={reserved}
         />
       }
