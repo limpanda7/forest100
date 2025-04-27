@@ -25,7 +25,7 @@ const OnOffCalendar = ({
       }
     }, 5000); // 5초 기다림
     return () => clearTimeout(timer); // cleanup
-  }, [reserved]);
+  }, []);
   
   const moveToReservation = () => {
     if (picked.length === 0) {
@@ -95,13 +95,13 @@ const OnOffCalendar = ({
             </div>
           ): showError ? (
             <div className="calendar">
-              <p style={{ textAlign: "center", marginTop: "20px" }}>
+              <p style={{ marginTop: "20px" }}>
                 예약 내역을 불러오지 못했습니다.<br/>
                 DM으로 문의해주세요.
-                <li>카카오톡 ID: eunbibi1001</li>
+                <li>카카오톡 ID: skfk1600</li>
                 <li>인스타그램:&nbsp;
-                  <a href='https://www.instagram.com/hanok.100/' target='_blank' className='anchor'>
-                    @hanok.100
+                  <a href='https://www.instagram.com/on.offstay/' target='_blank' className='anchor'>
+                    @on.offstay
                   </a>
                 </li>
               </p>

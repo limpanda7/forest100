@@ -18,7 +18,7 @@ const BlonCalendar = ({isLoading, setIsLoading, picked, setPicked, setCurrentPag
       }
     }, 5000); // 5초 기다림
     return () => clearTimeout(timer); // cleanup
-  }, [reserved]);
+  }, []);
 
   const moveToReservation = () => {
     if (picked.length === 0) {
@@ -90,7 +90,7 @@ const BlonCalendar = ({isLoading, setIsLoading, picked, setPicked, setCurrentPag
             </div>
           ) : showError ? (
             <div className="calendar">
-              <p style={{ textAlign: "center", marginTop: "20px" }}>
+              <p style={{ marginTop: "20px" }}>
                 예약 내역을 불러오지 못했습니다.<br/>
                 DM으로 문의해주세요.
                 <a href='https://www.instagram.com/boulogne_forest/' target='_blank' className='anchor'>
