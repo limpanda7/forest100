@@ -79,7 +79,10 @@ const Forest = () => {
           </div>
           <div
             className={cn('Tab', {Active: currentPage === 'calendar'})}
-            onClick={() => setCurrentPage('calendar')}
+            onClick={() => {
+              window.decibelInsight('sendTrackedEvent', 'forest - reservation', 100);
+              setCurrentPage('calendar');
+            }}
           >
             예약하기
           </div>
