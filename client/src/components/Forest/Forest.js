@@ -19,18 +19,30 @@ const Forest = () => {
     getReserved();
 
     const script = document.createElement('script');
-    script.src = 'https://cdn.decibelinsight.net/i/14230/2869932/di.js';
+    script.src = 'https://cdn.decibelinsight.net/i/14089/939431/di.js';
     script.async = true;
 
-    // 초기 변수 설정 (필수)
-    window.decibelInsight = window.decibelInsight || function () {
+    script.onload = () => {
+      console.log('✅ DXA script loaded');
+      // 1~2초 기다렸다가 상태 확인
+      setTimeout(() => {
+        console.log('typeof decibelInsight:', typeof window.decibelInsight);
+        console.log('typeof decibelInsight.isCollecting:', typeof window.decibelInsight.isCollecting);
+        console.log('isCollecting call:', window.decibelInsight.isCollecting?.());
+        console.log('getSessionId call:', window.decibelInsight.getSessionId?.());
+      }, 1500);
+    };
+
+    script.onerror = () => {
+      console.error('❌ Failed to load DXA script');
+    };
+
+    window.decibelInsight = function () {
       (window.decibelInsight.q = window.decibelInsight.q || []).push(arguments);
     };
-    window._da_ = window._da_ || [];
+    window._da_ = [];
 
     document.body.appendChild(script);
-
-    console.log('📦 DXA script appended after React is ready');
   }, []);
 
   useEffect(() => {
