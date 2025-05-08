@@ -80,7 +80,7 @@ const Forest = () => {
           <div
             className={cn('Tab', {Active: currentPage === 'calendar'})}
             onClick={() => {
-              window.decibelInsight('sendTrackedEvent', 'forest - reservation', 100);
+              window.decibelInsight('sendTrackedEvent', '테스트 이벤트', 100);
               setCurrentPage('calendar');
             }}
           >
