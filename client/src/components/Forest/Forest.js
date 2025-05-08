@@ -17,6 +17,20 @@ const Forest = () => {
 
   useEffect(() => {
     getReserved();
+
+    const script = document.createElement('script');
+    script.src = 'https://cdn.decibelinsight.net/i/14230/2869932/di.js';
+    script.async = true;
+
+    // 초기 변수 설정 (필수)
+    window.decibelInsight = window.decibelInsight || function () {
+      (window.decibelInsight.q = window.decibelInsight.q || []).push(arguments);
+    };
+    window._da_ = window._da_ || [];
+
+    document.body.appendChild(script);
+
+    console.log('📦 DXA script appended after React is ready');
   }, []);
 
   useEffect(() => {
