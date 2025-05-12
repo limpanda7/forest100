@@ -16,7 +16,7 @@ const BlonCalendar = ({isLoading, setIsLoading, picked, setPicked, setCurrentPag
       if (reserved.length === 0) {
         setShowError(true);
       }
-    }, 5000); // 5초 기다림
+    }, 7000);
     return () => clearTimeout(timer); // cleanup
   }, []);
 
