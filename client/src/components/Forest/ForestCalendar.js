@@ -1,24 +1,9 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import Calendar from "../Calendar/Calendar";
 import {FOREST_PRICE} from "../../constants";
 
-const ForestCalendar = ({isLoading, setIsLoading, picked, setPicked, setCurrentPage, reserved}) => {
+const ForestCalendar = ({isLoading, isError, picked, setPicked, setCurrentPage, reserved}) => {
   const [showRefund, setShowRefund] = useState(false);
-  const [showError, setShowError] = useState(false);
-
-  useEffect(() => {
-    if (!isLoading) {
-      setIsLoading(true);
-    }
-
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-      if (reserved.length === 0) {
-        setShowError(true);
-      }
-    }, 7000);
-    return () => clearTimeout(timer); // cleanup
-  }, []);
   
   const moveToReservation = () => {
     if (picked.length === 0) {
@@ -85,7 +70,7 @@ const ForestCalendar = ({isLoading, setIsLoading, picked, setPicked, setCurrentP
                 <div className='spinner' />
               </div>
             </div>
-          ): showError ? (
+          ): isError ? (
             <div className="calendar">
               <p style={{ marginTop: "20px" }}>
                 예약 내역을 불러오지 못했습니다.<br/>

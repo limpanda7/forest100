@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import axios from "axios";
 import 'react-calendar/dist/Calendar.css';
 import './Blon.scss';
 import BlonReservation from "./BlonReservation";
@@ -8,12 +7,14 @@ import BlonCalendar from "./BlonCalendar";
 import {Link, useNavigate} from "react-router-dom";
 import cn from 'classnames';
 import Header from "../Header/Header";
+import {getCombinedReservation} from "../../utils/reservation";
 
 const Blon = () => {
   const [currentPage, setCurrentPage] = useState('intro');
   const [reserved, setReserved] = useState([]);
   const [picked, setPicked] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,32 +26,17 @@ const Blon = () => {
   }, [currentPage]);
 
   const getReserved = async () => {
-    const {data: homepageReserved} = await axios.get("/api/reservation/blon");
-    const {data: airbnbReserved} = await axios.get("/api/ical/blon");
+    try {
+      setIsLoading(true);
+      setIsError(false);
 
-    let tempReserved = [];
-    for (const element of homepageReserved) {
-      tempReserved.push({
-        checkin_date: new Date(
-          new Date(element.checkin_date).toISOString().slice(0, -1)
-        ).toString(),
-        checkout_date: new Date(
-          new Date(element.checkout_date).toISOString().slice(0, -1)
-        ).toString(),
-      });
+      const data = await getCombinedReservation("blon");
+      setReserved(data);
+    } catch (e) {
+      setIsError(true);
+    } finally {
+      setIsLoading(false);
     }
-    for (const element of airbnbReserved) {
-      tempReserved.push({
-        checkin_date: new Date(
-          new Date(element.start_dt).toISOString().slice(0, -1)
-        ).toString(),
-        checkout_date: new Date(
-          new Date(element.end_dt).toISOString().slice(0, -1)
-        ).toString(),
-      });
-    }
-    setReserved(tempReserved);
-    setIsLoading(false);
   };
 
   const handleGoBack = () => {
@@ -98,7 +84,7 @@ const Blon = () => {
           setPicked={setPicked}
           setCurrentPage={setCurrentPage}
           isLoading={isLoading}
-          setIsLoading={setIsLoading}
+          isError={isError}
           reserved={reserved}
         />
       }

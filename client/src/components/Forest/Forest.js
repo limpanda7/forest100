@@ -7,9 +7,11 @@ import ForestCalendar from "./ForestCalendar";
 import {useNavigate} from "react-router-dom";
 import cn from 'classnames';
 import Header from "../Header/Header";
+import {getCombinedReservation} from "../../utils/reservation";
 
 const Forest = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
   const [currentPage, setCurrentPage] = useState('intro');
   const [reserved, setReserved] = useState([]);
   const [picked, setPicked] = useState([]);
@@ -50,32 +52,17 @@ const Forest = () => {
   }, [currentPage]);
 
   const getReserved = async () => {
-    const {data: homepageReserved} = await axios.get("/api/reservation/forest");
-    const {data: airbnbReserved} = await axios.get("/api/ical/forest");
+    try {
+      setIsLoading(true);
+      setIsError(false);
 
-    let tempReserved = [];
-    for (const element of homepageReserved) {
-      tempReserved.push({
-        checkin_date: new Date(
-          new Date(element.checkin_date).toISOString().slice(0, -1)
-        ).toString(),
-        checkout_date: new Date(
-          new Date(element.checkout_date).toISOString().slice(0, -1)
-        ).toString(),
-      });
+      const data = await getCombinedReservation("forest");
+      setReserved(data);
+    } catch (e) {
+      setIsError(true);
+    } finally {
+      setIsLoading(false);
     }
-    for (const element of airbnbReserved) {
-      tempReserved.push({
-        checkin_date: new Date(
-          new Date(element.start_dt).toISOString().slice(0, -1)
-        ).toString(),
-        checkout_date: new Date(
-          new Date(element.end_dt).toISOString().slice(0, -1)
-        ).toString(),
-      });
-    }
-    setReserved(tempReserved);
-    setIsLoading(false);
   };
 
   const handleGoBack = () => {
@@ -126,7 +113,7 @@ const Forest = () => {
           setPicked={setPicked}
           setCurrentPage={setCurrentPage}
           isLoading={isLoading}
-          setIsLoading={setIsLoading}
+          isError={isError}
           reserved={reserved}
         />
       }
