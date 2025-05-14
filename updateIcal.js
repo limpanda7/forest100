@@ -28,72 +28,83 @@ export const updateIcal = (url, target) => {
       url,
       {},
       (err, res) => {
-        if (err) {
-          console.error(`iCal error: Failed to fetch iCal data for ${target}: ${err.message}`);
-          checkAndSendAlert();
-          return;
-        }
+        try {
+          if (err) {
+            console.error(`iCal error: Failed to fetch iCal data for ${target}: ${err.message}`);
+            checkAndSendAlert(target, `fetch error - ${err.message}`);
+            return;
+          }
 
-        if (!res) {
-          console.error(`iCal error: iCal response is empty for ${target}`);
-          checkAndSendAlert();
-          return;
-        }
+          if (!res) {
+            console.error(`iCal error: iCal response is empty for ${target}`);
+            checkAndSendAlert(target, 'response empty');
+            return;
+          }
 
-        let values = [];
+          let values = [];
 
-        Object.keys(res).forEach(key => {
-          const {datetype, uid, start, end, summary, description} = res[key];
-          let reservationId = null;
+          for (const key of Object.keys(res)) {
+            try {
+              const {datetype, uid, start, end, summary, description} = res[key];
+              let reservationId = null;
 
-          if (datetype === 'date') {
-            if (!!description) {
-              const regex = /Reservation URL: https:\/\/www\.airbnb\.com\/hosting\/reservations\/details\/(\w+)/;
-              const match = description.match(regex);
+              if (datetype === 'date') {
+                if (!!description) {
+                  const regex = /Reservation URL: https:\/\/www\.airbnb\.com\/hosting\/reservations\/details\/(\w+)/;
+                  const match = description.match(regex);
 
-              if (match && match.length > 1) {
-                reservationId = match[1];
+                  if (match && match.length > 1) {
+                    reservationId = match[1];
+                  }
+                }
+
+                const startDt = moment(start).format('YYYY-MM-DD');
+                const endDt = moment(end).format('YYYY-MM-DD');
+                const phoneLastDigits = !!description ? description.slice(description.length - 4, description.length) : null;
+                const status = summary.startsWith('Airbnb') ? 'Not available' : summary;
+
+                values.push([uid, startDt, endDt, status, reservationId, phoneLastDigits]);
+              }
+            } catch (e) {
+              console.warn(`⚠️ Error parsing single entry: ${e.message}`);
+              checkAndSendAlert(target, `entry parse error - ${e.message}`);
+            }
+          }
+
+
+          if (values.length === 0) {
+            console.log(`iCal error: No data to insert for ${target}_ical`);
+            checkAndSendAlert();
+            return;
+          }
+
+          connection.query(
+            `INSERT INTO ${target}_ical
+                 (uid, start_dt, end_dt, status, reservation_id, phone_last_digits)
+             VALUES ? ON DUPLICATE KEY
+            UPDATE
+                start_dt =
+            VALUES (start_dt), end_dt =
+            VALUES (end_dt), status =
+            VALUES (status), reservation_id =
+            VALUES (reservation_id), phone_last_digits =
+            VALUES (phone_last_digits)
+            `,
+            [values],
+            (insertErr) => {
+              if (insertErr) {
+                console.error(`iCal error: Failed to upsert data into ${target}_ical: ${insertErr.message}`);
+                checkAndSendAlert(target, `db upsert error - ${insertErr.message}`);
+              } else {
+                errorCount = 0;
+                alertSent = false;
               }
             }
-
-            const startDt = moment(start).format('YYYY-MM-DD');
-            const endDt = moment(end).format('YYYY-MM-DD');
-            const phoneLastDigits = !!description ? description.slice(description.length - 4, description.length) : null;
-            const status = summary.startsWith('Airbnb') ? 'Not available' : summary;
-
-            values.push([uid, startDt, endDt, status, reservationId, phoneLastDigits]);
-          }
-        });
-
-
-        if (values.length === 0) {
-          console.log(`iCal error: No data to insert for ${target}_ical`);
-          checkAndSendAlert();
-          return;
+          );
+        } catch (innerErr) {
+          console.error(`❌ Unexpected error in handler: ${innerErr.message}`);
+          checkAndSendAlert(target, `handler error - ${innerErr.message}`);
         }
-
-        connection.query(
-          `INSERT INTO ${target}_ical 
-            (uid, start_dt, end_dt, status, reservation_id, phone_last_digits) 
-           VALUES ? 
-           ON DUPLICATE KEY UPDATE 
-            start_dt = VALUES(start_dt), 
-            end_dt = VALUES(end_dt), 
-            status = VALUES(status), 
-            reservation_id = VALUES(reservation_id), 
-            phone_last_digits = VALUES(phone_last_digits)
-          `,
-          [values],
-          (insertErr) => {
-            if (insertErr) {
-              console.error(`iCal error: Failed to upsert data into ${target}_ical: ${insertErr.message}`);
-              checkAndSendAlert();
-            } else {
-              errorCount = 0;
-              alertSent = false;
-            }
-          }
-        );
       }
     );
   } catch (e) {
@@ -103,13 +114,14 @@ export const updateIcal = (url, target) => {
 };
 
 // 특정 횟수 이상 오류 발생 시 통합 알림 전송
-const checkAndSendAlert = () => {
+const checkAndSendAlert = (target, errorMessage = '') => {
   if (!alertSent) {
     errorCount += 1;
 
     if (errorCount >= 3) {
-      bot.sendMessage(process.env.TELEGRAM_CHAT_ID_FOREST, `⚠️서버 상태를 확인하세요`);
-      alertSent = true; // 한 번만 알림을 보내도록 설정
+      const fullMessage = `⚠️서버 상태를 확인하세요\n\n${target}: ${errorMessage}`;
+      bot.sendMessage(process.env.TELEGRAM_CHAT_ID_FOREST, fullMessage);
+      alertSent = true;
     }
   }
 };
