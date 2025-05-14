@@ -72,27 +72,28 @@ export const updateIcal = (url, target) => {
           return;
         }
 
-        connection.query(`TRUNCATE TABLE ${target}_ical`, (truncateErr) => {
-          if (truncateErr) {
-            console.error(`iCal error: Failed to truncate table ${target}_ical: ${truncateErr.message}`);
-            checkAndSendAlert();
-            return;
-          }
-
-          connection.query(
-            `INSERT INTO ${target}_ical (uid, start_dt, end_dt, status, reservation_id, phone_last_digits) VALUES ?`,
-            [values],
-            (insertErr) => {
-              if (insertErr) {
-                console.error(`iCal error: Failed to insert data into ${target}_ical: ${insertErr.message}`);
-                checkAndSendAlert();
-              } else {
-                errorCount = 0;
-                alertSent = false;
-              }
+        connection.query(
+          `INSERT INTO ${target}_ical 
+            (uid, start_dt, end_dt, status, reservation_id, phone_last_digits) 
+           VALUES ? 
+           ON DUPLICATE KEY UPDATE 
+            start_dt = VALUES(start_dt), 
+            end_dt = VALUES(end_dt), 
+            status = VALUES(status), 
+            reservation_id = VALUES(reservation_id), 
+            phone_last_digits = VALUES(phone_last_digits)
+          `,
+          [values],
+          (insertErr) => {
+            if (insertErr) {
+              console.error(`iCal error: Failed to upsert data into ${target}_ical: ${insertErr.message}`);
+              checkAndSendAlert();
+            } else {
+              errorCount = 0;
+              alertSent = false;
             }
-          );
-        });
+          }
+        );
       }
     );
   } catch (e) {

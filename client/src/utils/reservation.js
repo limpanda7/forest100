@@ -1,4 +1,3 @@
-// src/api/reservationUtils.js
 import axios from "axios";
 
 export const getCombinedReservation = async (target) => {
@@ -18,6 +17,19 @@ export const getCombinedReservation = async (target) => {
     ];
   } catch (err) {
     console.error(`예약 데이터 불러오기 실패 (${target}):`, err);
-    throw err; // 호출부에서 isError 처리 가능하도록
+    throw err;
+  }
+};
+
+export const getHomepageReservation = async (target) => {
+  try {
+    const { data } = await axios.get(`/api/reservation/${target}`);
+    return data.map(el => ({
+      checkin_date: new Date(new Date(el.checkin_date).toISOString().slice(0, -1)).toString(),
+      checkout_date: new Date(new Date(el.checkout_date).toISOString().slice(0, -1)).toString(),
+    }));
+  } catch (err) {
+    console.error(`홈페이지 예약 데이터 불러오기 실패 (${target}):`, err);
+    throw err;
   }
 };
