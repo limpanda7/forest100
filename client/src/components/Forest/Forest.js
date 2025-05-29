@@ -7,7 +7,7 @@ import ForestCalendar from "./ForestCalendar";
 import {useNavigate} from "react-router-dom";
 import cn from 'classnames';
 import Header from "../Header/Header";
-import {getCombinedReservation} from "../../utils/reservation";
+import {getCombinedReservation, getHomepageReservation} from "../../utils/reservation";
 
 const Forest = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -56,7 +56,7 @@ const Forest = () => {
       setIsLoading(true);
       setIsError(false);
 
-      const data = await getCombinedReservation("forest");
+      const data = await getHomepageReservation("forest");
       setReserved(data);
     } catch (e) {
       setIsError(true);

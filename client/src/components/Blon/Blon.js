@@ -7,7 +7,7 @@ import BlonCalendar from "./BlonCalendar";
 import {Link, useNavigate} from "react-router-dom";
 import cn from 'classnames';
 import Header from "../Header/Header";
-import {getCombinedReservation} from "../../utils/reservation";
+import {getCombinedReservation, getHomepageReservation} from "../../utils/reservation";
 
 const Blon = () => {
   const [currentPage, setCurrentPage] = useState('intro');
@@ -30,7 +30,7 @@ const Blon = () => {
       setIsLoading(true);
       setIsError(false);
 
-      const data = await getCombinedReservation("blon");
+      const data = await getHomepageReservation("blon");
       setReserved(data);
     } catch (e) {
       setIsError(true);
