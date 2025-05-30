@@ -8,14 +8,14 @@ import 'dotenv/config';
 const router = express.Router();
 
 // 데이터베이스 연결
-const connection = mysql.createConnection({
+const connection = mysql.createPool({
+  connectionLimit: 10,
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
   timezone: "Asia/Seoul",
 });
-connection.connect();
 
 // 텔레그램 봇
 const token = process.env.TELEGRAM_TOKEN;
@@ -34,18 +34,23 @@ router.get("/reservation/:target", (req, res) => {
     query = `SELECT checkin_date, checkout_date FROM ${target}_reservation where checkout_date >= NOW() order by checkin_date`;
   }
 
-  connection.query(
-    query,
-    (err, data) => {
-      res.send(data);
+  connection.query(query, (err, data) => {
+    if (err) {
+      console.error('[쿼리 에러]', err);
+      return res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
     }
-  );
+    res.send(data);
+  });
 });
 router.get("/full-reservation/:target", (req, res) => {
   const {target} = req.params;
   connection.query(
     `SELECT * FROM ${target}_reservation where checkout_date >= NOW() order by checkin_date`,
     (err, data) => {
+      if (err) {
+        console.error('[쿼리 에러]', err);
+        return res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
+      }
       res.send(data);
     }
   );
@@ -53,6 +58,10 @@ router.get("/full-reservation/:target", (req, res) => {
 router.get("/ical/:target", (req, res) => {
   const {target} = req.params;
   connection.query(`SELECT * from ${target}_ical`, (err, data) => {
+    if (err) {
+      console.error('[쿼리 에러]', err);
+      return res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
+    }
     res.send(data);
   });
 });
@@ -62,6 +71,10 @@ router.delete("/reservation/:target/:id", (req, res) => {
     `DELETE FROM ${target}_reservation WHERE id = ?`,
     id,
     (err, data) => {
+      if (err) {
+        console.error('[쿼리 에러]', err);
+        return res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
+      }
       res.send(data);
     }
   );
@@ -103,6 +116,10 @@ router.post("/reservation/forest", (req, res) => {
     "INSERT INTO forest_reservation (checkin_date, checkout_date, name, phone, person, baby, dog, bedding, barbecue, price, price_option) VALUES ?",
     [values],
     (err, data) => {
+      if (err) {
+        console.error('[쿼리 에러]', err);
+        return res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
+      }
       res.send(data);
 
       // 2. 텔레그램 발송
@@ -180,6 +197,10 @@ router.post("/reservation/on_off", (req, res) => {
     "INSERT INTO on_off_reservation (checkin_date, checkout_date, name, phone, person, baby, dog, bedding, barbecue, price, price_option) VALUES ?",
     [values],
     (err, data) => {
+      if (err) {
+        console.error('[쿼리 에러]', err);
+        return res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
+      }
       res.send(data);
 
       // 2. 텔레그램 발송
@@ -269,6 +290,10 @@ router.post("/reservation/blon", (req, res) => {
     "INSERT INTO blon_reservation (checkin_date, checkout_date, name, phone, person, baby, dog, bedding, barbecue, price, price_option) VALUES ?",
     [values],
     (err, data) => {
+      if (err) {
+        console.error('[쿼리 에러]', err);
+        return res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
+      }
       res.send(data);
 
       // 2. 텔레그램 발송
@@ -353,6 +378,10 @@ router.post("/reservation/space", (req, res) => {
     "INSERT INTO space_reservation (date, checkin_time, checkout_time, name, phone, person, purpose, price, price_option) VALUES ?",
     [values],
     (err, data) => {
+      if (err) {
+        console.error('[쿼리 에러]', err);
+        return res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
+      }
       res.send(data);
 
       // 2. 텔레그램 발송
@@ -436,6 +465,10 @@ router.post("/reservation/apple", (req, res) => {
     "INSERT INTO apple_reservation (name, phone, five_kg, ten_kg, price, receiver_name, receiver_phone, address) VALUES ?",
     [values],
     (err, data) => {
+      if (err) {
+        console.error('[쿼리 에러]', err);
+        return res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
+      }
       res.send(data);
 
       // 2. 텔레그램 발송
