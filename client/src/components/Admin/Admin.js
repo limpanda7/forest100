@@ -6,6 +6,7 @@ import ReactModal from "react-modal";
 import {useNavigate} from "react-router-dom";
 import cn from "classnames";
 import Header from "../Header/Header";
+import {getHomepageReservation} from "../../utils/reservation";
 
 const Admin = () => {
   const [password, setPassword] = useState('');
@@ -48,36 +49,8 @@ const Admin = () => {
   }, [target]);
 
   const init = async() => {
-    const {data: homepageReserved} = await axios.get(`/api/full-reservation/${target}`);
-    const {data: airbnbReserved} = await axios.get(`/api/ical/${target}`);
-    let tempReserved = [];
-    for (const element of homepageReserved) {
-      tempReserved.push({
-        ...element,
-        type: 'homepage',
-        checkin_date: new Date(
-          new Date(element.checkin_date).toISOString().slice(0, -1)
-        ).toString(),
-        checkout_date: new Date(
-          new Date(element.checkout_date).toISOString().slice(0, -1)
-        ).toString(),
-      });
-    }
-    for (const element of airbnbReserved) {
-      tempReserved.push({
-        ...element,
-        type: 'airbnb',
-        checkin_date: new Date(
-          new Date(element.start_dt).toISOString().slice(0, -1)
-        ).toString(),
-        checkout_date: new Date(
-          new Date(element.end_dt).toISOString().slice(0, -1)
-        ).toString(),
-      });
-    }
-
-    tempReserved.sort((a, b) => new Date(a.checkin_date) - new Date(b.checkin_date));
-    setReserved(tempReserved);
+    const data = await getHomepageReservation(target);
+    setReserved(data);
   }
 
   const showDetail = (row) => {
