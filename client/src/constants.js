@@ -11,7 +11,7 @@ export const FOREST_PRICE = {
   },
   OVER_TWO: 20000,
   DOG: 30000,
-  BARBECUE: 20000,
+  BARBECUE: 30000,
 };
 
 export const ON_OFF_PRICE = {
