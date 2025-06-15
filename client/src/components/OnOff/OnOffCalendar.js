@@ -1,6 +1,6 @@
 import React, {useState} from "react";
-import Calendar from "../Calendar/Calendar";
-import { ON_OFF_PRICE } from "../../constants";
+import WeekCalendar from "../Calendar/WeekCalendar";
+import {ON_OFF_PRICE} from "../../constants";
 
 const OnOffCalendar = ({
   isLoading,
@@ -29,31 +29,51 @@ const OnOffCalendar = ({
       <section>
         <div className="DescTitle">Price</div>
 
+        {/*<table className="PriceTable">*/}
+        {/*  <tr>*/}
+        {/*    <th width='100'>구분</th>*/}
+        {/*    <th width='100'>평일</th>*/}
+        {/*    <th width='100'>주말, 공휴일</th>*/}
+        {/*  </tr>*/}
+        {/*  <tr>*/}
+        {/*    <td>성수기(7-8월)</td>*/}
+        {/*    <td>{ON_OFF_PRICE.SUMMER.WEEKDAY.toLocaleString()}</td>*/}
+        {/*    <td>{ON_OFF_PRICE.SUMMER.WEEKEND.toLocaleString()}</td>*/}
+        {/*  </tr>*/}
+        {/*  <tr>*/}
+        {/*    <td>비성수기</td>*/}
+        {/*    <td>{ON_OFF_PRICE.NORMAL.WEEKDAY.toLocaleString()}</td>*/}
+        {/*    <td>{ON_OFF_PRICE.NORMAL.WEEKEND.toLocaleString()}</td>*/}
+        {/*  </tr>*/}
+        {/*</table>*/}
+
         <table className="PriceTable">
           <tr>
-            <th width='100'>구분</th>
-            <th width='100'>평일</th>
-            <th width='100'>주말, 공휴일</th>
+            <td>임대료</td>
+            <td>{ON_OFF_PRICE.RENT_PER_WEEK.toLocaleString()}원 / 1주</td>
           </tr>
           <tr>
-            <td>성수기(7-8월)</td>
-            <td>{ON_OFF_PRICE.SUMMER.WEEKDAY.toLocaleString()}</td>
-            <td>{ON_OFF_PRICE.SUMMER.WEEKEND.toLocaleString()}</td>
+            <td>관리비</td>
+            <td>{ON_OFF_PRICE.MANAGEMENT_PER_WEEK.toLocaleString()}원 / 1주</td>
           </tr>
           <tr>
-            <td>비성수기</td>
-            <td>{ON_OFF_PRICE.NORMAL.WEEKDAY.toLocaleString()}</td>
-            <td>{ON_OFF_PRICE.NORMAL.WEEKEND.toLocaleString()}</td>
+            <td>청소비</td>
+            <td>{ON_OFF_PRICE.CLEANING_FEE.toLocaleString()}원</td>
+          </tr>
+          <tr>
+            <td>보증금</td>
+            <td>{ON_OFF_PRICE.DEPOSIT.toLocaleString()}원</td>
           </tr>
         </table>
 
         <ul>
-          <li>
-            4인 초과 시 1인당: 1박 {ON_OFF_PRICE.OVER_FOUR.toLocaleString()}원
-            <br/>
-            (추가침구 제공)
-          </li>
-          <li>바베큐 이용요금: 20,000원</li>
+          <li>기름보일러를 과도하게 사용하는 경우, 추가 관리비를 청구할 수 있습니다.</li>
+          {/*<li>*/}
+          {/*  4인 초과 시 1인당: 1박 {ON_OFF_PRICE.OVER_FOUR.toLocaleString()}원*/}
+          {/*  <br/>*/}
+          {/*  (추가침구 제공)*/}
+          {/*</li>*/}
+          {/*<li>바베큐 이용요금: 20,000원</li>*/}
           <li>입금계좌: 카카오 3333053810252 채민기</li>
           <li>
             <span className='anchor' onClick={() => setShowRefund(!showRefund)}>환불 규정 보기</span>
@@ -94,18 +114,15 @@ const OnOffCalendar = ({
           ) : (
             <>
               <p>
-                체크인 날짜와 체크아웃 날짜를 선택해주세요.
-                <br/>
-                (체크인 3시 / 체크아웃 11시)
+                입주 날짜를 선택해 주세요.
               </p>
-              <Calendar
-                isContinuous={true}
+              <WeekCalendar
                 picked={picked}
                 setPicked={setPicked}
                 reserved={reserved}
               />
               <button className="large-btn" onClick={moveToReservation}>
-                선택한 날짜로 예약하기
+                선택한 날짜로 계약하기
               </button>
             </>
           )

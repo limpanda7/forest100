@@ -17,7 +17,7 @@ const Main = () => {
               <div className='menu-text'>
                 백년한옥별채
                 <br/>
-                <span>DONGHAE</span>
+                <span>동해 숙소</span>
               </div>
             </Link>
           </td>
@@ -27,7 +27,7 @@ const Main = () => {
               <div className='menu-text'>
                 블로뉴숲
                 <br/>
-                <span>POCHEON</span>
+                <span>포천 숙소</span>
               </div>
             </Link>
           </td>
@@ -37,9 +37,9 @@ const Main = () => {
             <Link to='/on-off'>
               <FontAwesomeIcon icon={faToggleOn} size="3x" className={'Icon'}/>
               <div className='menu-text'>
-                온오프스테이
+                온오프 스테이
                 <br/>
-                <span>DONGHAE</span>
+                <span>동해 단기임대</span>
               </div>
             </Link>
           </td>
@@ -47,9 +47,9 @@ const Main = () => {
             <Link to='/on-off-space'>
               <FontAwesomeIcon icon={faPalette} size="3x" className={'Icon'}/>
               <div className='menu-text'>
-                온오프스페이스
+                온오프 스페이스
                 <br/>
-                <span>SEOUL</span>
+                <span>서울 공간대여</span>
               </div>
             </Link>
           </td>

@@ -55,6 +55,7 @@ const OnOffIntro = () => {
     return (
         <>
             <div className='Slider'>
+                <div className='img-desc'>※ 본 사진은 연출된 이미지입니다.</div>
                 <Slider {...sliderSetting}>
                     <div><img src={img1} alt={''}/></div>
                     <div><img src={img2} alt={''}/></div>
@@ -77,11 +78,15 @@ const OnOffIntro = () => {
 
             <div className='contents'>
                 <section>
-                    <div className="DescTitle">STAY</div>
+                    <div className="DescTitle">Stay</div>
                     <ul>
-                        <li>기준인원: 기준 4인, 최대 6인 + 반려견 2마리</li>
-                        <li>체크인 3시 / 체크아웃 11시</li>
-                        <li>객실정보: 침실1(퀸사이즈), 침실2(퀸사이즈), 북스테이 룸1, 북스테이 룸2, 거실, 메인 주방, 세컨 주방, 내부 화장실, 외부 화장실, 마당, 루프탑</li>
+                        {/*<li>기준인원: 기준 4인, 최대 6인 + 반려견 2마리</li>*/}
+                        {/*<li>체크인 3시 / 체크아웃 11시</li>*/}
+                        <li>최소 1주 이상부터 계약 가능</li>
+                        <li>4개의 방, 2개의 주방, 거실, 내부화장실 및 외부화장실, 마당이 제공됩니다.</li>
+                        <li>매트리스(퀸) 2개 비치</li>
+                        <li>숙소가 아닌 임대공간으로, 모든 숙소서비스는 제공되지 않습니다 (침구, 수건, 화장지, 바베큐 용품 등)</li>
+                        <li>반려동물 가능하며, 모든 시설 원상복구 조건입니다.</li>
                     </ul>
                 </section>
 
@@ -93,68 +98,68 @@ const OnOffIntro = () => {
                 <section>
                     <div className="DescTitle">Rooms</div>
 
-                    <p className='Ptitle'>Bathroom</p>
-                    <ul>
-                        <li>어메니티 (샴푸/린스/바디워시/치약)</li>
-                        <li>수건 (1인 2개/1박당)</li>
-                    </ul>
+                    {/*<p className='Ptitle'>Bathroom</p>*/}
+                    {/*<ul>*/}
+                    {/*    <li>어메니티 (샴푸/린스/바디워시/치약)</li>*/}
+                    {/*    <li>수건 (1인 2개/1박당)</li>*/}
+                    {/*</ul>*/}
 
                     <p className='Ptitle'>Kitchen</p>
                     <ul>
                         <li>냉장고/인덕션 2구/전자레인지</li>
                         <li>식기/컵/냄비/프라이팬/수저/가위/칼/집게</li>
-                        <li>와인잔/와인오프너</li>
+                        {/*<li>와인잔/와인오프너</li>*/}
                         <li>전기포트</li>
                     </ul>
 
-                    <p className='Ptitle'>Second Kitchen</p>
-                    <ul>
-                        <li>발뮤다 토스트기</li>
-                    </ul>
+                    {/*<p className='Ptitle'>Second Kitchen</p>*/}
+                    {/*<ul>*/}
+                    {/*    <li>발뮤다 토스트기</li>*/}
+                    {/*</ul>*/}
 
                     <p className='Ptitle'>Living Room</p>
                     <ul>
                         <li>통유리창문</li>
-                        <li>WI-FI/에어컨/4인식탁/2인사이드테이블</li>
-                        <li>브리츠 스피커/시네마빔/노트북(+넷플릭스)</li>
+                        <li>WI-FI/에어컨/4인식탁/2인 바테이블</li>
+                        <li>브리츠 스피커/시네마빔</li>
                         <span>(*별도의 TV는 비치되어 있지 않습니다.)</span>
                     </ul>
 
-                    <p className='Ptitle'>Bedroom 1</p>
-                    <ul>
-                        <li>통유리창문</li>
-                        <li>퀸사이즈 매트리스/침구</li>
-                        <li>거울/드라이기</li>
-                    </ul>
+                    {/*<p className='Ptitle'>Bedroom 1</p>*/}
+                    {/*<ul>*/}
+                    {/*    <li>통유리창문</li>*/}
+                    {/*    <li>퀸사이즈 매트리스/침구</li>*/}
+                    {/*    <li>거울/드라이기</li>*/}
+                    {/*</ul>*/}
 
-                    <p className='Ptitle'>Bedroom 2</p>
-                    <ul>
-                        <li>퀸사이즈 매트리스/침구/에어컨</li>
-                        <li>전신거울/드라이기</li>
-                        <li>원형테이블/의자 2개</li>
-                    </ul>
+                    {/*<p className='Ptitle'>Bedroom 2</p>*/}
+                    {/*<ul>*/}
+                    {/*    <li>퀸사이즈 매트리스/침구/에어컨</li>*/}
+                    {/*    <li>전신거울/드라이기</li>*/}
+                    {/*    <li>원형테이블/의자 2개</li>*/}
+                    {/*</ul>*/}
 
-                    <p className='Ptitle'>Book Stay 1</p>
-                    <ul>
-                        <li>1인 책상/의자</li>
-                        <li>서적</li>
-                        <li>유아용 매트</li>
-                    </ul>
+                    {/*<p className='Ptitle'>Book Stay 1</p>*/}
+                    {/*<ul>*/}
+                    {/*    <li>1인 책상/의자</li>*/}
+                    {/*    <li>서적</li>*/}
+                    {/*    <li>유아용 매트</li>*/}
+                    {/*</ul>*/}
 
-                    <p className='Ptitle'>Book Stay 2</p>
-                    <ul>
-                        <li>2인 테이블</li>
-                        <li>서적</li>
-                    </ul>
+                    {/*<p className='Ptitle'>Book Stay 2</p>*/}
+                    {/*<ul>*/}
+                    {/*    <li>2인 테이블</li>*/}
+                    {/*    <li>서적</li>*/}
+                    {/*</ul>*/}
 
                     <p className='Ptitle'>Garden & Rooftop</p>
                     <ul>
                         <li>4인 테이블 및 의자 / 야외조명</li>
-                        <li>바베큐존 (바베큐 신청 시 화로,토치,집게,숯 제공 / 이용요금 2만원)</li>
+                        {/*<li>바베큐존 (바베큐 신청 시 화로,토치,집게,숯 제공 / 이용요금 2만원)</li>*/}
                         <li>외부 화장실(온수X)</li>
                     </ul>
                 </section>
-
+                
                 <section>
                     <div className="DescTitle">Location</div>
 

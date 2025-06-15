@@ -1,0 +1,256 @@
+import ReactCalendar from "react-calendar";
+import React, {useMemo, useState} from "react";
+import ReactModal from "react-modal";
+
+const WeekCalendar = ({picked, setPicked, reserved}) => {
+  const [selected, setSelected] = useState(null);
+  const [duration, setDuration] = useState(null);
+  const [maxDate, setMaxDate] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+
+  const checker = useMemo(() => {
+    const map = {};
+
+    reserved.forEach(({checkin_date, checkout_date}) => {
+      const checkinTimestamp = new Date(checkin_date).valueOf();
+      const checkoutTimestamp = new Date(checkout_date).valueOf();
+
+      map[checkinTimestamp] = {
+        ...map[checkinTimestamp],
+        checkIn: true,
+      };
+      map[checkoutTimestamp] = {
+        ...map[checkoutTimestamp],
+        checkOut: true,
+      };
+    });
+    return map;
+  }, [reserved]);
+
+  const handleClickDay = (value) => {
+    if (checker[value.valueOf()]?.checkIn) return;
+    setSelected(value);
+    setShowModal(true);
+  };
+
+  const handleDurationSelect = (weeks) => {
+    const days = weeks * 7;
+    const startDate = new Date(selected);
+    const endDate = new Date(selected);
+    endDate.setDate(startDate.getDate() + days - 1);
+
+    const blocked = reserved.find(({ checkin_date, checkout_date }) => {
+      const checkIn = new Date(checkin_date);
+      const checkOut = new Date(checkout_date);
+      return startDate < checkOut && endDate >= checkIn;
+    });
+
+    if (blocked) {
+      alert("해당 기간에는 예약이 불가능합니다.");
+      setShowModal(false);
+      return;
+    }
+
+    const tempArr = [];
+    const iterDate = new Date(startDate);
+    for (let i = 0; i < days; i++) {
+      tempArr.push(iterDate.toLocaleDateString("sv-SE", { timeZone: "Asia/Seoul" }));
+      iterDate.setDate(iterDate.getDate() + 1);
+    }
+
+    setPicked(tempArr);
+    setDuration(days);
+    setMaxDate(endDate);
+    setShowModal(false);
+  };
+
+  const tileDisabled = () => {
+    return ({ date }) => {
+      if (
+        reserved.find(({ checkin_date, checkout_date }) => {
+          const checkinTimestamp = new Date(checkin_date).valueOf();
+          const checkoutTimestamp = new Date(checkout_date).valueOf();
+          return (
+            checkinTimestamp <= date.valueOf() &&
+            checkoutTimestamp >= date.valueOf()
+          );
+        })
+      ) {
+        return true;
+      }
+
+      if (picked.length > 0) {
+        const lastPicked = new Date(picked[picked.length - 1]);
+        if (date > lastPicked) {
+          return true;
+        }
+      }
+
+      if (
+        selected &&
+        checker[selected]?.checkIn &&
+        date.valueOf() > selected
+      ) {
+        return true;
+      } else if (selected && checker[selected]?.checkOut && date.valueOf() < selected) {
+        return true;
+      } else if (!selected && checker[date.valueOf()]?.checkIn) {
+        return true;
+      }
+    };
+  };
+
+  const tileClassName = ({ date }) => {
+    if (!picked.length) return;
+
+    const isPicked = picked.includes(date.toISOString().split("T")[0]);
+    if (isPicked) return "highlight";
+  };
+
+  const resetCalendar = () => {
+    setPicked([]);
+    setSelected(null);
+    setMaxDate(null);
+    setDuration(null);
+  }
+
+  const modalStyle = {
+    content: {
+      width: '80%',
+      maxWidth: '400px',
+      maxHeight: '80%',
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+      padding: '20px',
+      borderRadius: '12px',
+      border: '1px solid #ccc',
+      boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
+      backgroundColor: '#fff',
+    },
+    info: {
+      marginBottom: '16px',
+      fontSize: '16px',
+      fontWeight: '500',
+      textAlign: 'center',
+    },
+    durationOptions: {
+      textAlign: 'center',
+    },
+    durationButton: {
+      display: 'inline-block',
+      margin: '6px',
+      padding: '10px 14px',
+      fontSize: '14px',
+      borderRadius: '8px',
+      border: '1px solid #ccc',
+      backgroundColor: '#f8f8f8',
+      cursor: 'pointer',
+      transition: 'all 0.2s ease-in-out',
+    },
+    selectedDurationButton: {
+      backgroundColor: '#005fff',
+      color: '#fff',
+      borderColor: '#005fff',
+    },
+    closeButton: {
+      position: 'absolute',
+      top: '12px',
+      right: '12px',
+      width: '30px',
+      height: '30px',
+      backgroundColor: 'transparent',
+      border: 'none',
+      fontSize: '30px',
+      fontWeight: 'bold',
+      color: '#999',
+      cursor: 'pointer',
+      lineHeight: '1',
+      transition: 'color 0.2s ease',
+    },
+    durationSub: {
+      display: 'block',
+      fontSize: '11px',
+      marginTop: '4px',
+      color: '#777'
+    }
+  };
+
+  return (
+    <div className='Calendar'>
+      <div className='DateAndBtnWrap'>
+        <div className='PickedDate'>
+          <div className='DateWrap'>
+            <div className='DateTitle'>체크인</div>
+            <div className='DateContent'>{picked[0] || "-"}</div>
+          </div>
+          <div className='DateWrap'>
+            <div className='DateTitle'>체크아웃</div>
+            <div className='DateContent'>{picked[picked.length - 1] || "-"}</div>
+          </div>
+        </div>
+
+        <button
+          className='DateResetBtn'
+          onClick={resetCalendar}
+        >
+          초기화
+        </button>
+      </div>
+
+      <ReactCalendar
+        className="calendar"
+        calendarType="US"
+        formatDay={(localeDay, date) => date.getDate()}
+        minDate={selected ? new Date(selected) : new Date()}
+        maxDate={maxDate}
+        tileDisabled={tileDisabled()}
+        tileClassName={tileClassName}
+        onClickDay={handleClickDay}
+        value={picked.length ? [new Date(picked[0]), new Date(picked[picked.length - 1])] : null}
+      />
+
+      <ReactModal isOpen={showModal} ariaHideApp={false} style={modalStyle}>
+        <div className="DurationModalContent">
+          <div style={modalStyle.info}>{selected?.toISOString().split("T")[0]} ~</div>
+          <h3 style={modalStyle.info}>이용할 기간을 선택해 주세요.</h3>
+          <div style={modalStyle.durationOptions}>
+            {[...Array(12)].map((_, i) => {
+              const startDate = new Date(selected);
+              const endDate = new Date(selected);
+              endDate.setDate(startDate.getDate() + (i + 1) * 7 - 1);
+              return (
+                <button
+                  key={i + 1}
+                  onClick={() => handleDurationSelect(i + 1)}
+                  style={{
+                    ...modalStyle.durationButton,
+                    ...(duration === (i + 1) * 7 ? modalStyle.selectedDurationButton : {}),
+                  }}
+                >
+                  {i + 1}주
+                  <span style={modalStyle.durationSub}>{endDate.toISOString().split("T")[0]}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+        <button
+          style={modalStyle.closeButton}
+          onClick={() => {
+            setSelected(null);
+            setShowModal(false);
+          }}
+          aria-label="Close"
+        >
+          ×
+        </button>
+      </ReactModal>
+    </div>
+  );
+};
+
+export default WeekCalendar;

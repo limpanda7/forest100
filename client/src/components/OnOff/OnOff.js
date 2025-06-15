@@ -8,7 +8,7 @@ import {Link, useNavigate} from "react-router-dom";
 import cn from "classnames";
 import OnOffReview from "./OnOffReview";
 import Header from "../Header/Header";
-import {getCombinedReservation} from "../../utils/reservation";
+import {getCombinedReservation, getHomepageReservation} from "../../utils/reservation";
 
 const OnOff = () => {
   const [currentPage, setCurrentPage] = useState('intro');
@@ -26,12 +26,13 @@ const OnOff = () => {
     window.scrollTo(0, 0);
   }, [currentPage]);
 
+  console.log(reserved)
   const getReserved = async () => {
     try {
       setIsLoading(true);
       setIsError(false);
 
-      const data = await getCombinedReservation("on_off");
+      const data = await getHomepageReservation("on_off");
       setReserved(data);
     } catch (e) {
       setIsError(true);
@@ -68,7 +69,13 @@ const OnOff = () => {
             className={cn("Tab", { Active: currentPage === "calendar" })}
             onClick={() => setCurrentPage("calendar")}
           >
-            예약하기
+            계약하기
+          </div>
+          <div
+            className={cn("Tab", { Active: currentPage === "review" })}
+            onClick={() => setCurrentPage("review")}
+          >
+            이용후기
           </div>
         </div>
       )}

@@ -176,7 +176,7 @@ router.post("/reservation/forest", (req, res) => {
   온오프스테이 API
  */
 router.post("/reservation/on_off", (req, res) => {
-  const {picked, name, phone, person, baby, dog, bedding, barbecue, price, priceOption} = req.body;
+  const {picked, name, phone, person, dog, price} = req.body;
 
   // 1. 예약내역 DB 추가
   let values = [];
@@ -186,15 +186,11 @@ router.post("/reservation/on_off", (req, res) => {
     name,
     phone,
     person,
-    baby,
     dog,
-    bedding,
-    barbecue,
     price,
-    priceOption,
   ]);
   connection.query(
-    "INSERT INTO on_off_reservation (checkin_date, checkout_date, name, phone, person, baby, dog, bedding, barbecue, price, price_option) VALUES ?",
+    "INSERT INTO on_off_reservation (checkin_date, checkout_date, name, phone, person, dog, price) VALUES ?",
     [values],
     (err, data) => {
       if (err) {
@@ -206,23 +202,17 @@ router.post("/reservation/on_off", (req, res) => {
       // 2. 텔레그램 발송
       bot.sendMessage(
         process.env.TELEGRAM_CHAT_ID_ON_OFF,
-        `온오프스테이 신규 예약이 들어왔습니다.\n` +
+        `온오프스테이 신규 계약이 들어왔습니다.\n` +
         `\n` +
-        `기간: ${picked}\n` +
+        `기간: ${picked[0]} ~ ${picked[picked.length - 1]}\n` +
         `\n` +
         `이름: ${name}\n` +
         `\n` +
         `전화번호: ${phone}\n` +
         `\n` +
-        `인원수: ${person}명, 영유아 ${baby}명, 반려견 ${dog}마리\n` +
+        `인원수: ${person}명, 반려견 ${dog}마리\n` +
         `\n` +
-        `추가침구: ${bedding}개\n` +
-        `\n` +
-        `바베큐 이용여부: ${barbecue}\n` +
-        `\n` +
-        `이용금액: ${price.toLocaleString()}\n` +
-        `\n` +
-        `환불옵션: ${priceOption === "refundable" ? "환불가능" : "환불불가"}`
+        `이용금액: ${price.toLocaleString()}\n`
       );
     }
   );
@@ -233,9 +223,8 @@ router.post("/reservation/on_off", (req, res) => {
       `https://api-sms.cloud.toast.com/sms/v3.0/appKeys/${process.env.MMS_APP_KEY}/sender/mms`,
       {
         title: "온오프스테이 안내문자",
-        body: onOffMMS(picked, person, baby, dog, barbecue, price),
+        body: onOffMMS(picked, person, dog, price),
         sendNo: process.env.MMS_SEND_NO,
-        attachFileIdList: [189971052],
         recipientList: [{recipientNo: phone}],
       },
       {
