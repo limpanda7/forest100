@@ -6,17 +6,34 @@ input[type=radio] + label {
   font-weight: 400;
   font-size: 14px;
   margin-right: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  
+  &:hover {
+    color: #2c5aa0;
+    transform: translateX(2px);
+  }
 }
 
 input[type=radio] + label span {
   display: inline-block;
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   margin: -2px 10px 0 0;
   vertical-align: middle;
   cursor: pointer;
   border-radius: 50%;
   border: 3px solid #ffffff;
+  transition: all 0.3s ease;
+  position: relative;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
 }
 
 input[type=radio] + label span {
@@ -24,16 +41,122 @@ input[type=radio] + label span {
 }
 
 input[type=radio]:checked + label {
-  color: #333;
+  color: #2c5aa0;
   font-weight: 700;
+  transform: scale(1.02);
 }
 
 input[type=radio]:checked + label span {
-  background-color: darkcyan;
+  background: linear-gradient(135deg, darkcyan, #2c5aa0);
   border: 2px solid #ffffff;
-  box-shadow: 2px 2px 2px rgba(0, 0, 0, .1);
+  box-shadow: 0 4px 15px rgba(44, 90, 160, 0.3);
+  transform: scale(1.1);
 }
 
-input[type="radio"] + label span, input[type="radio"]:checked + label span {
-  transition: background-color 0.24s linear;
+// 일반 입력 필드 스타일
+input[type="text"], input[type="email"], input[type="password"], input[type="number"], textarea, select {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  
+  &:focus {
+    outline: none;
+    border-color: #2c5aa0;
+    box-shadow: 0 4px 15px rgba(44, 90, 160, 0.2);
+    transform: translateY(-1px);
+    background: white;
+  }
+  
+  &:hover {
+    border-color: #b0b0b0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  &::placeholder {
+    color: #999;
+    transition: color 0.3s ease;
+  }
+  
+  &:focus::placeholder {
+    color: #2c5aa0;
+    opacity: 0.7;
+  }
+}
+
+// 체크박스 스타일
+input[type="checkbox"] {
+  display: none;
+}
+
+input[type="checkbox"] + label {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    color: #2c5aa0;
+  }
+}
+
+input[type="checkbox"] + label span {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  margin-right: 8px;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  background: white;
+  transition: all 0.3s ease;
+  position: relative;
+  
+  &:hover {
+    border-color: #2c5aa0;
+    transform: scale(1.05);
+  }
+}
+
+input[type="checkbox"]:checked + label span {
+  background: linear-gradient(135deg, #2c5aa0, darkcyan);
+  border-color: #2c5aa0;
+  
+  &::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    animation: checkmark 0.3s ease-out;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes checkmark {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
 }

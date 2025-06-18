@@ -24,6 +24,7 @@ import OnOff from "./components/OnOff/OnOff";
 import Blon from "./components/Blon/Blon";
 import Admin from "./components/Admin/Admin";
 import Space from "./components/Space/Space";
+import Mukho from "./components/Mukho/Mukho";
 import ReactGA from "react-ga4";
 
 const vh = window.innerHeight * 0.01;
@@ -45,6 +46,7 @@ const App = () => {
       <Route path='boulogne' element={<Blon/>}/>
       <Route path='on-off' element={<OnOff />} />
       <Route path='on-off-space' element={<Space />} />
+      <Route path='new-accommodation' element={<Mukho />} />
       <Route path='admin' element={<Admin/>}/>
       <Route path='*' element={<Navigate to="/" />} />
     </Routes>
