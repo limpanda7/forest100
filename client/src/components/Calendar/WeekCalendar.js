@@ -1,6 +1,7 @@
 import ReactCalendar from "react-calendar";
 import React, {useMemo, useState} from "react";
 import ReactModal from "react-modal";
+import {formatDate} from "../../utils/date";
 
 const WeekCalendar = ({picked, setPicked, reserved}) => {
   const [selected, setSelected] = useState(null);
@@ -54,7 +55,7 @@ const WeekCalendar = ({picked, setPicked, reserved}) => {
     const tempArr = [];
     const iterDate = new Date(startDate);
     for (let i = 0; i < days; i++) {
-      tempArr.push(iterDate.toLocaleDateString("sv-SE", { timeZone: "Asia/Seoul" }));
+      tempArr.push(formatDate(iterDate));
       iterDate.setDate(iterDate.getDate() + 1);
     }
 
@@ -232,7 +233,7 @@ const WeekCalendar = ({picked, setPicked, reserved}) => {
                   }}
                 >
                   {i + 1}주
-                  <span style={modalStyle.durationSub}>{endDate.toISOString().split("T")[0]}</span>
+                  <span style={modalStyle.durationSub}>{formatDate(endDate)}</span>
                 </button>
               );
             })}
