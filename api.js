@@ -1,5 +1,5 @@
 import express from "express";
-import mysql from "mysql";
+import mysql from "mysql2/promise";
 import TelegramBot from "node-telegram-bot-api";
 import axios from "axios";
 import {forestMMS, onOffMMS, blonMMS, spaceMMS, appleMMS} from "./mms.js";
@@ -10,17 +10,16 @@ const router = express.Router();
 const isDev = process.env.NODE_ENV !== 'production';
 
 // 데이터베이스 연결 풀 설정 개선
-const connection = mysql.createPool({
+const pool = mysql.createPool({
   connectionLimit: isDev ? 30 : 10,
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
   timezone: "Asia/Seoul",
-  acquireTimeout: 60000, // 연결 획득 타임아웃
-  timeout: 60000, // 쿼리 타임아웃
-  reconnect: true, // 자동 재연결
-  queueLimit: 0, // 대기열 제한 없음
+  acquireTimeout: 60000,
+  waitForConnections: true,
+  queueLimit: 0,
 });
 
 // 텔레그램 봇
@@ -30,66 +29,78 @@ const bot = new TelegramBot(token);
 /*
   공통 API
  */
-router.get("/reservation/:target", (req, res) => {
+router.get("/reservation/:target", async (req, res) => {
   const {target} = req.params;
-
-  let query;
-  if (target === 'space') {
-    query = 'SELECT date, checkin_time, checkout_time FROM space_reservation where date >= CURDATE() order by date';
-  } else {
-    query = `SELECT checkin_date, checkout_date FROM ${target}_reservation where checkout_date >= NOW() order by checkin_date`;
+  let connection;
+  try {
+    connection = await pool.getConnection();
+    let query;
+    if (target === 'space') {
+      query = 'SELECT date, checkin_time, checkout_time FROM space_reservation where date >= CURDATE() order by date';
+    } else {
+      query = `SELECT checkin_date, checkout_date FROM ${target}_reservation where checkout_date >= NOW() order by checkin_date`;
+    }
+    const [data] = await connection.query(query);
+    res.send(data);
+  } catch (err) {
+    console.error('[쿼리 에러]', err);
+    res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
+  } finally {
+    if (connection) connection.release();
   }
-
-  connection.query(query, (err, data) => {
-    if (err) {
-      console.error('[쿼리 에러]', err);
-      return res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
-    }
-    res.send(data);
-  });
 });
-router.get("/full-reservation/:target", (req, res) => {
+router.get("/full-reservation/:target", async (req, res) => {
   const {target} = req.params;
-  connection.query(
-    `SELECT * FROM ${target}_reservation where checkout_date >= NOW() order by checkin_date`,
-    (err, data) => {
-      if (err) {
-        console.error('[쿼리 에러]', err);
-        return res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
-      }
-      res.send(data);
-    }
-  );
-});
-router.get("/ical/:target", (req, res) => {
-  const {target} = req.params;
-  connection.query(`SELECT * from ${target}_ical`, (err, data) => {
-    if (err) {
-      console.error('[쿼리 에러]', err);
-      return res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
-    }
+  let connection;
+  try {
+    connection = await pool.getConnection();
+    const [data] = await connection.query(
+      `SELECT * FROM ${target}_reservation where checkout_date >= NOW() order by checkin_date`
+    );
     res.send(data);
-  });
+  } catch (err) {
+    console.error('[쿼리 에러]', err);
+    res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
+  } finally {
+    if (connection) connection.release();
+  }
 });
-router.delete("/reservation/:target/:id", (req, res) => {
+router.get("/ical/:target", async (req, res) => {
+  const {target} = req.params;
+  let connection;
+  try {
+    connection = await pool.getConnection();
+    const [data] = await connection.query(`SELECT * from ${target}_ical`);
+    res.send(data);
+  } catch (err) {
+    console.error('[쿼리 에러]', err);
+    res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
+  } finally {
+    if (connection) connection.release();
+  }
+});
+router.delete("/reservation/:target/:id", async (req, res) => {
   const {target, id} = req.params;
-  connection.query(
-    `DELETE FROM ${target}_reservation WHERE id = ?`,
-    id,
-    (err, data) => {
-      if (err) {
-        console.error('[쿼리 에러]', err);
-        return res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
-      }
-      res.send(data);
-    }
-  );
+  let connection;
+  try {
+    connection = await pool.getConnection();
+    const [data] = await connection.query(
+      `DELETE FROM ${target}_reservation WHERE id = ?`,
+      [id]
+    );
+    res.send(data);
+  } catch (err) {
+    console.error('[쿼리 에러]', err);
+    res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
+  } finally {
+    if (connection) connection.release();
+  }
 });
 
 /*
   백년한옥별채 API
  */
-router.post("/reservation/forest", (req, res) => {
+router.post("/reservation/forest", async (req, res) => {
   const {
     picked,
     name,
@@ -102,157 +113,107 @@ router.post("/reservation/forest", (req, res) => {
     price,
     priceOption,
   } = req.body;
-
-  // 1. 예약내역 DB 추가
-  let values = [];
-  values.push([
-    picked[0],
-    picked[picked.length - 1],
-    name,
-    phone,
-    person,
-    baby,
-    dog,
-    bedding,
-    barbecue,
-    price,
-    priceOption,
-  ]);
-  connection.query(
-    "INSERT INTO forest_reservation (checkin_date, checkout_date, name, phone, person, baby, dog, bedding, barbecue, price, price_option) VALUES ?",
-    [values],
-    (err, data) => {
-      if (err) {
-        console.error('[쿼리 에러]', err);
-        return res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
-      }
-      res.send(data);
-
-      // 2. 텔레그램 발송
-      bot.sendMessage(
-        process.env.TELEGRAM_CHAT_ID_FOREST,
-        `백년한옥별채 신규 예약이 들어왔습니다.\n` +
-        `\n` +
-        `기간: ${picked}\n` +
-        `\n` +
-        `이름: ${name}\n` +
-        `\n` +
-        `전화번호: ${phone}\n` +
-        `\n` +
-        `인원수: ${person}명, 영유아 ${baby}명, 반려견 ${dog}마리\n` +
-        `\n` +
-        `추가침구: ${bedding}개\n` +
-        `\n` +
-        `바베큐 이용여부: ${barbecue}\n` +
-        `\n` +
-        `이용금액: ${price.toLocaleString()}\n` +
-        `\n` +
-        `환불옵션: ${priceOption === "refundable" ? "환불가능" : "환불불가"}`
-      );
-    }
-  );
-
-  // 3. 안내문자 발송
-  axios
-    .post(
-      `https://api-sms.cloud.toast.com/sms/v3.0/appKeys/${process.env.MMS_APP_KEY}/sender/mms`,
-      {
-        title: "백년한옥별채 안내문자",
-        body: forestMMS(picked, person, baby, dog, barbecue, price),
-        sendNo: process.env.MMS_SEND_NO,
-        recipientList: [{recipientNo: phone}],
-      },
-      {
-        headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          "X-Secret-Key": process.env.MMS_SECRET_KEY,
-        },
-      }
-    )
-    .then((axiosRes) => {
-      if (axiosRes.data.header.resultMessage === "SUCCESS") {
-        bot.sendMessage(process.env.TELEGRAM_CHAT_ID_FOREST, "문자 발송에 성공하였습니다.");
-      } else {
-        bot.sendMessage(process.env.TELEGRAM_CHAT_ID_FOREST, "문자 발송에 실패하였습니다.");
-      }
-    });
+  let connection;
+  try {
+    connection = await pool.getConnection();
+    let values = [];
+    values.push([
+      picked[0],
+      picked[picked.length - 1],
+      name,
+      phone,
+      person,
+      baby,
+      dog,
+      bedding,
+      barbecue,
+      price,
+      priceOption,
+    ]);
+    const [data] = await connection.query(
+      "INSERT INTO forest_reservation (checkin_date, checkout_date, name, phone, person, baby, dog, bedding, barbecue, price, price_option) VALUES ?",
+      [values]
+    );
+    res.send(data);
+    // 텔레그램 발송
+    bot.sendMessage(
+      process.env.TELEGRAM_CHAT_ID_FOREST,
+      `백년한옥별채 신규 예약이 들어왔습니다.\n` +
+      `\n` +
+      `기간: ${picked}\n` +
+      `\n` +
+      `이름: ${name}\n` +
+      `\n` +
+      `전화번호: ${phone}\n` +
+      `\n` +
+      `인원수: ${person}명, 영유아 ${baby}명, 반려견 ${dog}마리\n` +
+      `\n` +
+      `추가침구: ${bedding}개\n` +
+      `\n` +
+      `바베큐 이용여부: ${barbecue}\n` +
+      `\n` +
+      `이용금액: ${price.toLocaleString()}\n` +
+      `\n` +
+      `환불옵션: ${priceOption === "refundable" ? "환불가능" : "환불불가"}`
+    );
+  } catch (err) {
+    console.error('[쿼리 에러]', err);
+    res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
+  } finally {
+    if (connection) connection.release();
+  }
 });
 
 /*
   온오프스테이 API
  */
-router.post("/reservation/on_off", (req, res) => {
+router.post("/reservation/on_off", async (req, res) => {
   const {picked, name, phone, person, dog, price} = req.body;
-
-  // 1. 예약내역 DB 추가
-  let values = [];
-  values.push([
-    picked[0],
-    picked[picked.length - 1],
-    name,
-    phone,
-    person,
-    dog,
-    price,
-  ]);
-  connection.query(
-    "INSERT INTO on_off_reservation (checkin_date, checkout_date, name, phone, person, dog, price) VALUES ?",
-    [values],
-    (err, data) => {
-      if (err) {
-        console.error('[쿼리 에러]', err);
-        return res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
-      }
-      res.send(data);
-
-      // 2. 텔레그램 발송
-      bot.sendMessage(
-        process.env.TELEGRAM_CHAT_ID_ON_OFF,
-        `온오프스테이 신규 계약이 들어왔습니다.\n` +
-        `\n` +
-        `기간: ${picked[0]} ~ ${picked[picked.length - 1]}\n` +
-        `\n` +
-        `이름: ${name}\n` +
-        `\n` +
-        `전화번호: ${phone}\n` +
-        `\n` +
-        `인원수: ${person}명, 반려견 ${dog}마리\n` +
-        `\n` +
-        `이용금액: ${price.toLocaleString()}\n`
-      );
-    }
-  );
-
-  // 3. 안내문자 발송
-  axios
-    .post(
-      `https://api-sms.cloud.toast.com/sms/v3.0/appKeys/${process.env.MMS_APP_KEY}/sender/mms`,
-      {
-        title: "온오프스테이 안내문자",
-        body: onOffMMS(picked, person, dog, price),
-        sendNo: process.env.MMS_SEND_NO,
-        recipientList: [{recipientNo: phone}],
-      },
-      {
-        headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          "X-Secret-Key": process.env.MMS_SECRET_KEY,
-        },
-      }
-    )
-    .then((axiosRes) => {
-      if (axiosRes.data.header.resultMessage === "SUCCESS") {
-        bot.sendMessage(process.env.TELEGRAM_CHAT_ID_ON_OFF, "문자 발송에 성공하였습니다.");
-      } else {
-        bot.sendMessage(process.env.TELEGRAM_CHAT_ID_ON_OFF, "문자 발송에 실패하였습니다.");
-      }
-    });
+  let connection;
+  try {
+    connection = await pool.getConnection();
+    let values = [];
+    values.push([
+      picked[0],
+      picked[picked.length - 1],
+      name,
+      phone,
+      person,
+      dog,
+      price,
+    ]);
+    const [data] = await connection.query(
+      "INSERT INTO on_off_reservation (checkin_date, checkout_date, name, phone, person, dog, price) VALUES ?",
+      [values]
+    );
+    res.send(data);
+    // 텔레그램 발송
+    bot.sendMessage(
+      process.env.TELEGRAM_CHAT_ID_ON_OFF,
+      `온오프스테이 신규 계약이 들어왔습니다.\n` +
+      `\n` +
+      `기간: ${picked[0]} ~ ${picked[picked.length - 1]}\n` +
+      `\n` +
+      `이름: ${name}\n` +
+      `\n` +
+      `전화번호: ${phone}\n` +
+      `\n` +
+      `인원수: ${person}명, 반려견 ${dog}마리\n` +
+      `\n` +
+      `이용금액: ${price.toLocaleString()}\n`
+    );
+  } catch (err) {
+    console.error('[쿼리 에러]', err);
+    res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
+  } finally {
+    if (connection) connection.release();
+  }
 });
 
 /*
   블로뉴숲 API
  */
-router.post("/reservation/blon", (req, res) => {
+router.post("/reservation/blon", async (req, res) => {
   const {
     picked,
     name,
@@ -265,86 +226,61 @@ router.post("/reservation/blon", (req, res) => {
     price,
     priceOption,
   } = req.body;
-
-  // 1. 예약내역 DB 추가
-  let values = [];
-  values.push([
-    picked[0],
-    picked[picked.length - 1],
-    name,
-    phone,
-    person,
-    baby,
-    dog,
-    bedding,
-    barbecue,
-    price,
-    priceOption,
-  ]);
-  connection.query(
-    "INSERT INTO blon_reservation (checkin_date, checkout_date, name, phone, person, baby, dog, bedding, barbecue, price, price_option) VALUES ?",
-    [values],
-    (err, data) => {
-      if (err) {
-        console.error('[쿼리 에러]', err);
-        return res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
-      }
-      res.send(data);
-
-      // 2. 텔레그램 발송
-      bot.sendMessage(
-        process.env.TELEGRAM_CHAT_ID_BLON,
-        `블로뉴숲 신규 예약이 들어왔습니다.\n` +
-        `\n` +
-        `기간: ${picked}\n` +
-        `\n` +
-        `이름: ${name}\n` +
-        `\n` +
-        `전화번호: ${phone}\n` +
-        `\n` +
-        `인원수: ${person}명, 영유아 ${baby}명, 반려견 ${dog}마리\n` +
-        `\n` +
-        `추가침구: ${bedding}개\n` +
-        `\n` +
-        `바베큐 이용여부: ${barbecue}\n` +
-        `\n` +
-        `이용금액: ${price.toLocaleString()}\n` +
-        `\n` +
-        `환불옵션: ${priceOption === "refundable" ? "환불가능" : "환불불가"}\n`
-      );
-    }
-  );
-
-  // 3. 안내문자 발송
-  axios
-    .post(
-      `https://api-sms.cloud.toast.com/sms/v3.0/appKeys/${process.env.MMS_APP_KEY}/sender/mms`,
-      {
-        title: "블로뉴숲 안내문자",
-        body: blonMMS(picked, person, baby, dog, barbecue, price),
-        sendNo: process.env.MMS_SEND_NO,
-        recipientList: [{recipientNo: phone}],
-      },
-      {
-        headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          "X-Secret-Key": process.env.MMS_SECRET_KEY,
-        },
-      }
-    )
-    .then((axiosRes) => {
-      if (axiosRes.data.header.resultMessage === "SUCCESS") {
-        bot.sendMessage(process.env.TELEGRAM_CHAT_ID_BLON, "문자 발송에 성공하였습니다.");
-      } else {
-        bot.sendMessage(process.env.TELEGRAM_CHAT_ID_BLON, "문자 발송에 실패하였습니다.");
-      }
-    });
+  let connection;
+  try {
+    connection = await pool.getConnection();
+    let values = [];
+    values.push([
+      picked[0],
+      picked[picked.length - 1],
+      name,
+      phone,
+      person,
+      baby,
+      dog,
+      bedding,
+      barbecue,
+      price,
+      priceOption,
+    ]);
+    const [data] = await connection.query(
+      "INSERT INTO blon_reservation (checkin_date, checkout_date, name, phone, person, baby, dog, bedding, barbecue, price, price_option) VALUES ?",
+      [values]
+    );
+    res.send(data);
+    // 텔레그램 발송
+    bot.sendMessage(
+      process.env.TELEGRAM_CHAT_ID_BLON,
+      `블로뉴숲 신규 예약이 들어왔습니다.\n` +
+      `\n` +
+      `기간: ${picked}\n` +
+      `\n` +
+      `이름: ${name}\n` +
+      `\n` +
+      `전화번호: ${phone}\n` +
+      `\n` +
+      `인원수: ${person}명, 영유아 ${baby}명, 반려견 ${dog}마리\n` +
+      `\n` +
+      `추가침구: ${bedding}개\n` +
+      `\n` +
+      `바베큐 이용여부: ${barbecue}\n` +
+      `\n` +
+      `이용금액: ${price.toLocaleString()}\n` +
+      `\n` +
+      `환불옵션: ${priceOption === "refundable" ? "환불가능" : "환불불가"}\n`
+    );
+  } catch (err) {
+    console.error('[쿼리 에러]', err);
+    res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
+  } finally {
+    if (connection) connection.release();
+  }
 });
 
 /*
   온오프스페이스 API
  */
-router.post("/reservation/space", (req, res) => {
+router.post("/reservation/space", async (req, res) => {
   const {
     date,
     time,
@@ -355,84 +291,59 @@ router.post("/reservation/space", (req, res) => {
     priceOption,
     purpose,
   } = req.body;
-
-  // 1. 예약내역 DB 추가
-  let values = [];
-  values.push([
-    date,
-    time[0],
-    time[time.length - 1] + 1,
-    name,
-    phone,
-    person,
-    purpose,
-    price,
-    priceOption,
-  ]);
-  connection.query(
-    "INSERT INTO space_reservation (date, checkin_time, checkout_time, name, phone, person, purpose, price, price_option) VALUES ?",
-    [values],
-    (err, data) => {
-      if (err) {
-        console.error('[쿼리 에러]', err);
-        return res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
-      }
-      res.send(data);
-
-      // 2. 텔레그램 발송
-      bot.sendMessage(
-        process.env.TELEGRAM_CHAT_ID_SPACE,
-        `온오프스페이스 신규 예약이 들어왔습니다.\n` +
-        `\n` +
-        `날짜: ${date}\n` +
-        `\n` +
-        `시간: ${time[0]}:00 ~ ${time[time.length - 1] + 1}:00\n` +
-        `\n` +
-        `이름: ${name}\n` +
-        `\n` +
-        `전화번호: ${phone}\n` +
-        `\n` +
-        `인원수: ${person}명\n` +
-        `\n` +
-        `사용목적: ${purpose}\n` +
-        `\n` +
-        `이용금액: ${price.toLocaleString()}\n` +
-        `\n` +
-        `환불옵션: ${priceOption === "refundable" ? "환불가능" : "환불불가"}`
-      );
-    }
-  );
-
-  // 3. 안내문자 발송
-  axios
-    .post(
-      `https://api-sms.cloud.toast.com/sms/v3.0/appKeys/${process.env.MMS_APP_KEY}/sender/mms`,
-      {
-        title: "온오프스페이스 안내문자",
-        body: spaceMMS(date, time, person, purpose, price),
-        sendNo: process.env.MMS_SEND_NO,
-        recipientList: [{recipientNo: phone}],
-      },
-      {
-        headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          "X-Secret-Key": process.env.MMS_SECRET_KEY,
-        },
-      }
-    )
-    .then((axiosRes) => {
-      if (axiosRes.data.header.resultMessage === "SUCCESS") {
-        bot.sendMessage(process.env.TELEGRAM_CHAT_ID_SPACE, "문자 발송에 성공하였습니다.");
-      } else {
-        bot.sendMessage(process.env.TELEGRAM_CHAT_ID_SPACE, "문자 발송에 실패하였습니다.");
-      }
-    });
+  let connection;
+  try {
+    connection = await pool.getConnection();
+    let values = [];
+    values.push([
+      date,
+      time[0],
+      time[time.length - 1] + 1,
+      name,
+      phone,
+      person,
+      purpose,
+      price,
+      priceOption,
+    ]);
+    const [data] = await connection.query(
+      "INSERT INTO space_reservation (date, checkin_time, checkout_time, name, phone, person, purpose, price, price_option) VALUES ?",
+      [values]
+    );
+    res.send(data);
+    // 텔레그램 발송
+    bot.sendMessage(
+      process.env.TELEGRAM_CHAT_ID_SPACE,
+      `온오프스페이스 신규 예약이 들어왔습니다.\n` +
+      `\n` +
+      `날짜: ${date}\n` +
+      `\n` +
+      `시간: ${time[0]}:00 ~ ${time[time.length - 1] + 1}:00\n` +
+      `\n` +
+      `이름: ${name}\n` +
+      `\n` +
+      `전화번호: ${phone}\n` +
+      `\n` +
+      `인원수: ${person}명\n` +
+      `\n` +
+      `사용목적: ${purpose}\n` +
+      `\n` +
+      `이용금액: ${price.toLocaleString()}\n` +
+      `\n` +
+      `환불옵션: ${priceOption === "refundable" ? "환불가능" : "환불불가"}`
+    );
+  } catch (err) {
+    console.error('[쿼리 에러]', err);
+    res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
+  } finally {
+    if (connection) connection.release();
+  }
 });
 
 /*
   사과 API
  */
-router.post("/reservation/apple", (req, res) => {
+router.post("/reservation/apple", async (req, res) => {
   const {
     name,
     phone,
@@ -443,72 +354,47 @@ router.post("/reservation/apple", (req, res) => {
     receiverPhone,
     address,
   } = req.body;
-
-  // 1. 예약내역 DB 추가
-  let values = [];
-  values.push([
-    name,
-    phone,
-    fiveKg,
-    tenKg,
-    price,
-    receiverName,
-    receiverPhone,
-    address,
-  ]);
-  connection.query(
-    "INSERT INTO apple_reservation (name, phone, five_kg, ten_kg, price, receiver_name, receiver_phone, address) VALUES ?",
-    [values],
-    (err, data) => {
-      if (err) {
-        console.error('[쿼리 에러]', err);
-        return res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
-      }
-      res.send(data);
-
-      // 2. 텔레그램 발송
-      bot.sendMessage(
-        process.env.TELEGRAM_CHAT_ID_APPLE,
-        `사과 예약이 들어왔습니다.\n` +
-        `\n` +
-        `예약자 이름: ${name}\n` +
-        `예약자 전화번호: ${phone}\n` +
-        `\n` +
-        `5 kg: ${fiveKg}박스\n` +
-        `10 kg: ${tenKg}박스\n` +
-        `금액: ${price.toLocaleString()}\n` +
-        `\n` +
-        `받는사람 이름: ${receiverName}\n` +
-        `받는사람 전화번호: ${receiverPhone}\n` +
-        `받는사람 주소: ${address}`
-      );
-    }
-  );
-
-  // 3. 안내문자 발송
-  axios
-    .post(
-      `https://api-sms.cloud.toast.com/sms/v3.0/appKeys/${process.env.MMS_APP_KEY}/sender/mms`,
-      {
-        title: "백년한옥사과 안내문자",
-        body: appleMMS(name, phone, fiveKg, tenKg, price, receiverName, receiverPhone, address),
-        sendNo: process.env.MMS_SEND_NO,
-        recipientList: [{recipientNo: phone}],
-      },
-      {
-        headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          "X-Secret-Key": process.env.MMS_SECRET_KEY,
-        },
-      }
-    )
-    .then((axiosRes) => {
-      if (axiosRes.data.header.resultMessage === "SUCCESS") {
-        bot.sendMessage(process.env.TELEGRAM_CHAT_ID_APPLE, "문자 발송에 성공하였습니다.");
-      } else {
-        bot.sendMessage(process.env.TELEGRAM_CHAT_ID_APPLE, "문자 발송에 실패하였습니다.");
-      }
-    });
-})
+  let connection;
+  try {
+    connection = await pool.getConnection();
+    let values = [];
+    values.push([
+      name,
+      phone,
+      fiveKg,
+      tenKg,
+      price,
+      receiverName,
+      receiverPhone,
+      address,
+    ]);
+    const [data] = await connection.query(
+      "INSERT INTO apple_reservation (name, phone, five_kg, ten_kg, price, receiver_name, receiver_phone, address) VALUES ?",
+      [values]
+    );
+    res.send(data);
+    // 텔레그램 발송
+    bot.sendMessage(
+      process.env.TELEGRAM_CHAT_ID_APPLE,
+      `사과 예약이 들어왔습니다.\n` +
+      `\n` +
+      `예약자 이름: ${name}\n` +
+      `예약자 전화번호: ${phone}\n` +
+      `\n` +
+      `5 kg: ${fiveKg}박스\n` +
+      `10 kg: ${tenKg}박스\n` +
+      `금액: ${price.toLocaleString()}\n` +
+      `\n` +
+      `받는사람 이름: ${receiverName}\n` +
+      `받는사람 전화번호: ${receiverPhone}\n` +
+      `받는사람 주소: ${address}`
+    );
+  } catch (err) {
+    console.error('[쿼리 에러]', err);
+    res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
+  } finally {
+    if (connection) connection.release();
+  }
+});
 
 export default router;
