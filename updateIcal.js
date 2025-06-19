@@ -60,26 +60,56 @@ export const updateIcal = async (url, target) => {
       }
     }
 
-    if (values.length === 0) {
-      console.log(`iCal: No new data for ${target}`);
-      return;
+    // 트랜잭션으로 안전하게 처리
+    const connection = await mysql.createConnection({
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
+      timezone: 'Asia/Seoul',
+    });
+
+    try {
+      await connection.beginTransaction();
+
+      // 1. 기존 데이터 백업 (선택사항)
+      const [backupData] = await connection.query(`SELECT * FROM ${target}_ical`);
+      console.log(`Backup: ${backupData.length} records from ${target}_ical`);
+
+      // 2. 테이블 전체 삭제
+      await connection.query(`TRUNCATE TABLE ${target}_ical`);
+      console.log(`Truncated ${target}_ical table`);
+
+      // 3. 새로운 데이터 삽입
+      if (values.length > 0) {
+        const insertQuery = `
+          INSERT INTO ${target}_ical 
+            (uid, start_dt, end_dt, status, reservation_id, phone_last_digits)
+          VALUES ?
+        `;
+        await connection.query(insertQuery, [values]);
+        console.log(`Inserted ${values.length} records into ${target}_ical`);
+      }
+
+      // 4. 트랜잭션 커밋
+      await connection.commit();
+      
+      // 5. 변경사항 로깅
+      const deletedCount = backupData.length - values.length;
+      if (deletedCount > 0) {
+        console.log(`Deleted ${deletedCount} cancelled reservations from ${target}_ical`);
+      }
+
+      errorCount = 0;
+      alertSent = false;
+
+    } catch (error) {
+      await connection.rollback();
+      throw error;
+    } finally {
+      await connection.end();
     }
 
-    const query = `
-      INSERT INTO ${target}_ical 
-        (uid, start_dt, end_dt, status, reservation_id, phone_last_digits)
-      VALUES ?
-      ON DUPLICATE KEY UPDATE
-        start_dt = VALUES(start_dt),
-        end_dt = VALUES(end_dt),
-        status = VALUES(status),
-        reservation_id = VALUES(reservation_id),
-        phone_last_digits = VALUES(phone_last_digits)
-    `;
-
-    await connection.query(query, [values]);
-    errorCount = 0;
-    alertSent = false;
   } catch (e) {
     console.error(`❌ updateIcal failed for ${target}: ${e.message}`);
     checkAndSendAlert(target, e.message);
