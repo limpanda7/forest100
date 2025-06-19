@@ -9,18 +9,17 @@ const router = express.Router();
 
 const isDev = process.env.NODE_ENV !== 'production';
 
-// 데이터베이스 연결 풀 설정 개선
-const pool = mysql.createPool({
-  connectionLimit: isDev ? 30 : 10,
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
-  timezone: "Asia/Seoul",
-  acquireTimeout: 60000,
-  waitForConnections: true,
-  queueLimit: 0,
-});
+// 풀 대신 매번 새 커넥션 생성 함수
+const getConnection = async () => {
+  return await mysql.createConnection({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
+    timezone: "Asia/Seoul",
+    acquireTimeout: 60000,
+  });
+};
 
 // 텔레그램 봇
 const token = process.env.TELEGRAM_TOKEN;
@@ -33,7 +32,7 @@ router.get("/reservation/:target", async (req, res) => {
   const {target} = req.params;
   let connection;
   try {
-    connection = await pool.getConnection();
+    connection = await getConnection();
     let query;
     if (target === 'space') {
       query = 'SELECT date, checkin_time, checkout_time FROM space_reservation where date >= CURDATE() order by date';
@@ -46,14 +45,14 @@ router.get("/reservation/:target", async (req, res) => {
     console.error('[쿼리 에러]', err);
     res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
   } finally {
-    if (connection) connection.release();
+    if (connection) await connection.end();
   }
 });
 router.get("/full-reservation/:target", async (req, res) => {
   const {target} = req.params;
   let connection;
   try {
-    connection = await pool.getConnection();
+    connection = await getConnection();
     const [data] = await connection.query(
       `SELECT * FROM ${target}_reservation where checkout_date >= NOW() order by checkin_date`
     );
@@ -62,28 +61,28 @@ router.get("/full-reservation/:target", async (req, res) => {
     console.error('[쿼리 에러]', err);
     res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
   } finally {
-    if (connection) connection.release();
+    if (connection) await connection.end();
   }
 });
 router.get("/ical/:target", async (req, res) => {
   const {target} = req.params;
   let connection;
   try {
-    connection = await pool.getConnection();
+    connection = await getConnection();
     const [data] = await connection.query(`SELECT * from ${target}_ical`);
     res.send(data);
   } catch (err) {
     console.error('[쿼리 에러]', err);
     res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
   } finally {
-    if (connection) connection.release();
+    if (connection) await connection.end();
   }
 });
 router.delete("/reservation/:target/:id", async (req, res) => {
   const {target, id} = req.params;
   let connection;
   try {
-    connection = await pool.getConnection();
+    connection = await getConnection();
     const [data] = await connection.query(
       `DELETE FROM ${target}_reservation WHERE id = ?`,
       [id]
@@ -93,7 +92,7 @@ router.delete("/reservation/:target/:id", async (req, res) => {
     console.error('[쿼리 에러]', err);
     res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
   } finally {
-    if (connection) connection.release();
+    if (connection) await connection.end();
   }
 });
 
@@ -115,7 +114,7 @@ router.post("/reservation/forest", async (req, res) => {
   } = req.body;
   let connection;
   try {
-    connection = await pool.getConnection();
+    connection = await getConnection();
     let values = [];
     values.push([
       picked[0],
@@ -160,7 +159,7 @@ router.post("/reservation/forest", async (req, res) => {
     console.error('[쿼리 에러]', err);
     res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
   } finally {
-    if (connection) connection.release();
+    if (connection) await connection.end();
   }
 });
 
@@ -171,7 +170,7 @@ router.post("/reservation/on_off", async (req, res) => {
   const {picked, name, phone, person, dog, price} = req.body;
   let connection;
   try {
-    connection = await pool.getConnection();
+    connection = await getConnection();
     let values = [];
     values.push([
       picked[0],
@@ -206,7 +205,7 @@ router.post("/reservation/on_off", async (req, res) => {
     console.error('[쿼리 에러]', err);
     res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
   } finally {
-    if (connection) connection.release();
+    if (connection) await connection.end();
   }
 });
 
@@ -228,7 +227,7 @@ router.post("/reservation/blon", async (req, res) => {
   } = req.body;
   let connection;
   try {
-    connection = await pool.getConnection();
+    connection = await getConnection();
     let values = [];
     values.push([
       picked[0],
@@ -273,7 +272,7 @@ router.post("/reservation/blon", async (req, res) => {
     console.error('[쿼리 에러]', err);
     res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
   } finally {
-    if (connection) connection.release();
+    if (connection) await connection.end();
   }
 });
 
@@ -293,7 +292,7 @@ router.post("/reservation/space", async (req, res) => {
   } = req.body;
   let connection;
   try {
-    connection = await pool.getConnection();
+    connection = await getConnection();
     let values = [];
     values.push([
       date,
@@ -336,7 +335,7 @@ router.post("/reservation/space", async (req, res) => {
     console.error('[쿼리 에러]', err);
     res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
   } finally {
-    if (connection) connection.release();
+    if (connection) await connection.end();
   }
 });
 
@@ -356,7 +355,7 @@ router.post("/reservation/apple", async (req, res) => {
   } = req.body;
   let connection;
   try {
-    connection = await pool.getConnection();
+    connection = await getConnection();
     let values = [];
     values.push([
       name,
@@ -393,7 +392,7 @@ router.post("/reservation/apple", async (req, res) => {
     console.error('[쿼리 에러]', err);
     res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
   } finally {
-    if (connection) connection.release();
+    if (connection) await connection.end();
   }
 });
 
