@@ -7,14 +7,18 @@ import 'dotenv/config';
 
 const router = express.Router();
 
-// 데이터베이스 연결
+// 데이터베이스 연결 풀 설정 개선
 const connection = mysql.createPool({
-  connectionLimit: 10,
+  connectionLimit: 5, // 연결 수 제한
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
   timezone: "Asia/Seoul",
+  acquireTimeout: 60000, // 연결 획득 타임아웃
+  timeout: 60000, // 쿼리 타임아웃
+  reconnect: true, // 자동 재연결
+  queueLimit: 0, // 대기열 제한 없음
 });
 
 // 텔레그램 봇

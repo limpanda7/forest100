@@ -4,14 +4,18 @@ import mysql from "mysql2/promise";
 import 'dotenv/config';
 import TelegramBot from "node-telegram-bot-api";
 
-// DB 연결
-const connection = mysql.createPool({
-  connectionLimit: 10,
+// DB 연결 풀 설정 개선
+const connectionPool = mysql.createPool({
+  connectionLimit: 5, // 연결 수 제한
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
   timezone: 'Asia/Seoul',
+  acquireTimeout: 60000, // 연결 획득 타임아웃
+  timeout: 60000, // 쿼리 타임아웃
+  reconnect: true, // 자동 재연결
+  queueLimit: 0, // 대기열 제한 없음
 });
 
 // 텔레그램 봇
@@ -22,6 +26,8 @@ let errorCount = 0;
 let alertSent = false;
 
 export const updateIcal = async (url, target) => {
+  let connection = null;
+  
   try {
     const res = await new Promise((resolve, reject) => {
       ical.fromURL(url, {}, (err, data) => {
@@ -60,18 +66,13 @@ export const updateIcal = async (url, target) => {
       }
     }
 
-    // 트랜잭션으로 안전하게 처리
-    const connection = await mysql.createConnection({
-      host: process.env.DB_HOST,
-      user: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_DATABASE,
-      timezone: 'Asia/Seoul',
-    });
+    // 연결 풀에서 연결 획득
+    connection = await connectionPool.getConnection();
+
+    // 트랜잭션 시작
+    await connection.beginTransaction();
 
     try {
-      await connection.beginTransaction();
-
       // 1. 기존 데이터 백업 (선택사항)
       const [backupData] = await connection.query(`SELECT * FROM ${target}_ical`);
       console.log(`Backup: ${backupData.length} records from ${target}_ical`);
@@ -106,13 +107,16 @@ export const updateIcal = async (url, target) => {
     } catch (error) {
       await connection.rollback();
       throw error;
-    } finally {
-      await connection.end();
     }
 
   } catch (e) {
     console.error(`❌ updateIcal failed for ${target}: ${e.message}`);
     checkAndSendAlert(target, e.message);
+  } finally {
+    // 연결 반환 (중요!)
+    if (connection) {
+      connection.release();
+    }
   }
 };
 
