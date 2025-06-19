@@ -1,8 +1,13 @@
 import ReactCalendar from "react-calendar";
-import {useMemo, useState} from "react";
+import {useMemo, useState, useRef, useEffect} from "react";
+
+const SWIPE_THRESHOLD = 50; // px
 
 const Calendar = ({isContinuous, picked, setPicked, reserved}) => {
   const [selected, setSelected] = useState(null);
+  const [activeStartDate, setActiveStartDate] = useState(new Date());
+  const [touchStartX, setTouchStartX] = useState(null);
+  const calendarRef = useRef(null);
 
   const checker = useMemo(() => {
     const map = {};
@@ -174,8 +179,58 @@ const Calendar = ({isContinuous, picked, setPicked, reserved}) => {
     }
   }
 
+  // 터치 이벤트 핸들러
+  const handleTouchStart = (e) => {
+    if (e.touches && e.touches.length === 1) {
+      setTouchStartX(e.touches[0].clientX);
+    }
+  };
+  const handleTouchEnd = (e) => {
+    if (touchStartX === null) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const diffX = touchEndX - touchStartX;
+    if (Math.abs(diffX) > SWIPE_THRESHOLD) {
+      // 왼쪽 스와이프(다음달)
+      if (diffX < 0) {
+        setActiveStartDate((prev) => {
+          const next = new Date(prev);
+          next.setMonth(next.getMonth() + 1);
+          return next;
+        });
+      }
+      // 오른쪽 스와이프(이전달)
+      else if (diffX > 0) {
+        setActiveStartDate((prev) => {
+          const prevMonth = new Date(prev);
+          prevMonth.setMonth(prevMonth.getMonth() - 1);
+          return prevMonth;
+        });
+      }
+    }
+    setTouchStartX(null);
+  };
+
+  useEffect(() => {
+    const el = calendarRef.current;
+    if (!el) return;
+    const handleTouchMove = (e) => {
+      if (touchStartX !== null) {
+        e.preventDefault();
+      }
+    };
+    el.addEventListener('touchmove', handleTouchMove, { passive: false });
+    return () => {
+      el.removeEventListener('touchmove', handleTouchMove);
+    };
+  }, [touchStartX]);
+
   return (
-    <div className='Calendar'>
+    <div
+      className='Calendar'
+      ref={calendarRef}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+    >
       <div className='DateAndBtnWrap'>
         <div className='PickedDate'>
           <div className='DateWrap'>
@@ -226,6 +281,8 @@ const Calendar = ({isContinuous, picked, setPicked, reserved}) => {
             ? [new Date(picked[0]), new Date(picked[picked.length - 1])]
             : null
         }
+        activeStartDate={activeStartDate}
+        onActiveStartDateChange={({activeStartDate}) => setActiveStartDate(activeStartDate)}
       />
     </div>
   );
