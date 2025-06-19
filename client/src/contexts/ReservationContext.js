@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { getHomepageReservation } from '../utils/reservation';
+import {getCombinedReservation, getHomepageReservation} from '../utils/reservation';
 import axios from 'axios';
 
 const ReservationContext = createContext();
@@ -43,9 +43,9 @@ export const ReservationProvider = ({ children }) => {
 
       // 모든 숙소의 예약내역을 병렬로 로드
       const [forestData, onOffData, blonData, spaceData] = await Promise.all([
-        getHomepageReservation('forest'),
-        getHomepageReservation('on_off'),
-        getHomepageReservation('blon'),
+        getCombinedReservation('forest'),
+        getCombinedReservation('on_off'),
+        getCombinedReservation('blon'),
         axios.get('/api/reservation/space').then(response => response.data)
       ]);
 
