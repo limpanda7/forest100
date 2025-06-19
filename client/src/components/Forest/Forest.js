@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import axios from "axios";
 import 'react-calendar/dist/Calendar.css';
 import ForestReservation from "./ForestReservation";
 import ForestIntro from "./ForestIntro";
@@ -7,19 +6,18 @@ import ForestCalendar from "./ForestCalendar";
 import {useNavigate} from "react-router-dom";
 import cn from 'classnames';
 import Header from "../Header/Header";
-import {getCombinedReservation, getHomepageReservation} from "../../utils/reservation";
+import { useReservation } from '../../contexts/ReservationContext';
 
 const Forest = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
   const [currentPage, setCurrentPage] = useState('intro');
-  const [reserved, setReserved] = useState([]);
   const [picked, setPicked] = useState([]);
   const navigate = useNavigate();
+  
+  // 전역 예약 상태 사용
+  const { getReservationByTarget, loading: isLoading, error: isError } = useReservation();
+  const reserved = getReservationByTarget('forest');
 
   useEffect(() => {
-    getReserved();
-
     const script = document.createElement('script');
     script.src = 'https://cdn.decibelinsight.net/i/14089/939431/di.js';
     script.async = true;
@@ -50,20 +48,6 @@ const Forest = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [currentPage]);
-
-  const getReserved = async () => {
-    try {
-      setIsLoading(true);
-      setIsError(false);
-
-      const data = await getHomepageReservation("forest");
-      setReserved(data);
-    } catch (e) {
-      setIsError(true);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const handleGoBack = () => {
     if (currentPage === 'reservation') {

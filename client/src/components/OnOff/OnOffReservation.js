@@ -2,22 +2,27 @@ import React, {useState, useEffect} from 'react';
 import axios from "axios";
 import {ON_OFF_PRICE} from "../../constants";
 import ReactGA from "react-ga4";
+import { useReservation } from '../../contexts/ReservationContext';
 
 const {RENT_PER_WEEK, MANAGEMENT_PER_WEEK, CLEANING_FEE, DEPOSIT} = ON_OFF_PRICE;
 
-const OnOffReservation = ({picked}) => {
-  const [person, setPerson] = useState(4);
+const OnOffReservation = ({picked, setPicked, setCurrentPage}) => {
+  const [person, setPerson] = useState(2);
   const [dog, setDog] = useState(0);
+  const [basePrice, setBasePrice] = useState(0);
   const [price, setPrice] = useState(0);
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const weeks = Math.floor(picked.length / 7);
 
+  // 전역 예약 상태 새로고침 함수
+  const { refreshReservations } = useReservation();
+
   let isRequested = false;
 
   useEffect(() => {
     calcPrice();
-  }, [])
+  }, [person, dog]);
 
   const saveReservation = () => {
     if (isRequested) {
@@ -47,21 +52,17 @@ const OnOffReservation = ({picked}) => {
               value: price,
             });
 
-            alert(`감사합니다! 입금하실 금액은 ${price.toLocaleString()}원입니다.`);
+            // 예약 완료 후 전역 예약 상태 새로고침
+            refreshReservations();
+
+            alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${price.toLocaleString()}원입니다.`);
             window.location.href = '/';
           })
       } catch (e) {
         isRequested = false;
         alert('오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
         console.log('error: /api/reservation/on_off');
-        console.log({
-          picked,
-          name,
-          phone,
-          person,
-          dog,
-          price,
-        });
+        console.log({picked, name, phone, person, dog, price});
       }
     }
   }

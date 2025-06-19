@@ -2,6 +2,7 @@ import ReactCalendar from 'react-calendar';
 import moment from 'moment';
 import { SPACE_PRICE } from '../../constants';
 import { useState } from 'react';
+import { useReservation } from '../../contexts/ReservationContext';
 
 const SpaceCalendar = ({
                          date,
@@ -10,8 +11,11 @@ const SpaceCalendar = ({
                          setTime,
                          setCurrentPage,
                          reserved,
+                         isLoading,
+                         isError,
                        }) => {
   const [showRefund, setShowRefund] = useState(false);
+  const { manualRetry } = useReservation();
 
   const handleTimeChange = (hour) => {
     let updatedTime;
@@ -133,32 +137,69 @@ const SpaceCalendar = ({
 
       <section>
         <div className='DescTitle'>Reservation</div>
-        <ReactCalendar
-          className='calendar'
-          calendarType='US'
-          formatDay={(localeDay, date) => date.getDate()}
-          minDate={new Date()}
-          onClickDay={(value) => handleDateChange(value)} // Updated onClickDay handler
-        />
-
-        {date && (
-          <>
-            <div className='time-slots'>
-              <div className='column'>
-                <h2>오전</h2>
-                {renderTimeSlots(0, 11)}
-              </div>
-              <div className='column'>
-                <h2>오후</h2>
-                {renderTimeSlots(12, 23)}
+        {
+          isLoading ? (
+            <div className='calendar'>
+              <div className='loading'>
+                <div className='spinner' />
               </div>
             </div>
+          ) : isError ? (
+            <div className="calendar">
+              <p style={{ marginTop: "20px" }}>
+                예약 내역을 불러오지 못했습니다.
+              </p>
+              <div style={{ marginTop: "20px", textAlign: "center" }}>
+                <button 
+                  className="large-btn" 
+                  onClick={manualRetry}
+                  style={{ marginBottom: "15px" }}
+                >
+                  다시 시도하기
+                </button>
+                <p style={{ fontSize: "14px", color: "#666" }}>
+                  DM으로 문의해주세요.
+                  <br/>
+                  카카오톡 ID: skfk1600
+                  <br/>
+                  인스타그램:&nbsp;
+                  <a href='https://www.instagram.com/on.offstay/' target='_blank' className='anchor'>
+                    @on.offstay
+                  </a>
+                </p>
+              </div>
+            </div>
+          ) : (
+            <>
+              <ReactCalendar
+                className='calendar'
+                calendarType='US'
+                formatDay={(localeDay, date) => date.getDate()}
+                minDate={new Date()}
+                onClickDay={(value) => handleDateChange(value)} // Updated onClickDay handler
+              />
 
-            <button className='large-btn' onClick={moveToReservation}>
-              선택한 시간으로 예약하기
-            </button>
-          </>
-        )}
+              {date && (
+                <>
+                  <div className='time-slots'>
+                    <div className='column'>
+                      <h2>오전</h2>
+                      {renderTimeSlots(0, 11)}
+                    </div>
+                    <div className='column'>
+                      <h2>오후</h2>
+                      {renderTimeSlots(12, 23)}
+                    </div>
+                  </div>
+
+                  <button className='large-btn' onClick={moveToReservation}>
+                    선택한 시간으로 예약하기
+                  </button>
+                </>
+              )}
+            </>
+          )
+        }
       </section>
     </div>
   );

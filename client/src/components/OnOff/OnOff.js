@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import axios from "axios";
 import "react-calendar/dist/Calendar.css";
 import OnOffReservation from "./OnOffReservation";
 import OnOffIntro from "./OnOffIntro";
@@ -8,39 +7,23 @@ import {Link, useNavigate} from "react-router-dom";
 import cn from "classnames";
 import OnOffReview from "./OnOffReview";
 import Header from "../Header/Header";
-import {getCombinedReservation, getHomepageReservation} from "../../utils/reservation";
+import { useReservation } from '../../contexts/ReservationContext';
 
 const OnOff = () => {
   const [currentPage, setCurrentPage] = useState('intro');
-  const [reserved, setReserved] = useState([]);
   const [picked, setPicked] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    getReserved();
-  }, []);
+  
+  // 전역 예약 상태 사용
+  const { getReservationByTarget, loading: isLoading, error: isError } = useReservation();
+  const reserved = getReservationByTarget('on_off');
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [currentPage]);
 
   console.log(reserved)
-  const getReserved = async () => {
-    try {
-      setIsLoading(true);
-      setIsError(false);
-
-      const data = await getHomepageReservation("on_off");
-      setReserved(data);
-    } catch (e) {
-      setIsError(true);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
+  
   const handleGoBack = () => {
     if (currentPage === 'reservation') {
       setCurrentPage('calendar');

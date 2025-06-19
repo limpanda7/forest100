@@ -1,9 +1,11 @@
 import React, {useState} from "react";
 import Calendar from "../Calendar/Calendar";
 import {FOREST_PRICE} from "../../constants";
+import { useReservation } from '../../contexts/ReservationContext';
 
 const ForestCalendar = ({isLoading, isError, picked, setPicked, setCurrentPage, reserved}) => {
   const [showRefund, setShowRefund] = useState(false);
+  const { manualRetry } = useReservation();
   
   const moveToReservation = () => {
     if (picked.length === 0) {
@@ -73,15 +75,27 @@ const ForestCalendar = ({isLoading, isError, picked, setPicked, setCurrentPage, 
           ): isError ? (
             <div className="calendar">
               <p style={{ marginTop: "20px" }}>
-                예약 내역을 불러오지 못했습니다.<br/>
-                DM으로 문의해주세요.
-                <li>카카오톡 ID: eunbibi1001</li>
-                <li>인스타그램:&nbsp;
+                예약 내역을 불러오지 못했습니다.
+              </p>
+              <div style={{ marginTop: "20px", textAlign: "center" }}>
+                <button 
+                  className="large-btn" 
+                  onClick={manualRetry}
+                  style={{ marginBottom: "15px" }}
+                >
+                  다시 시도하기
+                </button>
+                <p style={{ fontSize: "14px", color: "#666" }}>
+                  DM으로 문의해주세요.
+                  <br/>
+                  카카오톡 ID: eunbibi1001
+                  <br/>
+                  인스타그램:&nbsp;
                   <a href='https://www.instagram.com/hanok.100/' target='_blank' className='anchor'>
                     @hanok.100
                   </a>
-                </li>
-              </p>
+                </p>
+              </div>
             </div>
           ) : (
             <>

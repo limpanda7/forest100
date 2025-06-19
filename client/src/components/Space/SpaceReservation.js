@@ -3,6 +3,7 @@ import {SPACE_PRICE} from "../../constants";
 import {isHoliday, isWeekday} from "../../utils/date";
 import axios from "axios";
 import ReactGA from "react-ga4";
+import { useReservation } from '../../contexts/ReservationContext';
 
 const SpaceReservation = ({ date, time }) => {
   const [person, setPerson] = useState(2);
@@ -15,6 +16,9 @@ const SpaceReservation = ({ date, time }) => {
   const [phone, setPhone] = useState('');
   const [showRefund, setShowRefund] = useState(false);
   const [purpose, setPurpose] = useState('');
+
+  // 전역 예약 상태 새로고침 함수
+  const { refreshReservations } = useReservation();
 
   let isRequested = false;
 
@@ -50,6 +54,9 @@ const SpaceReservation = ({ date, time }) => {
             label: 'Space',
             value: price,
           });
+
+          // 예약 완료 후 전역 예약 상태 새로고침
+          refreshReservations();
 
           alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${price.toLocaleString()}원입니다.`);
           window.location.href = '/';

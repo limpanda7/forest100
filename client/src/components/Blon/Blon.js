@@ -7,37 +7,20 @@ import BlonCalendar from "./BlonCalendar";
 import {Link, useNavigate} from "react-router-dom";
 import cn from 'classnames';
 import Header from "../Header/Header";
-import {getCombinedReservation, getHomepageReservation} from "../../utils/reservation";
+import { useReservation } from '../../contexts/ReservationContext';
 
 const Blon = () => {
   const [currentPage, setCurrentPage] = useState('intro');
-  const [reserved, setReserved] = useState([]);
   const [picked, setPicked] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    getReserved();
-  }, []);
+  
+  // 전역 예약 상태 사용
+  const { getReservationByTarget, loading: isLoading, error: isError } = useReservation();
+  const reserved = getReservationByTarget('blon');
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [currentPage]);
-
-  const getReserved = async () => {
-    try {
-      setIsLoading(true);
-      setIsError(false);
-
-      const data = await getHomepageReservation("blon");
-      setReserved(data);
-    } catch (e) {
-      setIsError(true);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const handleGoBack = () => {
     if (currentPage === 'reservation') {

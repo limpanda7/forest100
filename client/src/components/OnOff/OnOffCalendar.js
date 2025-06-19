@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import WeekCalendar from "../Calendar/WeekCalendar";
 import {ON_OFF_PRICE} from "../../constants";
+import { useReservation } from '../../contexts/ReservationContext';
 
 const OnOffCalendar = ({
   isLoading,
@@ -11,6 +12,7 @@ const OnOffCalendar = ({
   reserved,
 }) => {
   const [showRefund, setShowRefund] = useState(false);
+  const { manualRetry } = useReservation();
   
   const moveToReservation = () => {
     if (picked.length === 0) {
@@ -74,15 +76,19 @@ const OnOffCalendar = ({
           {/*  (추가침구 제공)*/}
           {/*</li>*/}
           {/*<li>바베큐 이용요금: 20,000원</li>*/}
-          <li>입금계좌: 카카오 3333053810252 채민기</li>
+          <li>입금계좌: 카카오 79420205681 남은비</li>
           <li>
             <span className='anchor' onClick={() => setShowRefund(!showRefund)}>환불 규정 보기</span>
             {
               showRefund &&
               <ul className='List'>
-                <li>체크인까지 30일 이상 전액 환불 가능</li>
-                <li>체크인까지 7~30일이 남은 시점에 예약을 취소하면, 숙박비 50%환불</li>
-                <li>체크인까지 7일이 채 남지 않은 시점에 예약을 취소하면, 환불 불가</li>
+                <li>입주 8일 전까지: 총 결제금액의 100% 환불</li>
+                <li>입주 7일 전: 총 결제금액의 50% 환불</li>
+                <li>입주 6일 전: 총 결제금액의 40% 환불</li>
+                <li>입주 5일 전: 총 결제금액의 30% 환불</li>
+                <li>입주 4일 전: 총 결제금액의 20% 환불</li>
+                <li>입주 3일 전: 총 결제금액의 10% 환불</li>
+                <li>입주 2일 전부터 환불불가</li>
               </ul>
             }
           </li>
@@ -101,15 +107,27 @@ const OnOffCalendar = ({
           ): isError ? (
             <div className="calendar">
               <p style={{ marginTop: "20px" }}>
-                예약 내역을 불러오지 못했습니다.<br/>
-                DM으로 문의해주세요.
-                <li>카카오톡 ID: skfk1600</li>
-                <li>인스타그램:&nbsp;
+                예약 내역을 불러오지 못했습니다.
+              </p>
+              <div style={{ marginTop: "20px", textAlign: "center" }}>
+                <button 
+                  className="large-btn" 
+                  onClick={manualRetry}
+                  style={{ marginBottom: "15px" }}
+                >
+                  다시 시도하기
+                </button>
+                <p style={{ fontSize: "14px", color: "#666" }}>
+                  DM으로 문의해주세요.
+                  <br/>
+                  카카오톡 ID: skfk1600
+                  <br/>
+                  인스타그램:&nbsp;
                   <a href='https://www.instagram.com/on.offstay/' target='_blank' className='anchor'>
                     @on.offstay
                   </a>
-                </li>
-              </p>
+                </p>
+              </div>
             </div>
           ) : (
             <>

@@ -5,28 +5,22 @@ import SpaceIntro from "./SpaceIntro";
 import SpaceCalendar from "./SpaceCalendar";
 import SpaceReservation from "./SpaceReservation";
 import Header from "../Header/Header";
-import axios from "axios";
+import { useReservation } from '../../contexts/ReservationContext';
 import './Space.scss';
 
 const Space = () => {
   const [currentPage, setCurrentPage] = useState('intro');
-  const [reserved, setReserved] = useState([]);
   const [date, setDate] = useState(null);
   const [time, setTime] = useState(null);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    getReserved();
-  }, []);
+  
+  // 전역 예약 상태 사용
+  const { getReservationByTarget, loading: isLoading, error: isError } = useReservation();
+  const reserved = getReservationByTarget('space');
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [currentPage]);
-
-  const getReserved = async () => {
-    const {data} = await axios.get("/api/reservation/space");
-    setReserved(data);
-  };
 
   const handleGoBack = () => {
     if (currentPage === 'reservation') {
@@ -71,6 +65,8 @@ const Space = () => {
           setTime={setTime}
           setCurrentPage={setCurrentPage}
           reserved={reserved}
+          isLoading={isLoading}
+          isError={isError}
         />
       )}
       {currentPage === 'reservation' && (

@@ -1,9 +1,11 @@
 import React, {useState} from "react";
 import Calendar from "../Calendar/Calendar";
 import {BLON_PRICE} from "../../constants";
+import { useReservation } from '../../contexts/ReservationContext';
 
 const BlonCalendar = ({isLoading, isError, picked, setPicked, setCurrentPage, reserved}) => {
   const [showRefund, setShowRefund] = useState(false);
+  const { manualRetry } = useReservation();
 
   const moveToReservation = () => {
     if (picked.length === 0) {
@@ -44,8 +46,7 @@ const BlonCalendar = ({isLoading, isError, picked, setPicked, setCurrentPage, re
         </table>
 
         <ul>
-          <li>4인 초과 시 1인당: 1박 {BLON_PRICE.OVER_FOUR.toLocaleString()}원<br/>(추가침구 제공)</li>
-          <li>36개월 미만의 영유아는 무료입니다.</li>
+          <li>4인 초과 시 1인당: 1박 {BLON_PRICE.OVER_FOUR.toLocaleString()}원</li>
           <li>반려견 1마리당: 1박 {BLON_PRICE.DOG.toLocaleString()}원</li>
           <li>바베큐 이용요금: {BLON_PRICE.BARBECUE.toLocaleString()}원</li>
           <li>입금계좌: 카카오 79420661213 남은진</li>
@@ -76,12 +77,24 @@ const BlonCalendar = ({isLoading, isError, picked, setPicked, setCurrentPage, re
           ) : isError ? (
             <div className="calendar">
               <p style={{ marginTop: "20px" }}>
-                예약 내역을 불러오지 못했습니다.<br/>
-                DM으로 문의해주세요.
-                <a href='https://www.instagram.com/boulogne_forest/' target='_blank' className='anchor'>
-                  <p>@boulogne_forest</p>
-                </a>
+                예약 내역을 불러오지 못했습니다.
               </p>
+              <div style={{ marginTop: "20px", textAlign: "center" }}>
+                <button 
+                  className="large-btn" 
+                  onClick={manualRetry}
+                  style={{ marginBottom: "15px" }}
+                >
+                  다시 시도하기
+                </button>
+                <p style={{ fontSize: "14px", color: "#666" }}>
+                  DM으로 문의해주세요.
+                  <br/>
+                  <a href='https://www.instagram.com/boulogne_forest/' target='_blank' className='anchor'>
+                    @boulogne_forest
+                  </a>
+                </p>
+              </div>
             </div>
           ) : (
             <>
