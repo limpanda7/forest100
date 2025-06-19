@@ -216,7 +216,7 @@ const WeekCalendar = ({picked, setPicked, reserved}) => {
 
       <ReactModal isOpen={showModal} ariaHideApp={false} style={modalStyle}>
         <div className="DurationModalContent">
-          <div style={modalStyle.info}>{selected?.toISOString().split("T")[0]} ~</div>
+          <div style={modalStyle.info}>{formatDate(selected)} ~</div>
           <h3 style={modalStyle.info}>이용할 기간을 선택해 주세요.</h3>
           <div style={modalStyle.durationOptions}>
             {[...Array(12)].map((_, i) => {
