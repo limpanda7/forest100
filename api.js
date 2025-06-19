@@ -7,9 +7,11 @@ import 'dotenv/config';
 
 const router = express.Router();
 
+const isDev = process.env.NODE_ENV !== 'production';
+
 // 데이터베이스 연결 풀 설정 개선
 const connection = mysql.createPool({
-  connectionLimit: 5, // 연결 수 제한
+  connectionLimit: isDev ? 30 : 10,
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
