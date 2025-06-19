@@ -1,4 +1,6 @@
 import {Helmet} from "react-helmet";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faChevronLeft, faArrowLeft} from '@fortawesome/free-solid-svg-icons';
 
 const Header = ({title, handleGoBack}) => {
   return (
@@ -9,7 +11,7 @@ const Header = ({title, handleGoBack}) => {
 
       <div className='header'>
         <div className='back-btn' onClick={handleGoBack}>
-          ◀
+          <FontAwesomeIcon icon={faChevronLeft} size="lg" />
         </div>
         <div className='Path'>
           {title}
