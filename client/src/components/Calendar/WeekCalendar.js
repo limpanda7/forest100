@@ -205,6 +205,8 @@ const WeekCalendar = ({picked, setPicked, reserved}) => {
       <ReactCalendar
         className="calendar"
         calendarType="US"
+        prev2Label={null}
+        next2Label={null}
         formatDay={(localeDay, date) => date.getDate()}
         minDate={selected ? new Date(selected) : new Date()}
         maxDate={maxDate}
