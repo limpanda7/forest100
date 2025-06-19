@@ -13,6 +13,8 @@ const WeekCalendar = ({picked, setPicked, reserved}) => {
   const [activeStartDate, setActiveStartDate] = useState(new Date());
   const [touchStartX, setTouchStartX] = useState(null);
   const calendarRef = useRef(null);
+  const [showSwipeGuide, setShowSwipeGuide] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
 
   const checker = useMemo(() => {
     const map = {};
@@ -185,6 +187,37 @@ const WeekCalendar = ({picked, setPicked, reserved}) => {
     }
   };
 
+  useEffect(() => {
+    // 모바일 환경 감지
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  useEffect(() => {
+    if (showSwipeGuide) {
+      const timer = setTimeout(() => setShowSwipeGuide(false), 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [showSwipeGuide]);
+
+  useEffect(() => {
+    const el = calendarRef.current;
+    if (!el) return;
+    const handleTouchMove = (e) => {
+      if (touchStartX !== null) {
+        e.preventDefault();
+      }
+    };
+    el.addEventListener('touchmove', handleTouchMove, { passive: false });
+    return () => {
+      el.removeEventListener('touchmove', handleTouchMove);
+    };
+  }, [touchStartX]);
+
   // 터치 이벤트 핸들러
   const handleTouchStart = (e) => {
     if (e.touches && e.touches.length === 1) {
@@ -216,27 +249,8 @@ const WeekCalendar = ({picked, setPicked, reserved}) => {
     setTouchStartX(null);
   };
 
-  useEffect(() => {
-    const el = calendarRef.current;
-    if (!el) return;
-    const handleTouchMove = (e) => {
-      if (touchStartX !== null) {
-        e.preventDefault();
-      }
-    };
-    el.addEventListener('touchmove', handleTouchMove, { passive: false });
-    return () => {
-      el.removeEventListener('touchmove', handleTouchMove);
-    };
-  }, [touchStartX]);
-
   return (
-    <div
-      className='Calendar'
-      ref={calendarRef}
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
-    >
+    <div className='Calendar'>
       <div className='DateAndBtnWrap'>
         <div className='PickedDate'>
           <div className='DateWrap'>
@@ -248,7 +262,6 @@ const WeekCalendar = ({picked, setPicked, reserved}) => {
             <div className='DateContent'>{picked[picked.length - 1] || "-"}</div>
           </div>
         </div>
-
         <button
           className='DateResetBtn'
           onClick={resetCalendar}
@@ -256,22 +269,51 @@ const WeekCalendar = ({picked, setPicked, reserved}) => {
           초기화
         </button>
       </div>
-
-      <ReactCalendar
-        className="calendar"
-        calendarType="US"
-        prev2Label={null}
-        next2Label={null}
-        formatDay={(localeDay, date) => date.getDate()}
-        minDate={selected ? new Date(selected) : new Date()}
-        maxDate={maxDate}
-        tileDisabled={tileDisabled()}
-        tileClassName={tileClassName}
-        onClickDay={handleClickDay}
-        value={picked.length ? [new Date(picked[0]), new Date(picked[picked.length - 1])] : null}
-        activeStartDate={activeStartDate}
-        onActiveStartDateChange={({activeStartDate}) => setActiveStartDate(activeStartDate)}
-      />
+      <div
+        ref={calendarRef}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        style={{position:'relative'}}
+      >
+        {isMobile && showSwipeGuide && (
+          <div style={{
+            position: 'absolute',
+            top: 10,
+            left: '50%',
+            transform: 'translateX(-50%)',
+            background: 'rgba(0,0,0,0.7)',
+            color: '#fff',
+            padding: '6px 16px',
+            borderRadius: '16px',
+            fontSize: '15px',
+            zIndex: 10,
+            pointerEvents: 'none',
+            transition: 'opacity 0.5s',
+          }}>
+            좌우로 밀어보세요!
+          </div>
+        )}
+        <ReactCalendar
+          className="calendar"
+          calendarType="US"
+          prev2Label={null}
+          next2Label={null}
+          formatDay={(localeDay, date) => date.getDate()}
+          minDate={selected ? new Date(selected) : new Date()}
+          maxDate={maxDate}
+          tileDisabled={tileDisabled()}
+          tileClassName={tileClassName}
+          onClickDay={handleClickDay}
+          value={picked.length ? [new Date(picked[0]), new Date(picked[picked.length - 1])] : null}
+          activeStartDate={activeStartDate}
+          onActiveStartDateChange={({activeStartDate}) => setActiveStartDate(activeStartDate)}
+          onDrillDown={({view}, e) => {
+            if (view === 'year') {
+              e.preventDefault();
+            }
+          }}
+        />
+      </div>
 
       <ReactModal isOpen={showModal} ariaHideApp={false} style={modalStyle}>
         <div className="DurationModalContent">
