@@ -15,8 +15,9 @@ const Blon = () => {
   const navigate = useNavigate();
   
   // 전역 예약 상태 사용
-  const { getReservationByTarget, loading: isLoading, error: isError } = useReservation();
+  const { getReservationByTarget, getLoadingByTarget, error: isError } = useReservation();
   const reserved = getReservationByTarget('blon');
+  const isLoading = getLoadingByTarget('blon');
 
   useEffect(() => {
     window.scrollTo(0, 0);
