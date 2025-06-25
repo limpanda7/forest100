@@ -11,8 +11,7 @@ const getConnection = async () => {
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
-    timezone: 'Asia/Seoul',
-    acquireTimeout: 60000,
+    timezone: '+09:00',
   });
 };
 

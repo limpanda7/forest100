@@ -319,11 +319,6 @@ const Calendar = ({isContinuous, picked, setPicked, reserved}) => {
           }
           activeStartDate={activeStartDate}
           onActiveStartDateChange={({activeStartDate}) => setActiveStartDate(activeStartDate)}
-          onDrillDown={({view}, e) => {
-            if (view === 'year') {
-              e.preventDefault();
-            }
-          }}
         />
       </div>
     </div>

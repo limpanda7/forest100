@@ -16,8 +16,7 @@ const getConnection = async () => {
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
-    timezone: "Asia/Seoul",
-    acquireTimeout: 60000,
+    timezone: '+09:00',
   });
 };
 
@@ -155,6 +154,31 @@ router.post("/reservation/forest", async (req, res) => {
       `\n` +
       `환불옵션: ${priceOption === "refundable" ? "환불가능" : "환불불가"}`
     );
+
+    // 3. 안내문자 발송
+    axios
+      .post(
+        `https://api-sms.cloud.toast.com/sms/v3.0/appKeys/${process.env.MMS_APP_KEY}/sender/mms`,
+        {
+          title: "백년한옥별채 안내문자",
+          body: forestMMS(picked, person, baby, dog, barbecue, price),
+          sendNo: process.env.MMS_SEND_NO,
+          recipientList: [{recipientNo: phone}],
+        },
+        {
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            "X-Secret-Key": process.env.MMS_SECRET_KEY,
+          },
+        }
+      )
+      .then((axiosRes) => {
+        if (axiosRes.data.header.resultMessage === "SUCCESS") {
+          bot.sendMessage(process.env.TELEGRAM_CHAT_ID_FOREST, "문자 발송에 성공하였습니다.");
+        } else {
+          bot.sendMessage(process.env.TELEGRAM_CHAT_ID_FOREST, "문자 발송에 실패하였습니다.");
+        }
+      });
   } catch (err) {
     console.error('[쿼리 에러]', err);
     res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
@@ -201,6 +225,31 @@ router.post("/reservation/on_off", async (req, res) => {
       `\n` +
       `이용금액: ${price.toLocaleString()}\n`
     );
+
+    // 3. 안내문자 발송
+    axios
+      .post(
+        `https://api-sms.cloud.toast.com/sms/v3.0/appKeys/${process.env.MMS_APP_KEY}/sender/mms`,
+        {
+          title: "온오프스테이 안내문자",
+          body: onOffMMS(picked, person, dog, price),
+          sendNo: process.env.MMS_SEND_NO,
+          recipientList: [{recipientNo: phone}],
+        },
+        {
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            "X-Secret-Key": process.env.MMS_SECRET_KEY,
+          },
+        }
+      )
+      .then((axiosRes) => {
+        if (axiosRes.data.header.resultMessage === "SUCCESS") {
+          bot.sendMessage(process.env.TELEGRAM_CHAT_ID_ON_OFF, "문자 발송에 성공하였습니다.");
+        } else {
+          bot.sendMessage(process.env.TELEGRAM_CHAT_ID_ON_OFF, "문자 발송에 실패하였습니다.");
+        }
+      });
   } catch (err) {
     console.error('[쿼리 에러]', err);
     res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
@@ -268,6 +317,31 @@ router.post("/reservation/blon", async (req, res) => {
       `\n` +
       `환불옵션: ${priceOption === "refundable" ? "환불가능" : "환불불가"}\n`
     );
+
+    // 3. 안내문자 발송
+    axios
+      .post(
+        `https://api-sms.cloud.toast.com/sms/v3.0/appKeys/${process.env.MMS_APP_KEY}/sender/mms`,
+        {
+          title: "블로뉴숲 안내문자",
+          body: blonMMS(picked, person, baby, dog, barbecue, price),
+          sendNo: process.env.MMS_SEND_NO,
+          recipientList: [{recipientNo: phone}],
+        },
+        {
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            "X-Secret-Key": process.env.MMS_SECRET_KEY,
+          },
+        }
+      )
+      .then((axiosRes) => {
+        if (axiosRes.data.header.resultMessage === "SUCCESS") {
+          bot.sendMessage(process.env.TELEGRAM_CHAT_ID_BLON, "문자 발송에 성공하였습니다.");
+        } else {
+          bot.sendMessage(process.env.TELEGRAM_CHAT_ID_BLON, "문자 발송에 실패하였습니다.");
+        }
+      });
   } catch (err) {
     console.error('[쿼리 에러]', err);
     res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
@@ -331,6 +405,31 @@ router.post("/reservation/space", async (req, res) => {
       `\n` +
       `환불옵션: ${priceOption === "refundable" ? "환불가능" : "환불불가"}`
     );
+
+    // 3. 안내문자 발송
+    axios
+      .post(
+        `https://api-sms.cloud.toast.com/sms/v3.0/appKeys/${process.env.MMS_APP_KEY}/sender/mms`,
+        {
+          title: "온오프스페이스 안내문자",
+          body: spaceMMS(date, time, person, purpose, price),
+          sendNo: process.env.MMS_SEND_NO,
+          recipientList: [{recipientNo: phone}],
+        },
+        {
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            "X-Secret-Key": process.env.MMS_SECRET_KEY,
+          },
+        }
+      )
+      .then((axiosRes) => {
+        if (axiosRes.data.header.resultMessage === "SUCCESS") {
+          bot.sendMessage(process.env.TELEGRAM_CHAT_ID_SPACE, "문자 발송에 성공하였습니다.");
+        } else {
+          bot.sendMessage(process.env.TELEGRAM_CHAT_ID_SPACE, "문자 발송에 실패하였습니다.");
+        }
+      });
   } catch (err) {
     console.error('[쿼리 에러]', err);
     res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
@@ -388,6 +487,31 @@ router.post("/reservation/apple", async (req, res) => {
       `받는사람 전화번호: ${receiverPhone}\n` +
       `받는사람 주소: ${address}`
     );
+
+    // 3. 안내문자 발송
+    axios
+      .post(
+        `https://api-sms.cloud.toast.com/sms/v3.0/appKeys/${process.env.MMS_APP_KEY}/sender/mms`,
+        {
+          title: "백년한옥사과 안내문자",
+          body: appleMMS(name, phone, fiveKg, tenKg, price, receiverName, receiverPhone, address),
+          sendNo: process.env.MMS_SEND_NO,
+          recipientList: [{recipientNo: phone}],
+        },
+        {
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            "X-Secret-Key": process.env.MMS_SECRET_KEY,
+          },
+        }
+      )
+      .then((axiosRes) => {
+        if (axiosRes.data.header.resultMessage === "SUCCESS") {
+          bot.sendMessage(process.env.TELEGRAM_CHAT_ID_APPLE, "문자 발송에 성공하였습니다.");
+        } else {
+          bot.sendMessage(process.env.TELEGRAM_CHAT_ID_APPLE, "문자 발송에 실패하였습니다.");
+        }
+      });
   } catch (err) {
     console.error('[쿼리 에러]', err);
     res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');

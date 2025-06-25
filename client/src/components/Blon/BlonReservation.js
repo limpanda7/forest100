@@ -4,6 +4,7 @@ import {BLON_PRICE} from "../../constants";
 import {isFriday, isHoliday, isSaturday, isSummerBlon, isWeekday} from "../../utils/date";
 import ReactGA from "react-ga4";
 import { useReservation } from '../../contexts/ReservationContext';
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 
 const BlonReservation = ({picked, setPicked, setCurrentPage}) => {
   const [person, setPerson] = useState(4);
@@ -17,6 +18,7 @@ const BlonReservation = ({picked, setPicked, setCurrentPage}) => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [showRefund, setShowRefund] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // 전역 예약 상태 새로고침 함수
   const { refreshReservations } = useReservation();
@@ -41,6 +43,7 @@ const BlonReservation = ({picked, setPicked, setCurrentPage}) => {
       const bedding = person > 4 ? 1 : 0;
       try {
         isRequested = true;
+        setIsLoading(true);
         axios.post('/api/reservation/blon', {
           picked,
           name,
@@ -66,8 +69,27 @@ const BlonReservation = ({picked, setPicked, setCurrentPage}) => {
             alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${price.toLocaleString()}원입니다.`);
             window.location.href = '/';
           })
+          .catch((e) => {
+            isRequested = false;
+            setIsLoading(false);
+            alert('오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+            console.log('error: /api/reservation/blon');
+            console.log({
+              picked,
+              name,
+              phone,
+              person,
+              baby,
+              dog,
+              bedding,
+              barbecue,
+              price,
+              priceOption,
+            });
+          });
       } catch (e) {
         isRequested = false;
+        setIsLoading(false);
         alert('오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
         console.log('error: /api/reservation/blon');
         console.log({
@@ -126,6 +148,8 @@ const BlonReservation = ({picked, setPicked, setCurrentPage}) => {
 
   return (
     <div className='contents reservation-page'>
+      <LoadingSpinner isVisible={isLoading} message="예약을 처리하고 있습니다..." />
+      
       <section>
         <h2>선택한 날짜</h2>
         <ul>

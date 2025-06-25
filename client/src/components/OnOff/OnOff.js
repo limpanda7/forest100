@@ -22,8 +22,6 @@ const OnOff = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [currentPage]);
-
-  console.log(reserved)
   
   const handleGoBack = () => {
     if (currentPage === 'reservation') {

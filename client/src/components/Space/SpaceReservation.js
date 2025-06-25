@@ -4,6 +4,7 @@ import {isHoliday, isWeekday} from "../../utils/date";
 import axios from "axios";
 import ReactGA from "react-ga4";
 import { useReservation } from '../../contexts/ReservationContext';
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 
 const SpaceReservation = ({ date, time }) => {
   const [person, setPerson] = useState(2);
@@ -16,6 +17,7 @@ const SpaceReservation = ({ date, time }) => {
   const [phone, setPhone] = useState('');
   const [showRefund, setShowRefund] = useState(false);
   const [purpose, setPurpose] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   // 전역 예약 상태 새로고침 함수
   const { refreshReservations } = useReservation();
@@ -36,45 +38,65 @@ const SpaceReservation = ({ date, time }) => {
       return;
     }
 
-    try {
-      isRequested = true;
-      axios.post('/api/reservation/space', {
-        date,
-        time,
-        name,
-        phone,
-        person,
-        price,
-        priceOption,
-        purpose,
-      })
-        .then(() => {
-          ReactGA.event({
-            event_name: 'purchase',
-            label: 'Space',
-            value: price,
-          });
-
-          // 예약 완료 후 전역 예약 상태 새로고침
-          refreshReservations();
-
-          alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${price.toLocaleString()}원입니다.`);
-          window.location.href = '/';
+    if (window.confirm(`성함: ${name}, 전화번호: ${phone}가 맞습니까?`)) {
+      try {
+        isRequested = true;
+        setIsLoading(true);
+        axios.post('/api/reservation/space', {
+          date,
+          time,
+          name,
+          phone,
+          person,
+          price,
+          priceOption,
+          purpose,
         })
-    } catch (e) {
-      isRequested = false;
-      alert('오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
-      console.log('error: /api/reservation/space');
-      console.log({
-        date,
-        time,
-        name,
-        phone,
-        person,
-        price,
-        priceOption,
-        purpose,
-      });
+          .then(() => {
+            ReactGA.event({
+              event_name: 'purchase',
+              label: 'Space',
+              value: price,
+            });
+
+            // 예약 완료 후 전역 예약 상태 새로고침
+            refreshReservations();
+
+            alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${price.toLocaleString()}원입니다.`);
+            window.location.href = '/';
+          })
+          .catch((e) => {
+            isRequested = false;
+            setIsLoading(false);
+            alert('오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+            console.log('error: /api/reservation/space');
+            console.log({
+              date,
+              time,
+              name,
+              phone,
+              person,
+              price,
+              priceOption,
+              purpose,
+            });
+          });
+      } catch (e) {
+        isRequested = false;
+        setIsLoading(false);
+        alert('오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+        console.log('error: /api/reservation/space');
+        console.log({
+          date,
+          time,
+          name,
+          phone,
+          person,
+          price,
+          priceOption,
+          purpose,
+        });
+      }
     }
   }
 
@@ -104,6 +126,8 @@ const SpaceReservation = ({ date, time }) => {
 
   return (
     <div className='contents reservation-page'>
+      <LoadingSpinner isVisible={isLoading} message="예약을 처리하고 있습니다..." />
+      
       <section>
         <h2>선택한 시간</h2>
         <ul>

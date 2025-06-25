@@ -3,6 +3,7 @@ import axios from "axios";
 import {ON_OFF_PRICE} from "../../constants";
 import ReactGA from "react-ga4";
 import { useReservation } from '../../contexts/ReservationContext';
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 
 const {RENT_PER_WEEK, MANAGEMENT_PER_WEEK, CLEANING_FEE, DEPOSIT} = ON_OFF_PRICE;
 
@@ -13,6 +14,7 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage}) => {
   const [price, setPrice] = useState(0);
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const weeks = Math.floor(picked.length / 7);
 
   // 전역 예약 상태 새로고침 함수
@@ -37,6 +39,7 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage}) => {
     if (window.confirm(`성함: ${name}, 전화번호: ${phone}가 맞습니까?`)) {
       try {
         isRequested = true;
+        setIsLoading(true);
         axios.post('/api/reservation/on_off', {
           picked,
           name,
@@ -58,8 +61,16 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage}) => {
             alert(`예약해주셔서 감사합니다! 입금하실 금액은 ${price.toLocaleString()}원입니다.`);
             window.location.href = '/';
           })
+          .catch((e) => {
+            isRequested = false;
+            setIsLoading(false);
+            alert('오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+            console.log('error: /api/reservation/on_off');
+            console.log({picked, name, phone, person, dog, price});
+          });
       } catch (e) {
         isRequested = false;
+        setIsLoading(false);
         alert('오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
         console.log('error: /api/reservation/on_off');
         console.log({picked, name, phone, person, dog, price});
@@ -85,6 +96,8 @@ const OnOffReservation = ({picked, setPicked, setCurrentPage}) => {
 
   return (
     <div className='contents reservation-page'>
+      <LoadingSpinner isVisible={isLoading} message="예약을 처리하고 있습니다..." />
+      
       <section>
         <h2>계약 기간</h2>
         <p>{formatPeriod()}</p>

@@ -307,11 +307,6 @@ const WeekCalendar = ({picked, setPicked, reserved}) => {
           value={picked.length ? [new Date(picked[0]), new Date(picked[picked.length - 1])] : null}
           activeStartDate={activeStartDate}
           onActiveStartDateChange={({activeStartDate}) => setActiveStartDate(activeStartDate)}
-          onDrillDown={({view}, e) => {
-            if (view === 'year') {
-              e.preventDefault();
-            }
-          }}
         />
       </div>
 
