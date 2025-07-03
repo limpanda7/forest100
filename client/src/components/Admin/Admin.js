@@ -49,6 +49,7 @@ const Admin = () => {
 
   const init = async() => {
     const {data: homepageReserved} = await axios.get(`/api/full-reservation/${target}`);
+    const {data: airbnbReserved} = await axios.get(`/api/ical/${target}`);
     let tempReserved = [];
     for (const element of homepageReserved) {
       tempReserved.push({
@@ -59,6 +60,18 @@ const Admin = () => {
         ).toString(),
         checkout_date: new Date(
           new Date(element.checkout_date).toISOString().slice(0, -1)
+        ).toString(),
+      });
+    }
+    for (const element of airbnbReserved) {
+      tempReserved.push({
+        ...element,
+        type: 'airbnb',
+        checkin_date: new Date(
+          new Date(element.start_dt).toISOString().slice(0, -1)
+        ).toString(),
+        checkout_date: new Date(
+          new Date(element.end_dt).toISOString().slice(0, -1)
         ).toString(),
       });
     }
@@ -132,60 +145,60 @@ const Admin = () => {
       />
 
       <div className='Admin'>
-      {
-        !isLogin ?
-          <input
-            placeholder='비밀번호'
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-          />
-          :
-          <table>
-            <tr>
-              <th style={{width: '60px'}}>체크인</th>
-              <th style={{width: '60px'}}>체크아웃</th>
-              <th style={{width: '40px'}}>구분</th>
-              <th>이름/끝번호</th>
-              <td></td>
-              <td></td>
-            </tr>
-            {
-              reserved.map((row, i) => {
-                return (
-                  <tr key={i}>
-                    <td>{moment(row.checkin_date).format('MM-DD')}</td>
-                    <td>{moment(row.checkout_date).format('MM-DD')}</td>
-                    <td className={cn(row.name ? 'homepage-cell' : 'airbnb-cell')}>
-                      {row.name ? '홈' : '에'}
-                    </td>
-                    <td>{row.name || row.phone_last_digits || '(막아둔날짜)'}</td>
-                    <td>
-                      {
-                        (row.name || row.phone_last_digits) &&
-                        <button onClick={() => {
-                          showDetail(row);
-                        }}>
-                          상세
-                        </button>
-                      }
-                    </td>
-                    <td>
-                      {
-                        row.name &&
-                        <button onClick={() => {
-                          setId(row.id);
-                          setIsDeleteModal(true);
-                        }}>
-                          삭제
-                        </button>
-                      }
-                    </td>
-                  </tr>
-                );
-              })
-            }
-          </table>
-      }
+        {
+          !isLogin ?
+            <input
+              placeholder='비밀번호'
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+            />
+            :
+            <table>
+              <tr>
+                <th style={{width: '60px'}}>체크인</th>
+                <th style={{width: '60px'}}>체크아웃</th>
+                <th style={{width: '40px'}}>구분</th>
+                <th>이름/끝번호</th>
+                <td></td>
+                <td></td>
+              </tr>
+              {
+                reserved.map((row, i) => {
+                  return (
+                    <tr key={i}>
+                      <td>{moment(row.checkin_date).format('MM-DD')}</td>
+                      <td>{moment(row.checkout_date).format('MM-DD')}</td>
+                      <td className={cn(row.name ? 'homepage-cell' : 'airbnb-cell')}>
+                        {row.name ? '홈' : '에'}
+                      </td>
+                      <td>{row.name || row.phone_last_digits || '(막아둔날짜)'}</td>
+                      <td>
+                        {
+                          (row.name || row.phone_last_digits) &&
+                          <button onClick={() => {
+                            showDetail(row);
+                          }}>
+                            상세
+                          </button>
+                        }
+                      </td>
+                      <td>
+                        {
+                          row.name &&
+                          <button onClick={() => {
+                            setId(row.id);
+                            setIsDeleteModal(true);
+                          }}>
+                            삭제
+                          </button>
+                        }
+                      </td>
+                    </tr>
+                  );
+                })
+              }
+            </table>
+        }
       </div>
 
       <ReactModal

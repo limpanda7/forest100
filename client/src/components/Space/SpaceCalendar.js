@@ -174,6 +174,8 @@ const SpaceCalendar = ({
               <ReactCalendar
                 className='calendar'
                 calendarType='US'
+                prev2Label={null}
+                next2Label={null}
                 formatDay={(localeDay, date) => date.getDate()}
                 minDate={new Date()}
                 onClickDay={(value) => handleDateChange(value)} // Updated onClickDay handler
