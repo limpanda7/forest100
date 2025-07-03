@@ -1,5 +1,5 @@
 import express from "express";
-import mysql from "mysql2/promise";
+import mysql from "mysql";
 import TelegramBot from "node-telegram-bot-api";
 import axios from "axios";
 import {forestMMS, onOffMMS, blonMMS, spaceMMS, appleMMS} from "./mms.js";
@@ -9,14 +9,30 @@ const router = express.Router();
 
 const isDev = process.env.NODE_ENV !== 'production';
 
-// 풀 대신 매번 새 커넥션 생성 함수
-const getConnection = async () => {
-  return await mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
-    timezone: "UTC",
+// 연결 풀 생성 (mysql 패키지용)
+const pool = mysql.createPool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+  timezone: "Asia/Seoul",
+  connectionLimit: 10, // 최대 연결 수 제한
+  acquireTimeout: 60000, // 연결 획득 타임아웃
+  timeout: 60000, // 쿼리 타임아웃
+  reconnect: true, // 자동 재연결
+  charset: 'utf8mb4'
+});
+
+// 연결 풀에서 연결 획득 함수
+const getConnection = () => {
+  return new Promise((resolve, reject) => {
+    pool.getConnection((err, connection) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(connection);
+    });
   });
 };
 
@@ -38,60 +54,95 @@ router.get("/reservation/:target", async (req, res) => {
     } else {
       query = `SELECT checkin_date, checkout_date FROM ${target}_reservation where checkout_date >= NOW() order by checkin_date`;
     }
-    const [data] = await connection.query(query);
+    
+    const data = await new Promise((resolve, reject) => {
+      connection.query(query, (err, results) => {
+        if (err) reject(err);
+        else resolve(results);
+      });
+    });
+    
     res.send(data);
   } catch (err) {
     console.error('[쿼리 에러]', err);
     res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
   } finally {
-    if (connection) await connection.end();
+    if (connection) {
+      connection.release(); // 연결 풀로 반환
+    }
   }
 });
+
 router.get("/full-reservation/:target", async (req, res) => {
   const {target} = req.params;
   let connection;
   try {
     connection = await getConnection();
-    const [data] = await connection.query(
-      `SELECT * FROM ${target}_reservation where checkout_date >= NOW() order by checkin_date`
-    );
+    const data = await new Promise((resolve, reject) => {
+      connection.query(
+        `SELECT * FROM ${target}_reservation where checkout_date >= NOW() order by checkin_date`,
+        (err, results) => {
+          if (err) reject(err);
+          else resolve(results);
+        }
+      );
+    });
     res.send(data);
   } catch (err) {
     console.error('[쿼리 에러]', err);
     res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
   } finally {
-    if (connection) await connection.end();
+    if (connection) {
+      connection.release();
+    }
   }
 });
+
 router.get("/ical/:target", async (req, res) => {
   const {target} = req.params;
   let connection;
   try {
     connection = await getConnection();
-    const [data] = await connection.query(`SELECT * from ${target}_ical`);
+    const data = await new Promise((resolve, reject) => {
+      connection.query(`SELECT * from ${target}_ical`, (err, results) => {
+        if (err) reject(err);
+        else resolve(results);
+      });
+    });
     res.send(data);
   } catch (err) {
     console.error('[쿼리 에러]', err);
     res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
   } finally {
-    if (connection) await connection.end();
+    if (connection) {
+      connection.release();
+    }
   }
 });
+
 router.delete("/reservation/:target/:id", async (req, res) => {
   const {target, id} = req.params;
   let connection;
   try {
     connection = await getConnection();
-    const [data] = await connection.query(
-      `DELETE FROM ${target}_reservation WHERE id = ?`,
-      [id]
-    );
+    const data = await new Promise((resolve, reject) => {
+      connection.query(
+        `DELETE FROM ${target}_reservation WHERE id = ?`,
+        [id],
+        (err, results) => {
+          if (err) reject(err);
+          else resolve(results);
+        }
+      );
+    });
     res.send(data);
   } catch (err) {
     console.error('[쿼리 에러]', err);
     res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
   } finally {
-    if (connection) await connection.end();
+    if (connection) {
+      connection.release();
+    }
   }
 });
 
@@ -128,10 +179,18 @@ router.post("/reservation/forest", async (req, res) => {
       price,
       priceOption,
     ]);
-    const [data] = await connection.query(
-      "INSERT INTO forest_reservation (checkin_date, checkout_date, name, phone, person, baby, dog, bedding, barbecue, price, price_option) VALUES ?",
-      [values]
-    );
+    
+    const data = await new Promise((resolve, reject) => {
+      connection.query(
+        "INSERT INTO forest_reservation (checkin_date, checkout_date, name, phone, person, baby, dog, bedding, barbecue, price, price_option) VALUES ?",
+        [values],
+        (err, results) => {
+          if (err) reject(err);
+          else resolve(results);
+        }
+      );
+    });
+    
     res.send(data);
     // 텔레그램 발송
     bot.sendMessage(
@@ -183,7 +242,9 @@ router.post("/reservation/forest", async (req, res) => {
     console.error('[쿼리 에러]', err);
     res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
   } finally {
-    if (connection) await connection.end();
+    if (connection) {
+      connection.release();
+    }
   }
 });
 
@@ -205,10 +266,18 @@ router.post("/reservation/on_off", async (req, res) => {
       dog,
       price,
     ]);
-    const [data] = await connection.query(
-      "INSERT INTO on_off_reservation (checkin_date, checkout_date, name, phone, person, dog, price) VALUES ?",
-      [values]
-    );
+    
+    const data = await new Promise((resolve, reject) => {
+      connection.query(
+        "INSERT INTO on_off_reservation (checkin_date, checkout_date, name, phone, person, dog, price) VALUES ?",
+        [values],
+        (err, results) => {
+          if (err) reject(err);
+          else resolve(results);
+        }
+      );
+    });
+    
     res.send(data);
     // 텔레그램 발송
     bot.sendMessage(
@@ -254,7 +323,9 @@ router.post("/reservation/on_off", async (req, res) => {
     console.error('[쿼리 에러]', err);
     res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
   } finally {
-    if (connection) await connection.end();
+    if (connection) {
+      connection.release();
+    }
   }
 });
 
@@ -291,10 +362,18 @@ router.post("/reservation/blon", async (req, res) => {
       price,
       priceOption,
     ]);
-    const [data] = await connection.query(
-      "INSERT INTO blon_reservation (checkin_date, checkout_date, name, phone, person, baby, dog, bedding, barbecue, price, price_option) VALUES ?",
-      [values]
-    );
+    
+    const data = await new Promise((resolve, reject) => {
+      connection.query(
+        "INSERT INTO blon_reservation (checkin_date, checkout_date, name, phone, person, baby, dog, bedding, barbecue, price, price_option) VALUES ?",
+        [values],
+        (err, results) => {
+          if (err) reject(err);
+          else resolve(results);
+        }
+      );
+    });
+    
     res.send(data);
     // 텔레그램 발송
     bot.sendMessage(
@@ -315,7 +394,7 @@ router.post("/reservation/blon", async (req, res) => {
       `\n` +
       `이용금액: ${price.toLocaleString()}\n` +
       `\n` +
-      `환불옵션: ${priceOption === "refundable" ? "환불가능" : "환불불가"}\n`
+      `환불옵션: ${priceOption === "refundable" ? "환불가능" : "환불불가"}`
     );
 
     // 3. 안내문자 발송
@@ -346,7 +425,9 @@ router.post("/reservation/blon", async (req, res) => {
     console.error('[쿼리 에러]', err);
     res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
   } finally {
-    if (connection) await connection.end();
+    if (connection) {
+      connection.release();
+    }
   }
 });
 
@@ -379,10 +460,18 @@ router.post("/reservation/space", async (req, res) => {
       price,
       priceOption,
     ]);
-    const [data] = await connection.query(
-      "INSERT INTO space_reservation (date, checkin_time, checkout_time, name, phone, person, purpose, price, price_option) VALUES ?",
-      [values]
-    );
+    
+    const data = await new Promise((resolve, reject) => {
+      connection.query(
+        "INSERT INTO space_reservation (date, checkin_time, checkout_time, name, phone, person, purpose, price, price_option) VALUES ?",
+        [values],
+        (err, results) => {
+          if (err) reject(err);
+          else resolve(results);
+        }
+      );
+    });
+    
     res.send(data);
     // 텔레그램 발송
     bot.sendMessage(
@@ -434,7 +523,9 @@ router.post("/reservation/space", async (req, res) => {
     console.error('[쿼리 에러]', err);
     res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
   } finally {
-    if (connection) await connection.end();
+    if (connection) {
+      connection.release();
+    }
   }
 });
 
@@ -466,10 +557,18 @@ router.post("/reservation/apple", async (req, res) => {
       receiverPhone,
       address,
     ]);
-    const [data] = await connection.query(
-      "INSERT INTO apple_reservation (name, phone, five_kg, ten_kg, price, receiver_name, receiver_phone, address) VALUES ?",
-      [values]
-    );
+    
+    const data = await new Promise((resolve, reject) => {
+      connection.query(
+        "INSERT INTO apple_reservation (name, phone, five_kg, ten_kg, price, receiver_name, receiver_phone, address) VALUES ?",
+        [values],
+        (err, results) => {
+          if (err) reject(err);
+          else resolve(results);
+        }
+      );
+    });
+    
     res.send(data);
     // 텔레그램 발송
     bot.sendMessage(
@@ -516,7 +615,9 @@ router.post("/reservation/apple", async (req, res) => {
     console.error('[쿼리 에러]', err);
     res.status(500).send('예약 정보를 불러오는 중 오류가 발생했습니다.');
   } finally {
-    if (connection) await connection.end();
+    if (connection) {
+      connection.release();
+    }
   }
 });
 

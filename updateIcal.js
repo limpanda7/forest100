@@ -1,17 +1,33 @@
 import ical from "node-ical";
 import moment from "moment";
-import mysql from "mysql2/promise";
+import mysql from "mysql";
 import 'dotenv/config';
 import TelegramBot from "node-telegram-bot-api";
 
-// 풀 대신 매번 새 커넥션 생성 함수
-const getConnection = async () => {
-  return await mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
-    timezone: '+09:00',
+// 연결 풀 생성 (mysql 패키지용)
+const pool = mysql.createPool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+  timezone: '+09:00',
+  connectionLimit: 10,
+  acquireTimeout: 60000,
+  timeout: 60000,
+  reconnect: true,
+  charset: 'utf8mb4'
+});
+
+// 연결 풀에서 연결 획득 함수
+const getConnection = () => {
+  return new Promise((resolve, reject) => {
+    pool.getConnection((err, connection) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(connection);
+    });
   });
 };
 
@@ -67,15 +83,30 @@ export const updateIcal = async (url, target) => {
     connection = await getConnection();
 
     // 트랜잭션 시작
-    await connection.beginTransaction();
+    await new Promise((resolve, reject) => {
+      connection.beginTransaction((err) => {
+        if (err) reject(err);
+        else resolve();
+      });
+    });
 
     try {
       // 1. 기존 데이터 백업 (선택사항)
-      const [backupData] = await connection.query(`SELECT * FROM ${target}_ical`);
+      const backupData = await new Promise((resolve, reject) => {
+        connection.query(`SELECT * FROM ${target}_ical`, (err, results) => {
+          if (err) reject(err);
+          else resolve(results);
+        });
+      });
       console.log(`Backup: ${backupData.length} records from ${target}_ical`);
 
       // 2. 테이블 전체 삭제
-      await connection.query(`TRUNCATE TABLE ${target}_ical`);
+      await new Promise((resolve, reject) => {
+        connection.query(`TRUNCATE TABLE ${target}_ical`, (err) => {
+          if (err) reject(err);
+          else resolve();
+        });
+      });
       console.log(`Truncated ${target}_ical table`);
 
       // 3. 새로운 데이터 삽입
@@ -85,12 +116,22 @@ export const updateIcal = async (url, target) => {
             (uid, start_dt, end_dt, status, reservation_id, phone_last_digits)
           VALUES ?
         `;
-        await connection.query(insertQuery, [values]);
+        await new Promise((resolve, reject) => {
+          connection.query(insertQuery, [values], (err) => {
+            if (err) reject(err);
+            else resolve();
+          });
+        });
         console.log(`Inserted ${values.length} records into ${target}_ical`);
       }
 
       // 4. 트랜잭션 커밋
-      await connection.commit();
+      await new Promise((resolve, reject) => {
+        connection.commit((err) => {
+          if (err) reject(err);
+          else resolve();
+        });
+      });
       
       // 5. 변경사항 로깅
       const deletedCount = backupData.length - values.length;
@@ -102,11 +143,13 @@ export const updateIcal = async (url, target) => {
       alertSent = false;
 
     } catch (error) {
-      await connection.rollback();
+      await new Promise((resolve) => {
+        connection.rollback(() => resolve());
+      });
       throw error;
     } finally {
       // 연결 반환 (중요!)
-      await connection.end();
+      connection.release();
     }
 
   } catch (e) {
