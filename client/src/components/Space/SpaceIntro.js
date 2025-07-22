@@ -1,4 +1,6 @@
 import Slider from "react-slick";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faHeart} from '@fortawesome/free-solid-svg-icons';
 import img1 from "../../images/Space/1.jpg";
 import img2 from "../../images/Space/2.jpg";
 import img3 from "../../images/Space/3.jpg";
@@ -106,6 +108,19 @@ const SpaceIntro = () => {
               </a>
             </li>
           </ul>
+        </section>
+
+        <section className="brand-story-section">
+          <div className="brand-story-btn">
+            <a href='https://nameun-jari.web.app/' target='_blank' rel='noopener noreferrer'>
+              <FontAwesomeIcon icon={faHeart} size="lg" className={'brand-icon'}/>
+              <div className='brand-text'>
+                브랜드 스토리
+                <br/>
+                <span>나믄자리</span>
+              </div>
+            </a>
+          </div>
         </section>
       </div>
     </>

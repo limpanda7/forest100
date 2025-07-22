@@ -2,7 +2,7 @@ import React from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import './Main.scss';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faToggleOn, faLeaf, faTree, faPalette} from '@fortawesome/free-solid-svg-icons'
+import {faToggleOn, faLeaf, faTree, faPalette, faHeart} from '@fortawesome/free-solid-svg-icons'
 
 const Main = () => {
   const navigate = useNavigate();
@@ -55,6 +55,17 @@ const Main = () => {
           </td>
         </tr>
       </table>
+
+      <div className='philosophy-btn'>
+        <a href='https://nameun-jari.web.app/' target='_blank' rel='noopener noreferrer'>
+          <FontAwesomeIcon icon={faHeart} size="2x" className={'Icon'}/>
+          <div className='menu-text'>
+            브랜드 스토리
+            <br/>
+            <span>나믄자리</span>
+          </div>
+        </a>
+      </div>
 
       {/*<Link to='/apple'>*/}
       {/*  <button className="apple-btn">*/}
