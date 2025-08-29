@@ -1,18 +1,20 @@
 import React, {useEffect, useState} from 'react';
 import 'react-calendar/dist/Calendar.css';
-import './Blon.scss';
 import BlonReservation from "./BlonReservation";
 import BlonIntro from "./BlonIntro";
 import BlonCalendar from "./BlonCalendar";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate, useSearchParams} from "react-router-dom";
 import cn from 'classnames';
 import Header from "../Header/Header";
 import { useReservation } from '../../contexts/ReservationContext';
 
 const Blon = () => {
-  const [currentPage, setCurrentPage] = useState('intro');
+  const [searchParams, setSearchParams] = useSearchParams();
   const [picked, setPicked] = useState([]);
   const navigate = useNavigate();
+  
+  // URL 쿼리 파라미터에서 currentPage 가져오기
+  const currentPage = searchParams.get('page') || 'intro';
   
   // 전역 예약 상태 사용
   const { getReservationByTarget, getLoadingByTarget, error: isError } = useReservation();
@@ -22,6 +24,10 @@ const Blon = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [currentPage]);
+
+  const setCurrentPage = (page) => {
+    setSearchParams({ page });
+  };
 
   const handleGoBack = () => {
     if (currentPage === 'reservation') {
@@ -50,7 +56,9 @@ const Blon = () => {
           </div>
           <div
             className={cn('Tab', {Active: currentPage === 'calendar'})}
-            onClick={() => setCurrentPage('calendar')}
+            onClick={() => {
+              setCurrentPage('calendar');
+            }}
           >
             예약하기
           </div>

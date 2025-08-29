@@ -1,0 +1,116 @@
+.floating-apple-button {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1000;
+  color: white;
+  text-decoration: none;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+
+  &:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 12px 35px rgba(255, 107, 107, 0.4);
+    background: linear-gradient(135deg, #ff5252, #d84315);
+  }
+
+  &:active {
+    transform: translateY(-2px) scale(1.02);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.3), 0 8px 25px rgba(255, 107, 107, 0.3);
+  }
+
+  // 클릭 상태
+  &.clicked {
+    transform: scale(0.95);
+    background: linear-gradient(135deg, #d84315, #bf360c);
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.5);
+  }
+
+  // 로딩 상태
+  &.loading {
+    cursor: not-allowed;
+    background: linear-gradient(135deg, #ff8a65, #ff7043);
+
+    .spinner {
+      animation: spin 1s linear infinite;
+    }
+  }
+
+  .button-text {
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 4px;
+    text-align: center;
+    line-height: 1.2;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  svg {
+    margin-bottom: 2px;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+  }
+
+  // 애니메이션 효과
+  animation: float 3s ease-in-out infinite;
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  &:hover {
+    animation: none;
+  }
+}
+
+// 모바일 반응형
+@media (max-width: 768px) {
+  .floating-apple-button {
+    bottom: 20px;
+    right: 20px;
+    width: 80px;
+    height: 80px;
+
+    svg {
+      font-size: 1.5em !important;
+    }
+  }
+}
+
+// 작은 화면에서의 최적화
+@media (max-width: 480px) {
+  .floating-apple-button {
+    bottom: 15px;
+    right: 15px;
+    width: 70px;
+    height: 70px;
+  }
+}

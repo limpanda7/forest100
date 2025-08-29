@@ -3,15 +3,18 @@ import 'react-calendar/dist/Calendar.css';
 import ForestReservation from "./ForestReservation";
 import ForestIntro from "./ForestIntro";
 import ForestCalendar from "./ForestCalendar";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useSearchParams} from "react-router-dom";
 import cn from 'classnames';
 import Header from "../Header/Header";
 import { useReservation } from '../../contexts/ReservationContext';
 
 const Forest = () => {
-  const [currentPage, setCurrentPage] = useState('intro');
+  const [searchParams, setSearchParams] = useSearchParams();
   const [picked, setPicked] = useState([]);
   const navigate = useNavigate();
+  
+  // URL 쿼리 파라미터에서 currentPage 가져오기
+  const currentPage = searchParams.get('page') || 'intro';
   
   // 전역 예약 상태 사용
   const { getReservationByTarget, getLoadingByTarget, error: isError } = useReservation();
@@ -21,6 +24,10 @@ const Forest = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [currentPage]);
+
+  const setCurrentPage = (page) => {
+    setSearchParams({ page });
+  };
 
   const handleGoBack = () => {
     if (currentPage === 'reservation') {

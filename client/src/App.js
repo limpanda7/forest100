@@ -24,6 +24,7 @@ import Blon from "./components/Blon/Blon";
 import Admin from "./components/Admin/Admin";
 import Space from "./components/Space/Space";
 import Mukho from "./components/Mukho/Mukho";
+import FloatingAppleButton from "./components/FloatingAppleButton/FloatingAppleButton";
 import ReactGA from "react-ga4";
 
 // context
@@ -40,6 +41,17 @@ const App = () => {
     ReactGA.send({ hitType: "pageview", page: location.pathname + location.search });
   }, [location]);
 
+  // 예약 페이지인지 확인하는 함수
+  const isReservationPage = () => {
+    const search = location.search;
+    
+    // URL 쿼리 파라미터에서 page=reservation인지 확인
+    const urlParams = new URLSearchParams(search);
+    const currentPage = urlParams.get('page');
+    
+    return currentPage === 'reservation';
+  };
+
   return (
     <ReservationProvider>
       <Routes>
@@ -52,6 +64,9 @@ const App = () => {
         <Route path='admin' element={<Admin/>}/>
         <Route path='*' element={<Navigate to="/" />} />
       </Routes>
+      
+      {/* 예약 페이지가 아닐 때만 플로팅 버튼 표시 */}
+      {!isReservationPage() && <FloatingAppleButton />}
     </ReservationProvider>
   );
 }
