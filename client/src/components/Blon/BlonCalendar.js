@@ -25,24 +25,28 @@ const BlonCalendar = ({isLoading, isError, picked, setPicked, setCurrentPage, re
         <div className="DescTitle">Price</div>
 
         <table className='PriceTable'>
-          <tr>
-            <th width='120'>구분</th>
-            <th width='100'>일~목</th>
-            <th width='100'>금</th>
-            <th width='100'>토</th>
-          </tr>
-          <tr>
-            <td>성수기<br/>(7/20-8/20)</td>
-            <td>{BLON_PRICE.SUMMER.WEEKDAY.toLocaleString()}</td>
-            <td>{BLON_PRICE.SUMMER.FRIDAY.toLocaleString()}</td>
-            <td>{BLON_PRICE.SUMMER.SATURDAY.toLocaleString()}</td>
-          </tr>
-          <tr>
-            <td>비성수기</td>
-            <td>{BLON_PRICE.NORMAL.WEEKDAY.toLocaleString()}</td>
-            <td>{BLON_PRICE.NORMAL.FRIDAY.toLocaleString()}</td>
-            <td>{BLON_PRICE.NORMAL.SATURDAY.toLocaleString()}</td>
-          </tr>
+          <thead>
+            <tr>
+              <th width='120'>구분</th>
+              <th width='100'>일~목</th>
+              <th width='100'>금</th>
+              <th width='100'>토</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>성수기<br/>(7/20-8/20)</td>
+              <td>{BLON_PRICE.SUMMER.WEEKDAY.toLocaleString()}</td>
+              <td>{BLON_PRICE.SUMMER.FRIDAY.toLocaleString()}</td>
+              <td>{BLON_PRICE.SUMMER.SATURDAY.toLocaleString()}</td>
+            </tr>
+            <tr>
+              <td>비성수기</td>
+              <td>{BLON_PRICE.NORMAL.WEEKDAY.toLocaleString()}</td>
+              <td>{BLON_PRICE.NORMAL.FRIDAY.toLocaleString()}</td>
+              <td>{BLON_PRICE.NORMAL.SATURDAY.toLocaleString()}</td>
+            </tr>
+          </tbody>
         </table>
 
         <ul>

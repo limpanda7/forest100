@@ -50,22 +50,24 @@ const OnOffCalendar = ({
         {/*</table>*/}
 
         <table className="PriceTable">
-          <tr>
-            <td>임대료</td>
-            <td>{ON_OFF_PRICE.RENT_PER_WEEK.toLocaleString()}원 / 1주</td>
-          </tr>
-          <tr>
-            <td>관리비</td>
-            <td>{ON_OFF_PRICE.MANAGEMENT_PER_WEEK.toLocaleString()}원 / 1주</td>
-          </tr>
-          <tr>
-            <td>청소비</td>
-            <td>{ON_OFF_PRICE.CLEANING_FEE.toLocaleString()}원</td>
-          </tr>
-          <tr>
-            <td>보증금</td>
-            <td>{ON_OFF_PRICE.DEPOSIT.toLocaleString()}원</td>
-          </tr>
+          <tbody>
+            <tr>
+              <td>임대료</td>
+              <td>{ON_OFF_PRICE.RENT_PER_WEEK.toLocaleString()}원 / 1주</td>
+            </tr>
+            <tr>
+              <td>관리비</td>
+              <td>{ON_OFF_PRICE.MANAGEMENT_PER_WEEK.toLocaleString()}원 / 1주</td>
+            </tr>
+            <tr>
+              <td>청소비</td>
+              <td>{ON_OFF_PRICE.CLEANING_FEE.toLocaleString()}원</td>
+            </tr>
+            <tr>
+              <td>보증금</td>
+              <td>{ON_OFF_PRICE.DEPOSIT.toLocaleString()}원</td>
+            </tr>
+          </tbody>
         </table>
 
         <ul>

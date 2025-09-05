@@ -154,49 +154,53 @@ const Admin = () => {
             />
             :
             <table>
-              <tr>
-                <th style={{width: '60px'}}>체크인</th>
-                <th style={{width: '60px'}}>체크아웃</th>
-                <th style={{width: '40px'}}>구분</th>
-                <th>이름/끝번호</th>
-                <td></td>
-                <td></td>
-              </tr>
-              {
-                reserved.map((row, i) => {
-                  return (
-                    <tr key={i}>
-                      <td>{moment(row.checkin_date).format('MM-DD')}</td>
-                      <td>{moment(row.checkout_date).format('MM-DD')}</td>
-                      <td className={cn(row.name ? 'homepage-cell' : 'airbnb-cell')}>
-                        {row.name ? '홈' : '에'}
-                      </td>
-                      <td>{row.name || row.phone_last_digits || '(막아둔날짜)'}</td>
-                      <td>
-                        {
-                          (row.name || row.phone_last_digits) &&
-                          <button onClick={() => {
-                            showDetail(row);
-                          }}>
-                            상세
-                          </button>
-                        }
-                      </td>
-                      <td>
-                        {
-                          row.name &&
-                          <button onClick={() => {
-                            setId(row.id);
-                            setIsDeleteModal(true);
-                          }}>
-                            삭제
-                          </button>
-                        }
-                      </td>
-                    </tr>
-                  );
-                })
-              }
+              <thead>
+                <tr>
+                  <th style={{width: '60px'}}>체크인</th>
+                  <th style={{width: '60px'}}>체크아웃</th>
+                  <th style={{width: '40px'}}>구분</th>
+                  <th>이름/끝번호</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  reserved.map((row, i) => {
+                    return (
+                      <tr key={i}>
+                        <td>{moment(row.checkin_date).format('MM-DD')}</td>
+                        <td>{moment(row.checkout_date).format('MM-DD')}</td>
+                        <td className={cn(row.name ? 'homepage-cell' : 'airbnb-cell')}>
+                          {row.name ? '홈' : '에'}
+                        </td>
+                        <td>{row.name || row.phone_last_digits || '(막아둔날짜)'}</td>
+                        <td>
+                          {
+                            (row.name || row.phone_last_digits) &&
+                            <button onClick={() => {
+                              showDetail(row);
+                            }}>
+                              상세
+                            </button>
+                          }
+                        </td>
+                        <td>
+                          {
+                            row.name &&
+                            <button onClick={() => {
+                              setId(row.id);
+                              setIsDeleteModal(true);
+                            }}>
+                              삭제
+                            </button>
+                          }
+                        </td>
+                      </tr>
+                    );
+                  })
+                }
+              </tbody>
             </table>
         }
       </div>

@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
 import {Navigate, Route, Routes, useLocation} from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 
 // styles
 import './styles/normalize.scss';
@@ -53,21 +54,23 @@ const App = () => {
   };
 
   return (
-    <ReservationProvider>
-      <Routes>
-        <Route path='/' element={<Main/>}/>
-        <Route path='forest' element={<Forest />} />
-        <Route path='boulogne' element={<Blon/>}/>
-        <Route path='on-off' element={<OnOff />} />
-        <Route path='on-off-space' element={<Space />} />
-        <Route path='new-accommodation' element={<Mukho />} />
-        <Route path='admin' element={<Admin/>}/>
-        <Route path='*' element={<Navigate to="/" />} />
-      </Routes>
-      
-      {/* 예약 페이지가 아닐 때만 플로팅 버튼 표시 */}
-      {!isReservationPage() && <FloatingAppleButton />}
-    </ReservationProvider>
+    <HelmetProvider>
+      <ReservationProvider>
+        <Routes>
+          <Route path='/' element={<Main/>}/>
+          <Route path='forest' element={<Forest />} />
+          <Route path='boulogne' element={<Blon/>}/>
+          <Route path='on-off' element={<OnOff />} />
+          <Route path='on-off-space' element={<Space />} />
+          <Route path='new-accommodation' element={<Mukho />} />
+          <Route path='admin' element={<Admin/>}/>
+          <Route path='*' element={<Navigate to="/" />} />
+        </Routes>
+        
+        {/* 예약 페이지가 아닐 때만 플로팅 버튼 표시 */}
+        {!isReservationPage() && <FloatingAppleButton />}
+      </ReservationProvider>
+    </HelmetProvider>
   );
 }
 

@@ -10,50 +10,52 @@ const Main = () => {
   return (
     <div className={'Main'}>
       <table>
-        <tr>
-          <td>
-            <Link to='/forest'>
-              <FontAwesomeIcon icon={faLeaf} size="3x" className={'Icon'}/>
-              <div className='menu-text'>
-                백년한옥별채
-                <br/>
-                <span>동해 숙소</span>
-              </div>
-            </Link>
-          </td>
-          <td>
-            <Link to='/boulogne'>
-              <FontAwesomeIcon icon={faTree} size="3x" className={'Icon'}/>
-              <div className='menu-text'>
-                블로뉴숲
-                <br/>
-                <span>포천 숙소</span>
-              </div>
-            </Link>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <Link to='/on-off'>
-              <FontAwesomeIcon icon={faToggleOn} size="3x" className={'Icon'}/>
-              <div className='menu-text'>
-                온오프 스테이
-                <br/>
-                <span>동해 단기임대</span>
-              </div>
-            </Link>
-          </td>
-          <td>
-            <Link to='/on-off-space'>
-              <FontAwesomeIcon icon={faPalette} size="3x" className={'Icon'}/>
-              <div className='menu-text'>
-                온오프 스페이스
-                <br/>
-                <span>서울 공간대여</span>
-              </div>
-            </Link>
-          </td>
-        </tr>
+        <tbody>
+          <tr>
+            <td>
+              <Link to='/forest'>
+                <FontAwesomeIcon icon={faLeaf} size="3x" className={'Icon'}/>
+                <div className='menu-text'>
+                  백년한옥별채
+                  <br/>
+                  <span>동해 숙소</span>
+                </div>
+              </Link>
+            </td>
+            <td>
+              <Link to='/boulogne'>
+                <FontAwesomeIcon icon={faTree} size="3x" className={'Icon'}/>
+                <div className='menu-text'>
+                  블로뉴숲
+                  <br/>
+                  <span>포천 숙소</span>
+                </div>
+              </Link>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <Link to='/on-off'>
+                <FontAwesomeIcon icon={faToggleOn} size="3x" className={'Icon'}/>
+                <div className='menu-text'>
+                  온오프 스테이
+                  <br/>
+                  <span>동해 단기임대</span>
+                </div>
+              </Link>
+            </td>
+            <td>
+              <Link to='/on-off-space'>
+                <FontAwesomeIcon icon={faPalette} size="3x" className={'Icon'}/>
+                <div className='menu-text'>
+                  온오프 스페이스
+                  <br/>
+                  <span>서울 공간대여</span>
+                </div>
+              </Link>
+            </td>
+          </tr>
+        </tbody>
       </table>
 
       <div className='philosophy-btn'>

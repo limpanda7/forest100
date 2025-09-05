@@ -110,14 +110,18 @@ const SpaceCalendar = ({
         <div className='DescTitle'>Price</div>
 
         <table className='PriceTable'>
-          <tr>
-            <th width='1'>월~목</th>
-            <th width='1'>금~일 및 공휴일</th>
-          </tr>
-          <tr>
-            <td>{SPACE_PRICE.WEEKDAY.toLocaleString()}원/시간</td>
-            <td>{SPACE_PRICE.WEEKEND.toLocaleString()}원/시간</td>
-          </tr>
+          <thead>
+            <tr>
+              <th width='1'>월~목</th>
+              <th width='1'>금~일 및 공휴일</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{SPACE_PRICE.WEEKDAY.toLocaleString()}원/시간</td>
+              <td>{SPACE_PRICE.WEEKEND.toLocaleString()}원/시간</td>
+            </tr>
+          </tbody>
         </table>
 
         <ul>

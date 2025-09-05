@@ -1,4 +1,4 @@
-import {Helmet} from "react-helmet";
+import {Helmet} from "react-helmet-async";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronLeft, faArrowLeft} from '@fortawesome/free-solid-svg-icons';
 

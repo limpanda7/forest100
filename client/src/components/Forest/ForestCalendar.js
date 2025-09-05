@@ -25,21 +25,25 @@ const ForestCalendar = ({isLoading, isError, picked, setPicked, setCurrentPage, 
         <div className="DescTitle">Price</div>
 
         <table className='PriceTable'>
-          <tr>
-            <th width='100'>구분</th>
-            <th width='100'>평일</th>
-            <th width='100'>주말, 공휴일</th>
-          </tr>
-          <tr>
-            <td>성수기(7-8월)</td>
-            <td>{FOREST_PRICE.SUMMER.WEEKDAY.toLocaleString()}</td>
-            <td>{FOREST_PRICE.SUMMER.WEEKEND.toLocaleString()}</td>
-          </tr>
-          <tr>
-            <td>비성수기</td>
-            <td>{FOREST_PRICE.NORMAL.WEEKDAY.toLocaleString()}</td>
-            <td>{FOREST_PRICE.NORMAL.WEEKEND.toLocaleString()}</td>
-          </tr>
+          <thead>
+            <tr>
+              <th width='100'>구분</th>
+              <th width='100'>평일</th>
+              <th width='100'>주말, 공휴일</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>성수기(7-8월)</td>
+              <td>{FOREST_PRICE.SUMMER.WEEKDAY.toLocaleString()}</td>
+              <td>{FOREST_PRICE.SUMMER.WEEKEND.toLocaleString()}</td>
+            </tr>
+            <tr>
+              <td>비성수기</td>
+              <td>{FOREST_PRICE.NORMAL.WEEKDAY.toLocaleString()}</td>
+              <td>{FOREST_PRICE.NORMAL.WEEKEND.toLocaleString()}</td>
+            </tr>
+          </tbody>
         </table>
 
         <ul>
