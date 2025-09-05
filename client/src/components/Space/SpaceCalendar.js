@@ -72,16 +72,20 @@ const SpaceCalendar = ({
     const timeSlots = [];
     for (let hour = startHour; hour <= endHour; hour++) {
       const isBlocked = isTimeSlotBlocked(date, hour);
+      const isChecked = time.includes(hour) && !isBlocked;
       timeSlots.push(
         <div key={hour} className='time-slot'>
           <input
             id={`time-${hour}`}
             type='checkbox'
-            checked={time.includes(hour) && !isBlocked}
+            checked={isChecked}
             disabled={isBlocked}
             onChange={() => handleTimeChange(hour)}
           />
-          <label htmlFor={`time-${hour}`}>
+          <label 
+            htmlFor={`time-${hour}`}
+            className={`${isChecked ? 'checked' : ''} ${isBlocked ? 'disabled' : ''}`}
+          >
             {hour < 10 ? `0${hour}` : hour}:00 - {hour < 9 ? `0${hour + 1}` : hour + 1}:00
           </label>
         </div>

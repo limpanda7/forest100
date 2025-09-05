@@ -7,10 +7,13 @@ import {useNavigate, useSearchParams} from "react-router-dom";
 import cn from 'classnames';
 import Header from "../Header/Header";
 import { useReservation } from '../../contexts/ReservationContext';
+import './Space.scss';
 
 const Space = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [picked, setPicked] = useState([]);
+  const [date, setDate] = useState('');
+  const [time, setTime] = useState([]);
   const navigate = useNavigate();
   
   // URL 쿼리 파라미터에서 currentPage 가져오기
@@ -73,8 +76,10 @@ const Space = () => {
       {
         currentPage === 'calendar' &&
         <SpaceCalendar
-          picked={picked}
-          setPicked={setPicked}
+          date={date}
+          setDate={setDate}
+          time={time}
+          setTime={setTime}
           setCurrentPage={setCurrentPage}
           isLoading={isLoading}
           isError={isError}
@@ -84,8 +89,8 @@ const Space = () => {
       {
         currentPage === 'reservation' && (
           <SpaceReservation
-            picked={picked}
-            setPicked={setPicked}
+            date={date}
+            time={time}
             setCurrentPage={setCurrentPage}
           />
         )
