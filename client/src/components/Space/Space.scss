@@ -1,14 +1,13 @@
 .Space {
   .time-slot {
     margin-bottom: 8px;
-    
+
     input[type="checkbox"] {
       display: none; /* Hide the checkbox */
     }
 
     label {
       display: block;
-      width: 100%;
       padding: 8px 12px;
       cursor: pointer;
       text-align: center;
@@ -18,7 +17,7 @@
       transition: all 0.3s ease;
       font-size: 14px;
       font-weight: 500;
-      
+
       &:hover {
         border-color: #006edc;
         background-color: #f0f8ff;

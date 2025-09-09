@@ -299,7 +299,11 @@ const WeekCalendar = ({picked, setPicked, reserved}) => {
           prev2Label={null}
           next2Label={null}
           formatDay={(localeDay, date) => date.getDate()}
-          minDate={selected ? new Date(selected) : new Date()}
+          minDate={selected ? new Date(selected) : (() => {
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            return tomorrow;
+          })()}
           maxDate={maxDate}
           tileDisabled={tileDisabled()}
           tileClassName={tileClassName}

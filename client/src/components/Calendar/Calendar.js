@@ -55,6 +55,15 @@ const Calendar = ({isContinuous, picked, setPicked, reserved}) => {
       // 모든 날짜 계산
       let startDate = new Date(value[0]);
       let endDate = new Date(value[1]);
+
+      // 같은 날짜 선택 시 alert
+      if (startDate.getDate() === endDate.getDate()) {
+        alert("체크인과 체크아웃 날짜는 같을 수 없습니다. 다시 선택해주세요.");
+        setPicked([]);
+        setSelected(null);
+        return false;
+      }
+
       startDate.setDate(startDate.getDate() + 1);
       endDate.setDate(endDate.getDate() + 1);
       while (startDate <= endDate) {
@@ -296,7 +305,11 @@ const Calendar = ({isContinuous, picked, setPicked, reserved}) => {
           prev2Label={null}
           next2Label={null}
           formatDay={(localeDay, date) => date.getDate()}
-          minDate={selected ? new Date(selected) : new Date()}
+          minDate={selected ? new Date(selected) : (() => {
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            return tomorrow;
+          })()}
           maxDate={maxDate}
           tileDisabled={tileDisabled()}
           tileClassName={tileClassname()}
