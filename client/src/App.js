@@ -68,7 +68,7 @@ const App = () => {
         </Routes>
         
         {/* 예약 페이지가 아닐 때만 플로팅 버튼 표시 */}
-        {!isReservationPage() && <FloatingAppleButton />}
+        {/* {!isReservationPage() && <FloatingAppleButton />} */}
       </ReservationProvider>
     </HelmetProvider>
   );
