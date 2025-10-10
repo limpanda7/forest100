@@ -84,8 +84,8 @@ const BlonCalendar = ({isLoading, isError, picked, setPicked, setCurrentPage, re
                 예약 내역을 불러오지 못했습니다.
               </p>
               <div style={{ marginTop: "20px", textAlign: "center" }}>
-                <button 
-                  className="large-btn" 
+                <button
+                  className="large-btn"
                   onClick={manualRetry}
                   style={{ marginBottom: "15px" }}
                 >
@@ -105,7 +105,7 @@ const BlonCalendar = ({isLoading, isError, picked, setPicked, setCurrentPage, re
               <p>
                 체크인 날짜와 체크아웃 날짜를 선택해주세요.
                 <br/>
-                (체크인 3시 / 체크아웃 11시)
+                (체크인 16시 / 체크아웃 12시)
               </p>
               <Calendar
                 isContinuous={true}
