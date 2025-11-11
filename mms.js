@@ -7,7 +7,8 @@ export const forestMMS = (picked, person, baby, dog, barbecue, price) => {
     '(입금계좌: 카카오 79420205681 남은비)\n' +
     '\n' +
     '[예약정보]\n' +
-    `기간: ${picked}\n` +
+    `체크인: ${picked[0]}\n` +
+    `체크아웃: ${picked[picked.length - 1]}\n` +
     `인원: ${person}명, 영유아 ${baby}명, 반려견 ${dog}마리\n` +
     `바베큐 이용여부: ${barbecue}\n` +
     '\n' +
@@ -142,7 +143,8 @@ export const blonMMS = (picked, person, baby, dog, barbecue, price) => {
     '(입금계좌: 카카오 79420661213 남은진)\n' +
     '\n' +
     '[예약정보]\n' +
-    `기간: ${picked}\n` +
+    `체크인: ${picked[0]}\n` +
+    `체크아웃: ${picked[picked.length - 1]}\n` +
     `인원: ${person}명, 영유아 ${baby}명, 반려견 ${dog}마리\n` +
     `바베큐 이용여부: ${barbecue}`;
 }

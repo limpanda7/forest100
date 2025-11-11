@@ -54,14 +54,14 @@ router.get("/reservation/:target", async (req, res) => {
     } else {
       query = `SELECT checkin_date, checkout_date FROM ${target}_reservation where checkout_date >= NOW() order by checkin_date`;
     }
-    
+
     const data = await new Promise((resolve, reject) => {
       connection.query(query, (err, results) => {
         if (err) reject(err);
         else resolve(results);
       });
     });
-    
+
     res.send(data);
   } catch (err) {
     console.error('[쿼리 에러]', err);
@@ -179,7 +179,7 @@ router.post("/reservation/forest", async (req, res) => {
       price,
       priceOption,
     ]);
-    
+
     const data = await new Promise((resolve, reject) => {
       connection.query(
         "INSERT INTO forest_reservation (checkin_date, checkout_date, name, phone, person, baby, dog, bedding, barbecue, price, price_option) VALUES ?",
@@ -190,27 +190,25 @@ router.post("/reservation/forest", async (req, res) => {
         }
       );
     });
-    
+
     res.send(data);
     // 텔레그램 발송
     bot.sendMessage(
       process.env.TELEGRAM_CHAT_ID_FOREST,
       `백년한옥별채 신규 예약이 들어왔습니다.\n` +
       `\n` +
-      `기간: ${picked}\n` +
+      `체크인: ${picked[0]}\n` +
+      `체크아웃: ${picked[picked.length - 1]}\n` +
       `\n` +
       `이름: ${name}\n` +
-      `\n` +
       `전화번호: ${phone}\n` +
       `\n` +
       `인원수: ${person}명, 영유아 ${baby}명, 반려견 ${dog}마리\n` +
-      `\n` +
       `추가침구: ${bedding}개\n` +
       `\n` +
       `바베큐 이용여부: ${barbecue}\n` +
       `\n` +
       `이용금액: ${price.toLocaleString()}\n` +
-      `\n` +
       `환불옵션: ${priceOption === "refundable" ? "환불가능" : "환불불가"}`
     );
 
@@ -266,7 +264,7 @@ router.post("/reservation/on_off", async (req, res) => {
       dog,
       price,
     ]);
-    
+
     const data = await new Promise((resolve, reject) => {
       connection.query(
         "INSERT INTO on_off_reservation (checkin_date, checkout_date, name, phone, person, dog, price) VALUES ?",
@@ -277,7 +275,7 @@ router.post("/reservation/on_off", async (req, res) => {
         }
       );
     });
-    
+
     res.send(data);
     // 텔레그램 발송
     bot.sendMessage(
@@ -362,7 +360,7 @@ router.post("/reservation/blon", async (req, res) => {
       price,
       priceOption,
     ]);
-    
+
     const data = await new Promise((resolve, reject) => {
       connection.query(
         "INSERT INTO blon_reservation (checkin_date, checkout_date, name, phone, person, baby, dog, bedding, barbecue, price, price_option) VALUES ?",
@@ -373,27 +371,25 @@ router.post("/reservation/blon", async (req, res) => {
         }
       );
     });
-    
+
     res.send(data);
     // 텔레그램 발송
     bot.sendMessage(
       process.env.TELEGRAM_CHAT_ID_BLON,
       `블로뉴숲 신규 예약이 들어왔습니다.\n` +
       `\n` +
-      `기간: ${picked}\n` +
+      `체크인: ${picked[0]}\n` +
+      `체크아웃: ${picked[picked.length - 1]}\n` +
       `\n` +
       `이름: ${name}\n` +
-      `\n` +
       `전화번호: ${phone}\n` +
       `\n` +
       `인원수: ${person}명, 영유아 ${baby}명, 반려견 ${dog}마리\n` +
-      `\n` +
       `추가침구: ${bedding}개\n` +
       `\n` +
       `바베큐 이용여부: ${barbecue}\n` +
       `\n` +
       `이용금액: ${price.toLocaleString()}\n` +
-      `\n` +
       `환불옵션: ${priceOption === "refundable" ? "환불가능" : "환불불가"}`
     );
 
@@ -460,7 +456,7 @@ router.post("/reservation/space", async (req, res) => {
       price,
       priceOption,
     ]);
-    
+
     const data = await new Promise((resolve, reject) => {
       connection.query(
         "INSERT INTO space_reservation (date, checkin_time, checkout_time, name, phone, person, purpose, price, price_option) VALUES ?",
@@ -471,7 +467,7 @@ router.post("/reservation/space", async (req, res) => {
         }
       );
     });
-    
+
     res.send(data);
     // 텔레그램 발송
     bot.sendMessage(
@@ -557,7 +553,7 @@ router.post("/reservation/apple", async (req, res) => {
       receiverPhone,
       address,
     ]);
-    
+
     const data = await new Promise((resolve, reject) => {
       connection.query(
         "INSERT INTO apple_reservation (name, phone, five_kg, ten_kg, price, receiver_name, receiver_phone, address) VALUES ?",
@@ -568,7 +564,7 @@ router.post("/reservation/apple", async (req, res) => {
         }
       );
     });
-    
+
     res.send(data);
     // 텔레그램 발송
     bot.sendMessage(
