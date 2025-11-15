@@ -12,14 +12,19 @@ const Forest = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [picked, setPicked] = useState([]);
   const navigate = useNavigate();
-  
+
   // URL 쿼리 파라미터에서 currentPage 가져오기
   const currentPage = searchParams.get('page') || 'intro';
-  
+
   // 전역 예약 상태 사용
   const { getReservationByTarget, getLoadingByTarget, error: isError } = useReservation();
   const reserved = getReservationByTarget('forest');
   const isLoading = getLoadingByTarget('forest');
+
+  // 컴포넌트 마운트 시 신규 사이트로 리다이렉트
+  useEffect(() => {
+    window.location.href = "https://nameun-jari.web.app/forest";
+  }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
