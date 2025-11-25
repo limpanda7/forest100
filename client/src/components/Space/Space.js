@@ -24,6 +24,11 @@ const Space = () => {
   const reserved = getReservationByTarget('space');
   const isLoading = getLoadingByTarget('space');
 
+  // 컴포넌트 마운트 시 신규 사이트로 리다이렉트
+  useEffect(() => {
+    window.location.href = "https://nameun-jari.web.app/space";
+  }, []);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [currentPage]);
